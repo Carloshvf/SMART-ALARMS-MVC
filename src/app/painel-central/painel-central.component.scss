@@ -7,7 +7,7 @@ header {
     font-size: 1.7em;
     img {
         width: 1.3em;
-        margin: 0 5px -1px 0;
+        margin: 0 5px 16px 0;
     }
 }
 
@@ -48,13 +48,17 @@ section {
     }
     h2 {
         margin: 0 0 25px 0;
-        color: #FCD487
+        color: #FCD487;
+        font-size: 1.6em;
+        font-weight: 700;
     }
     h3 {
-        margin: 0 0 25px 0;
+        margin: 0 0 5px 0px;
         color: #FFF;
+        font-size: 1.2em;
+        font-weight: 500;
         img {
-            margin: 0 0 -5px 20px
+            margin: 0 0 5px 20px
         }
     }
     .bottom-row {
@@ -106,6 +110,7 @@ section {
         color: #fff;
         padding: 20px;
         margin: 0;
+        font-size: 1em
     }
     .status-content {
         background: #47525E;
@@ -129,8 +134,10 @@ section {
             -moz-border-radius: 5px;
             -ms-border-radius: 5px;
             -o-border-radius: 5px;
-            width: 40%;
-            margin: 7px;
+            width: 48%;
+            margin: 5px;
+            font-size: 1.3em;
+            font-weight: 600;
             span {
                 float: right;
                 font-weight: 800;
@@ -183,11 +190,15 @@ section {
     margin: 0 20px;
     background-color: #F95F62;
     width: 37.5%;
+    .recomendacoes-content {
+        padding: 20px;
+    }
     h4 {
         background-color: #A74042;
         color: #fff;
         padding: 20px;
         margin: 0;
+        font-size: 1em
     }
     ul li {
         color: #fff;
