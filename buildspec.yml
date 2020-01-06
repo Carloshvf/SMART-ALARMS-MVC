@@ -32,7 +32,7 @@ phases:
       - echo 2º Passo - Realizar o build da aplicação ${projectName} 
       - cd $CODEBUILD_SRC_DIR 
       - npm install 
-      - npm run generate 
+      - npm run build 
  build: 
    commands: 
      - echo 3º Passo - Realizar o build da aplicação cicd e executar o script para fazer o deploy da aplicação 
