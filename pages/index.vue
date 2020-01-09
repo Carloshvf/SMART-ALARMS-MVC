@@ -1,68 +1,69 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        smart-alarms
-      </h1>
-      <h2 class="subtitle">
-        My fabulous Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
+  <div>
+    <!-- <header-smart></header-smart> -->
+    <div class="wrapper-content container">
+      <div class="row">
+        <div
+          class="col-6 col-sm-4 mb-4"
+          v-for="alarm in alarms"
+          :key="alarm.number"
+        >
+          <nuxt-link
+            :class="{ alarmActive: alarm.isActive }"
+            class="box-alarm d-flex align-items-center justify-content-center"
+            to="../alarm"
+          >
+            <span class="box-alarm-number">{{ alarm.number }}</span>
+          </nuxt-link>
+          <!-- /.box-alarm -->
+        </div>
+        <!-- /.col-3 -->
       </div>
+      <!-- /.row -->
     </div>
+    <!-- /.container -->
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      alarms: [
+        { number: '11', isActive: false },
+        { number: '21', isActive: true },
+        { number: '31', isActive: false },
+        { number: '12', isActive: false },
+        { number: '22', isActive: false },
+        { number: '32', isActive: false },
+        { number: '18', isActive: false },
+        { number: '28', isActive: false },
+        { number: '38', isActive: false }
+      ]
+      // isActive: true
+    }
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+<style lang="scss">
+@import '@/assets/scss/base.scss';
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+.box-alarm {
+  background-color: $purple;
+  border-radius: $border-radius;
+  transition: $transition;
+  padding: 15px;
+  height: 210px;
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+  &-number {
+    font-size: 100px;
+    font-weight: 700;
+    color: white;
+  }
 
-.links {
-  padding-top: 15px;
+  &:hover {
+    background-color: transparentize($purple, 0.06);
+  }
 }
 </style>
