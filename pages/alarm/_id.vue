@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="wrapper-content container-fluid">
-      <!-- v-for="list in lists" :key="list.id" -->
-      <div class="row">
+      <div class="row" v-for="list in $store.state.all" :key="list.id">
         <div class="col-12 col-sm-3">
           <card-detail />
         </div>
@@ -39,8 +38,18 @@ export default {
   },
   data() {
     return {
-      lists: [{}]
+      id: this.$route.params.id,
+      lists: []
     }
+  },
+
+  computed: {
+    alarmID() {
+      return this.$store.state.all.map(item => item.id === this.id)
+    }
+  },
+  mounted() {
+    console.log(this.lists)
   }
 }
 </script>

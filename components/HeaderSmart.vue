@@ -1,9 +1,11 @@
 <template>
   <section id="header">
     <div class="container">
-      <div class="row justify-content-center align-items-center py-2">
-        <img src="../static/img/alarm.svg" alt="Logo" />
-        <span class="text-uppercase mb-0 ml-2">smart alarms</span>
+      <div class="row">
+        <nuxt-link class="d-flex justify-content-center align-items-center py-2" to="/">
+          <img src="../static/img/alarm.svg" alt="Logo" />
+          <span class="text-uppercase mb-0 ml-2">smart alarms</span>
+        </nuxt-link>
       </div>
       <!-- /.row -->
     </div>

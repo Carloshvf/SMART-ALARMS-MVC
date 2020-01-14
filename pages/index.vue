@@ -3,15 +3,11 @@
     <!-- <header-smart></header-smart> -->
     <div class="wrapper-content container">
       <div class="row">
-        <div
-          class="col-6 col-sm-4 mb-4"
-          v-for="alarm in alarms"
-          :key="alarm.number"
-        >
+        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.number">
           <nuxt-link
             :class="{ alarmActive: alarm.isActive }"
             class="box-alarm d-flex align-items-center justify-content-center"
-            to="../alarm"
+            :to="{name: 'alarm-id', params: {id: alarm.number}}"
           >
             <span class="box-alarm-number">{{ alarm.number }}</span>
           </nuxt-link>
