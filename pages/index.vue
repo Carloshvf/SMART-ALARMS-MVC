@@ -3,13 +3,14 @@
     <!-- <header-smart></header-smart> -->
     <div class="wrapper-content container">
       <div class="row">
-        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.number">
+        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.id">
           <nuxt-link
             :class="{ alarmActive: alarm.isActive }"
             class="box-alarm d-flex align-items-center justify-content-center"
-            :to="{name: 'alarm-id', params: {id: alarm.number}}"
+            to="alarm"
           >
-            <span class="box-alarm-number">{{ alarm.number }}</span>
+            <!-- :to="{name: 'alarm-id', params: {id: alarm.id}}" -->
+            <span class="box-alarm-number">{{ alarm.id }}</span>
           </nuxt-link>
           <!-- /.box-alarm -->
         </div>
@@ -25,18 +26,7 @@
 export default {
   data() {
     return {
-      alarms: [
-        { number: '11', isActive: false },
-        { number: '21', isActive: true },
-        { number: '31', isActive: false },
-        { number: '12', isActive: false },
-        { number: '22', isActive: false },
-        { number: '32', isActive: false },
-        { number: '18', isActive: false },
-        { number: '28', isActive: false },
-        { number: '38', isActive: false }
-      ]
-      // isActive: true
+      alarms: this.$store.state.all
     }
   }
 }

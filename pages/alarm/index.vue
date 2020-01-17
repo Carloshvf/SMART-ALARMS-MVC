@@ -1,19 +1,20 @@
 <template>
   <div>
-    <div class="wrapper-content container-fluid">
-      <div class="row" v-for="list in $store.state.all" :key="list.id">
-        <div class="col-12 col-sm-3">
-          <card-detail />
+    <div class="wrapper-content container-fluid" v-for="list in lists" :key="list.name">
+      <div class="row" v-for="card in list.kks" :key="card.id">
+        <div class="col-12 col-sm-3 mb-4">
+          <card-detail :alarm="card" />
         </div>
         <!-- /.col-12 col-sm-3 -->
         <div class="col-12 col-sm-4">
-          <detail />
+          <!-- <detail /> -->
+          <!-- <top-detail /> -->
+          <status :alarm="card.status" />
           <!-- <status /> -->
         </div>
         <!-- /.col-12 col-sm-4 -->
         <div class="col-12 col-sm-5">
-          <!-- step-name="Escolha os poços" -->
-          <recommendation />
+          <recommendation :alarm="card.recom" />
         </div>
         <!-- /.col-12 col-sm-5 -->
       </div>
@@ -24,32 +25,23 @@
 </template>
 
 <script>
-import Detail from '~/components/Detail.vue'
+import TopDetail from '~/components/TopDetail.vue'
 import CardDetail from '~/components/CardDetail.vue'
 import Status from '~/components/Status.vue'
 import Recommendation from '~/components/Recommendation.vue'
 
 export default {
   components: {
-    Detail,
+    TopDetail,
     CardDetail,
     Status,
     Recommendation
   },
+
   data() {
     return {
-      id: this.$route.params.id,
-      lists: []
+      lists: this.$store.state.all
     }
-  },
-
-  computed: {
-    alarmID() {
-      return this.$store.state.all.map(item => item.id === this.id)
-    }
-  },
-  mounted() {
-    console.log(this.lists)
   }
 }
 </script>

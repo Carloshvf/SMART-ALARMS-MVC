@@ -24,9 +24,9 @@
               <h1 class="detail-page-name">PLS: TG 22</h1>
               <div class="detail-page-count d-flex align-items-center">
                 <p class="mr-4">
-                  Contagem <br />
-                  regressiva <br />
-                  Flame Off
+                  Contagem
+                  <br />regressiva
+                  <br />Flame Off
                 </p>
                 <h1>3:27</h1>
               </div>

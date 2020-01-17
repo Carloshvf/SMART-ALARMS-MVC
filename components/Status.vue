@@ -6,22 +6,14 @@
     <!-- /.card-header -->
     <div class="card-content bg-purple">
       <div class="row">
-        <div v-for="equip in equips" :key="equip.id" class="col-12 col-sm-6">
+        <div v-for="equip in alarm" :key="equip.id" class="col-12 col-sm-6">
           <div class="card-equip">
-            <h6
-              class="mb-0 text-uppercase p-2 bg-green"
-              :class="{ bg: equip.bg }"
-            >
-              {{ equip.name }}
-            </h6>
-            <div
-              class="card-equip-cause bg-light-purple p-2"
-              :class="{ dNone: equip.isActive }"
-            >
+            <h6 class="mb-0 text-uppercase p-2 bg-green" :class="{ bg: equip.bg }">{{ equip.kks }}</h6>
+            <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
               <small class="text-uppercase">causa</small>
-              <p>{{ equip.text }}</p>
+              <p>{{ equip.cause }}</p>
               <hr />
-              <a href="">{{ equip.number }}</a>
+              <a href>{{ equip.text }}</a>
             </div>
             <!-- /.card-cause -->
           </div>
@@ -38,6 +30,8 @@
 
 <script>
 export default {
+  props: ['alarm'],
+
   data() {
     return {
       equips: [

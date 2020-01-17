@@ -5,11 +5,8 @@
     </div>
     <!-- /.card-header -->
     <div class="card-content bg-red">
-      <!-- {{ stepName }} -->
       <ul class="card-recom-list">
-        <li class="card-recom-item" v-for="item in items" :key="item.name">
-          {{ item.recom }}
-        </li>
+        <li class="card-recom-item" v-for="value in alarm" :key="value.id">{{ value.item }}</li>
       </ul>
     </div>
     <!-- /.card-content -->
@@ -19,20 +16,7 @@
 
 <script>
 export default {
-  props: ['stepName'],
-
-  data() {
-    return {
-      items: [
-        {
-          recom: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-        },
-        {
-          recom: 'Lorem ipsum dolor sit amet'
-        }
-      ]
-    }
-  }
+  props: ['alarm']
 }
 </script>
 
