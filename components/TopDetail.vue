@@ -2,13 +2,13 @@
   <div class="top-detail mt-5">
     <div class="top-detail-header bg-dark-purple d-flex align-items-center">
       <p class="text-uppercase mb-0">causa:</p>
-      <h3 class="mb-0 ml-3">Nível baixo no tambor de HP</h3>
+      <h3 class="mb-0 ml-3">{{ alarm.cause }}</h3>
     </div>
     <!-- .top-detail-header -->
     <div class="top-detail-kks bg-purple d-flex align-items-center">
       <p class="text-uppercase mb-0">kks:</p>
-      <h5 class="mb-0 ml-3">22HAD50FL901XJ60P</h5>
-      <a class="ml-auto" href="">gráfico</a>
+      <h5 class="mb-0 ml-3">{{ alarm.kks }}</h5>
+      <a class="ml-auto" href>gráfico</a>
     </div>
     <!-- /.top-detail-kks -->
     <div class="top-detail-channel">
@@ -20,7 +20,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['alarm']
+}
 </script>
 
 <style lang="scss" scoped>

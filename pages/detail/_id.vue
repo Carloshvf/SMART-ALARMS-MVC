@@ -1,27 +1,27 @@
 <template>
   <div>
-    <section class="detail-page">
+    <section class="detail-page" v-for="value in lists" :key="value.id">
       <aside class="detail-page-sidebar">
         <nuxt-link to="/">Eventos</nuxt-link>
         <ul>
-          <li class="mb-3" v-for="turbine in turbines" :key="turbine.number">
+          <li class="mb-3">
             <nuxt-link
               class="detail-page-sidebar-link d-flex flex-column align-items-center justify-content-center"
               to="/"
             >
-              <h1>{{ turbine.number }}</h1>
-              <p class="mb-0">{{ turbine.count }}</p>
+              <h1>{{ value.id }}</h1>
+              <p class="mb-0">3:27</p>
             </nuxt-link>
           </li>
         </ul>
       </aside>
-      <div class="wrapper-content container">
+      <div class="wrapper-content container" v-for="item in value.kks" :key="item.kks">
         <div class="row">
           <div class="col-12">
             <header
               class="detail-page-header d-flex justify-content-between align-items-center mb-5"
             >
-              <h1 class="detail-page-name">PLS: TG 22</h1>
+              <h1 class="detail-page-name">{{ item.name }}</h1>
               <div class="detail-page-count d-flex align-items-center">
                 <p class="mr-4">
                   Contagem
@@ -38,7 +38,8 @@
         <!-- /.row -->
         <div class="row">
           <div class="col-12 col-sm-6">
-            <detail />
+            <top-detail :alarm="item" />
+            <status />
           </div>
         </div>
       </div>
@@ -49,22 +50,17 @@
 </template>
 
 <script>
-import Detail from '~/components/Detail.vue'
 import TopDetail from '~/components/TopDetail.vue'
 import Status from '~/components/Status.vue'
 
 export default {
   components: {
-    Detail,
     TopDetail,
     Status
   },
   data() {
     return {
-      turbines: [
-        { number: '21', count: '3:27:05', isActive: false },
-        { number: '22', count: '5:27:05', isActive: false }
-      ]
+      lists: this.$store.state.all
     }
   }
 }

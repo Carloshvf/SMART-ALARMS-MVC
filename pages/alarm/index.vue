@@ -19,6 +19,7 @@
         <!-- /.col-12 col-sm-5 -->
       </div>
       <!-- /.row -->
+      <hr class="mt-5 mb-0" />
     </div>
     <!-- /.container -->
   </div>

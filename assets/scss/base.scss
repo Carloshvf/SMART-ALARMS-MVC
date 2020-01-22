@@ -76,7 +76,7 @@ ul {
   }
 
   &-content {
-    height: 300px;
+    min-height: 320px;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }

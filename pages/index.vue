@@ -3,7 +3,11 @@
     <!-- <header-smart></header-smart> -->
     <div class="wrapper-content container">
       <div class="row">
-        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.id">
+        <div
+          class="col-6 col-sm-4 mb-4"
+          v-for="alarm in alarms"
+          :key="alarm.id"
+        >
           <nuxt-link
             :class="{ alarmActive: alarm.isActive }"
             class="box-alarm d-flex align-items-center justify-content-center"
@@ -23,11 +27,22 @@
 </template>
 
 <script>
+// import axios from 'axios'
+import { mapActions } from 'vuex'
+
 export default {
-  data() {
-    return {
-      alarms: this.$store.state.all
+  methods: {
+    ...mapActions(['loadAlarms'])
+  },
+
+  computed: {
+    alarms() {
+      return this.$store.state.all
     }
+  },
+
+  async mounted() {
+    this.loadAlarms()
   }
 }
 </script>
