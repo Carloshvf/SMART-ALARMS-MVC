@@ -1,15 +1,19 @@
 <template>
-  <div>
-    <div class="wrapper-content container-fluid" v-for="list in lists" :key="list.name">
-      <div class="row" v-for="card in list.kks" :key="card.id">
-        <div class="col-12 col-sm-3 mb-4">
-          <card-detail :alarm="card" />
+  <div class="py-5 mt-5">
+    <div
+      class="wrapper-content container-fluid"
+      v-for="list in lists"
+      :key="list.name"
+    >
+      <div class="row mb-4" v-for="card in list.kks" :key="card.id">
+        <div class="col-12 col-sm-3">
+          <card-detail :unity="list" :alarm="card" />
         </div>
         <!-- /.col-12 col-sm-3 -->
         <div class="col-12 col-sm-4">
           <!-- <detail /> -->
           <!-- <top-detail /> -->
-          <status :alarm="card.status" />
+          <status :alarm="card.status_one" />
           <!-- <status /> -->
         </div>
         <!-- /.col-12 col-sm-4 -->
@@ -19,7 +23,6 @@
         <!-- /.col-12 col-sm-5 -->
       </div>
       <!-- /.row -->
-      <hr class="mt-5 mb-0" />
     </div>
     <!-- /.container -->
   </div>

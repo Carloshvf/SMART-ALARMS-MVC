@@ -36,6 +36,7 @@ export default {}
   span {
     font-size: 23px;
     font-weight: 700;
+    color: black;
   }
 }
 </style>

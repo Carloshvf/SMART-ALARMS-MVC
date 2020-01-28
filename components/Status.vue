@@ -8,16 +8,8 @@
       <div class="row">
         <div v-for="equip in alarm" :key="equip.id" class="col-12 col-sm-6">
           <div class="card-equip">
-            <h6
-              class="mb-3 text-uppercase p-2 bg-green"
-              :class="{ bg: equip.bg }"
-            >
-              {{ equip.kks }}
-            </h6>
-            <div
-              class="card-equip-cause bg-light-purple p-2"
-              :class="{ dNone: equip.isHidden }"
-            >
+            <h6 class="mb-3 text-uppercase p-2 bg-green" :class="{ bg: equip.bg }">{{ equip.kks }}</h6>
+            <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
               <small class="text-uppercase">causa</small>
               <p>{{ equip.cause }}</p>
               <hr />
@@ -38,26 +30,7 @@
 
 <script>
 export default {
-  props: ['alarm'],
-
-  data() {
-    return {
-      equips: [
-        {
-          name: '28LAC50AP001',
-          text: 'Temperatura alta do enrolamento',
-          number: '28LAC50CT021 ',
-          isActive: true
-        },
-        {
-          name: '28LAC50AP001',
-          text: 'Temperatura alta do enrolamento',
-          number: '28LAC50CT021 ',
-          isActive: true
-        }
-      ]
-    }
-  }
+  props: ['alarm']
 }
 </script>
 

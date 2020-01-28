@@ -35,6 +35,10 @@ ul {
 //   background-color: $red !important;
 // }
 
+// #__layout {
+//   padding-top: 5%;
+// }
+
 @keyframes alarm-active {
   from {
     background-color: $red;
@@ -52,9 +56,9 @@ ul {
   animation-direction: alternate;
 }
 
-.wrapper-content {
-  padding-top: 5%;
-}
+// .wrapper-content {
+//   padding-top: 5%;
+// }
 
 .card {
   border: none;

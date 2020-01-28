@@ -1,8 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header bg-dark-purple">
-      <!-- PLS: TG 21  -->
-      <h2 class="mb-0 text-uppercase">{{ alarm.name }}</h2>
+      <h2 class="mb-0 text-uppercase">{{ alarm.type }} {{ alarm.name }}</h2>
     </div>
     <!-- /.card-header -->
     <div class="card-content card-detail bg-purple">
@@ -20,23 +19,29 @@
           <h6>{{ alarm.value }}</h6>
         </div>
         <!-- /.card-detail-content-txt -->
-        <a href>grafico</a>
-        <!-- <img src="../static/img/alarm.svg" alt="" /> -->
+        <b-button v-b-modal="alarm.value">Gráfico</b-button>
+
+        <b-modal :id="alarm.value" title="BootstrapVue">
+          <p class="my-4">{{ alarm.name }}</p>
+          <graph :chart-data="chartData" />
+          <!--  -->
+        </b-modal>
       </div>
       <!-- /.card-detail-content -->
       <hr />
       <div
         class="card-detail-footer d-flex flex-row justify-content-around align-items-center"
       >
-        <!-- <nuxt-link to="detail" class="btn btn-primary">Detalhes</nuxt-link> -->
         <nuxt-link
-          :to="{ name: 'detail-id', params: { id: alarm.value } }"
+          :to="{ name: 'detail-id', params: { id: unity.id } }"
           class="btn btn-primary"
           >Detalhes</nuxt-link
         >
         <!--  -->
         <small>Contagem regressiva flame Off</small>
-        <h1>3:27</h1>
+        <!-- <span>{{ new Date() | moment('H:mm:ss') }}</span> -->
+        <!-- <h1>{{ countDown }} {{ countTime | moment('mm:ss') }}</h1> -->
+        <h1>{{ countTime }}</h1>
       </div>
       <!-- /.card-detail-footer -->
     </div>
@@ -46,18 +51,73 @@
 </template>
 
 <script>
+import Graph from '~/components/Graph.vue'
+
+import main from '~/plugins/main'
+
 export default {
-  props: ['alarm'],
+  props: ['alarm', 'unity'],
+
+  components: {
+    Graph
+  },
 
   data() {
     return {
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      countDown: 10,
+      countTime: null,
+      chartData: {
+        labels: ['January', 'February'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: [40, 20]
+          }
+        ]
+      }
     }
   },
-  computed: {
-    valueKKS() {
-      return this.lists.find(i => i.id === this.id)
+
+  methods: {
+    countDownTimer() {
+      if (this.countDown > 0) {
+        setTimeout(() => {
+          this.countDown -= 1
+          this.countDownTimer()
+        }, 1000)
+      }
+    },
+
+    countDownn() {
+      this.$moment.locale('pt-BR')
+      const dataAtual = new Date()
+      var DataAPI = this.$moment(dataAtual)
+        .add(7, 'minutes')
+        .add(1, 'seconds')
+      var mat = this.$moment(new Date())
+      var ms = this.$moment(DataAPI).diff(mat)
+      var d = this.$moment.duration(ms)
+      this.countTime = d.get('minutes') + ':' + d.get('seconds')
+
+      setInterval(() => {
+        // var mObj = this.$moment(this.countTime).subtract(1, 'seconds')
+        //this.countTime = mObj.toDate()
+        var mat = this.$moment(new Date())
+        var ms = this.$moment(DataAPI).diff(mat)
+        var d = this.$moment.duration(ms)
+        this.countTime = d.get('minutes') + ':' + d.get('seconds')
+
+        //this.countDown -= 1
+        //this.countDownTimer()
+      }, 1000)
     }
+  },
+  created() {
+    this.countDownn()
+
+    return this.countDownTimer()
   }
 }
 </script>

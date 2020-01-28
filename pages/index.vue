@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <header-smart></header-smart> -->
-    <div class="wrapper-content container">
+    <div class="wrapper-content container pt-5 mt-5">
       <div class="row">
         <div
           class="col-6 col-sm-4 mb-4"
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import { mapActions } from 'vuex'
 
 export default {
