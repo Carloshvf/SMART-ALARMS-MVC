@@ -1,13 +1,12 @@
 <template>
   <div class="top-detail">
+    <h1 class="text-center">{{ alarm.type }}</h1>
     <div class="top-detail-header bg-dark-purple d-flex align-items-center">
       <p class="text-uppercase mb-0">causa:</p>
       <h3 class="mb-0 ml-3">{{ alarm.cause }}</h3>
     </div>
     <!-- .top-detail-header -->
-    <div
-      class="top-detail-kks bg-purple d-flex align-items-center justify-content-between"
-    >
+    <div class="top-detail-kks bg-purple d-flex align-items-center justify-content-between">
       <div class="d-flex">
         <p class="text-uppercase mb-0">kks:</p>
         <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>

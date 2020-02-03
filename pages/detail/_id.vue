@@ -15,21 +15,18 @@
           </li>
         </ul>
       </aside>
-      <div
-        class="wrapper-content container"
-        v-for="item in value.kks"
-        :key="item.kks"
-      >
+      <div class="wrapper-content container">
         <div class="row pt-5 my-5">
           <div class="col-12">
             <header
-              class="detail-page-header d-flex justify-content-between align-items-center mb-5"
+              class="detail-page-header d-flex justify-content-between align-items-center mb-3"
             >
-              <h1 class="detail-page-name">{{ item.name }}</h1>
+              <h1 class="detail-page-name">{{ value.kks.name }}</h1>
               <div class="detail-page-count d-flex align-items-center">
                 <p class="mr-4">
                   Contagem
-                  <br />regressiva <br />Flame Off
+                  <br />regressiva
+                  <br />Flame Off
                 </p>
                 <h1>3:27</h1>
               </div>
@@ -40,11 +37,7 @@
         </div>
         <!-- /.row -->
         <div class="row">
-          <div
-            class="col-12 col-sm-6"
-            v-for="content in value.kks"
-            :key="content.value"
-          >
+          <div class="col-12 col-sm-6 mb-5" v-for="content in value.kks" :key="content.value">
             <top-detail :alarm="content" />
             <status :alarm="content.status_two" />
           </div>
