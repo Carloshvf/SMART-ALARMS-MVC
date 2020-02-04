@@ -11,7 +11,9 @@
         <h3>{{ alarm.cause }}</h3>
       </div>
       <!-- /.card-detail-head -->
-      <div class="card-detail-content d-flex flex-row align-items-center justify-content-between">
+      <div
+        class="card-detail-content d-flex flex-row align-items-center justify-content-between"
+      >
         <div class="card-detail-content-txt">
           <p>KKS</p>
           <h6>{{ alarm.value }}</h6>
@@ -27,16 +29,18 @@
       </div>
       <!-- /.card-detail-content -->
       <hr />
-      <div class="card-detail-footer d-flex flex-row justify-content-around align-items-center">
+      <div
+        class="card-detail-footer d-flex flex-row justify-content-around align-items-center"
+      >
         <nuxt-link
           :to="{ name: 'detail-id', params: { id: unity.id } }"
           class="btn btn-primary"
-        >Detalhes</nuxt-link>
+          >Detalhes</nuxt-link
+        >
         <!--  -->
-        <small>Contagem regressiva flame Off</small>
+        <small class="ml-2">Contagem regressiva flame Off</small>
         <!-- <h1>{{ countDown | moment('mm:ss') }}</h1> -->
-        <!-- <h1>{{alarm.date}}</h1> -->
-        <h1>{{ alarm.countTime }}</h1>
+        <h1>{{ countTime }}</h1>
       </div>
       <!-- /.card-detail-footer -->
     </div>
@@ -62,6 +66,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      countTime: '',
       chartData: {
         labels: ['January', 'February'],
         datasets: [
@@ -79,60 +84,60 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadData', 'counter'])
+    ...mapActions(['loadData']),
 
-    // loadData() {
-    //   this.$axios
-    //     .get(
-    //       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarmes-ativos'
-    //     )
-    //     .then(response => {
-    //       const dateApi = this.alarm.date
-    //       const typeData = this.alarm.type
-    //       const dateNew = new Date()
-    //       const moDataApi = this.$moment(dateApi)
+    loadCount() {
+      const dateApi = this.alarm.date
+      const typeData = this.alarm.type
+      const dateNew = new Date()
+      const moDataApi = this.$moment(dateApi)
 
-    //       let dateCurrent = this.$moment(dateNew)
-    //       let ms = moDataApi.diff(dateCurrent)
-    //       let d = this.$moment.duration(ms)
+      let dateCurrent = this.$moment(dateNew)
+      let ms = moDataApi.diff(dateCurrent)
+      let d = this.$moment.duration(ms)
+      if (ms > 0) {
+        this.$moment.locale('pt-BR')
 
-    //       if (ms > 0) {
-    //         this.$moment.locale('pt-BR')
+        if (typeData == 'PLS') {
+          moDataApi.add(7, 'minutes')
+        } else {
+          moDataApi.add(5, 'minutes')
+        }
 
-    //         if (typeData == 'PLS') {
-    //           moDataApi.add(7, 'minutes')
-    //         } else {
-    //           moDataApi.add(5, 'minutes')
-    //         }
+        setInterval(() => {
+          let dateCurrent = this.$moment(new Date())
+          let ms = moDataApi.diff(dateCurrent)
 
-    //         setInterval(() => {
-    //           let dateCurrent = this.$moment(new Date())
-    //           let ms = moDataApi.diff(dateCurrent)
-    //           let d = this.$moment.duration(ms)
+          if (ms > 0) {
+            let d = this.$moment.duration(ms)
 
-    //           this.countTime =
-    //             d
-    //               .get('minutes')
-    //               .toString()
-    //               .padStart(2, '0') +
-    //             ':' +
-    //             d
-    //               .get('seconds')
-    //               .toString()
-    //               .padStart(2, '0')
-    //         }, 1000)
-    //       } else {
-    //         this.countTime = 'Expirou'
-    //       }
+            this.countTime =
+              d
+                .get('minutes')
+                .toString()
+                .padStart(2, '0') +
+              ':' +
+              d
+                .get('seconds')
+                .toString()
+                .padStart(2, '0')
+          } else {
+            this.countTime = 'Expirou'
+          }
+        }, 1000)
+      } else {
+        this.countTime = 'Expirou'
+      }
 
-    //       // commit('setAll', responseData)
-    //     })
-    // }
+      // commit('setAll', responseData)
+    }
   },
 
-  async created() {
-    this.alarm['countTime'] = ''
-    this.counter({ alarm: this.alarm })
+  created() {
+    this.countTime = ''
+    this.loadCount()
+    // this.alarm['countTime'] = ''
+    // this.counter({ alarm: this.alarm.countTime })
   }
 }
 </script>

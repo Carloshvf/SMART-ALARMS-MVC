@@ -10,25 +10,25 @@
               :to="{ name: 'detail-id', params: { id: link.id } }"
             >
               <h1>{{ link.id }}</h1>
-              <p class="mb-0">3:27</p>
+              <p class="mb-0">{{value.kks[0].countTime}}</p>
             </nuxt-link>
           </li>
         </ul>
       </aside>
       <div class="wrapper-content container">
-        <div class="row pt-5 my-5">
+        <div class="row pt-5 mt-5 mb-3">
           <div class="col-12">
             <header
               class="detail-page-header d-flex justify-content-between align-items-center mb-3"
             >
-              <h1 class="detail-page-name">{{ value.kks.name }}</h1>
+              <h1 class="detail-page-name">{{ value.kks[0].name }}</h1>
               <div class="detail-page-count d-flex align-items-center">
                 <p class="mr-4">
                   Contagem
                   <br />regressiva
                   <br />Flame Off
                 </p>
-                <h1>3:27</h1>
+                <h1>{{ value.kks[0].countTime }}</h1>
               </div>
               <!-- /.count -->
             </header>
@@ -53,8 +53,10 @@
 import TopDetail from '~/components/TopDetail.vue'
 import Status from '~/components/Status.vue'
 
+import { mapActions, mapState } from 'vuex'
+
 export default {
-  props: ['alarm'],
+  props: ['alarm', 'unity'],
 
   components: {
     TopDetail,
@@ -67,11 +69,20 @@ export default {
     }
   },
 
+  methods: {
+    ...mapActions(['counter'])
+  },
+
   computed: {
     cardDetail() {
       return this.lists.filter(i => i.id === this.id)
     }
   }
+
+  // async created() {
+  //   this.value.kks['countTime'] = ''
+  //   this.counter({ alarm: this.value.kks })
+  // }
 }
 </script>
 
