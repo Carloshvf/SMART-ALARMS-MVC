@@ -12,24 +12,26 @@
         <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>
       </div>
       <b-button v-b-modal="alarm.value">Gráfico</b-button>
-      <b-modal :id="alarm.value" title="BootstrapVue">
-        <p class="my-4">{{ alarm.name }}</p>
-        <graph :chart-data="chartData" />
+      <b-modal size="xl" :id="alarm.value" title="BootstrapVue"> <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
+        <p class="my-4">Endereço: {{ alarm.value }}</p> <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
+        <graph ref="chartCurve" :chart-data="chartData" :height="150" :options="chartOptions" />
+        <b-button v-on:click="reset()">Reset zoom</b-button>
       </b-modal>
       <!--b-modal  -->
     </div>
     <!-- /.top-detail-kks -->
     <div class="detail-channel d-flex justify-content-between mb-3">
-      <p class="text-uppercase">canais:</p>
+      <p class="text-uppercase">canais:</p> <!-- As classes são do Bootstrap -->
       <ul class="detail-channel-input">
         <li
-          class="detail-channel-input-item d-flex align-items-center"
+          class="detail-channel-input-item" 
           v-for="value in alarm.channels"
           :key="value.item"
         >
           <input class type="checkbox" :id="value.item" />
-          <label class="mb-0" :for="value.item">{{ value.item }}</label>
-          <a class="ml-4" href>gráfico</a>
+          <label class="mb-3" :for="value.item">{{ value.item }}</label>
+          <b-button v-b-modal="alarm.value">Gráfico</b-button> <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->
+          
         </li>
       </ul>
       <!-- /.detail-channel-input -->
@@ -50,16 +52,85 @@ export default {
   data() {
     return {
       chartData: {
-        labels: ['January', 'February'],
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+        '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
         datasets: [
           {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 20]
+            label: 'Day One',
+            pointBackgroundColor:'#f87979',
+            fill: false,
+            borderColor: '#f87979',
+            data: [40, 20, 30, 100]
+          },
+          {
+            label: 'Day Two',
+            pointBackgroundColor:'#e6e600',
+            fill: false,
+            borderColor: '#e6e600',
+            data: [100, 50, 70, 30]
+          }, 
+           {
+            label: 'Day Three',
+            pointBackgroundColor:'#0066ff',
+            fill: false,
+            borderColor: '#0066ff',
+            data: [80, 60, 30, 50]
           }
         ]
-      }
+      },
+      chartOptions: {
+          pan: {
+              enabled: true,
+              mode: "x"
+            },
+          zoom: {
+            drag: true,
+            enabled: true,
+            mode: "xy",
+            speed: 0.7
+          },
+          scales: {
+              yAxes: [
+                {
+                  gridLines: {
+                    display: false
+                  },
+                  scaleLabel: {
+                    display: true,
+                    labelString: "Valor"
+                  }
+                }
+              ],
+              xAxes: [
+                {
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    // max: 20
+                    // min: 0,
+                    stepSize: 4.5
+                  },
+                  scaleLabel: {
+                    display: true,
+                    labelString: "Horas"
+                  }
+                }
+              ]
+            }
+      } 
     }
+  },
+  methods: {
+    getChartVisible() {
+      var refChart = "chartCurve";
+      return refChart;
+    },
+
+    reset() {
+      this.$resetGraph(this.getChartVisible());
+    }
+    
   }
 }
 </script>

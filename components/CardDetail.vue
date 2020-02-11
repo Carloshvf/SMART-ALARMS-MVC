@@ -19,9 +19,10 @@
         <!-- /.card-detail-content-txt -->
         <b-button v-b-modal="alarm.value">Gráfico</b-button>
 
-        <b-modal :id="alarm.value" title="BootstrapVue">
-          <p class="my-4">{{ alarm.name }}</p>
-          <graph :chart-data="chartData" />
+        <b-modal size="xl" :id="alarm.value" title="BootstrapVue">
+          <p class="my-4">Endereço: {{ alarm.value }}</p>
+          <graph ref="chartCurve" :chart-data="chartData" :height="150" :options="chartOptions" />
+          <b-button v-on:click="reset()">Reset zoom</b-button>
           <!--  -->
         </b-modal>
       </div>
@@ -63,14 +64,71 @@ export default {
     return {
       id: this.$route.params.id,
       chartData: {
-        labels: ['January', 'February'],
+        labels: ['January', 'February', 'March'],
         datasets: [
           {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 20]
+            label: 'Day One',
+            pointBackgroundColor:'#f87979',
+            fill: false,
+            borderColor: '#f87979',
+            data: [40, 20, 30]
+          },
+          {
+            label: 'Day Two',
+            pointBackgroundColor:'#e6e600',
+            fill: false,
+            borderColor: '#e6e600',
+            data: [100, 50, 70]
+          }, 
+           {
+            label: 'Day Three',
+            pointBackgroundColor:'#0066ff',
+            fill: false,
+            borderColor: '#0066ff',
+            data: [80, 60, 30]
           }
         ]
+      },
+       chartOptions: {
+          pan: {
+              enabled: true,
+              mode: "x"
+            },
+          zoom: {
+            drag: true,
+            enabled: true,
+            mode: "xy",
+            speed: 0.7
+          },
+          scales: {
+            yAxes: [
+              {
+                gridLines: {
+                  display: false
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "Valor"
+                }
+              }
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  // max: 20
+                  // min: 0,
+                  stepSize: 4.5
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "Horas"
+                }
+              }
+            ]
+          }
       }
     }
   },
@@ -79,7 +137,16 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadData', 'counter'])
+    ...mapActions(['loadData', 'counter']),
+
+    getChartVisible() {
+      var refChart = "chartCurve";
+      return refChart;
+    },
+
+    reset() {
+      this.$resetGraph(this.getChartVisible());
+    }
 
     // loadData() {
     //   this.$axios

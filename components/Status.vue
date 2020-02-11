@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header bg-dark-purple">
-      <h6 class="mb-0 text-uppercase">Status de equipamento</h6>
+      <h6 class="mb-0 text-uppercase">Status e medida de equipamento</h6>
     </div>
     <!-- /.card-header -->
     <div class="card-content bg-purple">
