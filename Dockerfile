@@ -20,7 +20,6 @@ RUN npm run build
 # Make port 80 available to the world outside this container
 EXPOSE ${PORT}
 
-# Muda o usuário
 USER daemon
 
-ENTRYPOINT http-server dist -p ${PORT}
+CMD ng serve --host 0.0.0.0 --port ${PORT} --disableHostCheck true

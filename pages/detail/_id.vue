@@ -10,25 +10,26 @@
               :to="{ name: 'detail-id', params: { id: link.id } }"
             >
               <h1>{{ link.id }}</h1>
-              <p class="mb-0">3:27</p>
+              <counter :alarm="foo(link.id)" />
             </nuxt-link>
           </li>
         </ul>
       </aside>
       <div class="wrapper-content container">
-        <div class="row pt-5 my-5">
+        <div class="row pt-5 mt-5 mb-3">
           <div class="col-12">
             <header
               class="detail-page-header d-flex justify-content-between align-items-center mb-3"
             >
-              <h1 class="detail-page-name">{{ value.kks.name }}</h1>
+              <h1 class="detail-page-name">{{ foo(value.id).name }}</h1>
               <div class="detail-page-count d-flex align-items-center">
                 <p class="mr-4">
                   Contagem
-                  <br />regressiva
-                  <br />Flame Off
+                  <br />regressiva <br />Flame Off
                 </p>
-                <h1>3:27</h1>
+                <counter :alarm="foo(value.id)" />
+
+                <!-- <h1>{{ value.kks[0].countTime }}</h1> -->
               </div>
               <!-- /.count -->
             </header>
@@ -37,7 +38,11 @@
         </div>
         <!-- /.row -->
         <div class="row">
-          <div class="col-12 col-sm-6 mb-5" v-for="content in value.kks" :key="content.value">
+          <div
+            class="col-12 col-sm-6 mb-5"
+            v-for="content in value.kks"
+            :key="content.value"
+          >
             <top-detail :alarm="content" />
             <status :alarm="content.status_two" />
           </div>
@@ -52,13 +57,17 @@
 <script>
 import TopDetail from '~/components/TopDetail.vue'
 import Status from '~/components/Status.vue'
+import Counter from '~/components/Counter.vue'
+
+import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['alarm'],
+  props: ['alarm', 'unity'],
 
   components: {
     TopDetail,
-    Status
+    Status,
+    Counter
   },
   data() {
     return {
@@ -67,11 +76,66 @@ export default {
     }
   },
 
+  // methods: {
+  //   ...mapActions(['loadData'])
+  // },
+
+  methods: {
+    foo(id) {
+      var result = { countTimeDiff: 0 }
+
+      if (this.id && this.lists && this.lists.length > 0) {
+        var arrays = new Array()
+        for (const key in this.lists) {
+          arrays.push(Object.assign({}, this.lists[key]))
+        }
+
+        result = arrays.filter(i => i.id === id)
+        result = result[0].kks
+        let result2 = result.slice()
+        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
+        result = result.filter(
+          (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
+        )
+        result = result[0]
+      }
+
+      return result
+    }
+  },
+
   computed: {
     cardDetail() {
       return this.lists.filter(i => i.id === this.id)
     }
+    // foo() {
+    //   var result = { countTimeDiff: 0 }
+
+    //   if (this.id && this.lists && this.lists.length > 0) {
+    //     var arrays = new Array()
+    //     for (const key in this.lists) {
+    //       arrays.push(Object.assign({}, this.lists[key]))
+    //     }
+
+    //     result = arrays.filter(i => i.id === this.id)
+    //     result = result[0].kks
+    //     let result2 = result.slice()
+    //     result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
+    //     result = result.filter(
+    //       (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
+    //     )
+    //     result = result[0]
+    //   }
+
+    //   return result
+    // }
   }
+
+  // created() {
+  // console.log(this.foo())
+  //   this.value.kks['countTime'] = ''
+  //   this.counter({ alarm: this.value.kks })
+  // }
 }
 </script>
 
