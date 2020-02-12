@@ -17,6 +17,15 @@ export const actions = {
       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarmes-ativos'
     )
     context.commit('setAll', all)
+  },
+
+  async loadGraph(context) {
+    let {
+      data: { all }
+    } = await this.$axios.get(
+      'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico'
+    )
+    context.commit('setAll', all)
   }
 
   // async counter(context, alarm) {

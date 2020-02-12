@@ -14,7 +14,7 @@
       <b-button v-b-modal="alarm.value">Gráfico</b-button>
       <b-modal size="xl" :id="alarm.value" title="BootstrapVue"> <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ alarm.value }}</p> <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
-        <graph ref="chartCurve" :chart-data="chartData" :height="150" :options="chartOptions" />
+        <graph ref="chartCurve" :chart-data="chartData" :height="210" :options="chartOptions" />
         <b-button v-on:click="reset()">Reset zoom</b-button>
       </b-modal>
       <!--b-modal  -->
@@ -45,15 +45,14 @@
 import Graph from '~/components/Graph.vue'
 
 export default {
-  props: ['alarm'],
+  props: ['alarm', 'grap'],
   components: {
     Graph
   },
   data() {
     return {
       chartData: {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
-        '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+        labels: [ 'January', 'February', 'March', 'April'],
         datasets: [
           {
             label: 'Day One',
@@ -93,7 +92,7 @@ export default {
               yAxes: [
                 {
                   gridLines: {
-                    display: false
+                    display: true
                   },
                   scaleLabel: {
                     display: true,
@@ -104,7 +103,7 @@ export default {
               xAxes: [
                 {
                   gridLines: {
-                    display: false
+                    display: true
                   },
                   ticks: {
                     // max: 20
@@ -113,7 +112,7 @@ export default {
                   },
                   scaleLabel: {
                     display: true,
-                    labelString: "Horas"
+                    labelString: "Time"
                   }
                 }
               ]

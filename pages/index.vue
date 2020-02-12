@@ -3,7 +3,7 @@
     <!-- <header-smart></header-smart> -->
     <div class="wrapper-content container pt-5 mt-5">
       <div class="row">
-        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.id">
+        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.id"> 
           <nuxt-link
             :class="{ alarmActive: alarm.isActive }"
             class="box-alarm d-flex align-items-center justify-content-center"
@@ -27,18 +27,23 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions(['loadData'])
+    ...mapActions(['loadData', 'loadGraph']),
+    
   },
 
   computed: {
     alarms() {
+      return this.$store.state.all
+    },
+    graphs() {
       return this.$store.state.all
     }
   },
 
   async created() {
     // this.$store.dispatch('loadData')
-    this.loadData()
+    this.loadData(),
+    this.loadGraph()
   }
 
   // async mounted() {

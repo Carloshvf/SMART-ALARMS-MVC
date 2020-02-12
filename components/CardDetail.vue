@@ -23,7 +23,7 @@
 
         <b-modal size="xl" :id="alarm.value" title="BootstrapVue">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
-          <graph ref="chartCurve" :chart-data="chartData" :height="150" :options="chartOptions" />
+          <graph ref="chartCurve" :chart-data="chartData" :height="210" :options="chartOptions" />
           <b-button v-on:click="reset()">Reset zoom</b-button>
           <!--  -->
         </b-modal>
@@ -59,7 +59,7 @@ import main from '~/plugins/main'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['alarm', 'unity'],
+  props: ['alarm', 'unity', 'graph'],
 
   components: {
     Graph,
@@ -111,7 +111,7 @@ export default {
             yAxes: [
               {
                 gridLines: {
-                  display: false
+                  display: true
                 },
                 scaleLabel: {
                   display: true,
@@ -122,7 +122,7 @@ export default {
             xAxes: [
               {
                 gridLines: {
-                  display: false
+                  display: true
                 },
                 ticks: {
                   // max: 20
@@ -131,14 +131,23 @@ export default {
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: "Horas"
+                  labelString: "Time"
                 }
               }
             ]
           }
       }
     }
-  }
+  },
+  methods: {
+    getChartVisible() {
+      var refChart = "chartCurve";
+      return refChart;
+    },
+    reset() {
+      this.$resetGraph(this.getChartVisible());
+    }
+  },
   // computed: {
   //   ...mapState(['all'])
   // }
