@@ -1,11 +1,16 @@
-// import moment from 'moment'
+// import axios from 'moment'
+
 export const state = () => ({
-  all: []
+  all: [],
+  graph:[]
 })
 
 export const mutations = {
   setAll(state, all) {
     state.all = all
+  },
+  setGraph(state, graph) {
+    state.graph = graph
   }
 }
 
@@ -19,65 +24,27 @@ export const actions = {
     context.commit('setAll', all)
   },
 
-  async loadGraph(context) {
-    let {
-      data: { all }
-    } = await this.$axios.get(
-      'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico'
-    )
-    context.commit('setAll', all)
+  // async loadGraph(context, graphEnd) {
+  //   let {
+  //     data: {graph}
+  //   } = await this.$axios.get(
+  //     // 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/' + this.graphEnd
+  //     'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/21MBD11CT001'
+  //   )
+  //   context.commit('setGraph', graph)
+  // },
+
+  async loadGraph ({ commit, graphEnd }) {
+    this.$axios
+      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/21MBD11CT001')
+      .then(r => {
+        console.log(r.data)
+        // console.log(graphEnd)
+      })
   }
-
-  // async counter(context, alarm) {
-  //   let al = alarm
-  //   let dateApi = alarm['alarm'].date
-  //   let typeData = alarm['alarm'].type
-  //   // let dateNew = new Date()
-  //   let moDataApi = moment(dateApi)
-
-  //   let dateCurrent = moment(new Date())
-  //   let ms = moDataApi.diff(dateCurrent)
-  //   let d = moment.duration(ms)
-
-  //   // alarm['alarm'].countTime =
-  //   //   d
-  //   //     .get('minutes')
-  //   //     .toString()
-  //   //     .padStart(2, '0') +
-  //   //   ':' +
-  //   //   d
-  //   //     .get('seconds')
-  //   //     .toString()
-  //   //     .padStart(2, '0')
-
-  //   if (ms > 0) {
-  //     if (typeData == 'PLS') {
-  //       moDataApi.add(7, 'minutes')
-  //     } else {
-  //       moDataApi.add(5, 'minutes')
-  //     }
-  //     //moment.locale('pt-BR')
-
-  //     setInterval(() => {
-  //       let dateCurrent = moment(new Date())
-  //       let ms = moDataApi.diff(dateCurrent)
-  //       let d = moment.duration(ms)
-
-  //       alarm['alarm'].countTime =
-  //         d
-  //           .get('minutes')
-  //           .toString()
-  //           .padStart(2, '0') +
-  //         ':' +
-  //         d
-  //           .get('seconds')
-  //           .toString()
-  //           .padStart(2, '0')
-
-  //       console.log(alarm['alarm'].countTime)
-  //     }, 1000)
-  //   } else {
-  //     alarm['alarm'].countTime = 'Expirou'
-  //   }
-  // }
+}
+export const getters = {
+  teste: state => {
+    return state.loadGraph.filter(todo => todo.time)
+  }
 }

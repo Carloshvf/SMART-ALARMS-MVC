@@ -59,7 +59,7 @@ import main from '~/plugins/main'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['alarm', 'unity', 'graph'],
+  props: ['alarm', 'unity'],
 
   components: {
     Graph,

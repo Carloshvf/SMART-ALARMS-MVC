@@ -11,7 +11,7 @@
         <p class="text-uppercase mb-0">kks:</p>
         <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>
       </div>
-      <b-button v-b-modal="alarm.value">Gráfico</b-button>
+      <b-button v-b-modal="alarm.value" @click="getGraph()">Gráfico</b-button>
       <b-modal size="xl" :id="alarm.value" title="BootstrapVue"> <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ alarm.value }}</p> <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
         <graph ref="chartCurve" :chart-data="chartData" :height="210" :options="chartOptions" />
@@ -43,16 +43,19 @@
 
 <script>
 import Graph from '~/components/Graph.vue'
+import { mapActions, mapGetters } from 'vuex'
+
 
 export default {
-  props: ['alarm', 'grap'],
+  props: ['alarm'],
   components: {
     Graph
   },
   data() {
     return {
+
       chartData: {
-        labels: [ 'January', 'February', 'March', 'April'],
+        labels: [  ],
         datasets: [
           {
             label: 'Day One',
@@ -121,6 +124,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['loadGraph']),
+
     getChartVisible() {
       var refChart = "chartCurve";
       return refChart;
@@ -128,8 +133,23 @@ export default {
 
     reset() {
       this.$resetGraph(this.getChartVisible());
+    },
+
+
+    getGraph() {
+      // this.loadGraph({ graphEnd: this.alarm.value });
+      // this.loadGraph({ graphEnd: "21MBD11CT001" });
+      console.log(this.loadGraph());
     }
     
+  },
+  //  mounted () {
+  //   this.$store.dispatch('loadGraph')
+  // },
+  computed: {
+    teste() {
+
+    }
   }
 }
 </script>

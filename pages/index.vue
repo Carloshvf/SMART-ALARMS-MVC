@@ -9,7 +9,6 @@
             class="box-alarm d-flex align-items-center justify-content-center"
             to="alarm"
           >
-            <!-- :to="{name: 'alarm-id', params: {id: alarm.id}}" -->
             <span class="box-alarm-number">{{ alarm.id }}</span>
           </nuxt-link>
           <!-- /.box-alarm -->
@@ -27,28 +26,19 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions(['loadData', 'loadGraph']),
+    ...mapActions(['loadData']),
     
   },
 
   computed: {
     alarms() {
       return this.$store.state.all
-    },
-    graphs() {
-      return this.$store.state.all
-    }
+    },   
   },
 
   async created() {
-    // this.$store.dispatch('loadData')
-    this.loadData(),
-    this.loadGraph()
-  }
-
-  // async mounted() {
-  //   this.loadData()
-  // }
+    this.loadData()
+  },
 }
 </script>
 
