@@ -131,7 +131,7 @@ export default {
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: "Time"
+                  labelString: "Tempo"
                 }
               }
             ]
@@ -144,6 +144,7 @@ export default {
       var refChart = "chartCurve";
       return refChart;
     },
+    
     reset() {
       this.$resetGraph(this.getChartVisible());
     }

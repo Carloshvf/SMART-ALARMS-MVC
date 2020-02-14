@@ -55,14 +55,14 @@ export default {
     return {
 
       chartData: {
-        labels: [  ],
+        labels: [ 'January', 'February', 'March', ' April' ],
         datasets: [
           {
             label: 'Day One',
             pointBackgroundColor:'#f87979',
             fill: false,
             borderColor: '#f87979',
-            data: [40, 20, 30, 100]
+            data: this.chardDataa,
           },
           {
             label: 'Day Two',
@@ -115,7 +115,7 @@ export default {
                   },
                   scaleLabel: {
                     display: true,
-                    labelString: "Time"
+                    labelString: "Tempo"
                   }
                 }
               ]
@@ -143,12 +143,10 @@ export default {
     }
     
   },
-  //  mounted () {
-  //   this.$store.dispatch('loadGraph')
-  // },
-  computed: {
-    teste() {
 
+  computed: {
+    chardDataa() {
+      return this.loadGraph()
     }
   }
 }

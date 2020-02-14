@@ -34,17 +34,20 @@ export const actions = {
   //   context.commit('setGraph', graph)
   // },
 
-  async loadGraph ({ commit, graphEnd }) {
-    this.$axios
+  async loadGraph ({ context, graphEnd }) {
+    await this.$axios
       .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/21MBD11CT001')
       .then(r => {
-        console.log(r.data)
+        console.log(r.data.graph)
+        
         // console.log(graphEnd)
       })
+    context.commit('setGraph', graph)
+
   }
 }
-export const getters = {
-  teste: state => {
-    return state.loadGraph.filter(todo => todo.time)
-  }
-}
+// export const getters = {
+//   teste: state => {
+//     return state.graph.filter(todo => todo.tempo)
+//   }
+// }
