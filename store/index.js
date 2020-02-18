@@ -2,7 +2,7 @@
 
 export const state = () => ({
   all: [],
-  graph:[]
+  graph: []
 })
 
 export const mutations = {
@@ -24,30 +24,58 @@ export const actions = {
     context.commit('setAll', all)
   },
 
-  // async loadGraph(context, graphEnd) {
-  //   let {
-  //     data: {graph}
-  //   } = await this.$axios.get(
-  //     // 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/' + this.graphEnd
-  //     'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/21MBD11CT001'
-  //   )
-  //   context.commit('setGraph', graph)
-  // },
+  async loadGraph(context, idGraph) {
+    return this.$axios.get(
+      'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/' +
+        idGraph
+    )
+  },
 
-  async loadGraph ({ context, graphEnd }) {
-    await this.$axios
-      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/21MBD11CT001')
-      .then(r => {
-        console.log(r.data.graph)
-        
-        // console.log(graphEnd)
+  treatGraph(context, response) {
+    const responseData = response.data
+
+    var cores = [
+      '#f87979',
+      '#0000FF',
+      '#00FF00',
+      '#000000',
+      '#FF00FF',
+      '#00FFFF',
+      '#C6C6C6',
+      '#FFF000'
+    ]
+
+    var diaAtual = ''
+    var diaAnterior = ''
+    var arrayDias = new Array()
+    var arrayDatasets = new Array()
+
+    for (const key in responseData.graph) {
+      const element = responseData.graph[key]
+      diaAtual = element.tempo.substring(0, 10)
+      if (diaAtual != diaAnterior) {
+        diaAnterior = diaAtual
+        element['dia'] = diaAtual
+        arrayDias.push(diaAtual)
+      }
+    }
+
+    for (const key in arrayDias) {
+      const dia = arrayDias[key]
+
+      arrayDatasets.push({
+        label: dia,
+        pointBackgroundColor: cores[key],
+        fill: false,
+        borderColor: cores[key],
+        // data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor)
+        data: responseData.graph.map(v => v.valor)
       })
-    context.commit('setGraph', graph)
+    }
 
+    return {
+      labels: responseData.graph.map(i => i.tempo),
+      datasets: arrayDatasets
+    }
   }
 }
-// export const getters = {
-//   teste: state => {
-//     return state.graph.filter(todo => todo.tempo)
-//   }
-// }
