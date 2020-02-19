@@ -5,17 +5,17 @@
         <h1 class="mt-5 titles">Cadastro de alarme</h1>
       </div>
     </div>
-    <!-- -->
+    <!-- Mexer nos hover -->
     <div class="form-row mt-4">
       <div class="col">
-        <p class="mt-4 sizing">TIPO DE DESLIGAMENTO</p>
+        <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
         <select class="form-control">
           <option>PLS</option>
           <option>PLST</option>
         </select>
       </div>
       <div class="col-10">
-        <p class="mt-4 sizing">CAUSA</p>
+        <label class="mt-4 sizing">CAUSA</label>
         <input type="text" class="form-control" placeholder="Escreva aqui..." >
       </div>
     </div>
@@ -24,35 +24,36 @@
       <div class="col-sm-6">
         <div class="form-row align-items-end">
           <div class="col-4">
-            <p class="sizing">ENDEREÇO DE MEDIDA</p>
+            <label class="sizing">ENDEREÇO DE MEDIDA</label>
             <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
           </div>
           <div class="col-2">
-            <p class="sizing">UNIDADE</p>
+            <label class="sizing">UNIDADE</label>
             <input type="text" class="form-control" placeholder="ºC" >
           </div>
-          <div class="ml-3">
-            <button class="btn btn-green rounded-circle">+</button>
-          </div>
+          
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-row align-items-end">
           <div class="col-2">
-            <p class="sizing">OPERADORES</p>
+            <label class="sizing">OPERADORES</label>
             <select class="form-control">
               <option>E</option>
               <option>OU</option>
               <option>(</option>
               <option>)</option>
             </select>
+          </div>  
+          <div class="ml-2 mr-2">
+            <button class="btn btn-green rounded-circle">+</button>
           </div>
           <div class="col-4">
-            <p class="sizing">ENDEREÇO DE ALARME</p>
+            <label class="sizing">ENDEREÇO DE ALARME</label>
             <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
           </div>
           <div class="col-2">
-            <p class="sizing">ATIVAÇÃO</p>
+            <label class="sizing">ATIVAÇÃO</label>
             <select class="form-control">
               <option>1</option>
               <option>0</option>
@@ -69,7 +70,7 @@
       <div class="col-sm">
         <div class="form-row mt-4">
           <div class="col">
-            <p class="sizing">LISTA DE ALARMES</p>
+            <label class="mini-title">LISTA DE ALARMES</label>
             <textarea class="form-control push-area" rows="3"></textarea>
             <button class="btn btn-green btn-validar mt-4">Validar</button>
           </div>
@@ -87,23 +88,23 @@
       
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
-            <p class="sizing">ENDEREÇO DO ALARME</p>
+            <label class="sizing">ENDEREÇO DO ALARME</label>
             <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
           </div>
           <div class="col-2">
-            <p class="sizing">ATIVAÇÃO</p>
+            <label class="sizing">ATIVAÇÃO</label>
             <select class="form-control">
               <option>1</option>
               <option>0</option>
             </select>
           </div>
           <div class="col-4">
-            <p class="sizing">ENDEREÇO DE MEDIDA</p>
+            <label class="sizing">ENDEREÇO DE MEDIDA</label>
             <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
           </div>
 
           <div class="col-1">
-            <p class="sizing">UNIDADE</p>
+            <label class="sizing">UNIDADE</label>
             <input type="text" class="form-control" placeholder="ºC" >
           </div>  
           <div class="ml-2">
@@ -111,7 +112,8 @@
           </div>
 
           <div class="col-5 mt-4">
-            <h5 class="address">ENDEREÇO DO ALARME</h5>
+            <!-- Trocar pra <ul> -->
+            <h5 class="address">ENDEREÇO DO ALARME</h5> 
             <p class="alignment mt-3">22LYA00EZ101_XG01</p>
             <hr>
             <p class="alignment mt-3">22LYA00EZ101_XG01</p>
@@ -133,34 +135,44 @@
           </div>
 
           <div class="col-3">
-            <p class="sizing">TIPO</p>
-            <select class="form-control">
+            <label class="sizing">TIPO</label>
+            <select class="form-control" v-model="tipo">
               <option>Medida</option>
               <option>Status</option>
             </select>
+            <!-- Tentar usar um toggle pra mexer no tipo (Quando for medida vira UNIDADE, e quando for status ATIVAÇÃO) -->
           </div>
           <div class="col-9">
-            <p class="sizing">NOME</p>
+            <label class="sizing">NOME</label>
             <input type="text" class="form-control">
           </div>
         </div>
-        <div class="form-row align-items-end mt-2">
-          <div class="col-4 mt-4">
-            <p class="sizing">ENDEREÇO NO SUPERVISÓRIO</p>
+        <div class="form-row align-items-end mt-4">
+          <div class="col-4">
+            <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input type="text" class="form-control">
           </div>
-          <div class="col-2 mt-4">
-            <p class="sizing">PRIORIDADE</p>
+          <div class="col-2">
+            <label class="sizing">PRIORIDADE</label>
             <select class="form-control">
               <option>1</option>
               <option>2</option>
             </select>
           </div>
-          <div class="col-2 mt-4">
-            <p class="sizing">UNIDADE</p>
-            <input type="text" class="form-control" placeholder="ºC" >
+          <div class="col-2">
+            <div v-if="tipo == 'Medida'">
+              <label class="sizing">UNIDADE</label>
+              <input type="text" class="form-control" placeholder="ºC" >
+            </div>
+            <div v-else-if="tipo == 'Status'">
+              <label class="sizing">ATIVAÇÃO</label>
+              <select class="form-control">
+                <option>1</option>
+                <option>0</option>
+              </select>
+            </div>
           </div>
-          <div class="mt-4 ml-4">
+          <div class="ml-4">
             <button class="btn btn-green rounded-circle ">+</button>
           </div>
         </div>
@@ -206,7 +218,16 @@
 
 <script>
 export default {
+  data() {
+    return {
+      tipo: 'Medida',
+    } 
+  },
 
+  methods: {
+    
+  }
+  
 }
 </script>
 
@@ -232,6 +253,11 @@ export default {
 
 .area {
   height: 154.24px;
+}
+
+.mini-title {
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .btn-salvar {
