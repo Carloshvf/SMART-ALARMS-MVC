@@ -38,7 +38,7 @@
         <div class="form-row align-items-end">
           <div class="col-2">
             <label class="sizing">OPERADORES</label>
-            <select class="form-control">
+            <select class="form-control" v-model="operators">
               <option>E</option>
               <option>OU</option>
               <option>(</option>
@@ -46,7 +46,7 @@
             </select>
           </div>  
           <div class="ml-2 mr-2">
-            <button class="btn btn-green rounded-circle">+</button>
+            <button class="btn btn-green rounded-circle" @click="sendArea()">+</button>
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
@@ -54,13 +54,13 @@
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control">
+            <select class="form-control" v-model="activation">
               <option>1</option>
               <option>0</option>
             </select>
           </div>
           <div class="ml-3">
-            <button class="btn btn-green rounded-circle">+</button>
+            <button class="btn btn-green rounded-circle" @click="sendArea()">+</button> 
           </div>
         </div>
       </div>
@@ -112,17 +112,21 @@
           </div>
 
           <div class="col-5 mt-4">
-            <!-- Trocar pra <ul> -->
-            <h5 class="address">ENDEREÇO DO ALARME</h5> 
-            <p class="alignment mt-3">22LYA00EZ101_XG01</p>
-            <hr>
-            <p class="alignment mt-3">22LYA00EZ101_XG01</p>
+            <h5 class="address">ENDEREÇO DO ALARME</h5>
+            <ul class="bullet">
+              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
+              <hr>
+              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
+            </ul> 
+           
           </div>
           <div class="col-5 mt-4">
             <h5 class="address">ENDEREÇO DE MEDIDA</h5>
-            <p class="alignment mt-3">22LYA00EZ101_XG01</p>
-            <hr>
-            <p class="alignment mt-3">22LYA00EZ101_XG01</p>
+            <ul class="bullet">
+              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
+              <hr>
+              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
+            </ul> 
           </div>
           
         </div>
@@ -221,11 +225,16 @@ export default {
   data() {
     return {
       tipo: 'Medida',
+      operators: "E",
+      activation: "1",
+      pushed: [],
     } 
   },
 
   methods: {
-    
+    sendArea() {
+      this.pushed.push({})
+    }
   }
   
 }
@@ -284,6 +293,10 @@ export default {
 .alignment {
   text-align: center;
   font-size: 14px;
+}
+
+.bullet {
+  list-style-type: none;
 }
 
 @media (min-width: 1200px) {
