@@ -79,6 +79,15 @@ ul {
     }
   }
 
+  &-white {
+    padding: $padding;
+    background-color: $gray;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+
   &-content {
     min-height: 320px;
     border-bottom-left-radius: $border-radius;

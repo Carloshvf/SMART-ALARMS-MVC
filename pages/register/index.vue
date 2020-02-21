@@ -46,7 +46,7 @@
             </select>
           </div>  
           <div class="ml-2 mr-2">
-            <button class="btn btn-green rounded-circle" @click="sendArea()">+</button>
+            <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
@@ -60,18 +60,18 @@
             </select>
           </div>
           <div class="ml-3">
-            <button class="btn btn-green rounded-circle" @click="sendArea()">+</button> 
+            <button class="btn btn-green rounded-circle" @click="sendActivation()">+</button> 
           </div>
         </div>
       </div>
     </div>
     <!-- CADASTRO DE ALARMES -->
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm" >
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" rows="3"></textarea>
+            <textarea class="form-control push-area" v-model="pushed"></textarea>
             <button class="btn btn-green btn-validar mt-4">Validar</button>
           </div>
         </div>
@@ -232,9 +232,16 @@ export default {
   },
 
   methods: {
-    sendArea() {
-      this.pushed.push({})
+    sendOperator() {
+      this.pushed.push(this.operators)
+      console.log(this.pushed)
+    },
+//  Ainda n ta funcionando por completo(tem q tirar a virgula entre eles por exemplo, e fazer splice com os endereços)
+    sendActivation() {
+      this.pushed.push(this.activation)
+      console.log(this.pushed)
     }
+
   }
   
 }
