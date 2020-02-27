@@ -31,14 +31,6 @@ ul {
 }
 
 // Default
-// .nuxt-link-active {
-//   background-color: $red !important;
-// }
-
-// #__layout {
-//   padding-top: 5%;
-// }
-
 @keyframes alarm-active {
   from {
     background-color: $red;
@@ -47,6 +39,10 @@ ul {
   to {
     background-color: transparentize($red, 0.1);
   }
+}
+
+body {
+  background-color: #F5F5F5;
 }
 
 .alarmActive {
@@ -80,12 +76,42 @@ ul {
   }
 
   &-white {
-    padding: $padding;
-    background-color: $gray;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    padding: 17px;
+    background-color: $white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+
+    h1,
+    p {
+      color: #02592E;
+    }
+
+    h1 {
+      font-weight: 300;
+    }
+
+    p {
+      font-size: 12px;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+
+    button {
+      font-weight: bold;
+      font-size: 12px;
+      color: #B5B5B5;
+    }
+
+    span {
+      color: #CCCCCC;
+      font-weight: bold;
+      font-size: 12px;
+    }
   }
 
   &-content {

@@ -108,7 +108,7 @@
             <input type="text" class="form-control" placeholder="ºC" >
           </div>  
           <div class="ml-2">
-            <button class="btn btn-green rounded-circle">+</button>
+            <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
 
           <div class="col-5 mt-4">
@@ -118,9 +118,9 @@
               <hr>
               <li class="alignment mt-3">22LYA00EZ101_XG01</li>
             </ul> 
-           
           </div>
-          <div class="col-5 mt-4">
+
+           <div class="col-5 mt-4">
             <h5 class="address">ENDEREÇO DE MEDIDA</h5>
             <ul class="bullet">
               <li class="alignment mt-3">22LYA00EZ101_XG01</li>
@@ -133,7 +133,7 @@
       </div>
       <!-- CANAIS -->
       <div class="col-sm-6">
-        <div class="form-row  mt-5">
+        <div class="form-row mt-5">
           <div class="col-10 mb-3">
             <h4 class="titles">Status e Medidas</h4>
           </div>
@@ -144,18 +144,18 @@
               <option>Medida</option>
               <option>Status</option>
             </select>
-            <!-- Tentar usar um toggle pra mexer no tipo (Quando for medida vira UNIDADE, e quando for status ATIVAÇÃO) -->
+            
           </div>
-          <div class="col-9">
+          <div class="col-5">
             <label class="sizing">NOME</label>
             <input type="text" class="form-control">
           </div>
-        </div>
-        <div class="form-row align-items-end mt-4">
           <div class="col-4">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input type="text" class="form-control">
           </div>
+        </div>
+        <div class="form-row align-items-end mt-4">
           <div class="col-2">
             <label class="sizing">PRIORIDADE</label>
             <select class="form-control">
@@ -193,10 +193,10 @@
       </div>
       <div class="form-row mt-3 justify">
         <div class="col-12">
-          <textarea class="form-control area" placeholder="Escreva aqui..." rows="3"></textarea>
+          <textarea class="form-control area" placeholder="Escreva aqui..." rows="3" v-model="recommendation"></textarea>
         </div>
         <div class="mt-4">
-          <button class="btn btn-green rounded-circle">+</button>
+          <button class="btn btn-green rounded-circle" @click="sendRecommendation()">+</button>
         </div>
       </div>
     </div>
@@ -204,10 +204,8 @@
     <div class="col-sm-6 ">
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
-          <ul>
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-            <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>
+          <ul v-for="item in recom" :key="item.id">
+            <li>{{ item }}</li>
           </ul>
         </div>
       <div class="mt-5">
@@ -227,7 +225,12 @@ export default {
       tipo: 'Medida',
       operators: "E",
       activation: "1",
+      recommendation: "",
+      info: "",
       pushed: [],
+      recom: [],
+      end: [],
+      
     } 
   },
 
@@ -240,8 +243,17 @@ export default {
     sendActivation() {
       this.pushed.push(this.activation)
       console.log(this.pushed)
-    }
+    },
 
+    sendRecommendation() {
+      this.recom.push(this.recommendation)
+      console.log(this.recom)
+    },
+
+    sendEnderecos() {
+      this.end.push(this.info)
+      console.log(this.end)
+    }
   }
   
 }
@@ -284,7 +296,7 @@ export default {
 .push-area {
   height: 163px;
   resize: none;
-  background-color: #F7F7F7;
+  background-color: rgb(255, 255, 255);
 }
 
 .sizing {
