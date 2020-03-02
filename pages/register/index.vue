@@ -25,11 +25,11 @@
         <div class="form-row align-items-end">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input type="text" class="form-control" v-model="textMedida">
           </div>
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
-            <input type="text" class="form-control" placeholder="ºC" >
+            <input type="text" class="form-control" >
           </div>
           
         </div>
@@ -50,11 +50,11 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input type="text" class="form-control" v-model="textAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control" v-model="activation">
+            <select class="form-control" v-model="activation1">
               <option>1</option>
               <option>0</option>
             </select>
@@ -71,8 +71,9 @@
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" v-model="pushed"></textarea>
-            <button class="btn btn-green btn-validar mt-4">Validar</button>
+            <textarea class="form-control push-area" v-model="separador" disabled></textarea>
+            <button class="btn btn-green btn-validar mt-4" @click="validate()">Validar</button>
+            <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
         </div>
       </div>
@@ -89,7 +90,7 @@
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DO ALARME</label>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input type="text" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
@@ -100,34 +101,42 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input type="text" class="form-control" v-model="infoMedida" >
           </div>
 
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
-            <input type="text" class="form-control" placeholder="ºC" >
+            <input type="text" class="form-control" >
           </div>  
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
 
-          <div class="col-5 mt-4">
-            <h5 class="address">ENDEREÇO DO ALARME</h5>
-            <ul class="bullet">
-              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
-              <hr>
-              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
-            </ul> 
-          </div>
+          
+            <div class="col-12 mt-4">
+              <!-- <h5 class="address">ENDEREÇO DO ALARME</h5>
+              <h5 class="address">ENDEREÇO DE MEDIDA</h5>
+              <ul class="bullet">
+                <li class="alignment border-line mt-3" v-for="item in endAlarme" :key="item.id">{{ item }}</li>
+                <hr>
+              </ul>  -->
 
-           <div class="col-5 mt-4">
-            <h5 class="address">ENDEREÇO DE MEDIDA</h5>
-            <ul class="bullet">
-              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
-              <hr>
-              <li class="alignment mt-3">22LYA00EZ101_XG01</li>
-            </ul> 
-          </div>
+              <table class="table">
+                <thead>
+                  <tr class="address border-line">
+                    <th scope="col">ENDEREÇO DO ALARME</th>
+                    <th scope="col">ENDEREÇO DE MEDIDA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in end" :key="item.id">
+                    <td class="border-line">{{ item.alarme }}</td>
+                    <td class="border-line"> {{ item.medida }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
           
         </div>
       </div>
@@ -140,7 +149,7 @@
 
           <div class="col-3">
             <label class="sizing">TIPO</label>
-            <select class="form-control" v-model="tipo">
+            <select class="form-control" v-model="types">
               <option>Medida</option>
               <option>Status</option>
             </select>
@@ -148,37 +157,62 @@
           </div>
           <div class="col-5">
             <label class="sizing">NOME</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-model="name">
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-model="infoSuper">
           </div>
         </div>
         <div class="form-row align-items-end mt-4">
           <div class="col-2">
             <label class="sizing">PRIORIDADE</label>
-            <select class="form-control">
+            <select class="form-control" v-model="priority">
               <option>1</option>
               <option>2</option>
             </select>
           </div>
           <div class="col-2">
-            <div v-if="tipo == 'Medida'">
+            <div v-if="types == 'Medida'">
               <label class="sizing">UNIDADE</label>
-              <input type="text" class="form-control" placeholder="ºC" >
+              <input type="text" class="form-control" v-model="unit">
             </div>
-            <div v-else-if="tipo == 'Status'">
+            <div v-else-if="types == 'Status'">
               <label class="sizing">ATIVAÇÃO</label>
-              <select class="form-control">
+              <select class="form-control" v-model="activation3">
                 <option>1</option>
                 <option>0</option>
               </select>
             </div>
           </div>
           <div class="ml-4">
-            <button class="btn btn-green rounded-circle ">+</button>
+            <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
+          
+          <div class="col-12 mt-3">
+            <table class="table">
+              <thead>
+                <tr class="address border-line">
+                  <th scope="col">TIPO</th>
+                  <th scope="col">NOME</th>
+                  <th scope="col">ENDEREÇO</th>
+                  <th scope="col">PRIORIDADE</th>
+                  <th scope="col">UNIDADE/ATIVAÇÃO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="value in measures" :key="value.id">
+                  <td class="border-line">{{ value.tipo }}</td>
+                  <td class="border-line">{{ value.nome }}</td>
+                  <td class="border-line">{{ value.endereço }}</td>
+                  <td class="border-line">{{ value.prioridade }}</td>
+                  <td class="border-line" v-if="types == 'Medida'">{{ value.unidade }}</td>
+                  <td class="border-line" v-else-if="types == 'Status'">{{ value.ativação }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
         </div>
       </div>
     </div>
@@ -202,10 +236,10 @@
     </div>
 
     <div class="col-sm-6 ">
-        <div class="col-12 mt-5">
+        <div class="col-12 scroll mt-5">
           <h5 class="titles">Lista de recomendações</h5>
-          <ul v-for="item in recom" :key="item.id">
-            <li>{{ item }}</li>
+          <ul>
+            <li v-for="item in recom" :key="item.id">{{ item }}</li>
           </ul>
         </div>
       <div class="mt-5">
@@ -222,14 +256,25 @@
 export default {
   data() {
     return {
-      tipo: 'Medida',
+      types: 'Medida',
       operators: "E",
-      activation: "1",
+      textMedida: "",
+      textAlarme:"",
+      activation1: "1",
+      activation2: "1",
+      activation3: "1",
+      unit: "",
       recommendation: "",
-      info: "",
+      infoAlarme: "",
+      infoMedida: "",
+      infoSuper: "",
+      name: "",
+      priority: "1",
+      separador: [],
       pushed: [],
       recom: [],
       end: [],
+      measures: [],
       
     } 
   },
@@ -237,11 +282,13 @@ export default {
   methods: {
     sendOperator() {
       this.pushed.push(this.operators)
+      this.separador = this.pushed.join(' ')
       console.log(this.pushed)
     },
-//  Ainda n ta funcionando por completo(tem q tirar a virgula entre eles por exemplo, e fazer splice com os endereços)
+//  Teve q usar o join() pra poder botar um separador entre os elementos da string( o join() junta todos os elementos de uma array em uma string e retorna esta string.)
     sendActivation() {
-      this.pushed.push(this.activation)
+      this.pushed.push(this.textAlarme, "-", this.activation1)
+      this.separador = this.pushed.join(' ')
       console.log(this.pushed)
     },
 
@@ -251,8 +298,22 @@ export default {
     },
 
     sendEnderecos() {
-      this.end.push(this.info)
-      console.log(this.end)
+      this.end.push({ alarme: this.infoAlarme, medida: this.infoMedida })
+
+    },
+
+    sendMeasures() {
+      this.measures.push({ tipo: this.types, nome: this.name, endereço: this.infoSuper, prioridade:this.priority, unidade: this.unit, ativação: this.activation3 }) 
+      console.log(this.measures)
+    },
+
+    cleanArea() {
+      this.separador = ""
+      this.pushed.splice(0)
+    },
+
+    validate() {
+     
     }
   }
   
@@ -268,6 +329,17 @@ export default {
     font-size: 34px;
   }
 
+}
+
+.border-line {
+  border-bottom: solid rgba(209, 216, 245, 0.6);;
+  padding: 15px;
+  text-align: center;
+}
+
+.scroll {
+  overflow: auto;
+  max-height: 180px;
 }
 
 .justify {
@@ -306,7 +378,6 @@ export default {
 .address {
   font-size: 14px;
   font-weight: bold;
-  text-align: center;
 }
 
 .alignment {
