@@ -16,7 +16,7 @@
       </div>
       <div class="col-10">
         <p class="mt-4 sizing">CAUSA</p>
-        <input type="text" class="form-control" placeholder="Escreva aqui..." >
+        <input type="text" class="form-control" placeholder="Escreva aqui..." />
       </div>
     </div>
 
@@ -25,11 +25,15 @@
         <div class="form-row align-items-end">
           <div class="col-4">
             <p class="sizing">ENDEREÇO DE MEDIDA</p>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="22LYA00EZ101_XG01"
+            />
           </div>
           <div class="col-2">
             <p class="sizing">UNIDADE</p>
-            <input type="text" class="form-control" placeholder="ºC" >
+            <input type="text" class="form-control" placeholder="ºC" />
           </div>
           <div class="ml-3">
             <button class="btn btn-green rounded-circle">+</button>
@@ -47,9 +51,16 @@
               <option>)</option>
             </select>
           </div>
+          <div class="ml-2 mr-3">
+            <button class="btn btn-green rounded-circle">+</button>
+          </div>
           <div class="col-4">
             <p class="sizing">ENDEREÇO DE ALARME</p>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="22LYA00EZ101_XG01"
+            />
           </div>
           <div class="col-2">
             <p class="sizing">ATIVAÇÃO</p>
@@ -84,11 +95,15 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-      
+
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
             <p class="sizing">ENDEREÇO DO ALARME</p>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="22LYA00EZ101_XG01"
+            />
           </div>
           <div class="col-2">
             <p class="sizing">ATIVAÇÃO</p>
@@ -99,13 +114,17 @@
           </div>
           <div class="col-4">
             <p class="sizing">ENDEREÇO DE MEDIDA</p>
-            <input type="text" class="form-control" placeholder="22LYA00EZ101_XG01" >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="22LYA00EZ101_XG01"
+            />
           </div>
 
           <div class="col-1">
             <p class="sizing">UNIDADE</p>
-            <input type="text" class="form-control" placeholder="ºC" >
-          </div>  
+            <input type="text" class="form-control" placeholder="ºC" />
+          </div>
           <div class="ml-2">
             <button class="btn btn-green rounded-circle">+</button>
           </div>
@@ -113,16 +132,15 @@
           <div class="col-5 mt-4">
             <h5 class="address">ENDEREÇO DO ALARME</h5>
             <p class="alignment mt-3">22LYA00EZ101_XG01</p>
-            <hr>
+            <hr />
             <p class="alignment mt-3">22LYA00EZ101_XG01</p>
           </div>
           <div class="col-5 mt-4">
             <h5 class="address">ENDEREÇO DE MEDIDA</h5>
             <p class="alignment mt-3">22LYA00EZ101_XG01</p>
-            <hr>
+            <hr />
             <p class="alignment mt-3">22LYA00EZ101_XG01</p>
           </div>
-          
         </div>
       </div>
       <!-- CANAIS -->
@@ -141,13 +159,13 @@
           </div>
           <div class="col-9">
             <p class="sizing">NOME</p>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" />
           </div>
         </div>
         <div class="form-row align-items-end mt-2">
           <div class="col-4 mt-4">
             <p class="sizing">ENDEREÇO NO SUPERVISÓRIO</p>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" />
           </div>
           <div class="col-2 mt-4">
             <p class="sizing">PRIORIDADE</p>
@@ -158,7 +176,7 @@
           </div>
           <div class="col-2 mt-4">
             <p class="sizing">UNIDADE</p>
-            <input type="text" class="form-control" placeholder="ºC" >
+            <input type="text" class="form-control" placeholder="ºC" />
           </div>
           <div class="mt-4 ml-4">
             <button class="btn btn-green rounded-circle ">+</button>
@@ -167,47 +185,57 @@
       </div>
     </div>
 
-  <!-- STATUS E MEDIDAS -->
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-row mt-5">
-        <div class="col-3">
-          <h4 class="titles">Recomendações</h4>
+    <!-- STATUS E MEDIDAS -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-row mt-5">
+          <div class="col-3">
+            <h4 class="titles">Recomendações</h4>
+          </div>
+        </div>
+        <div class="form-row mt-3 justify">
+          <div class="col-12">
+            <textarea
+              class="form-control area"
+              placeholder="Escreva aqui..."
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="mt-4">
+            <button class="btn btn-green rounded-circle">+</button>
+          </div>
         </div>
       </div>
-      <div class="form-row mt-3 justify">
-        <div class="col-12">
-          <textarea class="form-control area" placeholder="Escreva aqui..." rows="3"></textarea>
-        </div>
-        <div class="mt-4">
-          <button class="btn btn-green rounded-circle">+</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-sm-6 ">
+      <div class="col-sm-6 ">
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul>
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-            <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>
+            <li>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </li>
+            <li>
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </li>
+            <li>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur.
+            </li>
           </ul>
         </div>
-      <div class="mt-5">
-        <button class="btn btn-green btn-salvar">Salvar</button>
+        <div class="mt-5">
+          <button class="btn btn-green btn-salvar">Salvar</button>
+        </div>
       </div>
+      <!-- RECOMENDAÇÕES -->
     </div>
-    <!-- RECOMENDAÇÕES -->
-  </div>
-
   </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
@@ -218,7 +246,6 @@ export default {
   h1 {
     font-size: 34px;
   }
-
 }
 
 .justify {
@@ -242,7 +269,7 @@ export default {
 .push-area {
   height: 163px;
   resize: none;
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .sizing {
@@ -261,9 +288,8 @@ export default {
 }
 
 @media (min-width: 1200px) {
-    .container{
-        max-width: 1300px;
-    }
+  .container {
+    max-width: 1300px;
+  }
 }
-
 </style>
