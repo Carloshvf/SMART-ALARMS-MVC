@@ -48,6 +48,9 @@
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
+          <div class="ml-2 mr-3">
+            <button class="btn btn-green rounded-circle">+</button>
+          </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
             <input type="text" class="form-control" v-model="textAlarme">
@@ -86,7 +89,7 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-      
+
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DO ALARME</label>
@@ -226,7 +229,6 @@
           <button class="btn btn-green rounded-circle" @click="sendRecommendation()">+</button>
         </div>
       </div>
-    </div>
 
     <div class="col-sm-6 ">
         <div class="col-12 scroll mt-5">
@@ -238,10 +240,8 @@
       <div class="mt-5">
         <button class="btn btn-green btn-salvar" @click="saveData()">Salvar</button>
       </div>
+      <!-- RECOMENDAÇÕES -->
     </div>
-    <!-- RECOMENDAÇÕES -->
-  </div>
-
   </div>
 </template>
 
@@ -337,7 +337,6 @@ export default {
   h1 {
     font-size: 34px;
   }
-
 }
 
 .border-line {
@@ -399,9 +398,8 @@ export default {
 }
 
 @media (min-width: 1200px) {
-    .container{
-        max-width: 1300px;
-    }
+  .container {
+    max-width: 1300px;
+  }
 }
-
 </style>

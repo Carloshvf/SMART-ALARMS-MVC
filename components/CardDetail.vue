@@ -21,9 +21,15 @@
         <!-- /.card-detail-content-txt -->
         <b-button v-b-modal="alarm.value">Gráfico</b-button>
 
-        <b-modal size="xl" :id="alarm.value" title="BootstrapVue">
-          <p class="my-4">Endereço: {{ alarm.value }}</p>
-          <graph ref="chartCurve" :chart-data="chartData" :height="210" :options="chartOptions" />
+        <b-modal size="xl" :id="alarm.value" title="BootstrapVuee">
+          <p class="my-4">Endereço: {{ alarm.value }} Medida: C</p>
+          <p class="ml-auto">Medida: C</p>
+          <graph
+            ref="chartCurve"
+            :chart-data="chartData"
+            :height="210"
+            :options="chartOptions"
+          />
           <b-button v-on:click="reset()">Reset zoom</b-button>
           <!--  -->
         </b-modal>
@@ -75,80 +81,80 @@ export default {
         datasets: [
           {
             label: 'Day One',
-            pointBackgroundColor:'#f87979',
+            pointBackgroundColor: '#f87979',
             fill: false,
             borderColor: '#f87979',
             data: [40, 20, 30]
           },
           {
             label: 'Day Two',
-            pointBackgroundColor:'#e6e600',
+            pointBackgroundColor: '#e6e600',
             fill: false,
             borderColor: '#e6e600',
             data: [100, 50, 70]
-          }, 
-           {
+          },
+          {
             label: 'Day Three',
-            pointBackgroundColor:'#0066ff',
+            pointBackgroundColor: '#0066ff',
             fill: false,
             borderColor: '#0066ff',
             data: [80, 60, 30]
           }
         ]
       },
-       chartOptions: {
-          pan: {
-              enabled: true,
-              mode: "x"
-            },
-          zoom: {
-            drag: true,
-            enabled: true,
-            mode: "xy",
-            speed: 0.7
-          },
-          scales: {
-            yAxes: [
-              {
-                gridLines: {
-                  display: true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: "Valor"
-                }
+      chartOptions: {
+        pan: {
+          enabled: true,
+          mode: 'x'
+        },
+        zoom: {
+          drag: true,
+          enabled: true,
+          mode: 'xy',
+          speed: 0.7
+        },
+        scales: {
+          yAxes: [
+            {
+              gridLines: {
+                display: true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Valor'
               }
-            ],
-            xAxes: [
-              {
-                gridLines: {
-                  display: true
-                },
-                ticks: {
-                  // max: 20
-                  // min: 0,
-                  stepSize: 4.5
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: "Tempo"
-                }
+            }
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                display: true
+              },
+              ticks: {
+                // max: 20
+                // min: 0,
+                stepSize: 4.5
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Tempo'
               }
-            ]
-          }
+            }
+          ]
+        }
       }
     }
   },
   methods: {
     getChartVisible() {
-      var refChart = "chartCurve";
-      return refChart;
+      var refChart = 'chartCurve'
+      return refChart
     },
-    
+
     reset() {
-      this.$resetGraph(this.getChartVisible());
+      this.$resetGraph(this.getChartVisible())
     }
-  },
+  }
 }
 
 // created() {
