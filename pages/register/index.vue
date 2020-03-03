@@ -9,14 +9,14 @@
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
-        <select class="form-control">
+        <select class="form-control" v-model="offType">
           <option>PLS</option>
           <option>PLST</option>
         </select>
       </div>
       <div class="col-10">
         <label class="mt-4 sizing">CAUSA</label>
-        <input type="text" class="form-control" placeholder="Escreva aqui..." >
+        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="reason" >
       </div>
     </div>
 
@@ -29,7 +29,7 @@
           </div>
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
-            <input type="text" class="form-control" >
+            <input type="text" class="form-control" v-model="unit1" >
           </div>
           
         </div>
@@ -94,7 +94,7 @@
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control">
+            <select class="form-control" v-model="activation2">
               <option>1</option>
               <option>0</option>
             </select>
@@ -106,21 +106,14 @@
 
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
-            <input type="text" class="form-control" >
+            <input type="text" class="form-control" v-model="unit2">
           </div>  
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
 
           
-            <div class="col-12 mt-4">
-              <!-- <h5 class="address">ENDEREÇO DO ALARME</h5>
-              <h5 class="address">ENDEREÇO DE MEDIDA</h5>
-              <ul class="bullet">
-                <li class="alignment border-line mt-3" v-for="item in endAlarme" :key="item.id">{{ item }}</li>
-                <hr>
-              </ul>  -->
-
+            <div class="col-12 mt-4 scroll">
               <table class="table">
                 <thead>
                   <tr class="address border-line">
@@ -175,7 +168,7 @@
           <div class="col-2">
             <div v-if="types == 'Medida'">
               <label class="sizing">UNIDADE</label>
-              <input type="text" class="form-control" v-model="unit">
+              <input type="text" class="form-control" v-model="unit3">
             </div>
             <div v-else-if="types == 'Status'">
               <label class="sizing">ATIVAÇÃO</label>
@@ -189,7 +182,7 @@
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
           
-          <div class="col-12 mt-3">
+          <div class="col-12 mt-3 scroll">
             <table class="table">
               <thead>
                 <tr class="address border-line">
@@ -204,10 +197,10 @@
                 <tr v-for="value in measures" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
-                  <td class="border-line">{{ value.endereço }}</td>
+                  <td class="border-line">{{ value.endereco }}</td>
                   <td class="border-line">{{ value.prioridade }}</td>
                   <td class="border-line" v-if="types == 'Medida'">{{ value.unidade }}</td>
-                  <td class="border-line" v-else-if="types == 'Status'">{{ value.ativação }}</td>
+                  <td class="border-line" v-else-if="types == 'Status'">{{ value.ativacao }}</td>
                 </tr>
               </tbody>
             </table>
@@ -243,7 +236,7 @@
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar">Salvar</button>
+        <button class="btn btn-green btn-salvar" @click="saveData()">Salvar</button>
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
@@ -253,17 +246,23 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
       types: 'Medida',
+      offType: "PLS",
+      reason: "",
       operators: "E",
       textMedida: "",
       textAlarme:"",
       activation1: "1",
       activation2: "1",
       activation3: "1",
-      unit: "",
+      unit1: "",
+      unit2: "",
+      unit3: "",
       recommendation: "",
       infoAlarme: "",
       infoMedida: "",
@@ -275,20 +274,24 @@ export default {
       recom: [],
       end: [],
       measures: [],
-      
+      allData: [],
     } 
   },
 
   methods: {
+    ...mapActions(['sendAlarms']),
+
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
+      this.separador = this.separador.replace(" - ", "-")
       console.log(this.pushed)
     },
 //  Teve q usar o join() pra poder botar um separador entre os elementos da string( o join() junta todos os elementos de uma array em uma string e retorna esta string.)
     sendActivation() {
       this.pushed.push(this.textAlarme, "-", this.activation1)
       this.separador = this.pushed.join(' ')
+      this.separador = this.separador.replace(" - ", "-")
       console.log(this.pushed)
     },
 
@@ -303,7 +306,7 @@ export default {
     },
 
     sendMeasures() {
-      this.measures.push({ tipo: this.types, nome: this.name, endereço: this.infoSuper, prioridade:this.priority, unidade: this.unit, ativação: this.activation3 }) 
+      this.measures.push({ tipo: this.types, nome: this.name, endereco: this.infoSuper, prioridade:this.priority, unidade: this.unit3, ativacao: this.activation3 }) 
       console.log(this.measures)
     },
 
@@ -314,6 +317,12 @@ export default {
 
     validate() {
      
+    },
+
+    saveData() {
+      this.allData.push({  })
+      this.sendAlarms()
+      
     }
   }
   
@@ -332,7 +341,7 @@ export default {
 }
 
 .border-line {
-  border-bottom: solid rgba(209, 216, 245, 0.6);;
+  border-bottom: solid rgba(209, 216, 245, 0.6);
   padding: 15px;
   text-align: center;
 }

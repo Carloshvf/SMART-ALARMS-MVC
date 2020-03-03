@@ -43,8 +43,20 @@ export const actions = {
         // console.log(graphEnd)
       })
     context.commit('setGraph', graph)
+  },
 
+  async sendAlarms ({ context }) {
+    await this.$axios
+      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/', {})
+      .then(r => {
+        console.log(r.data)  
+      })
+      .catch(e => {
+      
+      })
+      
   }
+
 }
 // export const getters = {
 //   teste: state => {
