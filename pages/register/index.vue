@@ -119,12 +119,17 @@
                   <tr class="address border-line">
                     <th scope="col">ENDEREÇO DO ALARME</th>
                     <th scope="col">ENDEREÇO DE MEDIDA</th>
+                    <th scope="col">AÇÕES</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in end" :key="item.id">
                     <td class="border-line">{{ item.alarme }}</td>
                     <td class="border-line"> {{ item.medida }}</td>
+                    <td class="border-line">
+                      <button class="btn" @click="cleanCanais()">Excluir</button>
+                      <button class="btn">Editar</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -315,13 +320,28 @@ export default {
       this.pushed.splice(0)
     },
 
+    cleanCanais() {
+      this.end.splice(0)
+    },
+
     validate() {
      
     },
 
     saveData() {
-      this.allData.push({  })
-      this.sendAlarms()
+      this.allData.push({ 
+        tipo_desligamento: this.offType,
+        causa: this.reason,
+        endereco_medida: this.textMedida,
+        unidade: this.unit1,
+        logica: this.separador,
+        ends_alarme: [{end_alarme: this.textAlarme, ativacao: this.activation1}],
+        canais: [{end_alarme: this.infoAlarme, ativacao: this.activation2, end_medida: this.infoMedida, unidade: this.unit2}],
+        status_medidas: [{tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade: this.priority, unidade: this.unit3}],
+        recomendacoes: [{item: this.recommendation}]
+       })
+       console.log(this.allData)
+      // this.sendAlarms()
       
     }
   }
@@ -399,9 +419,9 @@ export default {
 }
 
 @media (min-width: 1200px) {
-    .container{
-        max-width: 1300px;
-    }
+  .container{
+      max-width: 1300px;
+  }
 }
 
 </style>
