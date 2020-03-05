@@ -10,45 +10,45 @@ env:
       slackChannel: "CR288CXPW"
       clusterName: "spassu-td-access-container-spot"
       ecsType: "FARGATE"
-      phases: 
-        install: 
-          runtime-versions: 
-             python: 3.8
-          commands:
-            - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer build da aplicação
-            - python --version
-            - pip --version
-            - pip install --upgrade awscli
-            - pip install pylint
-            - pip install pytest==5.3.5
-            - pip install pytest-cov==2.8.1
-            - pip install python-dotenv
-            - aws --version
-            - ecs-cli --version
-            - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//')
-            - cat /proc/version
-            - uname -a
-            - cat /etc/issue
-            - cd $CODEBUILD_SRC_DIR
-            - mkdir .arquitetura-td-build
-            - cd .arquitetura-td-build
-            - chmod 775 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/
-            - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_6.zip . --quiet
-            - unzip -q cicd_3_1_6.zip
-            - chmod 777 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/
-            - export PATH=$PATH:$CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/bin/
+  phases: 
+    install: 
+      runtime-versions: 
+         python: 3.8
+      commands:
+        - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer build da aplicação
+        - python --version
+        - pip --version
+        - pip install --upgrade awscli
+        - pip install pylint
+        - pip install pytest==5.3.5
+        - pip install pytest-cov==2.8.1
+        - pip install python-dotenv
+        - aws --version
+        - ecs-cli --version
+        - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//')
+        - cat /proc/version
+        - uname -a
+        - cat /etc/issue
+        - cd $CODEBUILD_SRC_DIR
+        - mkdir .arquitetura-td-build
+        - cd .arquitetura-td-build
+        - chmod 775 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/
+        - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_6.zip . --quiet
+        - unzip -q cicd_3_1_6.zip
+        - chmod 777 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/
+        - export PATH=$PATH:$CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/bin/
   pre_build: 
    commands: 
       - echo 2º Passo - Realizar o build da aplicação ${projectName} 
       - cd $CODEBUILD_SRC_DIR 
       - npm install 
       - npm run build 
- build: 
+  build: 
    commands: 
      - echo 3º Passo - Realizar o build da aplicação cicd e executar o script para fazer o deploy da aplicação 
      - cd $CODEBUILD_SRC_DIR/.arquitetura-td-build/ 
      - npm install  
      - node index 
- post_build: 
+  post_build: 
    commands: 
      - echo 4º Passo - Realizar o teste de interface com sellenium 
