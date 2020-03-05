@@ -37,7 +37,7 @@ env:
             - unzip -q cicd_3_1_6.zip
             - chmod 777 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/
             - export PATH=$PATH:$CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/bin/
-        pre_build: 
+  pre_build: 
    commands: 
       - echo 2º Passo - Realizar o build da aplicação ${projectName} 
       - cd $CODEBUILD_SRC_DIR 
