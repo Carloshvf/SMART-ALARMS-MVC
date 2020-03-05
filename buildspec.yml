@@ -14,6 +14,7 @@ phases:
       nodejs: 10 
    commands: 
      - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer build da aplicação 
+     - echo ${projectPort}
      - aws --version 
      - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//') 
      - cd $CODEBUILD_SRC_DIR 
