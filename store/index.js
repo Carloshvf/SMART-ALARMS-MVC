@@ -31,16 +31,11 @@ export const actions = {
     )
   },
 
-  async sendAlarms ({ context }) {
+  async sendAlarms ( context, { info }) {
     await this.$axios
-      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/', {})
-      .then(r => {
-          console.log(r.data)  
-      })
-      .catch(e => {
-      
-      })
- 
+      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastro', info)
+      console.log(info)
+    
   },
 
   treatGraph(context, response) {

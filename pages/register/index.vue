@@ -119,7 +119,6 @@
                   <tr class="address border-line">
                     <th scope="col">ENDEREÇO DO ALARME</th>
                     <th scope="col">ENDEREÇO DE MEDIDA</th>
-                    <th scope="col">AÇÕES</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -127,8 +126,8 @@
                     <td class="border-line">{{ item.alarme }}</td>
                     <td class="border-line"> {{ item.medida }}</td>
                     <td class="border-line">
-                      <button class="btn" @click="cleanCanais()">Excluir</button>
-                      <button class="btn">Editar</button>
+                      <delete-outline @click="cleanCanais()"/>
+                      
                     </td>
                   </tr>
                 </tbody>
@@ -234,10 +233,10 @@
     </div>
 
     <div class="col-sm-6 ">
-        <div class="col-12 scroll mt-5">
+        <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
-          <ul>
-            <li v-for="item in recom" :key="item.id">{{ item }}</li>
+          <ul class="scroll">
+            <li v-for="item in recom" :key="item.id">{{ item.recomendacao }}</li>
           </ul>
         </div>
       <div class="mt-5">
@@ -252,11 +251,20 @@
 
 <script>
 import { mapActions } from 'vuex'
+import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';  
+import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 
 export default {
+
+  components: {
+    DeleteOutline,
+    PencilOutline
+  },
+  
   data() {
     return {
       types: 'Medida',
+      logic: "",
       offType: "PLS",
       reason: "",
       operators: "E",
@@ -290,6 +298,7 @@ export default {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(" - ", "-")
+      this.logic = this.separador
       console.log(this.pushed)
     },
 //  Teve q usar o join() pra poder botar um separador entre os elementos da string( o join() junta todos os elementos de uma array em uma string e retorna esta string.)
@@ -297,17 +306,18 @@ export default {
       this.pushed.push(this.textAlarme, "-", this.activation1)
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(" - ", "-")
+      this.logic = this.separador
       console.log(this.pushed)
     },
 
     sendRecommendation() {
-      this.recom.push(this.recommendation)
+      this.recom.push({recomendacao: this.recommendation})
       console.log(this.recom)
     },
 
     sendEnderecos() {
       this.end.push({ alarme: this.infoAlarme, medida: this.infoMedida })
-
+      console.log(this.end)
     },
 
     sendMeasures() {
@@ -320,28 +330,28 @@ export default {
       this.pushed.splice(0)
     },
 
-    cleanCanais() {
-      this.end.splice(0)
+    cleanCanais(index) {
+      this.end.splice(index, 1)
     },
 
     validate() {
      
     },
 
-    saveData() {
+   async saveData() {
+     this.allData.splice(0)
       this.allData.push({ 
         tipo_desligamento: this.offType,
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
-        logica: this.separador,
+        logica: this.logic,
         ends_alarme: [{end_alarme: this.textAlarme, ativacao: this.activation1}],
         canais: [{end_alarme: this.infoAlarme, ativacao: this.activation2, end_medida: this.infoMedida, unidade: this.unit2}],
-        status_medidas: [{tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade: this.priority, unidade: this.unit3}],
+        status_medidas: [{tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade: this.priority, unidade: this.unit3, valor_operacao: this.activation3}],
         recomendacoes: [{item: this.recommendation}]
        })
-       console.log(this.allData)
-      // this.sendAlarms()
+      this.sendAlarms({info: this.allData})
       
     }
   }
@@ -367,8 +377,10 @@ export default {
 }
 
 .scroll {
-  overflow: auto;
   max-height: 180px;
+  overflow-y: scroll;
+  padding-left: 15px;
+
 }
 
 .justify {
