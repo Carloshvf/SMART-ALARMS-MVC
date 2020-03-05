@@ -7,14 +7,15 @@ env:
       projectSrcFolder: "" 
       sonarToken: "845b26a70322ac8c88e6fbad79143010983072d1" 
       sonarUrl: "https://sonarqube.transformacaodigitalspassu.com.br" 
-      slackChannel: "CR288CXPW" 
+      slackChannel: "CR288CXPW"
+      clusterName: "spassu-td-access-container-spot"
+      ecsType: "FARGATE"
 phases: 
  install: 
    runtime-versions: 
       nodejs: 10 
    commands: 
      - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer build da aplicação 
-     - echo ${projectPort}
      - aws --version 
      - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//') 
      - cd $CODEBUILD_SRC_DIR 
@@ -24,10 +25,12 @@ phases:
      - apt-get update 
      - cd $CODEBUILD_SRC_DIR 
      - mkdir .arquitetura-td-build 
-     - cd .arquitetura-td-build 
-     - chmod 775 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/ 
-     - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_1.zip . --quiet 
-     - unzip -q cicd_3_1_1.zip 
+     - cd .arquitetura-td-build
+     - chmod 775 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/
+     - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_6.zip . --quiet
+     - unzip -q cicd_3_1_6.zip
+     - chmod 777 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/
+     - export PATH=$PATH:$CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/bin/
  pre_build: 
    commands: 
       - echo 2º Passo - Realizar o build da aplicação ${projectName} 
