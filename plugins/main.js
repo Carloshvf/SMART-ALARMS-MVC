@@ -1,0 +1,11 @@
+import Vue from 'vue'
+
+Vue.use(require('vue-moment'))
+
+
+Vue.prototype.$resetGraph = function(refChart) {
+    this.$refs[refChart]._data._chart.resetZoom();
+  };
+// export const moment = () => ({
+//   moment.locale('pt-BR');
+// })

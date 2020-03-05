@@ -1,16 +1,28 @@
-FROM node:10
+FROM node:12.14-alpine
 
-# copy project files and folders to the current working directory (i.e. 'app' folder) 
-COPY  --chown=daemon . /app   
+# create destination directory
+RUN mkdir -p /usr/src/nuxt-app
+WORKDIR /usr/src/nuxt-app
 
-WORKDIR /app
+ARG PORT
 
-ARG PORT 
-ENV PORT=$PORT 
+# update and install dependency
+RUN apk update && apk upgrade
+RUN apk add git
 
-RUN npm install -g @angular/cli
-RUN npm install --save-dev @angular-devkit/build-angular
+# copy the app, note .dockerignore
+COPY --chown=daemon . /usr/src/nuxt-app/
+RUN npm install
 
+RUN npm run build
+
+# set app serving to permissive / assigned
+ENV NUXT_HOST=0.0.0.0
+# set app port
+ENV NUXT_PORT=${PORT}
+
+# expose 5000 on container
 EXPOSE ${PORT}
 
-CMD ng serve --host 0.0.0.0 --port ${PORT} --disableHostCheck true
+# start the app
+CMD [ "npm", "start" ]
