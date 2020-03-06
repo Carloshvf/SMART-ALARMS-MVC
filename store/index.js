@@ -31,6 +31,21 @@ export const actions = {
     )
   },
 
+  async sendAlarms ( context, { info }) {
+    await this.$axios
+      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastro', info)
+      console.log(info)
+  },
+
+  async sendLogic ( context, { valid }) {
+    await this.$axios
+      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
+      console.log(valid)
+
+      .catch(err)
+        alert(err);
+  },
+  
   treatGraph(context, response) {
     const responseData = response.data
 
@@ -79,4 +94,5 @@ export const actions = {
       datasets: arrayDatasets
     }
   }
+
 }
