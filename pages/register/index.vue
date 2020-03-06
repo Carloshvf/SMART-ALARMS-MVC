@@ -123,11 +123,10 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in end" :key="item.id">
-                    <td class="border-line">{{ item.alarme }}</td>
-                    <td class="border-line"> {{ item.medida }}</td>
+                    <td class="border-line">{{ item.end_alarme }}</td>
+                    <td class="border-line"> {{ item.end_medida }}</td>
                     <td class="border-line">
                       <delete-outline @click="cleanCanais()"/>
-                      
                     </td>
                   </tr>
                 </tbody>
@@ -201,10 +200,10 @@
                 <tr v-for="value in measures" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
-                  <td class="border-line">{{ value.endereco }}</td>
+                  <td class="border-line">{{ value.end_supervisorio }}</td>
                   <td class="border-line">{{ value.prioridade }}</td>
                   <td class="border-line" v-if="types == 'Medida'">{{ value.unidade }}</td>
-                  <td class="border-line" v-else-if="types == 'Status'">{{ value.ativacao }}</td>
+                  <td class="border-line" v-else-if="types == 'Status'">{{ value.valor_operacao }}</td>
                 </tr>
               </tbody>
             </table>
@@ -236,7 +235,7 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="item in recom" :key="item.id">{{ item.recomendacao }}</li>
+            <li v-for="lista in recom" :key="lista.id">{{ lista.item }}</li>
           </ul>
         </div>
       <div class="mt-5">
@@ -252,13 +251,11 @@
 <script>
 import { mapActions } from 'vuex'
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';  
-import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 
 export default {
 
   components: {
     DeleteOutline,
-    PencilOutline
   },
   
   data() {
@@ -270,9 +267,9 @@ export default {
       operators: "E",
       textMedida: "",
       textAlarme:"",
-      activation1: "1",
-      activation2: "1",
-      activation3: "1",
+      activation1: "",
+      activation2: "",
+      activation3: "",
       unit1: "",
       unit2: "",
       unit3: "",
@@ -282,6 +279,7 @@ export default {
       infoSuper: "",
       name: "",
       priority: "1",
+      endAtivacao: [],
       separador: [],
       pushed: [],
       recom: [],
@@ -292,14 +290,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(['sendAlarms']),
+    ...mapActions(['sendAlarms', 'sendLogic']),
 
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(" - ", "-")
       this.logic = this.separador
-      console.log(this.pushed)
+      
     },
 //  Teve q usar o join() pra poder botar um separador entre os elementos da string( o join() junta todos os elementos de uma array em uma string e retorna esta string.)
     sendActivation() {
@@ -307,22 +305,23 @@ export default {
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(" - ", "-")
       this.logic = this.separador
-      console.log(this.pushed)
+      
     },
 
     sendRecommendation() {
-      this.recom.push({recomendacao: this.recommendation})
-      console.log(this.recom)
+      this.recom.push({item: this.recommendation})
+      
     },
 
     sendEnderecos() {
-      this.end.push({ alarme: this.infoAlarme, medida: this.infoMedida })
-      console.log(this.end)
+      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      
     },
 
     sendMeasures() {
-      this.measures.push({ tipo: this.types, nome: this.name, endereco: this.infoSuper, prioridade:this.priority, unidade: this.unit3, ativacao: this.activation3 }) 
-      console.log(this.measures)
+      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      
+      
     },
 
     cleanArea() {
@@ -330,28 +329,41 @@ export default {
       this.pushed.splice(0)
     },
 
+// Ainda n ta apagando da fileira correta ta apagando sempre começando pela primeira
     cleanCanais(index) {
       this.end.splice(index, 1)
     },
 
     validate() {
-     
+     if (this.pushed[this.pushed.length - 1] == 'E' || this.pushed[this.pushed.length - 1] == 'OU') {
+       alert("Por favor termine a logica de modo valido")
+     } 
+     else if(this.pushed.includes('(') == true && this.pushed.includes(')') == false ) {
+       alert("Feche o parenteses da logica")
+     }
+     else {
+       alert("Sem erros")
+     }
+     this.sendLogic({valid: this.logic})
+
     },
 
    async saveData() {
      this.allData.splice(0)
+     this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
+     
       this.allData.push({ 
         tipo_desligamento: this.offType,
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
         logica: this.logic,
-        ends_alarme: [{end_alarme: this.textAlarme, ativacao: this.activation1}],
-        canais: [{end_alarme: this.infoAlarme, ativacao: this.activation2, end_medida: this.infoMedida, unidade: this.unit2}],
-        status_medidas: [{tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade: this.priority, unidade: this.unit3, valor_operacao: this.activation3}],
-        recomendacoes: [{item: this.recommendation}]
+        ends_alarme: this.endAtivacao,
+        canais: this.end,
+        status_medidas: this.measures,
+        recomendacoes: this.recom
        })
-      this.sendAlarms({info: this.allData})
+      this.sendAlarms({info: this.allData[0]})
       
     }
   }
@@ -378,7 +390,8 @@ export default {
 
 .scroll {
   max-height: 180px;
-  overflow-y: scroll;
+  overflow:auto;
+  overflow-x: hidden;
   padding-left: 15px;
 
 }
