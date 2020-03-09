@@ -42,8 +42,6 @@ export const actions = {
       .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
       console.log(valid)
 
-      .catch(err)
-        alert(err);
   },
   
   treatGraph(context, response) {

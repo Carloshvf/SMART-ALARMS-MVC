@@ -295,7 +295,7 @@ export default {
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(" - ", "-")
+      this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
       
     },
@@ -303,7 +303,7 @@ export default {
     sendActivation() {
       this.pushed.push(this.textAlarme, "-", this.activation1)
       this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(" - ", "-")
+      this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
       
     },
@@ -321,8 +321,11 @@ export default {
     sendMeasures() {
       this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
       
-      
     },
+
+    teste(pushed, value) {
+      return this.pushed.filter((v) => (v === value)).length;
+    },  
 
     cleanArea() {
       this.separador = ""
@@ -335,14 +338,14 @@ export default {
     },
 
     validate() {
-     if (this.pushed[this.pushed.length - 1] == 'E' || this.pushed[this.pushed.length - 1] == 'OU') {
-       alert("Por favor termine a logica de modo valido")
+     if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+       alert("A lógica não esta válida")
      } 
-     else if(this.pushed.includes('(') == true && this.pushed.includes(')') == false ) {
-       alert("Feche o parenteses da logica")
+     else if(this.teste(this.pushed, '(') != this.teste(this.pushed, ')')) {
+       alert("Feche o parenteses da lógica")
      }
      else {
-       alert("Sem erros")
+       alert("A expressão esta correta")
      }
      this.sendLogic({valid: this.logic})
 
@@ -364,6 +367,7 @@ export default {
         recomendacoes: this.recom
        })
       this.sendAlarms({info: this.allData[0]})
+      alert("Salvo com sucesso")
       
     }
   }
@@ -390,7 +394,7 @@ export default {
 
 .scroll {
   max-height: 180px;
-  overflow:auto;
+  overflow: auto;
   overflow-x: hidden;
   padding-left: 15px;
 
@@ -446,6 +450,7 @@ export default {
 @media (min-width: 1200px) {
   .container{
       max-width: 1300px;
+      margin-bottom: 30px;
   }
 }
 
