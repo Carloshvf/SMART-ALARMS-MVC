@@ -502,6 +502,10 @@ export default {
   font-size: 14px;
 }
 
+.bullet {
+  list-style-type: none;
+}
+
 @media (min-width: 1200px) {
   .container{
       max-width: 1300px;

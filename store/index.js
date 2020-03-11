@@ -62,13 +62,15 @@ export const actions = {
     var diaAnterior = ''
     var arrayDias = new Array()
     var arrayDatasets = new Array()
+    var tempos = [...new Set(responseData.graph.map(i => i.tempo.split(' ')[1]))];
 
     for (const key in responseData.graph) {
       const element = responseData.graph[key]
       diaAtual = element.tempo.substring(0, 10)
+      element['dia'] = diaAtual
       if (diaAtual != diaAnterior) {
         diaAnterior = diaAtual
-        element['dia'] = diaAtual
+        
         arrayDias.push(diaAtual)
       }
     }
@@ -81,13 +83,12 @@ export const actions = {
         pointBackgroundColor: cores[key],
         fill: false,
         borderColor: cores[key],
-        // data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor)
-        data: responseData.graph.map(v => v.valor)
+        data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor)
       })
     }
 
     return {
-      labels: responseData.graph.map(i => i.tempo),
+      labels: tempos,
       datasets: arrayDatasets
     }
   }

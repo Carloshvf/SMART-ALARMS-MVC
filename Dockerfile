@@ -1,25 +1,28 @@
-FROM node:10
+FROM node:12.14-alpine
 
-# install simple http server for serving static content
-RUN npm install -g http-server
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY  --chown=daemon . /app  
-
-WORKDIR /app/
+# create destination directory
+RUN mkdir -p /usr/src/nuxt-app
+WORKDIR /usr/src/nuxt-app
 
 ARG PORT
-ENV PORT=$PORT
 
-# install project dependencies
+# update and install dependency
+RUN apk update && apk upgrade
+RUN apk add git
+
+# copy the app, note .dockerignore
+COPY --chown=daemon . /usr/src/nuxt-app/
 RUN npm install
 
-# build app for production with minification
 RUN npm run build
 
-# Make port 80 available to the world outside this container
+# set app serving to permissive / assigned
+ENV NUXT_HOST=0.0.0.0
+# set app port
+ENV NUXT_PORT=${PORT}
+
+# expose 5000 on container
 EXPOSE ${PORT}
 
-USER daemon
-
-CMD ng serve --host 0.0.0.0 --port ${PORT} --disableHostCheck true
+# start the app
+CMD [ "npm", "start" ]
