@@ -40,7 +40,10 @@ export const actions = {
   async sendLogic ( context, { valid }) {
     await this.$axios
       .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
-      
+      .then( response =>{ response.statusText})
+        console.log(response);
+      // .then(function (response) {
+      // })
 
   },
   
