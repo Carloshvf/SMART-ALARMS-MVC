@@ -227,8 +227,8 @@
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
                   <td class="border-line">{{ value.prioridade }}</td>
-                  <td class="border-line" v-if="types == 'Medida'">{{ value.unidade }}</td>
-                  <td class="border-line" v-else-if="types == 'Status'">{{ value.valor_operacao }}</td>
+                  <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
+                  <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
                   <td class="border-line">
                       <delete-outline @click="cleanStatus(index)"/>
                   </td>
@@ -290,6 +290,7 @@ export default {
   data() {
     return {
       types: 'Medida',
+      backendCheck: this.$store.state.validating,  
       local: "UG 11",
       logic: "",
       offType: "PLS",
@@ -297,8 +298,8 @@ export default {
       operators: "E",
       textMedida: "",
       textAlarme:"",
-      activation1: "",
-      activation2: "",
+      activation1: "1",
+      activation2: "1",
       activation3: "",
       unit1: "",
       unit2: "",
@@ -329,7 +330,7 @@ export default {
       this.logic = this.separador
       
     },
-//  Teve q usar o join() pra poder botar um separador entre os elementos da string( o join() junta todos os elementos de uma array em uma string e retorna esta string.)
+
     sendActivation() {
       if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true &&
         isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
@@ -338,6 +339,7 @@ export default {
       } 
       else if(isNaN(this.textMedida.charAt(0)) == false && isNaN(this.textMedida.charAt(1)) == false &&
         isNaN(this.textAlarme.charAt(0)) == false && isNaN(this.textAlarme.charAt(1)) == false) {
+
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
         this.pushed.push(this.textAlarme, "-", this.activation1)
@@ -364,6 +366,8 @@ export default {
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
       this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.unit3 = ""
+      this.activation3 = ""
       
     },
 
@@ -376,7 +380,7 @@ export default {
       this.pushed.splice(0)
     },
 
-// Ainda n ta apagando da fileira correta ta apagando sempre começando pela primeira
+
     cleanCanais(index) {
       this.end.splice(index, 1)
     },
@@ -385,20 +389,24 @@ export default {
       this.measures.splice(index, 1)
     },
 
-    validate() {
-     if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
-       alert("A lógica não esta válida")
-     } 
-     else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
-       alert("Feche o parenteses da lógica")
-     } 
-     else if(this.pushed.length == false) {
-       alert("Por favor preencha todos os campos")
-     }
-     else {
-       alert("A expressão esta correta")
-     }
-     this.sendLogic({valid: this.logic})
+    async validate() {
+      // await fez o metodo esperar receber resposta de q a função tinha acabado antes de continuar pro resto do codigo do validate(),
+      // await só pode ser usado quando a função é async
+      await this.sendLogic({valid: this.logic})
+
+      if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+        alert("A lógica não esta válida")
+      } 
+      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+        alert("Feche o parenteses da lógica")
+      } 
+    
+      else if(this.pushed.length == false) {
+        alert("Por favor preencha todos os campos")
+      }
+      else if(this.$store.state.validating == "expressão correta") {
+        alert("A expressão esta correta")
+      }
 
     },
 

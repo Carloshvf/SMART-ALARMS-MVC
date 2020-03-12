@@ -2,7 +2,8 @@
 
 export const state = () => ({
   all: [],
-  graph: []
+  graph: [],
+  validating: ""
 })
 
 export const mutations = {
@@ -11,7 +12,11 @@ export const mutations = {
   },
   setGraph(state, graph) {
     state.graph = graph
+  },
+  setLogic(state, validating) {
+    state.validating = validating
   }
+
 }
 
 export const actions = {
@@ -40,10 +45,10 @@ export const actions = {
   async sendLogic ( context, { valid }) {
     await this.$axios
       .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
-      .then( response =>{ response.statusText})
-        console.log(response);
-      // .then(function (response) {
-      // })
+      .then(response => {this.validating = response.data.ok})
+     
+      context.commit('setLogic', this.validating)
+      
 
   },
   
