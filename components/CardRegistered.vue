@@ -6,13 +6,9 @@
                 <p>TEMPERATURA ELEVADA ROLAMENTO DO ESTATOR GERADOR</p>
                 <hr>
                 <div class="align options">
-                    <button class="btn mr-5">Excluir <delete class="options"></delete>
-                    </button>
+                    <button class="btn mr-5">Excluir <delete class="options"></delete></button>
                     
-                    <nuxt-link to="/register" class="btn options ml-5">
-                    Editar
-                    
-                    </nuxt-link>
+                    <nuxt-link to="/register" class="btn options ml-5">Editar</nuxt-link>
                 </div>
             </div>
         </div>

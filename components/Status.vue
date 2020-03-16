@@ -8,7 +8,8 @@
       <div class="row">
         <div v-for="equip in alarm" :key="equip.id" class="col-12 col-sm-6">
           <div class="card-equip">
-            <h6 class="mb-3 text-uppercase p-2 bg-green" :class="{ bg: equip.bg }">{{ equip.kks }}</h6>
+            <h6 class="mb-3 text-uppercase p-2 bg-light-purple" v-if="equip.tipo == 'medida'">{{ equip.kks }}</h6>
+            <h6 class="mb-3 text-uppercase p-2" v-if="equip.tipo == 'status'" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">{{ equip.kks }}</h6>
             <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
               <small class="text-uppercase">causa</small>
               <p>{{ equip.cause }}</p>
@@ -30,7 +31,11 @@
 
 <script>
 export default {
-  props: ['alarm']
+  props: ['alarm'],
+
+  
+
+  
 }
 </script>
 
@@ -39,6 +44,14 @@ export default {
 
 .dNone {
   display: none;
+}
+
+.red {
+  background-color: $dark-red;
+}
+
+.green {
+  background-color: $green;
 }
 
 .card-equip {

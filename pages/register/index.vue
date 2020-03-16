@@ -290,7 +290,7 @@ export default {
   data() {
     return {
       types: 'Medida',
-      backendCheck: this.$store.state.validating,  
+      backendCheck: "",  
       local: "UG 11",
       logic: "",
       offType: "PLS",
@@ -332,14 +332,12 @@ export default {
     },
 
     sendActivation() {
-      if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true &&
+      if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
         isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
           
         alert("Os endereços precisam possuir dois numeros como os primeiros caracteres")
       } 
-      else if(isNaN(this.textMedida.charAt(0)) == false && isNaN(this.textMedida.charAt(1)) == false &&
-        isNaN(this.textAlarme.charAt(0)) == false && isNaN(this.textAlarme.charAt(1)) == false) {
-
+      else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
         this.pushed.push(this.textAlarme, "-", this.activation1)
@@ -393,6 +391,7 @@ export default {
       // await fez o metodo esperar receber resposta de q a função tinha acabado antes de continuar pro resto do codigo do validate(),
       // await só pode ser usado quando a função é async
       await this.sendLogic({valid: this.logic})
+      this.backendCheck = this.$store.state.validating
 
       if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
         alert("A lógica não esta válida")
@@ -404,7 +403,7 @@ export default {
       else if(this.pushed.length == false) {
         alert("Por favor preencha todos os campos")
       }
-      else if(this.$store.state.validating == "expressão correta") {
+      else if(this.backendCheck == "expressão correta") {
         alert("A expressão esta correta")
       }
 
