@@ -21,8 +21,10 @@ ENV NUXT_HOST=0.0.0.0
 # set app port
 ENV NUXT_PORT=${PORT}
 
-# expose 5000 on container
+# expose port container
 EXPOSE ${PORT}
+
+USER daemon
 
 # start the app
 CMD [ "npm", "start" ]
