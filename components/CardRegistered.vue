@@ -1,12 +1,12 @@
 <template>
         <div class="card mt-4">
             <div class="card-white">
-                <h1>PLST TG 31</h1>
+                <h1>{{ alarm.name }}</h1>
                 <span>Causa</span>
-                <p>TEMPERATURA ELEVADA ROLAMENTO DO ESTATOR GERADOR</p>
+                <p>{{ alarm.causa }}</p>
                 <hr>
                 <div class="align options">
-                    <button class="btn mr-5">Excluir <delete class="options"></delete></button>
+                    <button class="btn mr-5" @click="deletion()">Excluir <delete class="options"></delete></button>
                     
                     <nuxt-link to="/register" class="btn options ml-5">Editar</nuxt-link>
                 </div>
@@ -19,10 +19,17 @@ import Delete from 'vue-material-design-icons/Delete.vue';
 
 
 export default {
+    props: ['alarm'],
 
     components: {
         Delete,
         
+    },
+
+    methods: {
+        deletion() {
+            
+        }
     }
 
 }

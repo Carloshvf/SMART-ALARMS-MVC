@@ -4,6 +4,8 @@ export const state = () => ({
   all: [],
   graph: [],
   validating: "",
+  cardAlarm: [],
+  deleteAlarm: [],
 })
 
 export const mutations = {
@@ -16,7 +18,12 @@ export const mutations = {
   setLogic(state, validating) {
     state.validating = validating
   },
- 
+  setCard(state, cardAlarm) {
+    state.cardAlarm = cardAlarm
+  },
+  deleteCard(state, deleteAlarm) {
+    state.deleteAlarm = deleteAlarm
+  }
 
 }
 
@@ -29,8 +36,7 @@ export const actions = {
     )
 
     context.commit('setAll', all)
-    
-    
+  
   },
 
   async loadGraph(context, idGraph) {
@@ -43,7 +49,7 @@ export const actions = {
   async sendAlarms ( context, { info }) {
     await this.$axios
       .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastro', info)
-      console.log(info)
+      
   },
 
   async sendLogic ( context, { valid }) {
@@ -53,7 +59,22 @@ export const actions = {
       
       context.commit('setLogic', this.validating)
       
+  },
 
+  async loadRegistered(context, alarm) {
+    await this.$axios
+      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastrado/' + alarm.local + '/' + alarm.name)
+      .then(response => {this.cardAlarm = response})
+
+      context.commit('setCard', this.cardAlarm.data.all)
+    
+  },
+
+  async deleteRegistered(context, del) {
+    await this.$axios
+      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastrado/alarme/excluir/')
+      .then(response => {this.deleteAlarm = response})
+    
   },
   
   treatGraph(context, response) {
