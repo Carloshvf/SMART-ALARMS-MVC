@@ -2,7 +2,10 @@
 
 export const state = () => ({
   all: [],
-  graph: []
+  graph: [],
+  validating: "",
+  cardAlarm: [],
+  deleteAlarm: [],
 })
 
 export const mutations = {
@@ -11,7 +14,17 @@ export const mutations = {
   },
   setGraph(state, graph) {
     state.graph = graph
+  },
+  setLogic(state, validating) {
+    state.validating = validating
+  },
+  setCard(state, cardAlarm) {
+    state.cardAlarm = cardAlarm
+  },
+  deleteCard(state, deleteAlarm) {
+    state.deleteAlarm = deleteAlarm
   }
+
 }
 
 export const actions = {
@@ -21,7 +34,9 @@ export const actions = {
     } = await this.$axios.get(
       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarmes-ativos'
     )
+
     context.commit('setAll', all)
+  
   },
 
   async loadGraph(context, idGraph) {
@@ -34,16 +49,35 @@ export const actions = {
   async sendAlarms ( context, { info }) {
     await this.$axios
       .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastro', info)
-      console.log(info)
+      
   },
 
   async sendLogic ( context, { valid }) {
     await this.$axios
       .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
-      console.log(valid)
+      .then(response => {this.validating = response.data.ok})
+      
+      context.commit('setLogic', this.validating)
+      
+  },
 
-      .catch(err)
-        alert(err);
+  async loadRegistered(context, alarm) {
+    await this.$axios
+      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastrado/' + alarm.local + '/' + alarm.name)
+      .then(response => {this.cardAlarm = response})
+
+      context.commit('setCard', this.cardAlarm.data.all)
+    
+  },
+
+  async deleteRegistered(context, del) {
+    await this.$axios
+      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/excluir/' + del.causa + '/' + del.local)
+      .then(response => {this.deleteAlarm = response})
+      console.log(this.deleteAlarm)
+
+      context.commit('deleteCard', this.deleteAlarm.data.message)
+    
   },
   
   treatGraph(context, response) {

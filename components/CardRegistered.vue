@@ -1,20 +1,55 @@
 <template>
         <div class="card mt-4">
             <div class="card-white">
-                <h1>PLST TG 31</h1>
+                <h1>{{ alarm.name }}</h1>
                 <span>Causa</span>
-                <p>TEMPERATURA ELEVADA ROLAMENTO DO ESTATOR GERADOR</p>
+                <p>{{ alarm.causa }}</p>
                 <hr>
-                <div class="align">
-                    <button class="btn mr-5">Excluir</button>
-                    <button class="btn ml-5">Editar</button>
+                <div class="align options">
+                    <button class="btn mr-5" @click="deletion()">Excluir <delete class="options"></delete></button>
+                    
+                    <nuxt-link to="/register" class="btn options ml-5">Editar</nuxt-link>
                 </div>
             </div>
         </div>
 </template>
 
 <script>
+import Delete from 'vue-material-design-icons/Delete.vue';
+import { mapActions } from 'vuex'
+
 export default {
+    props: ['alarm', 'unit'],
+
+    data() {
+        return {
+        deletionAlarms: [],
+        delMessage: "",
+        }
+
+    },
+
+    components: {
+        Delete,
+    },
+
+    methods: {
+        ...mapActions(['deleteRegistered']),
+        // Ta praticamente feito mas tem q perguntar pra Belle se mensagem de resposta deveri ser positiva
+        async deletion() {
+            this.deletionAlarms.splice(0)
+            this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa})
+            await this.deleteRegistered(this.deletionAlarms[0])
+            this.delMessage = this.$store.state.deleteAlarm
+            console.log(this.delMessage)
+            if (this.delMessage == "deletado com sucesso") {
+                alert("Deletado com sucesso")
+            } else {
+                alert("Não foi possivel deletar")
+            }
+            
+        }
+    }
 
 }
 
@@ -30,5 +65,16 @@ button:hover {
 
 .align {
     text-align: center;
+}
+
+.options {
+    font-weight: bold;
+    font-size: 12px;
+    color: #B5B5B5;
+}
+
+.options:hover {
+    color: #008542;
+    transition: $transition;
 }
 </style>

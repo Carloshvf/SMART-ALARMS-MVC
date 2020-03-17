@@ -27,7 +27,8 @@
       <!-- As classes são do Bootstrap -->
       <ul class="detail-channel-input">
         <li class="detail-channel-input-item" v-for="value in alarm.channels" :key="value.item">
-          <input class type="checkbox" :id="value.item" />
+          <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
+          <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
           <label class="mb-3" :for="value.item">{{ value.item }}</label>
           <b-button v-b-modal="alarm.value" @click="getGraph(value.item)">Gráfico</b-button>
           <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->

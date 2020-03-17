@@ -5,6 +5,26 @@
         <h1 class="mt-5 titles">Cadastro de alarme</h1>
       </div>
     </div>
+
+    <div class="form-row mt-4">
+      <div class="col-2">
+        <label class="mt-4 sizing">LOCAL</label>
+        <select class="form-control" v-model="local">
+          <option>UG 11</option>
+          <option>UG 12</option>
+          <option>UG 18</option>
+          <option>UG 21</option>
+          <option>UG 22</option>
+          <option>UG 28</option>
+          <option>UG 31</option>
+          <option>UG 32</option>
+          <option>UG 38</option>
+          <option>CAV1</option>
+          <option>CAV2</option>
+          <option>CAV13</option>
+        </select>
+      </div>
+    </div>
     <!-- Mexer nos hover -->
     <div class="form-row mt-4">
       <div class="col">
@@ -12,6 +32,7 @@
         <select class="form-control" v-model="offType">
           <option>PLS</option>
           <option>PLST</option>
+          <option>TRIP</option>
         </select>
       </div>
       <div class="col-10">
@@ -25,11 +46,11 @@
         <div class="form-row align-items-end">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input type="text" class="form-control" v-model="textMedida">
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
-            <input type="text" class="form-control" v-model="unit1" >
+            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
           </div>
           
         </div>
@@ -50,7 +71,7 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
-            <input type="text" class="form-control" v-model="textAlarme">
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
@@ -90,7 +111,7 @@
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DO ALARME</label>
-            <input type="text" class="form-control" v-model="infoAlarme">
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
@@ -101,12 +122,12 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input type="text" class="form-control" v-model="infoMedida" >
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
           </div>
 
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
-            <input type="text" class="form-control" v-model="unit2">
+            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
           </div>  
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
@@ -118,15 +139,19 @@
                 <thead>
                   <tr class="address border-line">
                     <th scope="col">ENDEREÇO DO ALARME</th>
+                    <th scope="col">ATIVAÇÃO</th>
                     <th scope="col">ENDEREÇO DE MEDIDA</th>
+                    <th scope="col">UNIDADE</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in end" :key="item.id">
+                  <tr v-for="(item, index) in end" :key="item.id">
                     <td class="border-line">{{ item.end_alarme }}</td>
+                    <td class="border-line">{{ item.ativacao }}</td>
                     <td class="border-line"> {{ item.end_medida }}</td>
+                    <td class="border-line">{{ item.unidade }}</td>
                     <td class="border-line">
-                      <delete-outline @click="cleanCanais()"/>
+                      <delete-outline @click="cleanCanais(index)"/>
                     </td>
                   </tr>
                 </tbody>
@@ -157,7 +182,7 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
-            <input type="text" class="form-control" v-model="infoSuper">
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
           </div>
         </div>
         <div class="form-row align-items-end mt-4">
@@ -171,7 +196,7 @@
           <div class="col-2">
             <div v-if="types == 'Medida'">
               <label class="sizing">UNIDADE</label>
-              <input type="text" class="form-control" v-model="unit3">
+              <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3">
             </div>
             <div v-else-if="types == 'Status'">
               <label class="sizing">ATIVAÇÃO</label>
@@ -197,13 +222,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="value in measures" :key="value.id">
+                <tr v-for="(value, index) in measures" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
                   <td class="border-line">{{ value.prioridade }}</td>
-                  <td class="border-line" v-if="types == 'Medida'">{{ value.unidade }}</td>
-                  <td class="border-line" v-else-if="types == 'Status'">{{ value.valor_operacao }}</td>
+                  <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
+                  <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
+                  <td class="border-line">
+                      <delete-outline @click="cleanStatus(index)"/>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -240,6 +268,7 @@
         </div>
       <div class="mt-5">
         <button class="btn btn-green btn-salvar" @click="saveData()">Salvar</button>
+        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cadastrados</nuxt-link>
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
@@ -261,14 +290,16 @@ export default {
   data() {
     return {
       types: 'Medida',
+      backendCheck: "",  
+      local: "UG 11",
       logic: "",
       offType: "PLS",
       reason: "",
       operators: "E",
       textMedida: "",
       textAlarme:"",
-      activation1: "",
-      activation2: "",
+      activation1: "1",
+      activation2: "1",
       activation3: "",
       unit1: "",
       unit2: "",
@@ -295,16 +326,26 @@ export default {
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(" - ", "-")
+      this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
       
     },
-//  Teve q usar o join() pra poder botar um separador entre os elementos da string( o join() junta todos os elementos de uma array em uma string e retorna esta string.)
+
     sendActivation() {
-      this.pushed.push(this.textAlarme, "-", this.activation1)
-      this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(" - ", "-")
-      this.logic = this.separador
+      if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
+        isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
+          
+        alert("Os endereços precisam possuir dois numeros como os primeiros caracteres")
+      } 
+      else  {
+        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
+        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+        this.pushed.push(this.textAlarme, "-", this.activation1)
+        this.separador = this.pushed.join(' ')
+        this.separador = this.separador.replace(/\s-\s/g, "-")
+        this.logic = this.separador
+        
+      }
       
     },
 
@@ -314,37 +355,57 @@ export default {
     },
 
     sendEnderecos() {
+      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
+      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
       this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
       
     },
 
     sendMeasures() {
+      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
       this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
-      
+      this.unit3 = ""
+      this.activation3 = ""
       
     },
+
+    validation(pushed, value) {
+      return this.pushed.filter((v) => (v === value)).length;
+    },  
 
     cleanArea() {
       this.separador = ""
       this.pushed.splice(0)
     },
 
-// Ainda n ta apagando da fileira correta ta apagando sempre começando pela primeira
+
     cleanCanais(index) {
       this.end.splice(index, 1)
     },
 
-    validate() {
-     if (this.pushed[this.pushed.length - 1] == 'E' || this.pushed[this.pushed.length - 1] == 'OU') {
-       alert("Por favor termine a logica de modo valido")
-     } 
-     else if(this.pushed.includes('(') == true && this.pushed.includes(')') == false ) {
-       alert("Feche o parenteses da logica")
-     }
-     else {
-       alert("Sem erros")
-     }
-     this.sendLogic({valid: this.logic})
+    cleanStatus(index) {
+      this.measures.splice(index, 1)
+    },
+
+    async validate() {
+      // await fez o metodo esperar receber resposta de q a função tinha acabado antes de continuar pro resto do codigo do validate(),
+      // await só pode ser usado quando a função é async
+      await this.sendLogic({valid: this.logic})
+      this.backendCheck = this.$store.state.validating
+
+      if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+        alert("A lógica não esta válida")
+      } 
+      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+        alert("Feche o parenteses da lógica")
+      } 
+    
+      else if(this.pushed.length == false) {
+        alert("Por favor preencha todos os campos")
+      }
+      else if(this.backendCheck == "expressão correta") {
+        alert("A expressão esta correta")
+      }
 
     },
 
@@ -354,6 +415,7 @@ export default {
      
       this.allData.push({ 
         tipo_desligamento: this.offType,
+        local: this.local,
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
@@ -364,6 +426,11 @@ export default {
         recomendacoes: this.recom
        })
       this.sendAlarms({info: this.allData[0]})
+      alert("Salvo com sucesso")
+      setTimeout(() => {
+        // window.location.reload()
+      }, 3000);
+      
       
     }
   }
@@ -390,7 +457,7 @@ export default {
 
 .scroll {
   max-height: 180px;
-  overflow:auto;
+  overflow: auto;
   overflow-x: hidden;
   padding-left: 15px;
 
@@ -416,6 +483,12 @@ export default {
 
 .btn-salvar {
   width: 105px;
+  float: right;
+}
+
+.btn-cadastrados {
+  color: #ffffff;
+  background-color: $dark-purple;
   float: right;
 }
 
@@ -446,6 +519,7 @@ export default {
 @media (min-width: 1200px) {
   .container{
       max-width: 1300px;
+      margin-bottom: 30px;
   }
 }
 
