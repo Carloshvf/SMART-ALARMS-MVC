@@ -75,6 +75,8 @@ export const actions = {
       .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/excluir/' + del.causa + '/' + del.local)
       .then(response => {this.deleteAlarm = response})
       console.log(this.deleteAlarm)
+
+      context.commit('deleteCard', this.deleteAlarm.data.message)
     
   },
   

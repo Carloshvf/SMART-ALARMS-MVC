@@ -24,6 +24,7 @@ export default {
     data() {
         return {
         deletionAlarms: [],
+        delMessage: "",
         }
 
     },
@@ -35,11 +36,18 @@ export default {
     methods: {
         ...mapActions(['deleteRegistered']),
         // Ta praticamente feito mas tem q perguntar pra Belle se mensagem de resposta deveri ser positiva
-        deletion() {
+        async deletion() {
             this.deletionAlarms.splice(0)
             this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa})
-            this.deleteRegistered(this.deletionAlarms[0])
-            alert("Deletado com sucesso")
+            await this.deleteRegistered(this.deletionAlarms[0])
+            this.delMessage = this.$store.state.deleteAlarm
+            console.log(this.delMessage)
+            if (this.delMessage == "deletado com sucesso") {
+                alert("Deletado com sucesso")
+            } else {
+                alert("Não foi possivel deletar")
+            }
+            
         }
     }
 

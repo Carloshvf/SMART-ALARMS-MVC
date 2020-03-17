@@ -61,7 +61,7 @@ export default {
 
     data() {
         return {
-        ug: "Todos",
+        ug: "UG 11",
         type: "Todos",
         registeredAlarms: []
             
