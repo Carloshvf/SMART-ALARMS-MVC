@@ -35,7 +35,7 @@
 
         <div class="row" >
             <div class="col-sm-4" v-for="item in alarms" :key="item.id">
-                <card-registered :alarm="item"/>
+                <card-registered :alarm="item" :unit="unidade_geral"/>
             </div>
         </div>
 
@@ -61,8 +61,8 @@ export default {
 
     data() {
         return {
-        ug: "UG 12",
-        type: "PLS",
+        ug: "Todos",
+        type: "Todos",
         registeredAlarms: []
             
         }
@@ -73,6 +73,9 @@ export default {
         alarms() {
             return this.$store.state.cardAlarm
         },
+        unidade_geral() {
+            return this.ug
+        }
     },
 
     methods: {

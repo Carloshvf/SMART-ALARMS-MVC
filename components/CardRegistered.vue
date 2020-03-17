@@ -16,19 +16,30 @@
 
 <script>
 import Delete from 'vue-material-design-icons/Delete.vue';
-
+import { mapActions } from 'vuex'
 
 export default {
-    props: ['alarm'],
+    props: ['alarm', 'unit'],
+
+    data() {
+        return {
+        deletionAlarms: [],
+        }
+
+    },
 
     components: {
         Delete,
-        
     },
 
     methods: {
+        ...mapActions(['deleteRegistered']),
+        // Ta praticamente feito mas tem q perguntar pra Belle se mensagem de resposta deveri ser positiva
         deletion() {
-            
+            this.deletionAlarms.splice(0)
+            this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa})
+            this.deleteRegistered(this.deletionAlarms[0])
+            alert("Deletado com sucesso")
         }
     }
 

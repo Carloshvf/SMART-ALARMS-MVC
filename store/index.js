@@ -72,8 +72,9 @@ export const actions = {
 
   async deleteRegistered(context, del) {
     await this.$axios
-      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastrado/alarme/excluir/')
+      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/excluir/' + del.causa + '/' + del.local)
       .then(response => {this.deleteAlarm = response})
+      console.log(this.deleteAlarm)
     
   },
   
