@@ -19,7 +19,7 @@
                     <option>UG 38</option>
                     <option>CAV1</option>
                     <option>CAV2</option>
-                    <option>CAV13</option>
+                    <option>CAV3</option>
                 </select>
             </div>
             <div class="col-2 mt-5">
@@ -35,24 +35,29 @@
 
         <div class="row" >
             <div class="col-sm-4" v-for="item in alarms" :key="item.id">
-                <card-registered :alarm="item" :unit="unidade_geral"/>
+                <div class="card mt-4">
+                    <div class="card-white">
+                        <h1>{{ item.name }}</h1>
+                        <span>Causa</span>
+                        <p>{{ item.causa }}</p>
+                        <hr>
+                        <div class="align options">
+                            <button class="btn mr-5" @click="deletion(index)">Excluir <delete class="options"></delete></button>
+                            
+                            <nuxt-link @click.native="editing()" to="/register" no-prefetch class="btn options ml-5">Editar</nuxt-link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- <div class="row card mt-4" >
-            <div class="col-sm-4 card-white" v-for="item in registeredAlarms" :key=" item.id">
-                <h1>PLST TG 31</h1>
-                <span>Causa</span>
-                <p>TEMPERATURA ELEVADA ROLAMENTO DO ESTATOR GERADOR</p>
-                <hr>
-            </div>
-        </div> -->
     </div>
 </template>
 
 <script>
 import CardRegistered from '~/components/CardRegistered.vue'
-import { mapActions } from 'vuex'
+import Delete from 'vue-material-design-icons/Delete.vue';
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
     components: {
@@ -61,36 +66,68 @@ export default {
 
     data() {
         return {
-        ug: "UG 11",
+        ug: "Todos",
         type: "Todos",
-        registeredAlarms: []
-            
+        registeredAlarms: [],
+        deletionAlarms: [],
+        persistAlarms: [],
+        delMessage: "",
         }
 
+    },
+
+     components: {
+        Delete,
     },
 
     computed: {
         alarms() {
             return this.$store.state.cardAlarm
         },
-        unidade_geral() {
-            return this.ug
-        }
+
     },
 
     methods: {
-        ...mapActions(['loadRegistered']),
+        ...mapActions(['loadRegistered', 'deleteRegistered', 'persist']),
+        ...mapMutations(['teste']),
 
         changeCards() {
             this.registeredAlarms.splice(0)
             this.registeredAlarms.push({local: this.ug, name: this.type})
             this.loadRegistered(this.registeredAlarms[0])
+            
+            
+        },
+
+        async deletion(index) {
+            this.deletionAlarms.splice(0)
+            this.deletionAlarms.push({local: this.ug, causa: this.alarms[0].causa})
+            // await this.deleteRegistered(this.deletionAlarms[0])
+            
+            console.log(this.alarms)
+            
+            
+            // this.delMessage = this.$store.state.deleteAlarm
+            if (this.delMessage == "deletado com sucesso") {
+                alert("Deletado com sucesso")
+            } else {
+                alert("Não foi possivel deletar")
+            }
+            
+        },
+
+        editing() {
+            this.persistAlarms.splice(0)
+            this.persistAlarms.push({local: this.ug, causa: this.alarms[0].causa})
+            this.persist(this.persistAlarms[0])
         }
     },
 
     async created() {
         this.registeredAlarms.push({local: this.ug, name: this.type})
-        this.loadRegistered(this.registeredAlarms[0])
+        await this.loadRegistered(this.registeredAlarms[0])
+        
+        
   },
 
 }
@@ -108,6 +145,26 @@ export default {
 .labels {
     font-size: 12px;
     font-weight: bold;
+}
+
+button:hover {
+    color: #008542;
+    transition: $transition;
+}
+
+.align {
+    text-align: center;
+}
+
+.options {
+    font-weight: bold;
+    font-size: 12px;
+    color: #B5B5B5;
+}
+
+.options:hover {
+    color: #008542;
+    transition: $transition;
 }
 
 

@@ -6,6 +6,8 @@ export const state = () => ({
   validating: "",
   cardAlarm: [],
   deleteAlarm: [],
+  registerData: [],
+  update: [],
 })
 
 export const mutations = {
@@ -22,8 +24,21 @@ export const mutations = {
     state.cardAlarm = cardAlarm
   },
   deleteCard(state, deleteAlarm) {
-    state.deleteAlarm = deleteAlarm
-  }
+    // let index = state.articles.findIndex(a => a.id === deleteAlarm.id)
+
+    state.deleteAlarm.splice(state.deleteAlarm, deleteAlarm)
+  },
+
+  insertArticle(state, article) {
+    state.articles.splice(state.articles.length, 1, article);
+  },
+
+  persistData(state, registerData) {
+    state.registerData = registerData
+  },
+  updateCard(state, update) {
+    state.update = update
+  },
 
 }
 
@@ -77,7 +92,26 @@ export const actions = {
       console.log(this.deleteAlarm)
 
       context.commit('deleteCard', this.deleteAlarm.data.message)
+      console.log(this.deleteAlarm)
+  },
+
+  async persist(context, alarmData) {
+    await this.$axios
+      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/persistir/' + alarmData.causa + '/' + alarmData.local)
+      .then(response => {this.registerData = response.data})
+
+      context.commit('persistData', this.registerData.value)
+      console.log(this.registerData)
     
+  },
+
+  async updateData(context, upData) {
+    await this.$axios
+      .put('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/editar/' + upData.causa + '/' + upData.local)
+      .then(response => {this.update = response})
+
+      context.commit('updateCard', this.update)
+      console.log(this.update)
   },
   
   treatGraph(context, response) {

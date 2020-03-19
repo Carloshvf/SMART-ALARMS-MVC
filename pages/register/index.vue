@@ -21,7 +21,7 @@
           <option>UG 38</option>
           <option>CAV1</option>
           <option>CAV2</option>
-          <option>CAV13</option>
+          <option>CAV3</option>
         </select>
       </div>
     </div>
@@ -317,11 +317,19 @@ export default {
       end: [],
       measures: [],
       allData: [],
+      editData: [],
     } 
   },
 
+  computed: {
+    persistEdit() {
+      return this.$store.state.registerData
+    },
+
+  },
+
   methods: {
-    ...mapActions(['sendAlarms', 'sendLogic']),
+    ...mapActions(['sendAlarms', 'sendLogic', 'updateData']),
 
     sendOperator() {
       this.pushed.push(this.operators)
@@ -351,7 +359,6 @@ export default {
 
     sendRecommendation() {
       this.recom.push({item: this.recommendation})
-      
     },
 
     sendEnderecos() {
@@ -385,6 +392,7 @@ export default {
 
     cleanStatus(index) {
       this.measures.splice(index, 1)
+      
     },
 
     async validate() {
@@ -425,15 +433,37 @@ export default {
         status_medidas: this.measures,
         recomendacoes: this.recom
        })
-      this.sendAlarms({info: this.allData[0]})
-      alert("Salvo com sucesso")
-      setTimeout(() => {
-        // window.location.reload()
-      }, 3000);
       
+      // this.sendAlarms({info: this.allData[0]})
+      //  alert("Salvo com sucesso")
+      //   setTimeout(() => {
+      //   window.location.reload()
+      // }, 3000);
+
+      this.updateData({causa: this.allData[0].causa, local: this.allData[0].local})
+        alert("Update realizado com sucesso")
       
-    }
-  }
+      // if (this.persistEdit == undefined || this.persistEdit.length == 0) {
+      //   this.sendAlarms({info: this.allData[0]})
+      //   alert("Salvo com sucesso")
+      //   // setTimeout(() => {
+      //   // window.location.reload()
+      //   // }, 3000);
+      // } 
+      // else if(this.persistEdit != undefined) {
+      //   this.updateData({causa: this.allData[0].causa, local: this.allData[0].local})
+      //   alert("Update realizado com sucesso")
+      // }
+      
+    },
+
+  },
+
+    async created() {
+      console.log(this.persistEdit)
+      
+  },
+  
   
 }
 </script>
