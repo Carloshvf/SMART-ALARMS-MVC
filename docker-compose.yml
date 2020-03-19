@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  backend:
+    build:
+      context: .
+      args:
+        - PORT=8080
+        - baseURL=https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000
+    image: smartalarms-frontend
+    container_name: smartalarms-frontend
+    ports:
+      - 8080:8080
+    networks:
+      - smartalarms-network
+networks:
+  smartalarms-network:
+    driver: bridge
