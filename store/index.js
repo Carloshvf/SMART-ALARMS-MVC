@@ -1,7 +1,5 @@
 // import axios from 'moment'
 
-import axios from "axios";
-
 //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
 export const HOST_API = process.env.baseURL; 
 
