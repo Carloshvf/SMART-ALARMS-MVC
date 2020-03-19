@@ -5,6 +5,7 @@ RUN mkdir -p /usr/src/nuxt-app
 WORKDIR /usr/src/nuxt-app
 
 ARG PORT
+ARG baseURL
 
 # update and install dependency
 RUN apk update && apk upgrade
@@ -16,7 +17,11 @@ RUN npm install
 
 RUN npm run build
 
-# set app serving to permissive / assigned
+
+ENV baseURL=${baseURL}
+
+RUN echo $baseURL
+
 ENV NUXT_HOST=0.0.0.0
 # set app port
 ENV NUXT_PORT=${PORT}

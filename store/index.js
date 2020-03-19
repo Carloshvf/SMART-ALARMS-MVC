@@ -1,5 +1,10 @@
 // import axios from 'moment'
 
+import axios from "axios";
+
+//PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
+export const HOST_API = process.env.baseURL; 
+
 export const state = () => ({
   all: [],
   graph: [],
@@ -27,12 +32,17 @@ export const mutations = {
 
 }
 
+
 export const actions = {
+
+  
+
   async loadData(context) {
     let {
       data: { all }
     } = await this.$axios.get(
-      'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarmes-ativos'
+      //CONCATENANDO O HOST COM A RODA
+      HOST_API + '/alarmes-ativos'
     )
 
     context.commit('setAll', all)
@@ -41,20 +51,28 @@ export const actions = {
 
   async loadGraph(context, idGraph) {
     return this.$axios.get(
-      'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/grafico/' +
+      //CONCATENANDO O HOST COM A RODA
+      HOST_API + '/grafico/' +
         idGraph
     )
   },
 
   async sendAlarms ( context, { info }) {
     await this.$axios
-      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastro', info)
+      .post(
+        //CONCATENANDO O HOST COM A RODA
+        HOST_API + '/alarme/cadastro', 
+        info
+      )
       
   },
 
   async sendLogic ( context, { valid }) {
     await this.$axios
-      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
+      .post(
+        //CONCATENANDO O HOST COM A RODA
+        HOST_API + '/regra/' + valid
+      )
       .then(response => {this.validating = response.data.ok})
       
       context.commit('setLogic', this.validating)
@@ -63,7 +81,10 @@ export const actions = {
 
   async loadRegistered(context, alarm) {
     await this.$axios
-      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastrado/' + alarm.local + '/' + alarm.name)
+      .get(
+        //CONCATENANDO O HOST COM A RODA
+        HOST_API + '/alarme/cadastrado/' + alarm.local + '/' + alarm.name
+      )
       .then(response => {this.cardAlarm = response})
 
       context.commit('setCard', this.cardAlarm.data.all)
@@ -72,7 +93,10 @@ export const actions = {
 
   async deleteRegistered(context, del) {
     await this.$axios
-      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/excluir/' + del.causa + '/' + del.local)
+      .delete(
+        //CONCATENANDO O HOST COM A RODA
+        HOST_API + '/alarme/excluir/' + del.causa + '/' + del.local
+      )
       .then(response => {this.deleteAlarm = response})
       console.log(this.deleteAlarm)
 

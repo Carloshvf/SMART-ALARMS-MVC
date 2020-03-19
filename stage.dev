@@ -1,1 +1,2 @@
 PORT=3100
+baseURL=https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000
