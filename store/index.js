@@ -29,10 +29,6 @@ export const mutations = {
     state.deleteAlarm.splice(state.deleteAlarm, deleteAlarm)
   },
 
-  insertArticle(state, article) {
-    state.articles.splice(state.articles.length, 1, article);
-  },
-
   persistData(state, registerData) {
     state.registerData = registerData
   },
@@ -92,7 +88,7 @@ export const actions = {
       console.log(this.deleteAlarm)
 
       context.commit('deleteCard', this.deleteAlarm.data.message)
-      console.log(this.deleteAlarm)
+      
   },
 
   async persist(context, alarmData) {

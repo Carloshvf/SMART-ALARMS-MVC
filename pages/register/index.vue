@@ -434,14 +434,14 @@ export default {
         recomendacoes: this.recom
        })
       
-      // this.sendAlarms({info: this.allData[0]})
-      //  alert("Salvo com sucesso")
-      //   setTimeout(() => {
-      //   window.location.reload()
-      // }, 3000);
+      this.sendAlarms({info: this.allData[0]})
+       alert("Salvo com sucesso")
+        setTimeout(() => {
+        window.location.reload()
+      }, 3000);
 
-      this.updateData({causa: this.allData[0].causa, local: this.allData[0].local})
-        alert("Update realizado com sucesso")
+      // this.updateData({causa: this.allData[0].causa, local: this.allData[0].local})
+      //   alert("Update realizado com sucesso")
       
       // if (this.persistEdit == undefined || this.persistEdit.length == 0) {
       //   this.sendAlarms({info: this.allData[0]})
