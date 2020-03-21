@@ -37,14 +37,14 @@
             <div class="col-sm-4" v-for="item in alarms" :key="item.id">
                 <div class="card mt-4">
                     <div class="card-white">
-                        <h1>{{ item.name }}</h1>
+                        <h1>{{ item.infos[0].name }}</h1>
                         <span>Causa</span>
-                        <p>{{ item.causa }}</p>
+                        <p>{{ item.infos[0].causa }}</p>
                         <hr>
                         <div class="align options">
-                            <button class="btn mr-5" @click="deletion(index)">Excluir <delete class="options"></delete></button>
+                            <button class="btn mr-5" @click="deletion()">Excluir <delete class="options"></delete></button>
                             
-                            <nuxt-link @click.native="editing()" to="/register" no-prefetch class="btn options ml-5">Editar</nuxt-link>
+                            <nuxt-link @click.native="editing()" :to="{ name: 'register-id', params: { id: item.id } }" no-prefetch class="btn options ml-5">Editar</nuxt-link>
                         </div>
                     </div>
                 </div>
@@ -72,6 +72,7 @@ export default {
         deletionAlarms: [],
         persistAlarms: [],
         delMessage: "",
+        id: this.$route.params.id,
         }
 
     },
@@ -88,25 +89,18 @@ export default {
     },
 
     methods: {
-        ...mapActions(['loadRegistered', 'deleteRegistered', 'persist']),
-        ...mapMutations(['teste']),
+        ...mapActions(['loadRegistered', 'deleteRegistered', 'loadCard']),
 
         changeCards() {
-            this.registeredAlarms.splice(0)
-            this.registeredAlarms.push({local: this.ug, name: this.type})
-            this.loadRegistered(this.registeredAlarms[0])
-            
+            this.ug = this.ug.replace(/\s/g, '_')
+            this.loadRegistered({local: this.ug, tipo_desligamento: this.type})
             
         },
 
-        async deletion(index) {
-            this.deletionAlarms.splice(0)
-            this.deletionAlarms.push({local: this.ug, causa: this.alarms[0].causa})
-            // await this.deleteRegistered(this.deletionAlarms[0])
-            
-            console.log(this.alarms)
-            
-            
+        async deletion() {
+            this.deletionAlarms.push({id: this.alarms.id})
+            // await this.deleteRegistered(this.deletionAlarms)
+                 
             // this.delMessage = this.$store.state.deleteAlarm
             if (this.delMessage == "deletado com sucesso") {
                 alert("Deletado com sucesso")
@@ -116,17 +110,16 @@ export default {
             
         },
 
-        editing() {
-            this.persistAlarms.splice(0)
-            this.persistAlarms.push({local: this.ug, causa: this.alarms[0].causa})
-            this.persist(this.persistAlarms[0])
+        editing() {  
+            this.loadCard({local: this.ug, tipo_desligamento: this.type})
+            // this.$router.push({ name: 'register-id', params: {id} } )
+            // console.log(this.alarms)
         }
     },
 
     async created() {
-        this.registeredAlarms.push({local: this.ug, name: this.type})
-        await this.loadRegistered(this.registeredAlarms[0])
-        
+        this.ug = this.ug.replace(/\s/g, '_')
+        this.loadRegistered({local: this.ug, tipo_desligamento: this.type})
         
   },
 

@@ -86,6 +86,8 @@
         </div>
       </div>
     </div>
+    {{title}}
+    
     <!-- CADASTRO DE ALARMES -->
     <div class="row">
       <div class="col-sm" >
@@ -318,6 +320,7 @@ export default {
       measures: [],
       allData: [],
       editData: [],
+      id: this.$route.params.id,
     } 
   },
 
@@ -438,7 +441,17 @@ export default {
 
   },
 
-    
+
+    async asyncData({ store }) {
+    const teste = await store.dispatch('loadCard')
+    console.log(teste.data.todos.filter(i => i.id === this.id))
+    // return { title: teste.data.todos.filter(i => i.id === this.id) }
+    // return {
+    //   cause: teste.data.all[0].kks[0].cause,
+    //   date: teste.data.all[0].kks[0].date
+    // }
+    // console.log(teste.data.all[0].kks[0].cause)
+  }
   
   
 }

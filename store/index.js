@@ -6,7 +6,7 @@ export const state = () => ({
   validating: "",
   cardAlarm: [],
   deleteAlarm: [],
-  registerData: [],
+  todos: [],
   update: [],
 })
 
@@ -23,14 +23,11 @@ export const mutations = {
   setCard(state, cardAlarm) {
     state.cardAlarm = cardAlarm
   },
-  deleteCard(state, deleteAlarm) {
-    // let index = state.articles.findIndex(a => a.id === deleteAlarm.id)
-
-    state.deleteAlarm.splice(state.deleteAlarm, deleteAlarm)
+  loadAllCards(state, todos) {
+    state.todos = todos
   },
-
-  persistData(state, registerData) {
-    state.registerData = registerData
+  deleteCard(state, deleteAlarm) {
+    state.deleteAlarm = deleteAlarm
   },
   updateCard(state, update) {
     state.update = update
@@ -59,7 +56,7 @@ export const actions = {
 
   async sendAlarms ( context, { info }) {
     await this.$axios
-      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastro', info)
+      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme', info)
       
   },
 
@@ -72,42 +69,42 @@ export const actions = {
       
   },
 
-  async loadRegistered(context, alarm) {
+  async loadRegistered(context, {local, tipo_desligamento}) {
     await this.$axios
-      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/cadastrado/' + alarm.local + '/' + alarm.name)
-      .then(response => {this.cardAlarm = response})
+      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + local + '/' + tipo_desligamento)
+      .then(response => {this.cardAlarm = response.data.todos})
 
-      context.commit('setCard', this.cardAlarm.data.all)
-    
+      context.commit('setCard', this.cardAlarm)      
+  
+  },
+
+  async loadCard(context) {
+    return this.$axios
+      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/Todos/Todos')
+      .then(response => {
+        context.commit('loadAllCards', response)
+        // console.log(response)
+        return response
+      })
   },
 
   async deleteRegistered(context, del) {
     await this.$axios
-      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/excluir/' + del.causa + '/' + del.local)
+      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + del.id)
       .then(response => {this.deleteAlarm = response})
-      console.log(this.deleteAlarm)
+      // console.log(this.deleteAlarm)
 
       context.commit('deleteCard', this.deleteAlarm.data.message)
       
   },
 
-  async persist(context, alarmData) {
-    await this.$axios
-      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/persistir/' + alarmData.causa + '/' + alarmData.local)
-      .then(response => {this.registerData = response.data})
-
-      context.commit('persistData', this.registerData.value)
-      console.log(this.registerData)
-    
-  },
-
   async updateData(context, upData) {
     await this.$axios
-      .put('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/editar/' + upData.causa + '/' + upData.local)
+      .put('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + upData.id)
       .then(response => {this.update = response})
 
       context.commit('updateCard', this.update)
-      console.log(this.update)
+      // console.log(this.update)
   },
   
   treatGraph(context, response) {
