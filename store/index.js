@@ -3,11 +3,11 @@
 export const state = () => ({
   all: [],
   graph: [],
-  validating: "",
+  validating: '',
   cardAlarm: [],
   deleteAlarm: [],
   todos: [],
-  update: [],
+  update: []
 })
 
 export const mutations = {
@@ -31,8 +31,7 @@ export const mutations = {
   },
   updateCard(state, update) {
     state.update = update
-  },
-
+  }
 }
 
 export const actions = {
@@ -44,7 +43,41 @@ export const actions = {
     )
 
     context.commit('setAll', all)
-  
+  },
+
+  async sendAlarms(context, { info }) {
+    await this.$axios.post(
+      'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme',
+      info
+    )
+  },
+
+  async sendLogic(context, { valid }) {
+    await this.$axios
+      .post(
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' +
+          valid
+      )
+      .then(response => {
+        this.validating = response.data.ok
+      })
+
+    context.commit('setLogic', this.validating)
+  },
+
+  async loadRegistered(context, { local, tipo_desligamento }) {
+    await this.$axios
+      .get(
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+          local +
+          '/' +
+          tipo_desligamento
+      )
+      .then(response => {
+        this.cardAlarm = response.data.todos
+      })
+
+    context.commit('setCard', this.cardAlarm)
   },
 
   async loadGraph(context, idGraph) {
@@ -54,59 +87,46 @@ export const actions = {
     )
   },
 
-  async sendAlarms ( context, { info }) {
-    await this.$axios
-      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme', info)
-      
-  },
-
-  async sendLogic ( context, { valid }) {
-    await this.$axios
-      .post('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' + valid)
-      .then(response => {this.validating = response.data.ok})
-      
-      context.commit('setLogic', this.validating)
-      
-  },
-
-  async loadRegistered(context, {local, tipo_desligamento}) {
-    await this.$axios
-      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + local + '/' + tipo_desligamento)
-      .then(response => {this.cardAlarm = response.data.todos})
-
-      context.commit('setCard', this.cardAlarm)      
-  
-  },
-
-  async loadCard(context) {
+  async loadCard(context, id) {
     return this.$axios
-      .get('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/Todos/Todos')
+      .get(
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/Todos/Todos'
+      )
       .then(response => {
         context.commit('loadAllCards', response)
-        // console.log(response)
+
         return response
       })
   },
 
   async deleteRegistered(context, del) {
     await this.$axios
-      .delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + del.id)
-      .then(response => {this.deleteAlarm = response})
-      // console.log(this.deleteAlarm)
+      .delete(
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+          del.id
+      )
+      .then(response => {
+        this.deleteAlarm = response
+      })
+    // console.log(this.deleteAlarm)
 
-      context.commit('deleteCard', this.deleteAlarm.data.message)
-      
+    context.commit('deleteCard', this.deleteAlarm.data.message)
   },
 
   async updateData(context, upData) {
     await this.$axios
-      .put('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + upData.id)
-      .then(response => {this.update = response})
+      .put(
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+          upData.id
+      )
+      .then(response => {
+        this.update = response
+      })
 
-      context.commit('updateCard', this.update)
-      // console.log(this.update)
+    context.commit('updateCard', this.update)
+    // console.log(this.update)
   },
-  
+
   treatGraph(context, response) {
     const responseData = response.data
 
@@ -125,7 +145,9 @@ export const actions = {
     var diaAnterior = ''
     var arrayDias = new Array()
     var arrayDatasets = new Array()
-    var tempos = [...new Set(responseData.graph.map(i => i.tempo.split(' ')[1]))];
+    var tempos = [
+      ...new Set(responseData.graph.map(i => i.tempo.split(' ')[1]))
+    ]
 
     for (const key in responseData.graph) {
       const element = responseData.graph[key]
@@ -133,7 +155,7 @@ export const actions = {
       element['dia'] = diaAtual
       if (diaAtual != diaAnterior) {
         diaAnterior = diaAtual
-        
+
         arrayDias.push(diaAtual)
       }
     }
@@ -155,5 +177,4 @@ export const actions = {
       datasets: arrayDatasets
     }
   }
-
 }
