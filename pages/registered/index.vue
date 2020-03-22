@@ -99,11 +99,14 @@ export default {
 
         async deletion() {
             this.deletionAlarms.push({id: this.alarms.id})
-            // await this.deleteRegistered(this.deletionAlarms)
+            await this.deleteRegistered(this.deletionAlarms)
                  
-            // this.delMessage = this.$store.state.deleteAlarm
+            this.delMessage = this.$store.state.deleteAlarm
             if (this.delMessage == "deletado com sucesso") {
                 alert("Deletado com sucesso")
+                //   setTimeout(() => {
+                //   window.location.reload()
+                // }, 3000);
             } else {
                 alert("Não foi possivel deletar")
             }

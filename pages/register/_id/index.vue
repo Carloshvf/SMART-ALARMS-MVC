@@ -430,21 +430,18 @@ export default {
         recomendacoes: this.recom
        })
       
-      this.sendAlarms({info: this.allData[0]})
-       alert("Salvo com sucesso")
-      //   setTimeout(() => {
-      //   window.location.reload()
-      // }, 3000);
-      
+      // this.updateData()
       
     },
+
+    
 
   },
 
 
     async asyncData({ store }) {
     const teste = await store.dispatch('loadCard')
-    console.log(teste.data.todos.filter(i => i.id === this.id))
+    // console.log(teste.data.todos.filter(i => i.id === this.id))
     // return { title: teste.data.todos.filter(i => i.id === this.id) }
     // return {
     //   cause: teste.data.all[0].kks[0].cause,
