@@ -429,9 +429,9 @@ export default {
       
       this.sendAlarms({info: this.allData[0]})
        alert("Salvo com sucesso")
-      //   setTimeout(() => {
-      //   window.location.reload()
-      // }, 3000);
+        setTimeout(() => {
+        window.location.reload()
+      }, 3000);
       
       
     },

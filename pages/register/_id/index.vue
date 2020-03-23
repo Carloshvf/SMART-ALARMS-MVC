@@ -9,7 +9,7 @@
     <div class="form-row mt-4">
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
-        <select class="form-control" v-model="local">
+        <select class="form-control" v-model="detail.local">
           <option>UG 11</option>
           <option>UG 12</option>
           <option>UG 18</option>
@@ -29,7 +29,7 @@
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
-        <select class="form-control" v-model="offType">
+        <select class="form-control" v-model="detail.tipo_desligamento">
           <option>PLS</option>
           <option>PLST</option>
           <option>TRIP</option>
@@ -37,7 +37,7 @@
       </div>
       <div class="col-10">
         <label class="mt-4 sizing">CAUSA</label>
-        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="reason" />
+        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="detail.causa" />
       </div>
     </div>
 
@@ -52,12 +52,20 @@
               type="text"
               style="text-transform: uppercase;"
               class="form-control"
-              v-model="textMedida"
+              v-model="message.endereco_medida"
             />
+
+
+
+            <!-- AQUI -->
+
+
+
+            
           </div>
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
-            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" />
+            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="detail.unidade" />
           </div>
         </div>
       </div>
@@ -99,14 +107,13 @@
         </div>
       </div>
     </div>
-    {{title}}
     <!-- CADASTRO DE ALARMES -->
     <div class="row">
       <div class="col-sm">
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" v-model="separador" disabled></textarea>
+            <textarea class="form-control push-area" v-model="detail.logica" disabled></textarea>
             <button class="btn btn-green btn-validar mt-4" @click="validate()">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
@@ -131,7 +138,7 @@
               type="text"
               style="text-transform: uppercase;"
               class="form-control"
-              v-model="infoAlarme"
+              v-model="textAlarme"
             />
           </div>
           <div class="col-2">
@@ -172,7 +179,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in end" :key="item.id">
+                <tr v-for="(item, index) in detail.canais" :key="item.id">
                   <td class="border-line">{{ item.end_alarme }}</td>
                   <td class="border-line">{{ item.ativacao }}</td>
                   <td class="border-line">{{ item.end_medida }}</td>
@@ -253,7 +260,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(value, index) in measures" :key="value.id">
+                <tr v-for="(value, index) in detail.status_medidas" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
@@ -301,7 +308,7 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="lista in recom" :key="lista.id">{{ lista.item }}</li>
+            <li v-for="lista in detail.recomendacoes" :key="lista.id">{{ lista.item }}</li>
           </ul>
         </div>
         <div class="mt-5">
@@ -315,7 +322,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue'
 
 import axios from 'axios'
@@ -356,9 +363,23 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-      post: {}
+      post: {},
       // id: this.$route.params.id
     }
+  },
+
+  computed: {
+    message: {
+      get () {
+        return this.detail
+      },
+      set (value) {
+        this.$store.commit('updateMessage', value)
+      }
+    }
+  //   ...mapState({
+  //     message: state => detail
+  // })
   },
 
   methods: {
@@ -461,7 +482,7 @@ export default {
       }
     },
 
-    async saveData() {
+    async saveData(id) {
       this.allData.splice(0)
       this.endAtivacao.push({
         end_alarme: this.textAlarme,
@@ -481,8 +502,15 @@ export default {
         recomendacoes: this.recom
       })
 
+      // this.updateData({ident: id, info: this.allData[0]})
+
       
-    }
+    },
+
+  //   updateMessage (e) {
+  //     this.$store.commit('updateMessage', e.target.value)
+  // }
+
   },
 
   // async fetch({ store, params }) {
@@ -508,7 +536,7 @@ export default {
 
     console.log(teste)
 
-    // return { title: teste.data.todos}
+    return { detail: teste.data.todos[0]}
   }
 }
 </script>

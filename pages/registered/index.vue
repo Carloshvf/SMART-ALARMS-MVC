@@ -34,7 +34,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-4" v-for="item in alarms" :key="item.id">
+      <div class="col-sm-4" v-for="(item, i) in alarms" :key="i">
         <div class="card mt-4">
           <div class="card-white">
             <h1>{{ item.infos[0].name }}</h1>
@@ -42,7 +42,7 @@
             <p>{{ item.infos[0].causa }}</p>
             <hr />
             <div class="align options">
-              <button class="btn mr-5" @click="deletion()">
+              <button class="btn mr-5" @click="deletion(item, i)">
                 Excluir
                 <delete class="options"></delete>
               </button>
@@ -51,7 +51,6 @@
 
               <nuxt-link
                 :to="{ name: 'register-id', params: { id: item.id } }"
-                @click.native="editing()"
                 no-prefetch
                 class="btn options ml-5"
               >Editar</nuxt-link>
@@ -93,32 +92,40 @@ export default {
     alarms() {
       return this.$store.state.cardAlarm
     }
+    
   },
 
   methods: {
-    ...mapActions(['loadRegistered', 'deleteRegistered', 'loadCard']),
+    ...mapActions(['loadRegistered', 'deleteAll', 'loadCard']),
 
     changeCards() {
       this.ug = this.ug.replace(/\s/g, '_')
       this.loadRegistered({ local: this.ug, tipo_desligamento: this.type })
     },
 
-    async deletion() {
-      this.deletionAlarms.push({ id: this.alarms.id })
-      // await this.deleteRegistered(this.deletionAlarms)
-
-      // this.delMessage = this.$store.state.deleteAlarm
-      if (this.delMessage == 'deletado com sucesso') {
-        alert('Deletado com sucesso')
-      } else {
-        alert('Não foi possivel deletar')
+    async deletion(todos, id) {
+        this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
+          .then(() => {              
+              this.todos.splice(id, 1)
+          })
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
+         
       }
-    },
 
-    async editing(id) {
-      await this.loadCard(id)
-      // this.loadCard({ local: this.ug, tipo_desligamento: this.type })
-    }
+    // deleteAll(index) {
+    //     this.alarms.splice(index, 1)
+    // }
+
+    //   this.delMessage = this.$store.state.deleteAlarm
+    //   if (this.delMessage == 'deletado com sucesso') {
+    //     alert('Deletado com sucesso')
+    //   } else {
+    //     alert('Não foi possivel deletar')
+    //   }
+    // },
+
   },
 
   async created() {

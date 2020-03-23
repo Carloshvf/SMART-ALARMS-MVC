@@ -26,12 +26,25 @@ export const mutations = {
   loadAllCards(state, todos) {
     state.todos = todos
   },
-  deleteCard(state, deleteAlarm) {
-    state.deleteAlarm = deleteAlarm
-  },
-  updateCard(state, update) {
+  updateMessage (state, update) {
     state.update = update
-  }
+  },
+
+  DELETE_CARD(state, id){
+    index = state.todos.findIndex(i => i.id == id)
+    state.todos.splice(index, 1)
+   },
+  // DELETE_CARD(state, id){
+  //   index = state.todos.findIndex(i => i.id == id)
+  //   state.todos.splice(index, 1)
+  //  },
+  // deleteCard(state, deleteAlarm) {
+  //   index = state.cars.findIndex(car => car.id == id)
+  //   state.cars.splice(index, 1)
+  // },
+  // updateCard(state, update) {
+  //   state.update = update
+  // }
 }
 
 export const actions = {
@@ -90,7 +103,7 @@ export const actions = {
   async loadCard(context, id) {
     return this.$axios
       .get(
-        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/Todos/Todos'
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/cadastrado/' + id
       )
       .then(response => {
         context.commit('loadAllCards', response)
@@ -99,25 +112,39 @@ export const actions = {
       })
   },
 
-  async deleteRegistered(context, del) {
-    await this.$axios
-      .delete(
-        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
-          del.id
-      )
-      .then(response => {
-        this.deleteAlarm = response
-      })
-    // console.log(this.deleteAlarm)
+  // async deletion ({commit}, id) {
+  //   this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
+  //     .then(() => {              
+  //         commit('DELETE_CARD', id)
+  //     })
+  // },
 
-    context.commit('deleteCard', this.deleteAlarm.data.message)
+  async deleteAll ({commit}, id) {
+    this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
+      .then(() => {              
+          commit('DELETE_CARD', id)
+      })
   },
+
+  // async deleteRegistered(context, del) {
+  //   await this.$axios
+  //     .delete(
+  //       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+  //         del
+  //     )
+  //     .then(response => {
+  //       this.deleteAlarm = response
+  //     })
+  //   // console.log(this.deleteAlarm)
+
+  //   context.commit('deleteCard', this.deleteAlarm.data.message)
+  // },
 
   async updateData(context, upData) {
     await this.$axios
       .put(
         'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
-          upData.id
+          upData.ident
       )
       .then(response => {
         this.update = response
