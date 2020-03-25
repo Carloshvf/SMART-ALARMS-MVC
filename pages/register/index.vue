@@ -24,6 +24,10 @@
           <option>CAV3</option>
         </select>
       </div>
+      <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
+        <label class="mt-4 sizing">COMPLEMENTO</label>
+        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
+      </div>
     </div>
     <!-- Mexer nos hover -->
     <div class="form-row mt-4">
@@ -81,7 +85,7 @@
             </select>
           </div>
           <div class="ml-3">
-            <button class="btn btn-green rounded-circle" @click="sendActivation()">+</button> 
+            <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
           </div>
         </div>
       </div>
@@ -93,7 +97,7 @@
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
             <textarea class="form-control push-area" v-model="separador" disabled></textarea>
-            <button class="btn btn-green btn-validar mt-4" @click="validate()">Validar</button>
+            <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
         </div>
@@ -267,8 +271,8 @@
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar" @click="saveData()">Salvar</button>
-        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cadastrados</nuxt-link>
+        <button class="btn btn-green btn-salvar" @click="saveData('b-toaster-bottom-right')">Salvar</button>
+        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
@@ -292,6 +296,7 @@ export default {
       types: 'Medida',
       backendCheck: "",  
       local: "UG 11",
+      complement: "",
       logic: "",
       offType: "PLS",
       reason: "",
@@ -332,11 +337,16 @@ export default {
       
     },
 
-    sendActivation() {
+    sendActivation(toaster) {
       if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
         isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
           
-        alert("Os endereços precisam possuir dois numeros como os primeiros caracteres")
+        // alert("Os endereços precisam possuir dois numeros como os primeiros caracteres")
+        this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
+          title: `Alert`,
+          toaster: toaster,
+          solid: true
+        })
       } 
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
@@ -388,35 +398,50 @@ export default {
       
     },
 
-    async validate() {
-      // await fez o metodo esperar receber resposta de q a função tinha acabado antes de continuar pro resto do codigo do validate(),
-      // await só pode ser usado quando a função é async
+    async validate(toaster) {
+     
       await this.sendLogic({valid: this.logic})
       this.backendCheck = this.$store.state.validating
 
       if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
-        alert("A lógica não esta válida")
+        this.$bvToast.toast('A lógica não esta válida.', {
+          title: `Alert`,
+          toaster: toaster,
+          solid: true,
+        })
       } 
       else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
-        alert("Feche o parenteses da lógica")
-      } 
-    
-      else if(this.pushed.length == false) {
-        alert("Por favor preencha todos os campos")
+        this.$bvToast.toast('Feche o parenteses da lógica.', {
+          title: `Alert`,
+          toaster: toaster,
+          solid: true,
+        })
+      }
+       else if(this.pushed.length == false) {
+        this.$bvToast.toast('Por favor preencha todos os campos.', {
+          title: `Alert`,
+          toaster: toaster,
+          solid: true,
+        })
       }
       else if(this.backendCheck == "expressão correta") {
-        alert("A expressão esta correta")
+        this.$bvToast.toast('A expressão esta correta.', {
+          title: `Alert`,
+          toaster: toaster,
+          solid: true,
+        })
       }
 
     },
 
-   async saveData() {
+   async saveData(toaster) {
      this.allData.splice(0)
      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
      
       this.allData.push({ 
         tipo_desligamento: this.offType,
         local: this.local,
+        complemento: this.complement,
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
@@ -428,11 +453,19 @@ export default {
        })
       
       this.sendAlarms({info: this.allData[0]})
-       alert("Salvo com sucesso")
-        setTimeout(() => {
-        window.location.reload()
-      }, 3000);
-      
+
+      this.$bvToast.toast('Salvo com sucesso.', {
+          title: `Alert`,
+          toaster: toaster,
+          solid: true,
+        })
+
+      //   setTimeout(() => {
+      //   window.location.reload()
+      // }, 3000);
+
+
+        
       
     },
 

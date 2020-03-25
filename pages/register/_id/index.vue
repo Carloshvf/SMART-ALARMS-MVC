@@ -24,6 +24,10 @@
           <option>CAV3</option>
         </select>
       </div>
+      <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
+        <label class="mt-4 sizing">COMPLEMENTO</label>
+        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
+      </div>
     </div>
     <!-- Mexer nos hover -->
     <div class="form-row mt-4">
@@ -337,6 +341,7 @@ export default {
       types: 'Medida',
       backendCheck: '',
       local: 'UG 11',
+      complement: "",
       logic: '',
       offType: 'PLS',
       reason: '',
@@ -471,13 +476,16 @@ export default {
         this.pushed[0] == 'OU'
       ) {
         alert('A lógica não esta válida')
-      } else if (
+      } 
+      else if (
         this.validation(this.pushed, '(') != this.validation(this.pushed, ')')
       ) {
         alert('Feche o parenteses da lógica')
-      } else if (this.pushed.length == false) {
+      } 
+      else if (this.pushed.length == false) {
         alert('Por favor preencha todos os campos')
-      } else if (this.backendCheck == 'expressão correta') {
+      } 
+      else if (this.backendCheck == 'expressão correta') {
         alert('A expressão esta correta')
       }
     },
@@ -501,6 +509,12 @@ export default {
         status_medidas: this.measures,
         recomendacoes: this.recom
       })
+
+      // this.sendAlarms({info: this.allData[0]})
+      //  alert("Salvo com sucesso")
+      //   setTimeout(() => {
+      //   window.location.reload()
+      // }, 3000);
 
       // this.updateData({ident: id, info: this.allData[0]})
 

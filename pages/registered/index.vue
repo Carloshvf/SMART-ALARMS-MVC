@@ -51,7 +51,6 @@
 
               <nuxt-link
                 :to="{ name: 'register-id', params: { id: item.id } }"
-                no-prefetch
                 class="btn options ml-5"
               >Editar</nuxt-link>
             </div>
@@ -65,11 +64,14 @@
 <script>
 import CardRegistered from '~/components/CardRegistered.vue'
 import Delete from 'vue-material-design-icons/Delete.vue'
+import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 import { mapActions, mapMutations } from 'vuex'
 
 export default {
   components: {
-    CardRegistered
+    CardRegistered,
+    Delete,
+    PencilOutline,
   },
 
   data() {
@@ -101,6 +103,7 @@ export default {
     changeCards() {
       this.ug = this.ug.replace(/\s/g, '_')
       this.loadRegistered({ local: this.ug, tipo_desligamento: this.type })
+      
     },
 
     async deletion(todos, id) {
@@ -129,7 +132,6 @@ export default {
   },
 
   async created() {
-    this.ug = this.ug.replace(/\s/g, '_')
     this.loadRegistered({ local: this.ug, tipo_desligamento: this.type })
   }
 }
@@ -155,6 +157,12 @@ button:hover {
 
 .align {
   text-align: center;
+}
+
+.btn-cadastrados {
+  color: #ffffff;
+  background-color: $dark-purple;
+  float: right;
 }
 
 .options {
