@@ -78,6 +78,7 @@ export default {
     return {
       ug: 'Todos',
       type: 'Todos',
+      env_ug: "",
       registeredAlarms: [],
       deletionAlarms: [],
       persistAlarms: [],
@@ -101,8 +102,8 @@ export default {
     ...mapActions(['loadRegistered', 'deleteAll', 'loadCard']),
 
     changeCards() {
-      this.ug = this.ug.replace(/\s/g, '_')
-      this.loadRegistered({ local: this.ug, tipo_desligamento: this.type })
+      this.env_ug = this.ug.replace(/\s/g, '_')
+      this.loadRegistered({ local: this.env_ug, tipo_desligamento: this.type })
       
     },
 

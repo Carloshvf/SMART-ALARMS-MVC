@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header bg-dark-purple">
-      <h2 class="mb-0 text-uppercase">{{ alarm.type }} {{ alarm.name }}</h2>
+      <h2 class="mb-0 text-uppercase">{{ alarm.type }} {{ alarm.name }} {{ alarm.complemento }}</h2>
     </div>
     <!-- /.card-header -->
     <div class="card-content card-detail bg-purple">

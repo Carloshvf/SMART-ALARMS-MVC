@@ -3,6 +3,7 @@
 export const state = () => ({
   all: [],
   graph: [],
+  salvarAlarm: '',
   validating: '',
   cardAlarm: [],
   deleteAlarm: [],
@@ -16,6 +17,9 @@ export const mutations = {
   },
   setGraph(state, graph) {
     state.graph = graph
+  },
+  setAlarm(state, salvarAlarm) {
+    state.salvarAlarm = salvarAlarm
   },
   setLogic(state, validating) {
     state.validating = validating
@@ -63,6 +67,12 @@ export const actions = {
       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme',
       info
     )
+    .then(response => {
+      this.salvarAlarm = response.data.erro
+    })
+
+    context.commit('setAlarm', this.salvarAlarm)
+    console.log(this.salvarAlarm)
   },
 
   async sendLogic(context, { valid }) {

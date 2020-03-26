@@ -271,7 +271,8 @@
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar" @click="saveData('b-toaster-bottom-right')">Salvar</button>
+        <button class="btn btn-green btn-salvar" v-if="ok == false" @click="saveData('b-toaster-bottom-right')" disabled>Salvar</button>
+        <button class="btn btn-green btn-salvar" v-if="ok == true" @click="saveData('b-toaster-bottom-right')">Salvar</button>
         <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
       </div>
     </div>
@@ -294,9 +295,11 @@ export default {
   data() {
     return {
       types: 'Medida',
-      backendCheck: "",  
+      backendCheck: "",
+      backendAlarm: "",  
       local: "UG 11",
       complement: "",
+      ok: false,
       logic: "",
       offType: "PLS",
       reason: "",
@@ -341,13 +344,21 @@ export default {
       if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
         isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
           
-        // alert("Os endereços precisam possuir dois numeros como os primeiros caracteres")
         this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
-          title: `Alert`,
+          title: `Endereços`,
           toaster: toaster,
           solid: true
         })
       } 
+      // 
+       else if(this.textMedida == "" || this.textAlarme == "") {
+        this.$bvToast.toast('Por favor preencha os campos de medida e alarme.', {
+          title: `Preencher`,
+          toaster: toaster,
+          solid: true,
+        })
+      }
+      // 
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
@@ -385,6 +396,8 @@ export default {
 
     cleanArea() {
       this.separador = ""
+      this.logic = ""
+      this.ok = false
       this.pushed.splice(0)
     },
 
@@ -405,31 +418,28 @@ export default {
 
       if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
         this.$bvToast.toast('A lógica não esta válida.', {
-          title: `Alert`,
+          title: `Logica invalida`,
           toaster: toaster,
           solid: true,
         })
+        this.ok = false
       } 
       else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parenteses da lógica.', {
-          title: `Alert`,
+          title: `Parenteses`,
           toaster: toaster,
           solid: true,
         })
-      }
-       else if(this.pushed.length == false) {
-        this.$bvToast.toast('Por favor preencha todos os campos.', {
-          title: `Alert`,
-          toaster: toaster,
-          solid: true,
-        })
+        this.ok = false
       }
       else if(this.backendCheck == "expressão correta") {
         this.$bvToast.toast('A expressão esta correta.', {
-          title: `Alert`,
+          title: `Validação`,
           toaster: toaster,
           solid: true,
         })
+        this.ok = true
+
       }
 
     },
@@ -452,19 +462,28 @@ export default {
         recomendacoes: this.recom
        })
       
-      this.sendAlarms({info: this.allData[0]})
+      await this.sendAlarms({info: this.allData[0]})
+      this.backendAlarm = this.$store.state.salvarAlarm
 
-      this.$bvToast.toast('Salvo com sucesso.', {
-          title: `Alert`,
+      if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
+        this.$bvToast.toast('Verifique a logica.', {
+          title: `Logica`,
           toaster: toaster,
           solid: true,
         })
 
+      } 
+      else {
+        this.$bvToast.toast('Salvo com sucesso.', {
+          title: `Sucesso`,
+          toaster: toaster,
+          solid: true,
+        })
       //   setTimeout(() => {
       //   window.location.reload()
       // }, 3000);
 
-
+      }
         
       
     },

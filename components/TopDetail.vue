@@ -1,6 +1,6 @@
 <template>
   <div class="top-detail">
-    <h1 class="text-center">{{ alarm.type }}</h1>
+    <h1 class="text-center">{{ alarm.type }} {{ alarm.complemento }}</h1>
     <div class="top-detail-header bg-dark-purple d-flex align-items-center">
       <p class="text-uppercase mb-0">causa:</p>
       <h3 class="mb-0 ml-3">{{ alarm.cause }}</h3>
