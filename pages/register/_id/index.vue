@@ -9,7 +9,7 @@
     <div class="form-row mt-4">
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
-        <select class="form-control" v-model="detail.local">
+        <select class="form-control" v-model="local">
           <option>UG 11</option>
           <option>UG 12</option>
           <option>UG 18</option>
@@ -33,7 +33,7 @@
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
-        <select class="form-control" v-model="detail.tipo_desligamento">
+        <select class="form-control" v-model="offType">
           <option>PLS</option>
           <option>PLST</option>
           <option>TRIP</option>
@@ -41,7 +41,7 @@
       </div>
       <div class="col-10">
         <label class="mt-4 sizing">CAUSA</label>
-        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="detail.causa" />
+        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="message.causa" >
       </div>
     </div>
 
@@ -50,27 +50,13 @@
         <div class="form-row align-items-end">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input
-              maxlength="20"
-              minlength="3"
-              type="text"
-              style="text-transform: uppercase;"
-              class="form-control"
-              v-model="message.endereco_medida"
-            />
-
-
-
-            <!-- AQUI -->
-
-
-
-            
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
-            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="detail.unidade" />
+            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
           </div>
+          
         </div>
       </div>
       <div class="col-sm-6">
@@ -83,20 +69,13 @@
               <option>(</option>
               <option>)</option>
             </select>
-          </div>
+          </div>  
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
-            <input
-              maxlength="20"
-              minlength="3"
-              type="text"
-              style="text-transform: uppercase;"
-              class="form-control"
-              v-model="textAlarme"
-            />
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
@@ -106,19 +85,19 @@
             </select>
           </div>
           <div class="ml-3">
-            <button class="btn btn-green rounded-circle" @click="sendActivation()">+</button>
+            <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
           </div>
         </div>
       </div>
     </div>
     <!-- CADASTRO DE ALARMES -->
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm" >
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" v-model="detail.logica" disabled></textarea>
-            <button class="btn btn-green btn-validar mt-4" @click="validate()">Validar</button>
+            <textarea class="form-control push-area" v-model="message.logica" disabled></textarea>
+            <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
         </div>
@@ -132,18 +111,11 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-
+      
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DO ALARME</label>
-            <input
-              maxlength="20"
-              minlength="3"
-              type="text"
-              style="text-transform: uppercase;"
-              class="form-control"
-              v-model="textAlarme"
-            />
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
@@ -154,47 +126,43 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input
-              maxlength="20"
-              minlength="3"
-              type="text"
-              style="text-transform: uppercase;"
-              class="form-control"
-              v-model="infoMedida"
-            />
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
           </div>
 
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
-            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2" />
-          </div>
+            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
+          </div>  
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
 
-          <div class="col-12 mt-4 scroll">
-            <table class="table">
-              <thead>
-                <tr class="address border-line">
-                  <th scope="col">ENDEREÇO DO ALARME</th>
-                  <th scope="col">ATIVAÇÃO</th>
-                  <th scope="col">ENDEREÇO DE MEDIDA</th>
-                  <th scope="col">UNIDADE</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, index) in detail.canais" :key="item.id">
-                  <td class="border-line">{{ item.end_alarme }}</td>
-                  <td class="border-line">{{ item.ativacao }}</td>
-                  <td class="border-line">{{ item.end_medida }}</td>
-                  <td class="border-line">{{ item.unidade }}</td>
-                  <td class="border-line">
-                    <delete-outline @click="cleanCanais(index)" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          
+            <div class="col-12 mt-4 scroll">
+              <table class="table">
+                <thead>
+                  <tr class="address border-line">
+                    <th scope="col">ENDEREÇO DO ALARME</th>
+                    <th scope="col">ATIVAÇÃO</th>
+                    <th scope="col">ENDEREÇO DE MEDIDA</th>
+                    <th scope="col">UNIDADE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in end" :key="item.id">
+                    <td class="border-line">{{ item.end_alarme }}</td>
+                    <td class="border-line">{{ item.ativacao }}</td>
+                    <td class="border-line"> {{ item.end_medida }}</td>
+                    <td class="border-line">{{ item.unidade }}</td>
+                    <td class="border-line">
+                      <delete-outline @click="cleanCanais(index)"/>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          
         </div>
       </div>
       <!-- CANAIS -->
@@ -210,21 +178,15 @@
               <option>Medida</option>
               <option>Status</option>
             </select>
+            
           </div>
           <div class="col-5">
             <label class="sizing">NOME</label>
-            <input type="text" class="form-control" v-model="name" />
+            <input type="text" class="form-control" v-model="name">
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
-            <input
-              maxlength="20"
-              minlength="3"
-              type="text"
-              style="text-transform: uppercase;"
-              class="form-control"
-              v-model="infoSuper"
-            />
+            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
           </div>
         </div>
         <div class="form-row align-items-end mt-4">
@@ -238,7 +200,7 @@
           <div class="col-2">
             <div v-if="types == 'Medida'">
               <label class="sizing">UNIDADE</label>
-              <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3" />
+              <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3">
             </div>
             <div v-else-if="types == 'Status'">
               <label class="sizing">ATIVAÇÃO</label>
@@ -251,7 +213,7 @@
           <div class="ml-4">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
-
+          
           <div class="col-12 mt-3 scroll">
             <table class="table">
               <thead>
@@ -264,64 +226,70 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(value, index) in detail.status_medidas" :key="value.id">
+                <tr v-for="(value, index) in measures" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
                   <td class="border-line">{{ value.prioridade }}</td>
                   <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
-                  <td
-                    class="border-line"
-                    v-else-if="value.valor_operacao != '' "
-                  >{{ value.valor_operacao }}</td>
+                  <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
                   <td class="border-line">
-                    <delete-outline @click="cleanStatus(index)" />
+                      <delete-outline @click="cleanStatus(index)"/>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- STATUS E MEDIDAS -->
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="form-row mt-5">
-          <div class="col-3">
-            <h4 class="titles">Recomendações</h4>
-          </div>
-        </div>
-        <div class="form-row mt-3 justify">
-          <div class="col-12">
-            <textarea
-              class="form-control area"
-              placeholder="Escreva aqui..."
-              rows="3"
-              v-model="recommendation"
-            ></textarea>
-          </div>
-          <div class="mt-4">
-            <button class="btn btn-green rounded-circle" @click="sendRecommendation()">+</button>
-          </div>
+  <!-- STATUS E MEDIDAS -->
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-row mt-5">
+        <div class="col-3">
+          <h4 class="titles">Recomendações</h4>
         </div>
       </div>
+      <div class="form-row mt-3 justify">
+        <div class="col-12">
+          <textarea class="form-control area" placeholder="Escreva aqui..." rows="3" v-model="recommendation"></textarea>
+        </div>
+        <div class="mt-4">
+          <button class="btn btn-green rounded-circle" @click="sendRecommendation()">+</button>
+        </div>
+      </div>
+    </div>
 
-      <div class="col-sm-6">
+    <div class="col-sm-6 ">
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="lista in detail.recomendacoes" :key="lista.id">{{ lista.item }}</li>
+            <li v-for="lista in recom" :key="lista.id">{{ lista.item }}</li>
           </ul>
         </div>
-        <div class="mt-5">
-          <button class="btn btn-green btn-salvar" @click="saveData()">Salvar</button>
-          <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cadastrados</nuxt-link>
-        </div>
+      <div class="mt-5">
+        <button class="btn btn-green btn-salvar" v-if="ok == false" disabled>Salvar</button>
+        <button class="btn btn-green btn-salvar" v-b-modal="'modal-update'" v-if="ok == true">Salvar</button>
+        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
       </div>
-      <!-- RECOMENDAÇÕES -->
     </div>
+    <!-- RECOMENDAÇÕES -->
+     <b-modal id="modal-update" hide-footer>
+      <template v-slot:modal-title>
+        Salvando o alarme
+      </template>
+      <div>
+        <p>Escolha como quer salvar o alarme.</p>
+      </div>
+      <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')">Salvar como alarme novo</b-button>
+      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Editar</b-button>
+    </b-modal>
+    <!-- MODAL -->
+  </div>
+
   </div>
 </template>
 
@@ -339,27 +307,29 @@ export default {
   data() {
     return {
       types: 'Medida',
-      backendCheck: '',
-      local: 'UG 11',
+      backendCheck: "",
+      backendAlarm: "",  
+      local: "UG 11",
       complement: "",
-      logic: '',
-      offType: 'PLS',
-      reason: '',
-      operators: 'E',
-      textMedida: '',
-      textAlarme: '',
-      activation1: '1',
-      activation2: '1',
-      activation3: '',
-      unit1: '',
-      unit2: '',
-      unit3: '',
-      recommendation: '',
-      infoAlarme: '',
-      infoMedida: '',
-      infoSuper: '',
-      name: '',
-      priority: '1',
+      ok: false,
+      logic: "",
+      offType: "PLS",
+      reason: "",
+      operators: "E",
+      textMedida: "",
+      textAlarme:"",
+      activation1: "1",
+      activation2: "1",
+      activation3: "",
+      unit1: "",
+      unit2: "",
+      unit3: "",
+      recommendation: "",
+      infoAlarme: "",
+      infoMedida: "",
+      infoSuper: "",
+      name: "",
+      priority: "1",
       endAtivacao: [],
       separador: [],
       pushed: [],
@@ -393,67 +363,72 @@ export default {
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(/\s-\s/g, '-')
+      this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
+      
     },
 
-    sendActivation() {
-      if (
-        (isNaN(this.textMedida.charAt(0)) == true &&
-          isNaN(this.textMedida.charAt(1)) == true) ||
-        (isNaN(this.textAlarme.charAt(0)) == true &&
-          isNaN(this.textAlarme.charAt(1)) == true)
-      ) {
-        alert(
-          'Os endereços precisam possuir dois numeros como os primeiros caracteres'
-        )
-      } else {
+    sendActivation(toaster) {
+      if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
+        isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
+          
+        this.$bvToast.toast('Os endereços precisam possuir dois números como os primeiros caracteres.', {
+          title: `Endereços`,
+          toaster: toaster,
+          solid: true
+        })
+      } 
+      // 
+       else if(this.textMedida == "" || this.textAlarme == "") {
+        this.$bvToast.toast('Por favor, preencha os campos de medida e alarme.', {
+          title: `Preencher`,
+          toaster: toaster,
+          solid: true,
+        })
+      }
+      // 
+      else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        this.pushed.push(this.textAlarme, '-', this.activation1)
+        this.pushed.push(this.textAlarme, "-", this.activation1)
         this.separador = this.pushed.join(' ')
-        this.separador = this.separador.replace(/\s-\s/g, '-')
+        this.separador = this.separador.replace(/\s-\s/g, "-")
         this.logic = this.separador
+        
       }
+      
     },
 
     sendRecommendation() {
-      this.recom.push({ item: this.recommendation })
+      this.recom.push({item: this.recommendation})
     },
 
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({
-        end_alarme: this.infoAlarme,
-        ativacao: this.activation2,
-        end_medida: this.infoMedida,
-        unidade: this.unit2
-      })
+      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({
-        tipo: this.types,
-        nome: this.name,
-        end_supervisorio: this.infoSuper,
-        prioridade: this.priority,
-        unidade: this.unit3,
-        valor_operacao: this.activation3
-      })
-      this.unit3 = ''
-      this.activation3 = ''
+      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.unit3 = ""
+      this.activation3 = ""
+      
     },
 
     validation(pushed, value) {
-      return this.pushed.filter(v => v === value).length
-    },
+      return this.pushed.filter((v) => (v === value)).length;
+    },  
 
     cleanArea() {
-      this.separador = ''
+      this.separador = ""
+      this.logic = ""
+      this.ok = false
       this.pushed.splice(0)
     },
+
 
     cleanCanais(index) {
       this.end.splice(index, 1)
@@ -461,45 +436,50 @@ export default {
 
     cleanStatus(index) {
       this.measures.splice(index, 1)
+      
     },
 
-    async validate() {
-      // await fez o metodo esperar receber resposta de q a função tinha acabado antes de continuar pro resto do codigo do validate(),
-      // await só pode ser usado quando a função é async
-      await this.sendLogic({ valid: this.logic })
+    async validate(toaster) {
+     
+      await this.sendLogic({valid: this.message.logica})
       this.backendCheck = this.$store.state.validating
 
-      if (
-        this.pushed[this.pushed.length - 1] == 'E' ||
-        this.pushed[0] == 'E' ||
-        this.pushed[this.pushed.length - 1] == 'OU' ||
-        this.pushed[0] == 'OU'
-      ) {
-        alert('A lógica não esta válida')
+      if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+        this.$bvToast.toast('A lógica não está válida.', {
+          title: `Lógica inválida`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.ok = false
       } 
-      else if (
-        this.validation(this.pushed, '(') != this.validation(this.pushed, ')')
-      ) {
-        alert('Feche o parenteses da lógica')
-      } 
-      else if (this.pushed.length == false) {
-        alert('Por favor preencha todos os campos')
-      } 
-      else if (this.backendCheck == 'expressão correta') {
-        alert('A expressão esta correta')
+      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+        this.$bvToast.toast('Feche o parênteses da lógica.', {
+          title: `Parenteses`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.ok = false
       }
+      else if(this.backendCheck == "expressão correta") {
+        this.$bvToast.toast('A expressão está correta.', {
+          title: `Validação`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.ok = true
+
+      }
+
     },
 
-    async saveData(id) {
-      this.allData.splice(0)
-      this.endAtivacao.push({
-        end_alarme: this.textAlarme,
-        ativacao: this.activation1
-      })
-
-      this.allData.push({
+   async saveData(toaster) {
+     this.allData.splice(0)
+     this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
+     
+      this.allData.push({ 
         tipo_desligamento: this.offType,
         local: this.local,
+        complemento: this.complement,
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
@@ -508,18 +488,41 @@ export default {
         canais: this.end,
         status_medidas: this.measures,
         recomendacoes: this.recom
-      })
+       })
+      
+      await this.sendAlarms({info: this.allData[0]})
+      this.backendAlarm = this.$store.state.salvarAlarm
 
-      // this.sendAlarms({info: this.allData[0]})
-      //  alert("Salvo com sucesso")
+      if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
+        this.$bvToast.toast('Verifique a lógica e/ou o endereço de medida.', {
+          title: `Lógica`,
+          toaster: toaster,
+          solid: true,
+        })
+
+      } 
+      else {
+        this.$bvToast.toast('Salvo com sucesso.', {
+          title: `Sucesso`,
+          toaster: toaster,
+          solid: true,
+        })
       //   setTimeout(() => {
       //   window.location.reload()
       // }, 3000);
-
-      // this.updateData({ident: id, info: this.allData[0]})
-
-      
+      }
+        
     },
+
+    updateCard(toaster) {
+      // this.updateData()
+
+      this.$bvToast.toast('Editado com sucesso.', {
+          title: `Editar`,
+          toaster: toaster,
+          solid: true,
+        })
+    }
 
   //   updateMessage (e) {
   //     this.$store.commit('updateMessage', e.target.value)
@@ -576,6 +579,10 @@ export default {
   overflow: auto;
   overflow-x: hidden;
   padding-left: 15px;
+}
+
+.modal-buttons {
+  float: right;
 }
 
 .justify {
