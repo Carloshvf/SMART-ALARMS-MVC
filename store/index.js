@@ -8,7 +8,22 @@ export const state = () => ({
   cardAlarm: [],
   deleteAlarm: [],
   todos: [],
-  update: []
+  edit: {},
+  update: [],
+  // 
+  // local: "",
+  // complemento: "",
+  // offType: "",
+  // causa: "",
+  // textMedida: "",
+  // unit1: "",
+  // textAlarme: "",
+  // activation1: "",
+  // logic: [],
+  // canais: [],
+  // status: [],
+  // recomendacao: [],
+  
 })
 
 export const mutations = {
@@ -27,13 +42,12 @@ export const mutations = {
   setCard(state, cardAlarm) {
     state.cardAlarm = cardAlarm
   },
-  loadAllCards(state, todos) {
-    state.todos = todos
+  loadInfo(state, edit) {
+    state.edit = edit
   },
-  updateMessage (state, update) {
+  updateCard(state, update) {
     state.update = update
   },
-
   DELETE_CARD(state, id){
     index = state.todos.findIndex(i => i.id == id)
     state.todos.splice(index, 1)
@@ -42,13 +56,52 @@ export const mutations = {
   //   index = state.todos.findIndex(i => i.id == id)
   //   state.todos.splice(index, 1)
   //  },
-  // deleteCard(state, deleteAlarm) {
-  //   index = state.cars.findIndex(car => car.id == id)
-  //   state.cars.splice(index, 1)
-  // },
+  deleteCard(state, deleteAlarm) {
+    state.deleteAlarm = deleteAlarm
+  },
   // updateCard(state, update) {
   //   state.update = update
   // }
+
+  // POPULANDO A PAGINA DE EDITAR
+  setLocal(state, local) {
+    state.edit.local = local;
+  },
+  setComplemento(state, complemento) {
+    state.edit.complemento = complemento;
+  },
+  setOffType(state, offType) {
+    state.edit.tipo_desligamento = offType;
+  },
+  setCausa(state, causa) {
+    state.edit.causa = causa;
+  },
+  setTextMedida(state, textMedida) {
+    state.edit.endereco_medida = textMedida;
+  },
+  setUnit1(state, unit1) {
+    state.edit.unidade = unit1;
+  },
+  setTextAlarme(state, textAlarme) {
+    state.edit.ends_alarme[0].end_alarme = textAlarme;
+  },
+  setActivation1(state, activation1) {
+    state.edit.ends_alarme[0].ativacao = activation1;
+  },
+  setLogica(state, logic) {
+    state.edit.logica = logic;
+  },
+  setCanais(state, canais) {
+    state.edit.canais = canais;
+  },
+  setStatus(state, status) {
+    state.edit.status_medidas = status;
+  },
+  setRecom(state, recomendacao) {
+    state.edit.recomendacoes = recomendacao;
+  },
+  
+  // 
 }
 
 export const actions = {
@@ -72,7 +125,6 @@ export const actions = {
     })
 
     context.commit('setAlarm', this.salvarAlarm)
-    console.log(this.salvarAlarm)
   },
 
   async sendLogic(context, { valid }) {
@@ -116,25 +168,18 @@ export const actions = {
         'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/cadastrado/' + id
       )
       .then(response => {
-        context.commit('loadAllCards', response)
+        context.commit('loadInfo', response.data.todos[0])
 
         return response
       })
   },
 
-  // async deletion ({commit}, id) {
-  //   this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
+  // async deleteAll ({commit}, todos) {
+  //   await this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
   //     .then(() => {              
-  //         commit('DELETE_CARD', id)
+  //         commit('DELETE_CARD', todos.id)
   //     })
   // },
-
-  async deleteAll ({commit}, id) {
-    this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
-      .then(() => {              
-          commit('DELETE_CARD', id)
-      })
-  },
 
   // async deleteRegistered(context, del) {
   //   await this.$axios
@@ -142,26 +187,25 @@ export const actions = {
   //       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
   //         del
   //     )
-  //     .then(response => {
-  //       this.deleteAlarm = response
-  //     })
-  //   // console.log(this.deleteAlarm)
+  //     // console.log(this.cardAlarm)
+  //     // .then(() => {
+  //     //   this.cardAlarm.id
+  //     // })
 
-  //   context.commit('deleteCard', this.deleteAlarm.data.message)
   // },
 
-  async updateData(context, upData) {
+  async updateData(context, dados) {
+    console.log(dados)
     await this.$axios
       .put(
-        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
-          upData.ident
+        ('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+          dados.id), dados.data
       )
-      .then(response => {
-        this.update = response
-      })
+    //   .then(response => {
+    //     this.update = response
+    //   })
 
-    context.commit('updateCard', this.update)
-    // console.log(this.update)
+    // context.commit('updateCard', this.update)
   },
 
   treatGraph(context, response) {

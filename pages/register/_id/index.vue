@@ -41,7 +41,7 @@
       </div>
       <div class="col-10">
         <label class="mt-4 sizing">CAUSA</label>
-        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="message.causa" >
+        <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="reason" >
       </div>
     </div>
 
@@ -96,7 +96,7 @@
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" v-model="message.logica" disabled></textarea>
+            <textarea class="form-control push-area" v-model="logic" disabled></textarea>
             <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
@@ -149,7 +149,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in end" :key="item.id">
+                  <tr v-for="(item, index) in canais" :key="item.id">
                     <td class="border-line">{{ item.end_alarme }}</td>
                     <td class="border-line">{{ item.ativacao }}</td>
                     <td class="border-line"> {{ item.end_medida }}</td>
@@ -226,7 +226,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(value, index) in measures" :key="value.id">
+                <tr v-for="(value, index) in status" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
@@ -267,7 +267,7 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="lista in recom" :key="lista.id">{{ lista.item }}</li>
+            <li v-for="lista in recomendacao" :key="lista.id">{{ lista.item }}</li>
           </ul>
         </div>
       <div class="mt-5">
@@ -309,19 +309,10 @@ export default {
       types: 'Medida',
       backendCheck: "",
       backendAlarm: "",  
-      local: "UG 11",
-      complement: "",
       ok: false,
-      logic: "",
-      offType: "PLS",
-      reason: "",
       operators: "E",
-      textMedida: "",
-      textAlarme:"",
-      activation1: "1",
       activation2: "1",
       activation3: "",
-      unit1: "",
       unit2: "",
       unit3: "",
       recommendation: "",
@@ -338,23 +329,108 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-      post: {},
-      // id: this.$route.params.id
+      id: this.$route.params.id
     }
   },
 
-  computed: {
-    message: {
+  computed: { 
+    local: {
       get () {
-        return this.detail
+        return this.$store.state.edit.local
       },
       set (value) {
-        this.$store.commit('updateMessage', value)
+        this.$store.commit('setLocal', value)
       }
-    }
-  //   ...mapState({
-  //     message: state => detail
-  // })
+    },
+    complement: {
+      get () {
+        return this.$store.state.edit.complemento
+      },
+      set (value) {
+        this.$store.commit('setComplemento', value)
+      }
+    },
+    offType: {
+      get () {
+        return this.$store.state.edit.tipo_desligamento
+      },
+      set (value) {
+        this.$store.commit('setOffType', value)
+      }
+    },
+    reason: {
+      get () {
+        return this.$store.state.edit.causa
+      },
+      set (value) {
+        this.$store.commit('setCausa', value)
+      }
+    },
+    textMedida: {
+      get () {
+        return this.$store.state.edit.endereco_medida
+      },
+      set (value) {
+        this.$store.commit('setTextMedida', value)
+      }
+    },
+    unit1: {
+      get () {
+        return this.$store.state.edit.unidade
+      },
+      set (value) {
+        this.$store.commit('setUnit1', value)
+      }
+    },
+    textAlarme: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].end_alarme
+      },
+      set (value) {
+        this.$store.commit('setTextAlarme', value)
+      }
+    },
+    activation1: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].ativacao
+      },
+      set (value) {
+        this.$store.commit('setActivation1', value)
+      }
+    },
+    logic: {
+      get () {
+        return this.$store.state.edit.logica
+      },
+      set (value) {
+        this.$store.commit('setLogica', value)
+      }
+    },
+    canais: {
+      get () {
+        return this.$store.state.edit.canais
+      },
+      set (value) {
+        this.$store.commit('setCanais', value)
+      }
+    },
+    status: {
+      get () {
+        return this.$store.state.edit.status_medidas
+      },
+      set (value) {
+        this.$store.commit('setStatus', value)
+      }
+    },
+    recomendacao: {
+      get () {
+        return this.$store.state.edit.recomendacoes
+      },
+      set (value) {
+        this.$store.commit('setRecom', value)
+      }
+    },
+ 
   },
 
   methods: {
@@ -363,6 +439,7 @@ export default {
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
+      // console.log(this.separador)
       this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
       
@@ -393,6 +470,7 @@ export default {
         this.pushed.push(this.textAlarme, "-", this.activation1)
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
+        // console.log(this.separador)
         this.logic = this.separador
         
       }
@@ -429,7 +507,6 @@ export default {
       this.pushed.splice(0)
     },
 
-
     cleanCanais(index) {
       this.end.splice(index, 1)
     },
@@ -441,7 +518,7 @@ export default {
 
     async validate(toaster) {
      
-      await this.sendLogic({valid: this.message.logica})
+      await this.sendLogic({valid: this.logic})
       this.backendCheck = this.$store.state.validating
 
       if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
@@ -475,7 +552,7 @@ export default {
    async saveData(toaster) {
      this.allData.splice(0)
      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-     
+    
       this.allData.push({ 
         tipo_desligamento: this.offType,
         local: this.local,
@@ -499,7 +576,6 @@ export default {
           toaster: toaster,
           solid: true,
         })
-
       } 
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
@@ -514,8 +590,24 @@ export default {
         
     },
 
-    updateCard(toaster) {
-      // this.updateData()
+    updateCard(toaster, id) {
+      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+
+      this.allData.push({ 
+        tipo_desligamento: this.offType,
+        local: this.local,
+        complemento: this.complement,
+        causa: this.reason,
+        endereco_medida: this.textMedida,
+        unidade: this.unit1,
+        logica: this.logic,
+        ends_alarme: this.endAtivacao,
+        canais: this.end,
+        status_medidas: this.measures,
+        recomendacoes: this.recom
+       })
+
+      this.updateData({ id: this.id, data: this.allData[0]})
 
       this.$bvToast.toast('Editado com sucesso.', {
           title: `Editar`,
@@ -524,36 +616,18 @@ export default {
         })
     }
 
-  //   updateMessage (e) {
-  //     this.$store.commit('updateMessage', e.target.value)
-  // }
+  
 
   },
-
-  // async fetch({ store, params }) {
-  //   const teste = await store.dispatch('loadCard')
-
-  //   console.log(teste.data.todos)
-  // }
-
-  // async mounted() {
-  //   var teste = await $store.dispatch('loadCard')
-  //   console.log(teste)
-  // }
-
-  // asynData() {
-  //   return {
-  //     axios: store.dispatch('loadCard')
-  //   }
-  // },
 
   async asyncData({ store, route }) {
     const { id } = route.params
     const teste = await store.dispatch('loadCard', id)
 
-    console.log(teste)
+    // console.log(teste)
 
     return { detail: teste.data.todos[0]}
+    
   }
 }
 </script>

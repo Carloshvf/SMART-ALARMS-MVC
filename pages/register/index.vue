@@ -277,19 +277,6 @@
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
-    <!-- <b-button v-b-modal="'modal-update'" >Open Modal</b-button> -->
-
-    <!-- <b-modal id="modal-update" hide-footer> -->
-      <!-- <template v-slot:modal-title>
-        Salvando o alarme
-      </template>
-      <div>
-        <p>Escolha como quer salvar o alarme.</p>
-      </div>
-      <b-button class="modal-buttons bg-dark-red mt-3" >Salvar como alarme novo</b-button>
-      <b-button class="modal-buttons btn-green mt-3 mr-2" >Editar</b-button>
-    </b-modal> -->
-    <!-- MODAL -->
   </div>
 
   </div>
@@ -425,7 +412,6 @@ export default {
     },
 
     async validate(toaster) {
-     
       await this.sendLogic({valid: this.logic})
       this.backendCheck = this.$store.state.validating
 

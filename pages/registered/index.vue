@@ -42,7 +42,7 @@
             <p>{{ item.infos[0].causa }}</p>
             <hr />
             <div class="align options">
-              <button class="btn mr-5" @click="deletion(item, i)">
+              <button class="btn mr-5" @click="deletion(item.id,'b-toaster-bottom-right')">
                 Excluir
                 <delete class="options"></delete>
               </button>
@@ -99,7 +99,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadRegistered', 'deleteAll', 'loadCard']),
+    ...mapActions(['loadRegistered', 'deleteRegistered']),
 
     changeCards() {
       this.env_ug = this.ug.replace(/\s/g, '_')
@@ -107,28 +107,34 @@ export default {
       
     },
 
-    async deletion(todos, id) {
-        this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
-          .then(() => {              
-              this.todos.splice(id, 1)
-          })
-          setTimeout(() => {
-            window.location.reload()
-          }, 2000);
+    async deletion(id, toaster) {
+      this.env_ug = this.ug.replace(/\s/g, '_')
+      await this.$axios
+      .delete(
+        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+          id
+      )
+      .then(() => {
+        this.loadRegistered({ local: this.env_ug, tipo_desligamento: this.type })
+      })
+      this.$bvToast.toast('Deletado com sucesso.', {
+          title: `Deletar`,
+          toaster: toaster,
+          solid: true,
+        })
+      
+    }
+
+    // async deletion(todos, id) {
+    //     this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
+    //       .then(() => {              
+    //           this.todos.splice(id, 1)
+    //       })
+    //       setTimeout(() => {
+    //         window.location.reload()
+    //       }, 2000);
          
-      }
-
-    // deleteAll(index) {
-    //     this.alarms.splice(index, 1)
-    // }
-
-    //   this.delMessage = this.$store.state.deleteAlarm
-    //   if (this.delMessage == 'deletado com sucesso') {
-    //     alert('Deletado com sucesso')
-    //   } else {
-    //     alert('Não foi possivel deletar')
     //   }
-    // },
 
   },
 
