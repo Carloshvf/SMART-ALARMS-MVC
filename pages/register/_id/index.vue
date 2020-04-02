@@ -96,7 +96,7 @@
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" v-model="logic" disabled></textarea>
+            <textarea class="form-control push-area" v-model="pushed" disabled></textarea>
             <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
@@ -149,7 +149,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in canais" :key="item.id">
+                  <tr v-for="(item, index) in canal" :key="item.id">
                     <td class="border-line">{{ item.end_alarme }}</td>
                     <td class="border-line">{{ item.ativacao }}</td>
                     <td class="border-line"> {{ item.end_medida }}</td>
@@ -294,7 +294,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue'
 
 import axios from 'axios'
@@ -321,9 +321,10 @@ export default {
       infoSuper: "",
       name: "",
       priority: "1",
+      logicInfo: this.$store.state.edit.logica.toString(),
       endAtivacao: [],
       separador: [],
-      pushed: [],
+      pushed: [this.$store.state.edit.logica],
       recom: [],
       end: [],
       measures: [],
@@ -406,7 +407,7 @@ export default {
         this.$store.commit('setLogica', value)
       }
     },
-    canais: {
+    canal: {
       get () {
         return this.$store.state.edit.canais
       },
@@ -435,13 +436,20 @@ export default {
 
   methods: {
     ...mapActions(['sendAlarms', 'sendLogic', 'updateData']),
+    ...mapMutations({
+      recomAdd: 'setNewRecom',
+      canaisAdd: 'setNewCanal',
+      statusAdd: 'setNewMeasure',
+    }),
 
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
-      // console.log(this.separador)
+      // console.log(this.logicInfo)
       this.separador = this.separador.replace(/\s-\s/g, "-")
-      this.logic = this.separador
+      this.pushed.splice(0)
+      this.pushed.push(this.separador)
+      this.logicInfo = this.pushed
       
     },
 
@@ -470,27 +478,29 @@ export default {
         this.pushed.push(this.textAlarme, "-", this.activation1)
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
-        // console.log(this.separador)
-        this.logic = this.separador
+        this.pushed.splice(0)
+        this.pushed.push(this.separador)
+        this.logicInfo = this.pushed.toString()
+       
         
       }
       
     },
 
     sendRecommendation() {
-      this.recom.push({item: this.recommendation})
+      this.recomAdd(this.recommendation)
     },
 
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
       
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.statusAdd({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
       this.unit3 = ""
       this.activation3 = ""
       
@@ -560,12 +570,13 @@ export default {
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
-        logica: this.logic,
+        logica: this.logicInfo,
         ends_alarme: this.endAtivacao,
-        canais: this.end,
-        status_medidas: this.measures,
-        recomendacoes: this.recom
+        canais: this.canal,
+        status_medidas: this.status,
+        recomendacoes: this.recomendacao
        })
+      //  console.log(this.allData[0])
       
       await this.sendAlarms({info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
@@ -600,11 +611,11 @@ export default {
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
-        logica: this.logic,
+        logica: this.logicInfo,
         ends_alarme: this.endAtivacao,
-        canais: this.end,
-        status_medidas: this.measures,
-        recomendacoes: this.recom
+        canais: this.canal,
+        status_medidas: this.status,
+        recomendacoes: this.recomendacao
        })
 
       this.updateData({ id: this.id, data: this.allData[0]})

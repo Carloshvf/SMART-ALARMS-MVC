@@ -52,16 +52,9 @@ export const mutations = {
     index = state.todos.findIndex(i => i.id == id)
     state.todos.splice(index, 1)
    },
-  // DELETE_CARD(state, id){
-  //   index = state.todos.findIndex(i => i.id == id)
-  //   state.todos.splice(index, 1)
-  //  },
   deleteCard(state, deleteAlarm) {
     state.deleteAlarm = deleteAlarm
   },
-  // updateCard(state, update) {
-  //   state.update = update
-  // }
 
   // POPULANDO A PAGINA DE EDITAR
   setLocal(state, local) {
@@ -100,7 +93,16 @@ export const mutations = {
   setRecom(state, recomendacao) {
     state.edit.recomendacoes = recomendacao;
   },
-  
+  // Mutations para alterar os arrays na página de editar
+  setNewRecom(state, recomendacao) {
+    state.edit.recomendacoes.push({item: recomendacao})
+  },
+  setNewCanal(state, canal) {
+    state.edit.canais.push(canal)
+  },
+  setNewMeasure(state, status) {
+    state.edit.status_medidas.push(status)
+  }
   // 
 }
 
@@ -195,7 +197,6 @@ export const actions = {
   // },
 
   async updateData(context, dados) {
-    console.log(dados)
     await this.$axios
       .put(
         ('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
