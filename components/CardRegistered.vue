@@ -6,9 +6,9 @@
                 <p>{{ alarm.causa }}</p>
                 <hr>
                 <div class="align options">
-                    <button class="btn mr-5" @click="deletion()">Excluir <delete class="options"></delete></button>
+                    <button class="btn mr-5" @click="deletion(ind)">Excluir <delete class="options"></delete></button>
                     
-                    <nuxt-link to="/register" class="btn options ml-5">Editar</nuxt-link>
+                    <nuxt-link @click.native="editing()" to="/register" class="btn options ml-5">Editar</nuxt-link>
                 </div>
             </div>
         </div>
@@ -16,14 +16,15 @@
 
 <script>
 import Delete from 'vue-material-design-icons/Delete.vue';
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
-    props: ['alarm', 'unit'],
+    props: ['alarm', 'unit', 'ind'],
 
     data() {
         return {
         deletionAlarms: [],
+        persistAlarms: [],
         delMessage: "",
         }
 
@@ -34,21 +35,32 @@ export default {
     },
 
     methods: {
-        ...mapActions(['deleteRegistered']),
-        // Ta praticamente feito mas tem q perguntar pra Belle se mensagem de resposta deveri ser positiva
-        async deletion() {
+        ...mapActions(['deleteRegistered', 'persist']),
+
+        
+        async deletion(ind) {
             this.deletionAlarms.splice(0)
             this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa})
-            await this.deleteRegistered(this.deletionAlarms[0])
-            this.delMessage = this.$store.state.deleteAlarm
-            console.log(this.delMessage)
+            // await this.deleteRegistered(this.deletionAlarms[0])
+            
+            console.log(this.ind)
+            this.alarm.splice(ind, 1)
+            
+            // this.delMessage = this.$store.state.deleteAlarm
             if (this.delMessage == "deletado com sucesso") {
                 alert("Deletado com sucesso")
             } else {
                 alert("Não foi possivel deletar")
             }
             
+        },
+
+        editing() {
+            this.persistAlarms.splice(0)
+            this.persistAlarms.push({local: this.unit, causa: this.alarm.causa})
+            this.persist(this.persistAlarms[0])
         }
+
     }
 
 }

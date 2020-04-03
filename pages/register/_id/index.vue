@@ -96,7 +96,7 @@
         <div class="form-row mt-4">
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
-            <textarea class="form-control push-area" v-model="separador" disabled></textarea>
+            <textarea class="form-control push-area" v-model="pushed" disabled></textarea>
             <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
           </div>
@@ -149,7 +149,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in end" :key="item.id">
+                  <tr v-for="(item, index) in canal" :key="item.id">
                     <td class="border-line">{{ item.end_alarme }}</td>
                     <td class="border-line">{{ item.ativacao }}</td>
                     <td class="border-line"> {{ item.end_medida }}</td>
@@ -226,7 +226,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(value, index) in measures" :key="value.id">
+                <tr v-for="(value, index) in status" :key="value.id">
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
@@ -267,49 +267,52 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="lista in recom" :key="lista.id">{{ lista.item }}</li>
+            <li v-for="lista in recomendacao" :key="lista.id">{{ lista.item }}</li>
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar" v-if="ok == false" @click="saveData('b-toaster-bottom-right')" disabled>Salvar</button>
-        <button class="btn btn-green btn-salvar" v-if="ok == true" @click="saveData('b-toaster-bottom-right')">Salvar</button>
+        <button class="btn btn-green btn-salvar" v-if="ok == false" disabled>Salvar</button>
+        <button class="btn btn-green btn-salvar" v-b-modal="'modal-update'" v-if="ok == true">Salvar</button>
         <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
+     <b-modal id="modal-update" hide-footer>
+      <template v-slot:modal-title>
+        Salvando o alarme
+      </template>
+      <div>
+        <p>Escolha como quer salvar o alarme.</p>
+      </div>
+      <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')">Salvar como alarme novo</b-button>
+      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Editar</b-button>
+    </b-modal>
+    <!-- MODAL -->
   </div>
 
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';  
+import { mapActions, mapState, mapMutations } from 'vuex'
+import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue'
+
+import axios from 'axios'
 
 export default {
-
   components: {
-    DeleteOutline,
+    DeleteOutline
   },
-  
+
   data() {
     return {
       types: 'Medida',
       backendCheck: "",
       backendAlarm: "",  
-      local: "UG 11",
-      complement: "",
       ok: false,
-      logic: "",
-      offType: "PLS",
-      reason: "",
       operators: "E",
-      textMedida: "",
-      textAlarme:"",
-      activation1: "1",
       activation2: "1",
       activation3: "",
-      unit1: "",
       unit2: "",
       unit3: "",
       recommendation: "",
@@ -318,25 +321,137 @@ export default {
       infoSuper: "",
       name: "",
       priority: "1",
+      logicInfo: this.$store.state.edit.logica.toString(),
       endAtivacao: [],
       separador: [],
-      pushed: [],
+      pushed: [this.$store.state.edit.logica],
       recom: [],
       end: [],
       measures: [],
       allData: [],
       editData: [],
-    } 
+      id: this.$route.params.id
+    }
+  },
+
+  computed: { 
+    local: {
+      get () {
+        return this.$store.state.edit.local
+      },
+      set (value) {
+        this.$store.commit('setLocal', value)
+      }
+    },
+    complement: {
+      get () {
+        return this.$store.state.edit.complemento
+      },
+      set (value) {
+        this.$store.commit('setComplemento', value)
+      }
+    },
+    offType: {
+      get () {
+        return this.$store.state.edit.tipo_desligamento
+      },
+      set (value) {
+        this.$store.commit('setOffType', value)
+      }
+    },
+    reason: {
+      get () {
+        return this.$store.state.edit.causa
+      },
+      set (value) {
+        this.$store.commit('setCausa', value)
+      }
+    },
+    textMedida: {
+      get () {
+        return this.$store.state.edit.endereco_medida
+      },
+      set (value) {
+        this.$store.commit('setTextMedida', value)
+      }
+    },
+    unit1: {
+      get () {
+        return this.$store.state.edit.unidade
+      },
+      set (value) {
+        this.$store.commit('setUnit1', value)
+      }
+    },
+    textAlarme: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].end_alarme
+      },
+      set (value) {
+        this.$store.commit('setTextAlarme', value)
+      }
+    },
+    activation1: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].ativacao
+      },
+      set (value) {
+        this.$store.commit('setActivation1', value)
+      }
+    },
+    logic: {
+      get () {
+        return this.$store.state.edit.logica
+      },
+      set (value) {
+        this.$store.commit('setLogica', value)
+      }
+    },
+    canal: {
+      get () {
+        return this.$store.state.edit.canais
+      },
+      set (value) {
+        this.$store.commit('setCanais', value)
+      }
+    },
+    status: {
+      get () {
+        return this.$store.state.edit.status_medidas
+      },
+      set (value) {
+        this.$store.commit('setStatus', value)
+      }
+    },
+    recomendacao: {
+      get () {
+        return this.$store.state.edit.recomendacoes
+      },
+      set (value) {
+        this.$store.commit('setRecom', value)
+      }
+    },
+ 
   },
 
   methods: {
     ...mapActions(['sendAlarms', 'sendLogic', 'updateData']),
+    ...mapMutations({
+      recomAdd: 'setNewRecom',
+      canaisAdd: 'setNewCanal',
+      statusAdd: 'setNewMeasure',
+      canaisClean: 'setCleanCanal',
+      statusClean: 'setCleanStatus'
+    }),
 
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(/\s-\s/g, "-")
-      this.logic = this.separador
+      // Esse splice ta sumindo com o espaço necessario no final da logica
+      this.pushed.splice(0)
+      this.pushed.push(this.separador)
+      this.logicInfo = this.pushed.toString()
       
     },
 
@@ -344,7 +459,7 @@ export default {
       if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
         isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
           
-        this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
+        this.$bvToast.toast('Os endereços precisam possuir dois números como os primeiros caracteres.', {
           title: `Endereços`,
           toaster: toaster,
           solid: true
@@ -352,7 +467,7 @@ export default {
       } 
       // 
        else if(this.textMedida == "" || this.textAlarme == "") {
-        this.$bvToast.toast('Por favor preencha os campos de medida e alarme.', {
+        this.$bvToast.toast('Por favor, preencha os campos de medida e alarme.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
@@ -365,26 +480,29 @@ export default {
         this.pushed.push(this.textAlarme, "-", this.activation1)
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
-        this.logic = this.separador
+        this.pushed.splice(0)
+        this.pushed.push(this.separador)
+        this.logicInfo = this.pushed.toString()
+       
         
       }
       
     },
 
     sendRecommendation() {
-      this.recom.push({item: this.recommendation})
+      this.recomAdd(this.recommendation)
     },
 
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
       
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.statusAdd({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
       this.unit3 = ""
       this.activation3 = ""
       
@@ -401,30 +519,29 @@ export default {
       this.pushed.splice(0)
     },
 
-
     cleanCanais(index) {
-      this.end.splice(index, 1)
+      this.canaisClean(index)
     },
 
     cleanStatus(index) {
-      this.measures.splice(index, 1)
-      
+      this.statusClean(index)
     },
 
     async validate(toaster) {
-      await this.sendLogic({valid: this.logic})
+     
+      await this.sendLogic({valid: this.logicInfo})
       this.backendCheck = this.$store.state.validating
 
       if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
-        this.$bvToast.toast('A lógica não esta válida.', {
-          title: `Logica invalida`,
+        this.$bvToast.toast('A lógica não está válida.', {
+          title: `Lógica inválida`,
           toaster: toaster,
           solid: true,
         })
         this.ok = false
       } 
       else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
-        this.$bvToast.toast('Feche o parenteses da lógica.', {
+        this.$bvToast.toast('Feche o parênteses da lógica.', {
           title: `Parenteses`,
           toaster: toaster,
           solid: true,
@@ -432,13 +549,20 @@ export default {
         this.ok = false
       }
       else if(this.backendCheck == "expressão correta") {
-        this.$bvToast.toast('A expressão esta correta.', {
+        this.$bvToast.toast('A expressão está correta.', {
           title: `Validação`,
           toaster: toaster,
           solid: true,
         })
         this.ok = true
-
+      }
+      else {
+         this.$bvToast.toast('A expressão está incorreta.', {
+          title: `Validação`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.ok = false
       }
 
     },
@@ -446,7 +570,7 @@ export default {
    async saveData(toaster) {
      this.allData.splice(0)
      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-     
+    
       this.allData.push({ 
         tipo_desligamento: this.offType,
         local: this.local,
@@ -454,23 +578,23 @@ export default {
         causa: this.reason,
         endereco_medida: this.textMedida,
         unidade: this.unit1,
-        logica: this.logic,
+        logica: this.logicInfo,
         ends_alarme: this.endAtivacao,
-        canais: this.end,
-        status_medidas: this.measures,
-        recomendacoes: this.recom
+        canais: this.canal,
+        status_medidas: this.status,
+        recomendacoes: this.recomendacao
        })
+      //  console.log(this.allData[0])
       
       await this.sendAlarms({info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
       if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
-        this.$bvToast.toast('Verifique a logica.', {
-          title: `Logica`,
+        this.$bvToast.toast('Verifique a lógica e/ou o endereço de medida.', {
+          title: `Lógica`,
           toaster: toaster,
           solid: true,
         })
-
       } 
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
@@ -481,15 +605,49 @@ export default {
       //   setTimeout(() => {
       //   window.location.reload()
       // }, 3000);
-
       }
         
-      
     },
 
+    updateCard(toaster, id) {
+      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+
+      this.allData.push({ 
+        tipo_desligamento: this.offType,
+        local: this.local,
+        complemento: this.complement,
+        causa: this.reason,
+        endereco_medida: this.textMedida,
+        unidade: this.unit1,
+        logica: this.logicInfo,
+        ends_alarme: this.endAtivacao,
+        canais: this.canal,
+        status_medidas: this.status,
+        recomendacoes: this.recomendacao
+       })
+
+      this.updateData({ id: this.id, data: this.allData[0]})
+
+      this.$bvToast.toast('Editado com sucesso.', {
+          title: `Editar`,
+          toaster: toaster,
+          solid: true,
+        })
+    }
+
+  
+
   },
-  
-  
+
+  async asyncData({ store, route }) {
+    const { id } = route.params
+    const teste = await store.dispatch('loadCard', id)
+
+    // console.log(teste)
+
+    return { detail: teste.data.todos[0]}
+    
+  }
 }
 </script>
 
@@ -501,7 +659,6 @@ export default {
   h1 {
     font-size: 34px;
   }
-
 }
 
 .border-line {
@@ -515,7 +672,10 @@ export default {
   overflow: auto;
   // overflow-x: hidden;
   padding-left: 15px;
+}
 
+.modal-buttons {
+  float: right;
 }
 
 .justify {
@@ -572,10 +732,9 @@ export default {
 }
 
 @media (min-width: 1200px) {
-  .container{
-      max-width: 1300px;
-      margin-bottom: 30px;
+  .container {
+    max-width: 1300px;
+    margin-bottom: 30px;
   }
 }
-
 </style>
