@@ -513,7 +513,7 @@ export default {
 .scroll {
   max-height: 180px;
   overflow: auto;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   padding-left: 15px;
 
 }

@@ -440,16 +440,18 @@ export default {
       recomAdd: 'setNewRecom',
       canaisAdd: 'setNewCanal',
       statusAdd: 'setNewMeasure',
+      canaisClean: 'setCleanCanal',
+      statusClean: 'setCleanStatus'
     }),
 
     sendOperator() {
       this.pushed.push(this.operators)
       this.separador = this.pushed.join(' ')
-      // console.log(this.logicInfo)
       this.separador = this.separador.replace(/\s-\s/g, "-")
+      // Esse splice ta sumindo com o espaço necessario no final da logica
       this.pushed.splice(0)
       this.pushed.push(this.separador)
-      this.logicInfo = this.pushed
+      this.logicInfo = this.pushed.toString()
       
     },
 
@@ -518,17 +520,16 @@ export default {
     },
 
     cleanCanais(index) {
-      this.end.splice(index, 1)
+      this.canaisClean(index)
     },
 
     cleanStatus(index) {
-      this.measures.splice(index, 1)
-      
+      this.statusClean(index)
     },
 
     async validate(toaster) {
      
-      await this.sendLogic({valid: this.logic})
+      await this.sendLogic({valid: this.logicInfo})
       this.backendCheck = this.$store.state.validating
 
       if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
@@ -554,7 +555,14 @@ export default {
           solid: true,
         })
         this.ok = true
-
+      }
+      else {
+         this.$bvToast.toast('A expressão está incorreta.', {
+          title: `Validação`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.ok = false
       }
 
     },
@@ -662,7 +670,7 @@ export default {
 .scroll {
   max-height: 180px;
   overflow: auto;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   padding-left: 15px;
 }
 

@@ -48,10 +48,10 @@ export const mutations = {
   updateCard(state, update) {
     state.update = update
   },
-  DELETE_CARD(state, id){
-    index = state.todos.findIndex(i => i.id == id)
-    state.todos.splice(index, 1)
-   },
+  // DELETE_CARD(state, id){
+  //   index = state.todos.findIndex(i => i.id == id)
+  //   state.todos.splice(index, 1)
+  //  },
   deleteCard(state, deleteAlarm) {
     state.deleteAlarm = deleteAlarm
   },
@@ -102,7 +102,13 @@ export const mutations = {
   },
   setNewMeasure(state, status) {
     state.edit.status_medidas.push(status)
-  }
+  },
+  setCleanCanal(state, index) {
+    state.edit.canais.splice(index, 1)
+  },
+  setCleanStatus(state, index) {
+    state.edit.status_medidas.splice(index, 1)
+  },
   // 
 }
 
@@ -133,7 +139,7 @@ export const actions = {
     await this.$axios
       .post(
         'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/regra/' +
-          valid
+        "'" + valid + " '"
       )
       .then(response => {
         this.validating = response.data.ok
@@ -175,26 +181,6 @@ export const actions = {
         return response
       })
   },
-
-  // async deleteAll ({commit}, todos) {
-  //   await this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
-  //     .then(() => {              
-  //         commit('DELETE_CARD', todos.id)
-  //     })
-  // },
-
-  // async deleteRegistered(context, del) {
-  //   await this.$axios
-  //     .delete(
-  //       'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
-  //         del
-  //     )
-  //     // console.log(this.cardAlarm)
-  //     // .then(() => {
-  //     //   this.cardAlarm.id
-  //     // })
-
-  // },
 
   async updateData(context, dados) {
     await this.$axios
