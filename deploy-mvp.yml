@@ -1,0 +1,43 @@
+version: 0.2 
+env: 
+  variables: 
+      projectName: "smartalarms-frontend-vue"
+      slackChannel: "CR288CXPW"   
+phases:
+ install:
+   runtime-versions:
+      nodejs: 10
+   commands:
+    - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer o deploy da aplicação 
+    - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//') 
+    - apt-get update 
+    - cd $CODEBUILD_SRC_DIR 
+    - mkdir .arquitetura-td-build 
+    - cd .arquitetura-td-build 
+    - chmod 775 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/ 
+    - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_8.zip . --quiet 
+    - unzip -q cicd_3_1_8.zip 
+    - cd $CODEBUILD_SRC_DIR/.arquitetura-td-build/
+    - npm install
+ pre_build:
+   commands:
+     - echo 2º Passo - Realizar o Teste de Interface
+ build:
+   commands:
+     - echo 3º Passo - Realizar o deploy da aplicação no ambiente MVP da Petrobras
+     - cd $CODEBUILD_SRC_DIR
+     - export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+     - git init
+     - git config --global http.sslVerify false
+     - git config --global user.email "arquitetura@spassu.com"
+     - git config --global user.name "Arquitetura Spassu"
+     - git remote add origin https://oauth2:xXxAhfjo4YEhEyuR8wzY@codigo-externo.petrobras.com.br/esteiras-digitais-tic/spassu/smartalarms/$projectName.git
+     - git fetch
+     - git reset origin/develop 
+     - git add --all
+     - git commit -m "Alterações importadas pelo AWS Code Build da Spassu de ID $CODEBUILD_BUILD_ID com os fontes do AWS Code Commit(Git) da Spassu com a versão de ID ${CODEBUILD_RESOLVED_SOURCE_VERSION}."
+     - git checkout -b develop
+     - git push -u origin develop --force
+     - echo 4º Passo - Gerar Aviso no Slack da Finalização do Pipeline 
+     - cd $CODEBUILD_SRC_DIR/.arquitetura-td-build/
+     - node slack "O Projeto ${projectName} foi versionado com sucesso no git da Petrobras na url https://codigo-externo.petrobras.com.br/esteiras-digitais-tic/spassu/smartalarms/${projectName}.git."

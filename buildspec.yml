@@ -33,8 +33,8 @@ phases:
      - mkdir .arquitetura-td-build
      - cd .arquitetura-td-build
      - chmod 775 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/
-     - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_6.zip . --quiet
-     - unzip -q cicd_3_1_6.zip
+     - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_8.zip . --quiet
+     - unzip -q cicd_3_1_8.zip
      - chmod 777 -R $CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/
      - export PATH=$PATH:$CODEBUILD_SRC_DIR/.arquitetura-td-build/sonar-scanner/bin/
  pre_build:

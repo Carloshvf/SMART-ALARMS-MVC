@@ -35,7 +35,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -65,12 +64,6 @@ typings/
 # next.js build output
 .next
 
-# nuxt.js build output
-.nuxt
-
-# Nuxt generate
-dist
-
 # vuepress build output
 .vuepress/dist
 
@@ -81,8 +74,8 @@ dist
 .idea
 .editorconfig
 
-# Service worker
-sw.*
-
 # Mac OSX
 .DS_Store
+
+.arquitetura-td-build/
+node_modules
