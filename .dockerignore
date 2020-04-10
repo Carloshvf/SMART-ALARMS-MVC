@@ -1,0 +1,11 @@
+# ignore .git and gitignore folders
+.git
+.gitignore
+
+# ignore all markdown files (md) beside all README*.md other than README-secret.md
+*.md
+
+# ignore files node and nuxt
+node_modules
+npm-debug*
+.nuxt

@@ -1,8 +1,15 @@
 export default {
+
+  env: {
+    //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
+    baseURL: process.env.baseURL || 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000'
+  },
+
   mode: 'universal',
   /*
    ** Headers of the page
    */
+
   head: {
     title: process.env.npm_package_name || '',
     meta: [

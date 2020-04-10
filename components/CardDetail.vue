@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header bg-dark-purple">
-      <h2 class="mb-0 text-uppercase">{{ alarm.type }} {{ alarm.name }}</h2>
+      <h2 class="mb-0 text-uppercase">{{ alarm.type }} {{ alarm.name }} {{ alarm.complemento }}</h2>
     </div>
     <!-- /.card-header -->
     <div class="card-content card-detail bg-purple">
@@ -21,9 +21,15 @@
         <!-- /.card-detail-content-txt -->
         <b-button v-b-modal="alarm.value">Gráfico</b-button>
 
-        <b-modal size="xl" :id="alarm.value" title="BootstrapVue">
-          <p class="my-4">Endereço: {{ alarm.value }}</p>
-          <graph ref="chartCurve" :chart-data="chartData" :height="210" :options="chartOptions" />
+        <b-modal size="xl" :id="alarm.value" title="BootstrapVuee">
+          <p class="my-4">Endereço: {{ alarm.value }} Medida: C</p>
+          <p class="ml-auto">Medida: C</p>
+          <graph
+            ref="chartCurve"
+            :chart-data="chartData"
+            :height="210"
+            :options="chartOptions"
+          />
           <b-button v-on:click="reset()">Reset zoom</b-button>
           <!--  -->
         </b-modal>
@@ -75,124 +81,80 @@ export default {
         datasets: [
           {
             label: 'Day One',
-            pointBackgroundColor:'#f87979',
+            pointBackgroundColor: '#f87979',
             fill: false,
             borderColor: '#f87979',
             data: [40, 20, 30]
           },
           {
             label: 'Day Two',
-            pointBackgroundColor:'#e6e600',
+            pointBackgroundColor: '#e6e600',
             fill: false,
             borderColor: '#e6e600',
             data: [100, 50, 70]
-          }, 
-           {
+          },
+          {
             label: 'Day Three',
-            pointBackgroundColor:'#0066ff',
+            pointBackgroundColor: '#0066ff',
             fill: false,
             borderColor: '#0066ff',
             data: [80, 60, 30]
           }
         ]
       },
-       chartOptions: {
-          pan: {
-              enabled: true,
-              mode: "x"
-            },
-          zoom: {
-            drag: true,
-            enabled: true,
-            mode: "xy",
-            speed: 0.7
-          },
-          scales: {
-            yAxes: [
-              {
-                gridLines: {
-                  display: true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: "Valor"
-                }
+      chartOptions: {
+        pan: {
+          enabled: true,
+          mode: 'x'
+        },
+        zoom: {
+          drag: true,
+          enabled: true,
+          mode: 'xy',
+          speed: 0.7
+        },
+        scales: {
+          yAxes: [
+            {
+              gridLines: {
+                display: true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Valor'
               }
-            ],
-            xAxes: [
-              {
-                gridLines: {
-                  display: true
-                },
-                ticks: {
-                  // max: 20
-                  // min: 0,
-                  stepSize: 4.5
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: "Tempo"
-                }
+            }
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                display: true
+              },
+              ticks: {
+                // max: 20
+                // min: 0,
+                stepSize: 4.5
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Tempo'
               }
-            ]
-          }
+            }
+          ]
+        }
       }
     }
   },
   methods: {
     getChartVisible() {
-      var refChart = "chartCurve";
-      return refChart;
+      var refChart = 'chartCurve'
+      return refChart
     },
-    
-    reset() {
-      this.$resetGraph(this.getChartVisible());
-    }
-  },
-  // computed: {
-  //   ...mapState(['all'])
-  // }
 
-  // methods: {
-  // ...mapActions(['loadData'])
-  // loadCount() {
-  //   const dateApi = this.alarm.date
-  //   const typeData = this.alarm.type
-  //   const dateNew = new Date()
-  //   const moDataApi = this.$moment(dateApi)
-  //   let dateCurrent = this.$moment(dateNew)
-  //   let ms = moDataApi.diff(dateCurrent)
-  //   let d = this.$moment.duration(ms)
-  //   if (ms > 0) {
-  //     this.$moment.locale('pt-BR')
-  //     if (typeData == 'PLS') {
-  //       moDataApi.add(7, 'minutes')
-  //     } else {
-  //       moDataApi.add(5, 'minutes')
-  //     }
-  //     setInterval(() => {
-  //       let dateCurrent = this.$moment(new Date())
-  //       let ms = moDataApi.diff(dateCurrent)
-  //       if (ms > 0) {
-  //         let d = this.$moment.duration(ms)
-  //         this.countTime =
-  //           d
-  //             .get('minutes')
-  //             .toString()
-  //             .padStart(2, '0') +
-  //           ':' +
-  //           d
-  //             .get('seconds')
-  //             .toString()
-  //             .padStart(2, '0')
-  //       } else {
-  //         this.countTime = 'Expirou'
-  //       }
-  //     }, 1000)
-  //   } else {
-  //     this.countTime = 'Expirou'
-  //   }
-  // }
+    reset() {
+      this.$resetGraph(this.getChartVisible())
+    }
+  }
 }
 
 // created() {
