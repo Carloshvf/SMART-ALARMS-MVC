@@ -8,3 +8,4 @@
 # ignore files node and nuxt
 node_modules
 npm-debug*
+.nuxt

@@ -1,20 +1,11 @@
-ARG IMG=nexus.petrobras.com.br:5000/node:12.14-alpine
+ARG IMG=nexus.petrobras.com.br:5000/nginx:1.15.9-alpine
 FROM ${IMG}
-
-RUN mkdir -p /usr/src/nuxt-app
-WORKDIR /usr/src/nuxt-app
-
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY dist /usr/share/nginx/html
 ARG PORT=3100
 ARG baseURL
-
+ENV PORT=${PORT}
 ENV baseURL=${baseURL}
-ENV NUXT_HOST=0.0.0.0
-ENV NUXT_PORT=${PORT}
-
-COPY --chown=daemon . /usr/src/nuxt-app/
-
+COPY . /app
 EXPOSE ${PORT}
-
-USER daemon
-
-CMD [ "npm", "start" ]
+CMD ["nginx", "-g", "daemon off;"]
