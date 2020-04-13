@@ -285,7 +285,7 @@
         <p>Escolha como quer salvar o alarme.</p>
       </div>
       <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')">Salvar como alarme novo</b-button>
-      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Editar</b-button>
+      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Salvar edição</b-button>
     </b-modal>
     <!-- MODAL -->
   </div>

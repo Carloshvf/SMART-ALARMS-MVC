@@ -118,8 +118,6 @@ export const mutations = {
 
 export const actions = {
 
-  
-
   async loadData(context) {
     let {
       data: { all }
@@ -147,7 +145,7 @@ export const actions = {
   async sendLogic(context, { valid }) {
     await this.$axios
       .post(
-        'HOST_API + '0/regra/' +
+        HOST_API + '/regra/' +
         "'" + valid + " '"
       )
       .then(response => {

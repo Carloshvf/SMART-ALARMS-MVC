@@ -8,6 +8,7 @@
             <nuxt-link
               class="detail-page-sidebar-link d-flex flex-column align-items-center justify-content-center"
               :to="{ name: 'detail-id', params: { id: link.id } }"
+              v-if="link.active == 1"
             >
               <h1>{{ link.id }}</h1>
               <counter :alarm="foo(link.id)" />
