@@ -1,35 +1,11 @@
-FROM node:12.14-alpine
-
-# create destination directory
-RUN mkdir -p /usr/src/nuxt-app
-WORKDIR /usr/src/nuxt-app
-
-ARG PORT
+ARG IMG=nexus.petrobras.com.br:5000/nginx:1.15.9-alpine
+FROM ${IMG}
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY dist /usr/share/nginx/html
+ARG PORT=3100
 ARG baseURL
-
-# update and install dependency
-RUN apk update && apk upgrade
-RUN apk add git
-
-# copy the app, note .dockerignore
-COPY --chown=daemon . /usr/src/nuxt-app/
-RUN npm install
-
-RUN npm run build
-
-
+ENV PORT=${PORT}
 ENV baseURL=${baseURL}
-
-RUN echo $baseURL
-
-ENV NUXT_HOST=0.0.0.0
-# set app port
-ENV NUXT_PORT=${PORT}
-
-# expose port container
+COPY . /app
 EXPOSE ${PORT}
-
-USER daemon
-
-# start the app
-CMD [ "npm", "start" ]
+CMD ["nginx", "-g", "daemon off;"]
