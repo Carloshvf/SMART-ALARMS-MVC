@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       disabled: true,
-      stop: false,
+      stop: true,
     }
   },
 
@@ -44,24 +44,22 @@ export default {
     alarms() {
       return this.$store.state.all
     },
-    currentRoute() {
-      return this.$route.name;
-    }
   },
 
   async created() {
-    // if (this.stop == true) {
-    //   setInterval(() => {
-    //   this.loadData()
-    //     for (let index = 0; index < this.alarms.length; index++) {
-    //       if (this.alarms[index].active) {
-    //           this.$router.push('/alarm')
-    //           this.stop = false
-    //           break
-    //       }
-    //     }
-    //   }, 5000);
-    // }
+    setInterval(() => {
+      if (this.stop == true) {
+      this.loadData()
+        for (let index = 0; index < this.alarms.length; index++) {
+          if (this.alarms[index].active == 1) {
+              this.$router.push('/alarm')
+              this.stop = false
+              break
+            }
+          }
+        }
+      }, 5000);
+    
     this.loadData()
    
   },

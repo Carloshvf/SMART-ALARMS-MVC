@@ -33,6 +33,7 @@ import TopDetail from '~/components/TopDetail.vue'
 import CardDetail from '~/components/CardDetail.vue'
 import Status from '~/components/Status.vue'
 import Recommendation from '~/components/Recommendation.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -42,14 +43,28 @@ export default {
     Recommendation
   },
 
-  data() {
-    return {
-      lists: this.$store.state.all
-    }
+  // data() {
+  //   return {
+  //     lists: this.$store.state.all
+  //   }
+  // },
+
+   methods: {
+    ...mapActions(['loadData']),
+    
+  },
+
+  computed: {
+    lists() {
+      return this.$store.state.all
+    },
   },
 
   async created() {
-    // console.log(this.lists[1].kks[0])
+    setInterval(() => {
+      this.loadData()
+    }, 5000);
+   
   },
 }
 </script>

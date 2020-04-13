@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      lists: this.$store.state.all
+      // lists: this.$store.state.all
     }
   },
 
@@ -82,6 +82,8 @@ export default {
   // },
 
   methods: {
+    ...mapActions(['loadData']),
+
     foo(id) {
       var result = { countTimeDiff: 0 }
 
@@ -108,7 +110,11 @@ export default {
   computed: {
     cardDetail() {
       return this.lists.filter(i => i.id === this.id)
-    }
+    },
+
+    lists() {
+      return this.$store.state.all
+    },
     // foo() {
     //   var result = { countTimeDiff: 0 }
 
@@ -130,13 +136,14 @@ export default {
 
     //   return result
     // }
-  }
+  },
 
-  // created() {
-  // console.log(this.foo())
-  //   this.value.kks['countTime'] = ''
-  //   this.counter({ alarm: this.value.kks })
-  // }
+ async created() {
+    setInterval(() => {
+      this.loadData()
+    }, 5000);
+   
+  },
 }
 </script>
 
