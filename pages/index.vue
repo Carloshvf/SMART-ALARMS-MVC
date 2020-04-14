@@ -7,7 +7,7 @@
           <nuxt-link
             :class="{ alarmActive: alarm.active == 1 }"
             class="box-alarm d-flex align-items-center justify-content-center"
-            
+            :event="disabled ? '' : 'click'"
             to="alarm"
           >
             <span class="box-alarm-number">{{ alarm.id }}</span>
@@ -58,7 +58,7 @@ export default {
             }
           }
         }
-      }, 5000);
+      }, 15000);
     
     this.loadData()
    
