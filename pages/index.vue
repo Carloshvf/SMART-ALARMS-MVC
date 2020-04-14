@@ -11,6 +11,7 @@
             to="alarm"
           >
             <span class="box-alarm-number">{{ alarm.id }}</span>
+            <!-- :event="disabled ? '' : 'click'" -->
           </nuxt-link>
           <!-- /.box-alarm -->
         </div>

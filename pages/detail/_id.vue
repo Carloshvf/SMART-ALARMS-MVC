@@ -141,7 +141,11 @@ export default {
  async created() {
     setInterval(() => {
       this.loadData()
+<<<<<<< HEAD
     }, 15000);
+=======
+    }, 5000);
+>>>>>>> develop
    
   },
 }
