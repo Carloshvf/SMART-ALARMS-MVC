@@ -141,7 +141,7 @@ export default {
  async created() {
     setInterval(() => {
       this.loadData()
-    }, 5000);
+    }, 15000);
    
   },
 }
