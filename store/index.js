@@ -118,8 +118,6 @@ export const mutations = {
 
 export const actions = {
 
-  
-
   async loadData(context) {
     let {
       data: { all }

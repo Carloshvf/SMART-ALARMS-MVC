@@ -8,6 +8,7 @@
             <nuxt-link
               class="detail-page-sidebar-link d-flex flex-column align-items-center justify-content-center"
               :to="{ name: 'detail-id', params: { id: link.id } }"
+              v-if="link.active == 1"
             >
               <h1>{{ link.id }}</h1>
               <counter :alarm="foo(link.id)" />
@@ -72,7 +73,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      lists: this.$store.state.all
+      // lists: this.$store.state.all
     }
   },
 
@@ -81,6 +82,8 @@ export default {
   // },
 
   methods: {
+    ...mapActions(['loadData']),
+
     foo(id) {
       var result = { countTimeDiff: 0 }
 
@@ -107,7 +110,11 @@ export default {
   computed: {
     cardDetail() {
       return this.lists.filter(i => i.id === this.id)
-    }
+    },
+
+    lists() {
+      return this.$store.state.all
+    },
     // foo() {
     //   var result = { countTimeDiff: 0 }
 
@@ -129,13 +136,14 @@ export default {
 
     //   return result
     // }
-  }
+  },
 
-  // created() {
-  // console.log(this.foo())
-  //   this.value.kks['countTime'] = ''
-  //   this.counter({ alarm: this.value.kks })
-  // }
+ async created() {
+    setInterval(() => {
+      this.loadData()
+    }, 5000);
+   
+  },
 }
 </script>
 
