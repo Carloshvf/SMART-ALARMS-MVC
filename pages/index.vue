@@ -46,7 +46,7 @@ export default {
     },
   },
 
-  async created() {
+  created() {
     setInterval(() => {
       if (this.stop == true) {
       this.loadData()

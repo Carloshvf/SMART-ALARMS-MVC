@@ -74,6 +74,8 @@ export default {
     return {
       id: this.$route.params.id,
       // lists: this.$store.state.all
+      stop: true,
+      stopInterval: "",
     }
   },
 
@@ -115,33 +117,27 @@ export default {
     lists() {
       return this.$store.state.all
     },
-    // foo() {
-    //   var result = { countTimeDiff: 0 }
 
-    //   if (this.id && this.lists && this.lists.length > 0) {
-    //     var arrays = new Array()
-    //     for (const key in this.lists) {
-    //       arrays.push(Object.assign({}, this.lists[key]))
-    //     }
-
-    //     result = arrays.filter(i => i.id === this.id)
-    //     result = result[0].kks
-    //     let result2 = result.slice()
-    //     result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
-    //     result = result.filter(
-    //       (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
-    //     )
-    //     result = result[0]
-    //   }
-
-    //   return result
-    // }
+    currentRouteName() {
+        return this.$route.name;
+    }
+   
   },
 
- async created() {
-    setInterval(() => {
-      this.loadData()
-    }, 15000);
+  created() {
+    this.stopInterval = setInterval(() => {
+        if (this.stop == true) {
+          this.loadData()
+          console.log(this.currentRouteName)
+          if (this.currentRouteName != 'detail-id') {
+            console.log(this.stop)
+            this.stop = false 
+          }
+        } else {
+          console.log("parou")
+          clearInterval(this.stopInterval)
+        }
+      }, 15000);
    
   },
 }

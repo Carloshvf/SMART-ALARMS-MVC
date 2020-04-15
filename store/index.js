@@ -250,6 +250,7 @@ export const actions = {
 
     return {
       labels: tempos,
+      value: responseData.medida,
       datasets: arrayDatasets
     }
   }

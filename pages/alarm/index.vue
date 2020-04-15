@@ -43,11 +43,13 @@ export default {
     Recommendation
   },
 
-  // data() {
-  //   return {
-  //     lists: this.$store.state.all
-  //   }
-  // },
+  data() {
+    return {
+      // lists: this.$store.state.all
+      stop: true,
+      stopInterval: ""
+    }
+  },
 
    methods: {
     ...mapActions(['loadData']),
@@ -58,13 +60,24 @@ export default {
     lists() {
       return this.$store.state.all
     },
+
+    currentRouteName() {
+        return this.$route.name;
+    }
   },
 
-  async created() {
-    setInterval(() => {
-      this.loadData()
-    }, 15000);
-   
+  created() {
+      this.stopInterval = setInterval(() => {
+        if (this.stop == true) {
+          this.loadData()
+          if (this.currentRouteName != 'alarm') {
+            this.stop = false 
+          }
+        }  else {
+          clearInterval(this.stopInterval)
+        }
+      }, 15000);
+  
   },
 }
 </script>

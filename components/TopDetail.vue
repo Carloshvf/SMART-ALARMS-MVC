@@ -112,6 +112,7 @@ export default {
     async getGraph(id) {
       let response = await this.loadGraph(id)
       this.fillData = await this.treatGraph(response)
+      // this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
     }
   }
 }
