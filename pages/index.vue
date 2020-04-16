@@ -58,7 +58,7 @@ export default {
             }
           }
         }
-      }, 15000);
+      }, 5000);
     
     this.loadData()
    
