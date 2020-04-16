@@ -128,13 +128,10 @@ export default {
     this.stopInterval = setInterval(() => {
         if (this.stop == true) {
           this.loadData()
-          console.log(this.currentRouteName)
           if (this.currentRouteName != 'detail-id') {
-            console.log(this.stop)
             this.stop = false 
           }
         } else {
-          console.log("parou")
           clearInterval(this.stopInterval)
         }
       }, 15000);
