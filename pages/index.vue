@@ -46,7 +46,7 @@ export default {
     },
   },
 
-  async created() {
+  created() {
     setInterval(() => {
       if (this.stop == true) {
       this.loadData()
@@ -58,7 +58,7 @@ export default {
             }
           }
         }
-      }, 15000);
+      }, 5000);
     
     this.loadData()
    

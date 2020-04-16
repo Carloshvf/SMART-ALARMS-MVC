@@ -267,7 +267,7 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="lista in recom" :key="lista.id">{{ lista.item }}</li>
+            <li v-for="(lista, index) in recom" :key="lista.id">{{ lista.item }} <delete-outline @click="cleanRecom(index)"/></li>
           </ul>
         </div>
       <div class="mt-5">
@@ -409,6 +409,10 @@ export default {
     cleanStatus(index) {
       this.measures.splice(index, 1)
       
+    },
+
+    cleanRecom(index) {
+      this.recom.splice(index, 1)
     },
 
     async validate(toaster) {

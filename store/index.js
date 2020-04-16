@@ -112,6 +112,9 @@ export const mutations = {
   setCleanStatus(state, index) {
     state.edit.status_medidas.splice(index, 1)
   },
+  setCleanRecom(state, index) {
+    state.edit.recomendacoes.splice(index, 1)
+  },
   // 
 }
 
@@ -250,6 +253,7 @@ export const actions = {
 
     return {
       labels: tempos,
+      value: responseData.medida,
       datasets: arrayDatasets
     }
   }
