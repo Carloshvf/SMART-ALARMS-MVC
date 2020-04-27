@@ -44,7 +44,7 @@
             v-for="content in value.kks"
             :key="content.value"
           >
-            <top-detail :alarm="content" />
+            <top-detail :alarm="content" @loops="onClickChild"/>
             <status :alarm="content.status_two" />
           </div>
         </div>
@@ -85,6 +85,10 @@ export default {
 
   methods: {
     ...mapActions(['loadData']),
+
+    onClickChild (value) {
+      this.stop = value
+    },
 
     foo(id) {
       var result = { countTimeDiff: 0 }
@@ -133,6 +137,7 @@ export default {
           }
         } else {
           clearInterval(this.stopInterval)
+         
         }
       }, 5000);
    

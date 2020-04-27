@@ -14,18 +14,6 @@ export const state = () => ({
   edit: {},
   update: [],
   // 
-  // local: "",
-  // complemento: "",
-  // offType: "",
-  // causa: "",
-  // textMedida: "",
-  // unit1: "",
-  // textAlarme: "",
-  // activation1: "",
-  // logic: [],
-  // canais: [],
-  // status: [],
-  // recomendacao: [],
   
 })
 
