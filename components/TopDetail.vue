@@ -162,7 +162,7 @@ export default {
           clearInterval(this.stopInterval)
          
         }
-      }, 10000);
+      }, 5000);
 
       // this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
     }

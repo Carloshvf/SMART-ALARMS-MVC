@@ -137,7 +137,7 @@ export default {
           }
         } else {
           clearInterval(this.stopInterval)
-          console.log("parou")
+         
         }
       }, 5000);
    
