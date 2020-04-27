@@ -44,6 +44,9 @@ export default {
     alarms() {
       return this.$store.state.all
     },
+     currentRouteName() {
+        return this.$route.name;
+    }
   },
 
   created() {
@@ -51,7 +54,7 @@ export default {
       if (this.stop == true) {
       this.loadData()
         for (let index = 0; index < this.alarms.length; index++) {
-          if (this.alarms[index].active == 1) {
+          if (this.alarms[index].active == 1 && this.currentRouteName == 'index') {
               this.$router.push('/alarm')
               this.stop = false
               break
