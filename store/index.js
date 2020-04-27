@@ -14,18 +14,6 @@ export const state = () => ({
   edit: {},
   update: [],
   // 
-  // local: "",
-  // complemento: "",
-  // offType: "",
-  // causa: "",
-  // textMedida: "",
-  // unit1: "",
-  // textAlarme: "",
-  // activation1: "",
-  // logic: [],
-  // canais: [],
-  // status: [],
-  // recomendacao: [],
   
 })
 
@@ -112,13 +100,14 @@ export const mutations = {
   setCleanStatus(state, index) {
     state.edit.status_medidas.splice(index, 1)
   },
+  setCleanRecom(state, index) {
+    state.edit.recomendacoes.splice(index, 1)
+  },
   // 
 }
 
 
 export const actions = {
-
-  
 
   async loadData(context) {
     let {
@@ -252,6 +241,7 @@ export const actions = {
 
     return {
       labels: tempos,
+      value: responseData.medida,
       datasets: arrayDatasets
     }
   }

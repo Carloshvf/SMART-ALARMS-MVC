@@ -267,7 +267,7 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="lista in recomendacao" :key="lista.id">{{ lista.item }}</li>
+            <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} <delete-outline @click="cleanRecom(index)"/></li>
           </ul>
         </div>
       <div class="mt-5">
@@ -285,7 +285,7 @@
         <p>Escolha como quer salvar o alarme.</p>
       </div>
       <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')">Salvar como alarme novo</b-button>
-      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Editar</b-button>
+      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Salvar edição</b-button>
     </b-modal>
     <!-- MODAL -->
   </div>
@@ -441,7 +441,8 @@ export default {
       canaisAdd: 'setNewCanal',
       statusAdd: 'setNewMeasure',
       canaisClean: 'setCleanCanal',
-      statusClean: 'setCleanStatus'
+      statusClean: 'setCleanStatus',
+      recomClean: 'setCleanRecom'
     }),
 
     sendOperator() {
@@ -525,6 +526,10 @@ export default {
 
     cleanStatus(index) {
       this.statusClean(index)
+    },
+    
+    cleanRecom(index) {
+      this.recomClean(index)
     },
 
     async validate(toaster) {

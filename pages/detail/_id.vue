@@ -8,6 +8,7 @@
             <nuxt-link
               class="detail-page-sidebar-link d-flex flex-column align-items-center justify-content-center"
               :to="{ name: 'detail-id', params: { id: link.id } }"
+              v-if="link.active == 1"
             >
               <h1>{{ link.id }}</h1>
               <counter :alarm="foo(link.id)" />
@@ -43,7 +44,7 @@
             v-for="content in value.kks"
             :key="content.value"
           >
-            <top-detail :alarm="content" />
+            <top-detail :alarm="content" @loops="onClickChild"/>
             <status :alarm="content.status_two" />
           </div>
         </div>
@@ -72,7 +73,9 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      lists: this.$store.state.all
+      // lists: this.$store.state.all
+      stop: true,
+      stopInterval: "",
     }
   },
 
@@ -81,6 +84,12 @@ export default {
   // },
 
   methods: {
+    ...mapActions(['loadData']),
+
+    onClickChild (value) {
+      this.stop = value
+    },
+
     foo(id) {
       var result = { countTimeDiff: 0 }
 
@@ -107,35 +116,32 @@ export default {
   computed: {
     cardDetail() {
       return this.lists.filter(i => i.id === this.id)
+    },
+
+    lists() {
+      return this.$store.state.all
+    },
+
+    currentRouteName() {
+        return this.$route.name;
     }
-    // foo() {
-    //   var result = { countTimeDiff: 0 }
+   
+  },
 
-    //   if (this.id && this.lists && this.lists.length > 0) {
-    //     var arrays = new Array()
-    //     for (const key in this.lists) {
-    //       arrays.push(Object.assign({}, this.lists[key]))
-    //     }
-
-    //     result = arrays.filter(i => i.id === this.id)
-    //     result = result[0].kks
-    //     let result2 = result.slice()
-    //     result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
-    //     result = result.filter(
-    //       (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
-    //     )
-    //     result = result[0]
-    //   }
-
-    //   return result
-    // }
-  }
-
-  // created() {
-  // console.log(this.foo())
-  //   this.value.kks['countTime'] = ''
-  //   this.counter({ alarm: this.value.kks })
-  // }
+  created() {
+    this.stopInterval = setInterval(() => {
+        if (this.stop == true) {
+          this.loadData()
+          if (this.currentRouteName != 'detail-id') {
+            this.stop = false 
+          }
+        } else {
+          clearInterval(this.stopInterval)
+         
+        }
+      }, 5000);
+   
+  },
 }
 </script>
 

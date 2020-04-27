@@ -12,7 +12,7 @@
         <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>
       </div>
       <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)">Gráfico</b-button>
-      <b-modal size="xl" :id="alarm.value" title="BootstrapVue">
+      <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ alarm.value }}</p>
         <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
@@ -30,7 +30,7 @@
           <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
           <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
           <label class="mb-3" :for="value.item">{{ value.item }}</label>
-          <b-button v-b-modal="alarm.value" @click="getGraph(value.item)">Gráfico</b-button>
+          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)">Gráfico</b-button>
           <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->
         </li>
       </ul>
@@ -52,6 +52,11 @@ export default {
   },
   data() {
     return {
+      stop: true,
+      stopInterval: true,
+      rerun: true,
+      stopRerun: true,
+      ceaseLoop: true,
       fillData: {},
       chartOptions: {
         pan: {
@@ -97,8 +102,15 @@ export default {
     }
   },
 
+  computed: {
+    currentRouteName() {
+        return this.$route.name;
+    }
+   
+  },
+
   methods: {
-    ...mapActions(['loadGraph', 'treatGraph']),
+    ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
 
     getChartVisible() {
       var refChart = 'chartCurve'
@@ -109,11 +121,53 @@ export default {
       this.$resetGraph(this.getChartVisible())
     },
 
+    onShow() {
+      this.$emit('loops', false)
+      this.stopRerun = false
+      
+    },
+
+    onHidden() {
+      this.ceaseLoop = false
+      this.stopRerun = true
+      this.rerun = setInterval(() => {
+        if (this.stopRerun == true) {
+          this.loadData()
+          if (this.currentRouteName != 'detail-id') {
+            this.stopRerun = false 
+           
+          }
+        } else {
+          clearInterval(this.rerun)
+         
+        }
+      }, 5000);
+     
+    },
+
     async getGraph(id) {
       let response = await this.loadGraph(id)
       this.fillData = await this.treatGraph(response)
+      this.stopInterval = true
+      this.stop = true
+
+      this.stopInterval = setInterval(async () => {
+        if(this.stop == true) {
+           let response = await this.loadGraph(id)
+           this.fillData = await this.treatGraph(response)
+           if (this.ceaseLoop == false) {
+            this.stop = false 
+          }
+        } else {
+          clearInterval(this.stopInterval)
+         
+        }
+      }, 5000);
+
+      // this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
     }
-  }
+  },
+
 }
 </script>
 

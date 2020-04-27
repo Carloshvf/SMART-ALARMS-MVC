@@ -33,9 +33,6 @@
 export default {
   props: ['alarm'],
 
-  
-
-  
 }
 </script>
 
