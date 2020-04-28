@@ -67,6 +67,8 @@ import Delete from 'vue-material-design-icons/Delete.vue'
 import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 import { mapActions, mapMutations } from 'vuex'
 
+export const HOST_API = process.env.baseURL;
+
 export default {
   components: {
     CardRegistered,
@@ -111,7 +113,7 @@ export default {
       this.env_ug = this.ug.replace(/\s/g, '_')
       await this.$axios
       .delete(
-        'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' +
+        HOST_API + '/alarme/' +
           id
       )
       .then(() => {
