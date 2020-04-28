@@ -122,6 +122,7 @@
             <select class="form-control" v-model="activation2">
               <option>1</option>
               <option>0</option>
+              <option></option>
             </select>
           </div>
           <div class="col-4">

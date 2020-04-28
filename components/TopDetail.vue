@@ -160,7 +160,7 @@ export default {
           }
         } else {
           clearInterval(this.stopInterval)
-          
+         
         }
       }, 5000);
 
