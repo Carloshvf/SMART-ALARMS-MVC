@@ -14,7 +14,7 @@
       <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)">Gráfico</b-button>
       <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
-        <p class="my-4">Endereço: {{ alarm.value }}</p>
+        <p class="my-4">Endereço: {{ ende }}</p>
         <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
         <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
         <b-button @click="reset">Reset zoom</b-button>
@@ -30,7 +30,7 @@
           <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
           <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
           <label class="mb-3" :for="value.item">{{ value.item }}</label>
-          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)">Gráfico</b-button>
+          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)" :disabled="disable">Gráfico</b-button>
           <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->
         </li>
       </ul>
@@ -52,11 +52,14 @@ export default {
   },
   data() {
     return {
+      ende: "",
+      teste: true,
       stop: true,
       stopInterval: true,
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
+      disable: false,
       fillData: {},
       chartOptions: {
         pan: {
@@ -124,6 +127,7 @@ export default {
     onShow() {
       this.$emit('loops', false)
       this.stopRerun = false
+      this.ceaseLoop = true
       
     },
 
@@ -142,7 +146,11 @@ export default {
          
         }
       }, 5000);
-     
+
+      this.disable = true
+      setTimeout(() => {
+       this.disable = false
+     }, 5000);
     },
 
     async getGraph(id) {
@@ -153,8 +161,18 @@ export default {
 
       this.stopInterval = setInterval(async () => {
         if(this.stop == true) {
-           let response = await this.loadGraph(id)
-           this.fillData = await this.treatGraph(response)
+          for (let index = 0; index < this.alarm.channels.length; index++) {
+              if (this.alarm.channels[index].medida != id) {
+                  continue
+                  
+              } else {
+                let response = await this.loadGraph(id)
+                this.fillData = await this.treatGraph(response)
+              }
+          }
+          //  let response = await this.loadGraph(id)
+          //  this.fillData = await this.treatGraph(response)
+
            if (this.ceaseLoop == false) {
             this.stop = false 
           }
@@ -162,9 +180,10 @@ export default {
           clearInterval(this.stopInterval)
          
         }
-      }, 5000);
+      }, 3000);
+      this.ende = id
 
-      // this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
+      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
     }
   },
 
