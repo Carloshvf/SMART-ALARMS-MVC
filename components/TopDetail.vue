@@ -11,7 +11,7 @@
         <p class="text-uppercase mb-0">kks:</p>
         <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>
       </div>
-      <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)">Gráfico</b-button>
+      <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">Gráfico</b-button>
       <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ ende }}</p>
