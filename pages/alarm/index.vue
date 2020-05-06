@@ -7,7 +7,7 @@
     >
       <div class="row" v-for="card in list.kks" :key="card.id">
         <div class="col-12 col-sm-3 mb-4" v-if="list.active == 1">
-          <card-detail :unity="list" :alarm="card" />
+          <card-detail :unity="list" :alarm="card" @loops="transform"/>
         </div>
         <!-- /.col-12 col-sm-3 -->
         <div class="col-12 col-sm-4 mb-4" v-if="list.active == 1">
@@ -53,6 +53,10 @@ export default {
 
    methods: {
     ...mapActions(['loadData']),
+
+    transform (value) {
+      this.stop = value
+    },
     
   },
 

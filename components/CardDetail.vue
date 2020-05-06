@@ -19,14 +19,14 @@
           <h6>{{ alarm.value }}</h6>
         </div>
         <!-- /.card-detail-content-txt -->
-        <b-button v-b-modal="alarm.value">Gráfico</b-button>
+        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">Gráfico</b-button>
 
-        <b-modal size="xl" :id="alarm.value" title="BootstrapVuee">
-          <p class="my-4">Endereço: {{ alarm.value }} Medida: C</p>
-          <p class="ml-auto">Medida: C</p>
+        <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
+          <p class="my-4">Endereço: {{ alarm.value }}</p>
+          <!-- <p class="ml-auto">Medida: C</p> -->
           <graph
             ref="chartCurve"
-            :chart-data="chartData"
+            :chart-data="fillData"
             :height="210"
             :options="chartOptions"
           />
@@ -76,32 +76,13 @@ export default {
     return {
       id: this.$route.params.id,
       countTime: '',
-      chartData: {
-        labels: ['January', 'February', 'March'],
-        datasets: [
-          {
-            label: 'Day One',
-            pointBackgroundColor: '#f87979',
-            fill: false,
-            borderColor: '#f87979',
-            data: [40, 20, 30]
-          },
-          {
-            label: 'Day Two',
-            pointBackgroundColor: '#e6e600',
-            fill: false,
-            borderColor: '#e6e600',
-            data: [100, 50, 70]
-          },
-          {
-            label: 'Day Three',
-            pointBackgroundColor: '#0066ff',
-            fill: false,
-            borderColor: '#0066ff',
-            data: [80, 60, 30]
-          }
-        ]
-      },
+      stop: true,
+      stopInterval: true,
+      rerun: true,
+      stopRerun: true,
+      ceaseLoop: true,
+      disable: false,
+      fillData: {},
       chartOptions: {
         pan: {
           enabled: true,
@@ -146,6 +127,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
+
     getChartVisible() {
       var refChart = 'chartCurve'
       return refChart
@@ -153,6 +136,57 @@ export default {
 
     reset() {
       this.$resetGraph(this.getChartVisible())
+    },
+
+    onShow() {
+      this.$emit('loops', false)
+      this.stopRerun = false
+      this.ceaseLoop = true
+      
+    },
+
+    onHidden() {
+      this.ceaseLoop = false
+      this.stopRerun = true
+      this.rerun = setInterval(() => {
+        if (this.stopRerun == true) {
+          this.loadData()
+          if (this.currentRouteName != 'alarm') {
+            this.stopRerun = false 
+          }
+        } else {
+          clearInterval(this.rerun)
+         
+        }
+      }, 5000);
+
+      this.disable = true
+      setTimeout(() => {
+       this.disable = false
+     }, 5000);
+    },
+
+    async getGraph(id) {
+      let response = await this.loadGraph(id)
+      this.fillData = await this.treatGraph(response)
+      this.stopInterval = true
+      this.stop = true
+
+      this.stopInterval = setInterval(async () => {
+        if(this.stop == true) {
+          let response = await this.loadGraph(id)
+          this.fillData = await this.treatGraph(response)
+
+           if (this.ceaseLoop == false) {
+            this.stop = false 
+          }
+        } else {
+          clearInterval(this.stopInterval)
+         
+        }
+      }, 3000);
+    
+      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
     }
   }
 }
