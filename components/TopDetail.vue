@@ -139,7 +139,6 @@ export default {
           this.loadData()
           if (this.currentRouteName != 'detail-id') {
             this.stopRerun = false 
-           
           }
         } else {
           clearInterval(this.rerun)
