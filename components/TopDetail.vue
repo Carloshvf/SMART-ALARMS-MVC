@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       ende: "",
-      teste: true,
       stop: true,
       stopInterval: true,
       rerun: true,
