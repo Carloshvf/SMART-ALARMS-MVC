@@ -144,7 +144,6 @@ export default {
          
         }
       }, 5000);
-
       this.disable = true
       setTimeout(() => {
        this.disable = false
