@@ -30,11 +30,7 @@
           <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
           <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
           <label class="mb-3" :for="value.item">{{ value.item }}</label>
-<<<<<<< HEAD
           <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)" :disabled="disable">Gráfico</b-button>
-=======
-          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)">Gráfico</b-button>
->>>>>>> develop
           <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->
         </li>
       </ul>
@@ -56,20 +52,14 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
       ende: "",
       teste: true,
-=======
->>>>>>> develop
       stop: true,
       stopInterval: true,
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
-<<<<<<< HEAD
       disable: false,
-=======
->>>>>>> develop
       fillData: {},
       chartOptions: {
         pan: {
@@ -137,10 +127,7 @@ export default {
     onShow() {
       this.$emit('loops', false)
       this.stopRerun = false
-<<<<<<< HEAD
       this.ceaseLoop = true
-=======
->>>>>>> develop
       
     },
 
@@ -159,15 +146,11 @@ export default {
          
         }
       }, 5000);
-<<<<<<< HEAD
 
       this.disable = true
       setTimeout(() => {
        this.disable = false
      }, 5000);
-=======
-     
->>>>>>> develop
     },
 
     async getGraph(id) {
@@ -178,7 +161,6 @@ export default {
 
       this.stopInterval = setInterval(async () => {
         if(this.stop == true) {
-<<<<<<< HEAD
           for (let index = 0; index < this.alarm.channels.length; index++) {
               if (this.alarm.channels[index].medida != id) {
                   continue
@@ -189,10 +171,6 @@ export default {
               }
           }
 
-=======
-           let response = await this.loadGraph(id)
-           this.fillData = await this.treatGraph(response)
->>>>>>> develop
            if (this.ceaseLoop == false) {
             this.stop = false 
           }
@@ -200,16 +178,10 @@ export default {
           clearInterval(this.stopInterval)
          
         }
-<<<<<<< HEAD
       }, 3000);
       this.ende = id
 
       this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
-=======
-      }, 5000);
-
-      // this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
->>>>>>> develop
     }
   },
 
