@@ -170,8 +170,6 @@ export default {
                 this.fillData = await this.treatGraph(response)
               }
           }
-          //  let response = await this.loadGraph(id)
-          //  this.fillData = await this.treatGraph(response)
 
            if (this.ceaseLoop == false) {
             this.stop = false 
