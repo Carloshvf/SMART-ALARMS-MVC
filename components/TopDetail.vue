@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       ende: "",
-      teste: true,
       stop: true,
       stopInterval: true,
       rerun: true,
@@ -145,7 +144,6 @@ export default {
          
         }
       }, 5000);
-     
       this.disable = true
       setTimeout(() => {
        this.disable = false
