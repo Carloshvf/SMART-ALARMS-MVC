@@ -11,7 +11,7 @@
         <p class="text-uppercase mb-0">kks:</p>
         <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>
       </div>
-      <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">Gráfico</b-button>
+      <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
       <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ ende }}</p>
@@ -30,7 +30,7 @@
           <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
           <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
           <label class="mb-3" :for="value.item">{{ value.item }}</label>
-          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)" :disabled="disable">Gráfico</b-button>
+          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
           <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->
         </li>
       </ul>
