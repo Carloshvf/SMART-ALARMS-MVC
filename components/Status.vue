@@ -159,13 +159,21 @@ export default {
           clearInterval(this.rerun)
          
         }
+<<<<<<< HEAD
       }, 15000);
+=======
+      }, 5000);
+>>>>>>> develop
       }
       
       this.disable = true
       setTimeout(() => {
        this.disable = false
+<<<<<<< HEAD
      }, 15000);
+=======
+     }, 5000);
+>>>>>>> develop
     },
 
     async getGraph(id) {
@@ -186,7 +194,11 @@ export default {
           clearInterval(this.stopInterval)
          
         }
+<<<<<<< HEAD
       }, 13000);
+=======
+      }, 3000);
+>>>>>>> develop
       this.ende = id
 
       this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
