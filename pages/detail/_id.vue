@@ -45,7 +45,7 @@
             :key="content.value"
           >
             <top-detail :alarm="content" @loops="onClickChild"/>
-            <status :alarm="content.status_two" />
+            <status :alarm="content.status_two" @loops="onClickChild"/>
           </div>
         </div>
       </div>

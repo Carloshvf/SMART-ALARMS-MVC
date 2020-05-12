@@ -19,7 +19,7 @@
           <h6>{{ alarm.value }}</h6>
         </div>
         <!-- /.card-detail-content-txt -->
-        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">Gráfico</b-button>
+        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
 
         <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
@@ -125,6 +125,13 @@ export default {
         }
       }
     }
+  },
+
+   computed: {
+    currentRouteName() {
+        return this.$route.name;
+    }
+   
   },
   methods: {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
