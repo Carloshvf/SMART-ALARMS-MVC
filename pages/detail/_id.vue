@@ -139,7 +139,7 @@ export default {
           clearInterval(this.stopInterval)
          
         }
-      }, 5000);
+      }, 15000);
    
   },
 }

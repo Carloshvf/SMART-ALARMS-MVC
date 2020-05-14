@@ -148,7 +148,7 @@ export default {
           clearInterval(this.rerun)
          
         }
-      }, 5000);
+      }, 15000);
       }
       else if (this.currentRouteName == 'detail-id') {
         this.rerun = setInterval(() => {
@@ -161,13 +161,13 @@ export default {
           clearInterval(this.rerun)
          
         }
-      }, 5000);
+      }, 15000);
       }
       
       this.disable = true
       setTimeout(() => {
        this.disable = false
-     }, 5000);
+     }, 15000);
     },
 
     async getGraph(id) {
@@ -188,7 +188,7 @@ export default {
           clearInterval(this.stopInterval)
          
         }
-      }, 3000);
+      }, 13000);
       this.ende = id
 
       this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
