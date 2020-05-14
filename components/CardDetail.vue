@@ -37,7 +37,7 @@
       <!-- /.card-detail-content -->
       <hr />
       <div
-        class="card-detail-footer d-flex flex-row justify-content-around align-items-center"
+        class="card-detail-footer d-flex flex-row align-items-center"
       >
         <nuxt-link
           :to="{ name: 'detail-id', params: { id: unity.id } }"
@@ -45,7 +45,7 @@
           >Detalhes</nuxt-link
         >
         <!--  -->
-        <small class="ml-2">Contagem regressiva flame Off</small>
+        <small class="ml-2" >Contagem regressiva flame Off</small>
         <!-- <h1>{{ countDown | moment('mm:ss') }}</h1> -->
         <h1>{{ countTime }}</h1>
         <counter :alarm="alarm" />
