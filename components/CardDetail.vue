@@ -19,7 +19,7 @@
           <h6>{{ alarm.value }}</h6>
         </div>
         <!-- /.card-detail-content-txt -->
-        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">Gráfico</b-button>
+        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
 
         <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
@@ -37,7 +37,7 @@
       <!-- /.card-detail-content -->
       <hr />
       <div
-        class="card-detail-footer d-flex flex-row justify-content-around align-items-center"
+        class="card-detail-footer d-flex flex-row align-items-center"
       >
         <nuxt-link
           :to="{ name: 'detail-id', params: { id: unity.id } }"
@@ -45,7 +45,7 @@
           >Detalhes</nuxt-link
         >
         <!--  -->
-        <small class="ml-2">Contagem regressiva flame Off</small>
+        <small class="ml-2" >Contagem regressiva flame Off</small>
         <!-- <h1>{{ countDown | moment('mm:ss') }}</h1> -->
         <h1>{{ countTime }}</h1>
         <counter :alarm="alarm" />
@@ -125,6 +125,13 @@ export default {
         }
       }
     }
+  },
+
+   computed: {
+    currentRouteName() {
+        return this.$route.name;
+    }
+   
   },
   methods: {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
