@@ -19,7 +19,11 @@
           <h6>{{ alarm.value }}</h6>
         </div>
         <!-- /.card-detail-content-txt -->
+<<<<<<< HEAD
         <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
+=======
+        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">Gráfico</b-button>
+>>>>>>> master
 
         <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
