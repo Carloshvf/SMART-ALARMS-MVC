@@ -26,7 +26,7 @@ export default {
       const moDataApi = this.$moment(dateApi)
 
       let dateCurrent = this.$moment(dateNew)
-      let ms = moDataApi.diff(dateCurrent)
+      let ms = moDataApi
       this.alarm['countTimeDiff'] = ms
       let d = this.$moment.duration(ms)
       if (ms > 0) {
@@ -34,7 +34,7 @@ export default {
 
         if (typeData == 'PLS') {
           moDataApi.add(7, 'minutes')
-        } else {
+        } else if(typeData == 'PLST'){
           moDataApi.add(5, 'minutes')
         }
 

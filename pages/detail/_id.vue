@@ -18,7 +18,7 @@
       </aside>
       <div class="wrapper-content container">
         <div class="row pt-5 mt-5 mb-3">
-          <div class="col-12">
+          <div class="col-12" >
             <header
               class="detail-page-header d-flex justify-content-between align-items-center mb-3"
             >
@@ -76,6 +76,7 @@ export default {
       // lists: this.$store.state.all
       stop: true,
       stopInterval: "",
+      // cond: [],
     }
   },
 
@@ -129,6 +130,18 @@ export default {
   },
 
   created() {
+    // for (let ind = 0; ind < this.lists.length; ind++) {
+    //   for (let i = 0; i < this.lists[ind].kks.length; i++) {
+    //     if (this.lists[ind].kks[i].type == 'TRIP') {
+    //       this.cond = true
+    //     } else {
+    //       this.cond = false
+    //     }
+    //      console.log(this.lists[ind].kks[i])
+    //   }
+      
+    // }
+
     this.stopInterval = setInterval(() => {
         if (this.stop == true) {
           this.loadData()
