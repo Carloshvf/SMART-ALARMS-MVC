@@ -61,7 +61,7 @@ export default {
             }
           }
         }
-      }, 5000);
+      }, 15000);
     
     this.loadData()
    
