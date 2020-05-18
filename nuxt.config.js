@@ -2,7 +2,11 @@ export default {
 
   env: {
     //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
+<<<<<<< HEAD
     baseURL: process.env.baseURL || 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000'
+=======
+    baseURL: process.env.baseURL || 'https://smartalarms-dev.transformacaodigitalspassu.com.br:3000/'
+>>>>>>> 624338ce6a8fb31ce0e5e180d41bee6daa6bf2ee
   },
 
   mode: 'universal',
