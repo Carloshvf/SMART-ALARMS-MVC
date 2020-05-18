@@ -15,19 +15,12 @@
               <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
               <b-button @click="reset">Reset zoom</b-button>
             </b-modal>
-<<<<<<< HEAD
             <b-button class="mb-3 text-uppercase p-2 bg-light-purple btn-block" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
               <b>{{ equip.kks }} - {{ equip.valor_medida }} </b>
             </b-button>
             <b-button class="mb-3 text-uppercase p-2 btn-block disabling" v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
               <b>{{ equip.kks }}</b>
             </b-button>
-=======
-            <h6 class="mb-3 text-uppercase p-2 bg-light-purple" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
-              {{ equip.kks }} - {{ equip.valor_medida }}
-            </h6>
-            <h6 class="mb-3 text-uppercase p-2" v-if="equip.tipo == 'status'" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">{{ equip.kks }}</h6>
->>>>>>> parent of aacf3db... Squashed commit of the following 
             <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
               <small class="text-uppercase">causa</small>
               <p>{{ equip.cause }}</p>
