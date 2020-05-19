@@ -18,7 +18,7 @@
             <b-button class="mb-3 text-uppercase p-2 bg-light-purple btn-block" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
               <b>{{ equip.kks }} - {{ equip.valor_medida }} </b>
             </b-button>
-            <b-button class="mb-3 text-uppercase p-2 btn-block" v-if="equip.tipo == 'status'" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
+            <b-button class="mb-3 text-uppercase p-2 btn-block disabling" v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
               <b>{{ equip.kks }}</b>
             </b-button>
             <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
@@ -56,6 +56,7 @@ export default {
       ende: "",
       stop: true,
       stopInterval: true,
+      unavailable: true,
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
@@ -148,7 +149,7 @@ export default {
           clearInterval(this.rerun)
          
         }
-      }, 15000);
+      }, 5000);
       }
       else if (this.currentRouteName == 'detail-id') {
         this.rerun = setInterval(() => {
@@ -161,13 +162,13 @@ export default {
           clearInterval(this.rerun)
          
         }
-      }, 15000);
+      }, 5000);
       }
       
       this.disable = true
       setTimeout(() => {
        this.disable = false
-     }, 15000);
+     }, 5000);
     },
 
     async getGraph(id) {
@@ -188,7 +189,7 @@ export default {
           clearInterval(this.stopInterval)
          
         }
-      }, 13000);
+      }, 3000);
       this.ende = id
 
       this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
@@ -203,6 +204,10 @@ export default {
 
 .dNone {
   display: none;
+}
+
+.disabling {
+  opacity: 1.0;
 }
 
 .red {
