@@ -48,7 +48,7 @@
         <small class="ml-2" >Contagem regressiva flame Off</small>
         <!-- <h1>{{ countDown | moment('mm:ss') }}</h1> -->
         <h1>{{ countTime }}</h1>
-        <counter :alarm="alarm" />
+        <counter :alarm="foo(unity.id)" />
       </div>
       <!-- /.card-detail-footer -->
     </div>
@@ -74,7 +74,7 @@ export default {
 
   data() {
     return {
-      id: this.$route.params.id,
+      // id: this.unity.id,
       countTime: '',
       stop: true,
       stopInterval: true,
@@ -130,11 +130,41 @@ export default {
    computed: {
     currentRouteName() {
         return this.$route.name;
-    }
+    },
+
+    cardDetail() {
+      return this.lists.filter(i => i.id === this.id)
+    },
+
+    lists() {
+      return this.$store.state.all
+    },
    
   },
   methods: {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
+
+    foo(id) {
+      var result = { countTimeDiff: 0 }
+
+      if (id && this.lists && this.lists.length > 0) {
+        var arrays = new Array()
+        for (const key in this.lists) {
+          arrays.push(Object.assign({}, this.lists[key]))
+        }
+
+        result = arrays.filter(i => i.id === id)
+        result = result[0].kks
+        let result2 = result.slice()
+        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
+        result = result.filter(
+          (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
+        )
+        result = result[0]
+      }
+
+      return result
+    },
 
     getChartVisible() {
       var refChart = 'chartCurve'

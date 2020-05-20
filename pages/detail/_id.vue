@@ -130,18 +130,6 @@ export default {
   },
 
   created() {
-    // for (let ind = 0; ind < this.lists.length; ind++) {
-    //   for (let i = 0; i < this.lists[ind].kks.length; i++) {
-    //     if (this.lists[ind].kks[i].type == 'TRIP') {
-    //       this.cond = true
-    //     } else {
-    //       this.cond = false
-    //     }
-    //      console.log(this.lists[ind].kks[i])
-    //   }
-      
-    // }
-
     this.stopInterval = setInterval(() => {
         if (this.stop == true) {
           this.loadData()
