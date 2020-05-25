@@ -248,18 +248,18 @@ export default {
   }
   p {
     margin-bottom: 0;
-    color: $gray;
+    color: #666666;
   }
 
   &-header {
     h3 {
-      color: $yellow;
+      color: #004165;
     }
   }
 
   &-content {
     h6 {
-      color: white;
+      color: #004165;
     }
   }
 

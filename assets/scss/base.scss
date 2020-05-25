@@ -1,5 +1,114 @@
 @import 'variables';
+// @import 'fonts';
 
+@font-face {
+  font-family: 'petrobras-light--normal';
+  src: url('/fonts/petrobrassans_lt-webfont.eot');
+  src: url('/fonts/petrobrassans_lt-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_lt-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_lt-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_lt-webfont.svg#petrobras_sanslight')
+      format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'petrobras-light--italic';
+  src: url('/fonts/petrobrassans_ltit-webfont.eot');
+  src: url('/fonts/petrobrassans_ltit-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_ltit-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_ltit-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_ltit-webfont.svg#petrobras_sanslight_italic')
+      format('svg');
+  font-weight: 300;
+  font-style: italic;
+}
+/******** PETROBRAS--NORMAL ******* */
+@font-face {
+  font-family: 'petrobras--normal';
+  src: url('/fonts/petrobrassans_rg-webfont.eot');
+  src: url('/fonts/petrobrassans_rg-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_rg-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_rg-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_rg-webfont.svg#petrobras_sansregular')
+      format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'petrobras--italic';
+  src: url('/fonts/petrobrassans_it-webfont.eot');
+  src: url('/fonts/petrobrassans_it-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_it-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_it-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_it-webfont.svg#petrobras_sansitalic')
+      format('svg');
+  font-weight: 500;
+  font-style: italic;
+}
+/******** PETROBRAS--BOLD ******* */
+@font-face {
+  font-family: 'petrobras-bold--normal';
+  src: url('/fonts/petrobrassans_bd-webfont.eot');
+  src: url('/fonts/petrobrassans_bd-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_bd-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_bd-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_bd-webfont.svg#petrobras_sansbold')
+      format('svg');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'petrobras-bold--italic';
+  src: url('/fonts/petrobrassans_bdit-webfont.eot');
+  src: url('/fonts/petrobrassans_bdit-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_bdit-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_bdit-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_bdit-webfont.svg#petrobras_sansbold_italic')
+      format('svg');
+  font-weight: 600;
+  font-style: italic;
+}
+/******** PETROBRAS--XBOLD ******* */
+@font-face {
+  font-family: 'petrobras-xbold--normal';
+  src: url('/fonts/petrobrassans_xbd-webfont.eot');
+  src: url('/fonts/petrobrassans_xbd-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_xbd-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_xbd-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_xbd-webfont.svg#petrobras_sansxbold')
+      format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'petrobras-xbold--italic';
+  src: url('/fonts/petrobrassans_xbdit-webfont.eot');
+  src: url('/fonts/petrobrassans_xbdit-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/petrobrassans_xbdit-webfont.woff') format('woff'),
+    url('/fonts/petrobrassans_xbdit-webfont.ttf') format('truetype'),
+    url('/fonts/petrobrassans_xbdit-webfont.svg#petrobras_sansxbold_italic')
+      format('svg');
+  font-weight: 700;
+  font-style: italic;
+}
+
+$petrobras-light: 'petrobras-light--normal', arial, sans-serif;
+$petrobras-light-i: 'petrobras-light--italic', arial, sans-serif;
+$petrobras--normal: 'petrobras--normal', arial, sans-serif;
+$petrobras--italic: 'petrobras--italic', arial, sans-serif;
+$petrobras-bold--normal: 'petrobras-bold--normal', arial, sans-serif;
+$petrobras-bold--italic: 'petrobras-bold--italic', arial, sans-serif;
+$petrobras-xbold--normal: 'petrobras-xbold--normal', arial, sans-serif;
+$petrobras-xbold--italic: 'petrobras-xbold--italic', arial, sans-serif;
 // Colors
 
 .bg-red {
@@ -43,6 +152,7 @@ ul {
 
 body {
   background-color: #F5F5F5;
+  // font-family: $petrobras--normal
 }
 
 .alarmActive {

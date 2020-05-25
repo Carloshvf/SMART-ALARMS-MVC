@@ -1,3 +1,21 @@
+/* PETROBRAS theme */
+/* Oficial Colors*/
+$green-pb: #008542;
+$yellow-pb: #fdca30;
+$blue-pb: #006298;
+$black: #000;
+$white: #fff;
+
+/*Darker*/
+$green-pb-darken: darken($green-pb, 6%);
+$yellow-pb-darken: darken($yellow-pb, 6%);
+$blue-pb-darken: darken($blue-pb, 6%);
+
+/*lighten*/
+$green-pb-lighten: lighten($green-pb, 6%);
+$yellow-pb-lighten: lighten($yellow-pb, 6%);
+$blue-pb-lighten: lighten($blue-pb, 6%);
+
 // Colors
 $purple: #47525e;
 $dark-purple: #353d46;

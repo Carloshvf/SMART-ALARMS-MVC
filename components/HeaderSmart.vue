@@ -45,7 +45,7 @@ export default {
 
 .btn-links {
   color: #ffffff;
-  background-color: $light-purple;
+  background-color: #00B2A9;
 }
 
 .btn-links:hover {
@@ -59,7 +59,7 @@ export default {
 }
 
 .icon-color {
-  color: #008542 !important;
+  color: #00B2A9 !important;
 }
 
 #header {

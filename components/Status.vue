@@ -15,10 +15,10 @@
               <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
               <b-button @click="reset">Reset zoom</b-button>
             </b-modal>
-            <b-button class="mb-3 text-uppercase p-2 bg-light-purple btn-block" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
+            <b-button class="mb-3 p-2 medida-color btn-block adjusting" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
               <b>{{ equip.kks }} - {{ equip.valor_medida }} </b>
             </b-button>
-            <b-button class="mb-3 text-uppercase p-2 btn-block disabling" v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
+            <b-button class="mb-3 p-2 btn-block disabling " v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
               <b>{{ equip.kks }}</b>
             </b-button>
             <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
@@ -206,8 +206,17 @@ export default {
   display: none;
 }
 
+.adjusting {
+  height: 65px;
+}
+
+.medida-color {
+  background-color: #666666;
+}
+
 .disabling {
   opacity: 1.0;
+  height: 65px;
 }
 
 .red {
@@ -215,7 +224,7 @@ export default {
 }
 
 .green {
-  background-color: $green;
+  background-color: $green-pb;
 }
 
 .card-equip {
