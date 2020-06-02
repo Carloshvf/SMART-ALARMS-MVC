@@ -9,13 +9,13 @@
           </nuxt-link>
         </div>
         <div class="col-5 position">
-          <nuxt-link to="/" class="btn mt-2 mr-2" v-b-tooltip.hover title="Pagina principal">
-           <home-outline class="icon-color"/> 
-           </nuxt-link>
-          <nuxt-link to="/registered" class="btn mt-2 mr-2" v-b-tooltip.hover title="Alarmes cadastrados"> 
-          <pencil-box-outline class="icon-color"/> 
+          <nuxt-link to="/" class="btn mt-2 mr-4">
+            <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" /> 
           </nuxt-link>
-          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2">
+          <nuxt-link to="/registered" class="btn mt-2 mr-4"> 
+            <img class="icons" v-b-tooltip.hover title="Alarmes cadastrados" src="../static/img/edit.svg" alt="Editalt" /> 
+          </nuxt-link>
+          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
           Cadastrar Alarmes
           </nuxt-link>
          
@@ -53,13 +53,15 @@ export default {
   transition: $transition;
 }
 
-.position {
-  display: flex;
-  justify-content: flex-end;
+.icons {
+  height: 2em;
+  position: absolute;
 }
 
-.icon-color {
-  color: #00B2A9 !important;
+.position {
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
 }
 
 #header {
