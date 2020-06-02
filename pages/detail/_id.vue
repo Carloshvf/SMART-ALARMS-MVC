@@ -126,20 +126,20 @@ export default {
    
   },
 
-  // created() {
-  //   this.stopInterval = setInterval(() => {
-  //       if (this.stop == true) {
-  //         this.loadData()
-  //         if (this.currentRouteName != 'detail-id') {
-  //           this.stop = false 
-  //         }
-  //       } else {
-  //         clearInterval(this.stopInterval)
+  created() {
+    this.stopInterval = setInterval(() => {
+        if (this.stop == true) {
+          this.loadData()
+          if (this.currentRouteName != 'detail-id') {
+            this.stop = false 
+          }
+        } else {
+          clearInterval(this.stopInterval)
          
-  //       }
-  //     }, 5000);
+        }
+      }, 5000);
    
-  // },
+  },
 }
 </script>
 

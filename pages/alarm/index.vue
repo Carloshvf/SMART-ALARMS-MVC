@@ -117,18 +117,18 @@ export default {
     }
   },
 
-  // created() {
-  //     this.stopInterval = setInterval(() => {
-  //       if (this.stop == true) {
-  //         this.loadData()
-  //         if (this.currentRouteName != 'alarm') {
-  //           this.stop = false 
-  //         }
-  //       }  else {
-  //         clearInterval(this.stopInterval)
-  //       }
-  //     }, 5000);
-  // },
+  created() {
+      this.stopInterval = setInterval(() => {
+        if (this.stop == true) {
+          this.loadData()
+          if (this.currentRouteName != 'alarm') {
+            this.stop = false 
+          }
+        }  else {
+          clearInterval(this.stopInterval)
+        }
+      }, 5000);
+  },
 }
 </script>
 
