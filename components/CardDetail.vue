@@ -4,7 +4,7 @@
       <div class="card-detail-header">
         <h6 class="mb-2">Causa básica:</h6>
         <!-- <h3>Nível baixo do tambor de HP</h3> -->
-        <h3 class="mb-3">{{ alarm.cause }}</h3>
+        <h2 class="mb-3">{{ alarm.cause }}</h2>
       </div>
       <!-- /.card-detail-head -->
       <div
@@ -245,7 +245,7 @@ export default {
   }
 
   &-header {
-    h3 {
+    h2 {
       color: $blue-pb;
     }
   }
