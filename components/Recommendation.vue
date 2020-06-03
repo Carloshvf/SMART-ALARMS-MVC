@@ -1,12 +1,12 @@
 <template>
-  <div class="card">
-    <div class="card-header bg-dark-red">
-      <h6 class="mb-0 text-uppercase">Recomendações</h6>
+  <div>
+    <div class="card-header">
+      <h6 class="mb-0">Recomendações:</h6>
     </div>
     <!-- /.card-header -->
-    <div class="card-content bg-red">
+    <div class="card-content card-recom">
       <ul class="card-recom-list">
-        <li class="card-recom-item" v-for="value in alarm" :key="value.id">{{ value.item }}</li>
+        <li class="card-recom-item mb-2" v-for="value in alarm" :key="value.id">{{ value.item }}</li>
       </ul>
     </div>
     <!-- /.card-content -->
@@ -24,12 +24,19 @@ export default {
 @import '~/assets/scss/base.scss';
 
 .card-recom-list {
-  padding-left: 20px;
+  padding-left: 15px;
+  color: black;
+  max-height: 180px;
+  overflow: auto;
+}
+
+.card-recom {
+  background-color: $grey;
 }
 
 .card-recom-item {
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: white;
+  font-weight: normal;
+  line-height: 16px;  
+  font-size: 14px;
 }
 </style>

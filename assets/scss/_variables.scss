@@ -1,13 +1,32 @@
+/* PETROBRAS theme */
+/* Oficial Colors*/
+$green-pb: #008542;
+$yellow-pb: #fdca30;
+$blue-pb: #004165;
+$black: #000;
+$white: #fff;
+
+/*Darker*/
+$green-pb-darken: darken($green-pb, 6%);
+$yellow-pb-darken: darken($yellow-pb, 6%);
+$blue-pb-darken: darken($blue-pb, 6%);
+
+/*lighten*/
+$green-pb-lighten: lighten($green-pb, 6%);
+$yellow-pb-lighten: lighten($yellow-pb, 6%);
+$blue-pb-lighten: lighten($blue-pb, 6%);
+
 // Colors
 $purple: #47525e;
 $dark-purple: #353d46;
-$light-purple: #617283;
+$light-purple: #666666;
 $red: #f95f62;
-$dark-red: #a74042;
+$dark-red: #AD0000;
 $green: #509037;
 $gray: #cacaca;
 $yellow: #fcd487;
 $white: #FFFFFF;
+$grey: #F3F1F1;
 
 // Attribute
 $border-radius: 12px;

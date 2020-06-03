@@ -273,7 +273,10 @@
         </div>
       <div class="mt-5">
         <button class="btn btn-green btn-salvar" v-if="ok == false" @click="saveData('b-toaster-bottom-right')" disabled>Salvar</button>
-        <button class="btn btn-green btn-salvar" v-if="ok == true" @click="saveData('b-toaster-bottom-right')">Salvar</button>
+        <button class="btn btn-green btn-salvar" v-if="ok == true" @click="saveData('b-toaster-bottom-right')" :disabled="disabling">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
+          Salvar
+        </button>
         <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
       </div>
     </div>
@@ -301,6 +304,8 @@ export default {
       local: "UG 11",
       complement: "",
       ok: false,
+      load: false,
+      disabling: false,
       logic: "",
       offType: "PLS",
       reason: "",
@@ -451,6 +456,8 @@ export default {
    async saveData(toaster) {
      this.allData.splice(0)
      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
+     this.load = true
+     this.disabling = true
      
       this.allData.push({ 
         tipo_desligamento: this.offType,
@@ -475,17 +482,27 @@ export default {
           toaster: toaster,
           solid: true,
         })
+        this.disabling = false
+        this.load = false
 
       } 
+      else if(this.backendAlarm == "Preencha a causa") {
+        this.$bvToast.toast('Preencha o campo da causa.', {
+          title: `Causa`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.disabling = false
+        this.load = false
+      }
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
           title: `Sucesso`,
           toaster: toaster,
           solid: true,
         })
-      //   setTimeout(() => {
-      //   window.location.reload()
-      // }, 3000);
+        this.disabling = false
+        this.load = false
 
       }
         

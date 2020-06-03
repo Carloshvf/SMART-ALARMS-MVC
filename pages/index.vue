@@ -73,7 +73,7 @@ export default {
 @import '@/assets/scss/base.scss';
 
 .box-alarm {
-  background-color: $purple;
+  background-color: #666666;
   border-radius: $border-radius;
   transition: $transition;
   padding: 15px;
@@ -85,12 +85,9 @@ export default {
     color: white;
   }
 
-  &:hover {
-    background-color: transparentize($purple, 0.06);
-  }
 }
 
 .alarmActive {
-  background-color: $dark-red;
+  background-color: #ED1313 !important;
 }
 </style>
