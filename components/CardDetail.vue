@@ -56,7 +56,7 @@ export default {
 
   data() {
     return {
-      id: this.$route.params.id,
+      // id: this.unity.id,
       countTime: '',
       stop: true,
       stopInterval: true,
@@ -112,7 +112,15 @@ export default {
    computed: {
     currentRouteName() {
         return this.$route.name;
-    }
+    },
+
+    cardDetail() {
+      return this.lists.filter(i => i.id === this.id)
+    },
+
+    lists() {
+      return this.$store.state.all
+    },
    
   },
   methods: {
@@ -224,7 +232,6 @@ export default {
 }
 
 .card-detail {
-  min-height: 300px;
 
   h1,
   h3,
