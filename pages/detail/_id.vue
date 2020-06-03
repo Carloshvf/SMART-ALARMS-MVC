@@ -10,7 +10,7 @@
               :to="{ name: 'detail-id', params: { id: link.id } }"
               v-if="link.active == 1"
             >
-              <h1>{{ link.id }}</h1>
+              <h1 class="detail-counter">{{ link.id }}</h1>
               <counter :alarm="foo(link.id)" />
             </nuxt-link>
           </li>
@@ -20,14 +20,11 @@
         <div class="row pt-5 mt-5 mb-3">
           <div class="col-12" >
             <header
-              class="detail-page-header d-flex justify-content-between align-items-center mb-3"
+              class="detail-page-header d-flex align-items-center"
             >
               <h1 class="detail-page-name">{{ foo(value.id).name }}</h1>
               <div class="detail-page-count d-flex align-items-center">
-                <p class="mr-4">
-                  Contagem
-                  <br />regressiva <br />Flame Off
-                </p>
+
                 <counter :alarm="foo(value.id)" />
 
                 <!-- <h1>{{ value.kks[0].countTime }}</h1> -->
@@ -38,14 +35,14 @@
           <!-- /.col-12 -->
         </div>
         <!-- /.row -->
+        <!-- AQUI -->
+        
         <div class="row">
-          <div
-            class="col-12 col-sm-6 mb-5"
-            v-for="content in value.kks"
-            :key="content.value"
-          >
-            <top-detail :alarm="content" @loops="onClickChild"/>
-            <status :alarm="content.status_two" @loops="onClickChild"/>
+          <div class="col-6" v-for="content in value.kks" :key="content.value">
+            <div class="card">
+              <top-detail :alarm="content" @loops="onClickChild"/>
+              <status :alarm="content.status_two" @loops="onClickChild"/>
+            </div>
           </div>
         </div>
       </div>
@@ -149,13 +146,17 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
 
+.detail-counter {
+  font-weight: bold;
+}
+
 .detail-page {
   &-sidebar {
     position: fixed;
     left: 0;
     padding: 10px 25px;
     height: 100%;
-    background-color: lightgray;
+    background-color: #E4E4E4;
     padding-top: 30px;
 
     li {
@@ -164,27 +165,25 @@ export default {
 
     &-link {
       padding: $padding;
-      background-color: $dark-red;
-      color: white;
+      background-color: #E4E4E4;
+      color: #666666;
       border-radius: $border-radius;
       transition: $transition;
 
-      &:hover {
-        background-color: $red;
-      }
+      // &:hover {
+      //   background-color: $red;
+      // }
     }
   }
 
   &-name {
-    color: $purple;
+    color: #02592E;
     font-weight: 700;
   }
 
   &-count {
-    background-color: $purple;
-    color: white;
-    padding: 10px 25px;
-    border-radius: $border-radius;
+    padding: 10px 400px;
+    // border-radius: $border-radius;
 
     h1 {
       font-size: 4rem;

@@ -1,25 +1,21 @@
 <template>
-  <div class="card">
-    <div class="card-header bg-dark-purple">
-      <h2 class="mb-0 text-uppercase">{{ alarm.type }} {{ alarm.name }} {{ alarm.complemento }}</h2>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-content card-detail bg-purple">
+  <div>
+    <div class="card-content card-detail">
       <div class="card-detail-header">
-        <p>Causa básica:</p>
+        <h6 class="mb-2">Causa básica:</h6>
         <!-- <h3>Nível baixo do tambor de HP</h3> -->
-        <h3>{{ alarm.cause }}</h3>
+        <h2 class="mb-3">{{ alarm.cause }}</h2>
       </div>
       <!-- /.card-detail-head -->
       <div
         class="card-detail-content d-flex flex-row align-items-center justify-content-between"
       >
-        <div class="card-detail-content-txt">
-          <p>KKS</p>
-          <h6>{{ alarm.value }}</h6>
+        <div class="card-detail-content">
+          <h6 class="mb-1">KKS</h6>
+          <p>{{ alarm.value }}</p>
         </div>
         <!-- /.card-detail-content-txt -->
-        <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
+        <b-button class="card-button mt-1" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
 
         <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
@@ -35,22 +31,7 @@
         </b-modal>
       </div>
       <!-- /.card-detail-content -->
-      <hr />
-      <div
-        class="card-detail-footer d-flex flex-row align-items-center"
-      >
-        <nuxt-link
-          :to="{ name: 'detail-id', params: { id: unity.id } }"
-          class="btn btn-primary"
-          >Detalhes</nuxt-link
-        >
-        <!--  -->
-        <small class="ml-2" >Contagem regressiva flame Off</small>
-        <!-- <h1>{{ countDown | moment('mm:ss') }}</h1> -->
-        <h1>{{ countTime }}</h1>
-        <counter :alarm="foo(unity.id)" />
-      </div>
-      <!-- /.card-detail-footer -->
+    
     </div>
     <!-- /.card-content -->
   </div>
@@ -69,12 +50,13 @@ export default {
 
   components: {
     Graph,
-    Counter
+    Counter,
+   
   },
 
   data() {
     return {
-      // id: this.unity.id,
+      id: this.$route.params.id,
       countTime: '',
       stop: true,
       stopInterval: true,
@@ -130,15 +112,7 @@ export default {
    computed: {
     currentRouteName() {
         return this.$route.name;
-    },
-
-    cardDetail() {
-      return this.lists.filter(i => i.id === this.id)
-    },
-
-    lists() {
-      return this.$store.state.all
-    },
+    }
    
   },
   methods: {
@@ -238,6 +212,17 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
 
+.card-button {
+  background-color: #004165;
+}
+
+.type-background {
+  background: #008542;
+  border-radius: 20px;
+  color: $white;
+  font-weight: bold;
+}
+
 .card-detail {
   min-height: 300px;
 
@@ -246,20 +231,30 @@ export default {
   h6 {
     font-weight: 700;
   }
-  p {
+  h6 {
     margin-bottom: 0;
-    color: $gray;
+    color: $light-purple;
+    font-weight: bold;
   }
 
   &-header {
-    h3 {
-      color: $yellow;
+    h2 {
+      color: $blue-pb;
     }
   }
 
   &-content {
     h6 {
-      color: white;
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: bold;
+    }
+
+    p {
+      color: $blue-pb;
+      font-weight: bold;
+      line-height: 20px;
+
     }
   }
 

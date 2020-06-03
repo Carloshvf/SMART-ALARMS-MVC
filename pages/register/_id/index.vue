@@ -285,8 +285,14 @@
       <div>
         <p>Escolha como quer salvar o alarme.</p>
       </div>
-      <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')">Salvar como alarme novo</b-button>
-      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')">Salvar edição</b-button>
+      <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')" :disabled="disabling">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
+        Salvar como alarme novo
+        </b-button>
+      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')" :disabled="disabling">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loadEdit == true"></span>
+        Salvar edição
+        </b-button>
     </b-modal>
     <!-- MODAL -->
   </div>
@@ -311,6 +317,9 @@ export default {
       backendCheck: "",
       backendAlarm: "",  
       ok: false,
+      load: false,
+      loadEdit: false,
+      disabling: false,
       operators: "E",
       activation2: "1",
       activation3: "",
@@ -576,6 +585,8 @@ export default {
    async saveData(toaster) {
      this.allData.splice(0)
      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
+     this.load = true
+     this.disabling = true
     
       this.allData.push({ 
         tipo_desligamento: this.offType,
@@ -590,7 +601,7 @@ export default {
         status_medidas: this.status,
         recomendacoes: this.recomendacao
        })
-      //  console.log(this.allData[0])
+      
       
       await this.sendAlarms({info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
@@ -601,22 +612,35 @@ export default {
           toaster: toaster,
           solid: true,
         })
+        this.disabling = false
+        this.load = false
       } 
+      else if(this.backendAlarm == "Preencha a causa") {
+        this.$bvToast.toast('Preencha o campo da causa.', {
+          title: `Causa`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.disabling = false
+        this.load = false
+      }
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
           title: `Sucesso`,
           toaster: toaster,
           solid: true,
         })
-      //   setTimeout(() => {
-      //   window.location.reload()
-      // }, 3000);
+        this.disabling = false
+        this.load = false
+     
       }
         
     },
 
     updateCard(toaster, id) {
       this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+      this.loadEdit = true
+      this.disabling = true
 
       this.allData.push({ 
         tipo_desligamento: this.offType,
@@ -639,6 +663,11 @@ export default {
           toaster: toaster,
           solid: true,
         })
+        setTimeout(() => {
+          this.disabling = false
+          this.loadEdit = false
+        }, 1000);
+        
     }
 
   

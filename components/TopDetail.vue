@@ -1,17 +1,18 @@
 <template>
   <div class="top-detail">
-    <h1 class="text-center">{{ alarm.type }} {{ alarm.complemento }}</h1>
-    <div class="top-detail-header bg-dark-purple d-flex align-items-center">
-      <p class="text-uppercase mb-0">causa:</p>
-      <h3 class="mb-0 ml-3">{{ alarm.cause }}</h3>
+    <h1 class="header-top">{{ alarm.type }} {{ alarm.name }} {{ alarm.complemento }}</h1>
+    <hr />
+    <div class="top-detail-header ">
+      <h6>Causa básica:</h6>
+      <h3 class="mb-0">{{ alarm.cause }}</h3>
     </div>
     <!-- .top-detail-header -->
-    <div class="top-detail-kks bg-purple d-flex align-items-center justify-content-between">
+    <div class="top-detail-kks">
+      <h6 class="text-uppercase mt-3 mb-1">kks</h6>
       <div class="d-flex">
-        <p class="text-uppercase mb-0">kks:</p>
-        <h5 class="mb-0 ml-3">{{ alarm.value }}</h5>
+        <h5 class="mb-0">{{ alarm.value }}</h5>
+        <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
       </div>
-      <b-button v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
       <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ ende }}</p>
@@ -22,16 +23,14 @@
       <!--b-modal  -->
     </div>
     <!-- /.top-detail-kks -->
-    <div class="detail-channel d-flex justify-content-between mb-3">
-      <p class="text-uppercase">canais:</p>
-      <!-- As classes são do Bootstrap -->
+    <div class="detail-channel">
+      <h6 class="mt-2">Canal:</h6>
       <ul class="detail-channel-input">
         <li class="detail-channel-input-item" v-for="value in alarm.channels" :key="value.item">
           <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
           <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
-          <label class="mb-3" :for="value.item">{{ value.item }}</label>
-          <b-button v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
-          <!-- Isso é só o botão, v-b-modal faz o botão ser capaz de mostrar o prompt -->
+          <label :for="value.item">{{ value.item }}</label>
+          <b-button class="card-button" v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
         </li>
       </ul>
       <!-- /.detail-channel-input -->
@@ -188,35 +187,83 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
 
+.card-button {
+  background-color: #004165;
+}
+
+.header-top {
+  background: #008542;
+  border-radius: 20px;
+  color: $white;
+  font-weight: bold;
+  width: 150px;
+}
+
 .top-detail {
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
+  background-color: white;
+  padding: $padding;
+
+  h1{
+    font-size: 22px;
+    background: #008542;
+    border-radius: 20px;
+    text-align: center;
+    color: $white;
+    font-weight: bold;
+  }
+  
   h3,
   h5 {
     font-weight: 700;
   }
 
-  &-header,
   &-kks {
-    padding: $padding;
-    color: white;
+    h6 {
+      color: $light-purple;
+      font-weight: bold;
+    }
+
+    h5 {
+      color: $blue-pb;
+    }
+
   }
 
   &-header {
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
+    color: $light-purple;
+
+    h6 {
+      font-weight: bold;
+    }
+
+    h3 {
+      color: $blue-pb;
+    }
   }
 }
 
 .detail-channel {
-  padding: $padding;
-  background-color: lightgray;
+  background-color: white;
   border-bottom-left-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
+
+  h6 {
+    color: $light-purple;
+    font-weight: bold;
+  }
 
   &-input-item {
     font-size: 1.37rem;
     list-style: none;
     font-weight: 700;
-    color: $dark-purple;
+
+    label {
+      color: $blue-pb;
+    }
 
     input {
       margin-right: 10px;

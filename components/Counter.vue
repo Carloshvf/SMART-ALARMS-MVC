@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ countTime }}</h1>
+    <h1 class="counter-color">{{ countTime }}</h1>
   </div>
 </template>
 
@@ -74,4 +74,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '~/assets/scss/base.scss';
+
+.counter-color {
+  color: $dark-red;
+}
+
+</style>
