@@ -15,11 +15,11 @@
               <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
               <b-button @click="reset">Reset zoom</b-button>
             </b-modal>
-            <b-button class="mb-3 p-2 medida-color btn-block" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
-              <b>{{ equip.kks }} - {{ equip.valor_medida }} </b>
+            <b-button class="mb-3 p-2 btn-block medida-color" v-b-modal="equip.kks" @click="getGraph(equip.kks)" :disabled="disable" v-if="equip.tipo == 'medida'">
+              <b class="spacing">{{ equip.kks }} - {{ equip.valor_medida }} </b>
             </b-button>
             <b-button class="mb-3 p-2 btn-block disabling " v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
-              <b>{{ equip.kks }}</b>
+              <b class="spacing">{{ equip.kks }}</b>
             </b-button>
             <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
               <small class="text-uppercase">causa</small>
@@ -206,18 +206,22 @@ export default {
   display: none;
 }
 
+.spacing {
+  letter-spacing: 1px;
+}
+
 .medida-color {
   background-color: #666666;
   padding: 2px 13px;
   border-radius: 40px;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .disabling {
   opacity: 1.0;
   padding: 2px 13px;
   border-radius: 40px;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .red {

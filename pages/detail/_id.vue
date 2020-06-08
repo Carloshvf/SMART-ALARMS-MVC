@@ -2,7 +2,7 @@
   <div>
     <section class="detail-page" v-for="value in cardDetail" :key="value.id">
       <aside class="detail-page-sidebar">
-        <nuxt-link to="/alarm">Eventos</nuxt-link>
+        <!-- <nuxt-link to="/alarm">Eventos</nuxt-link> -->
         <ul>
           <li class="mb-3" v-for="link in lists" :key="link.id">
             <nuxt-link
