@@ -12,12 +12,9 @@
           <nuxt-link to="/" class="btn mt-2 mr-4">
             <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" /> 
           </nuxt-link>
-<<<<<<< HEAD
           <nuxt-link to="/alarm" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Alarmes ativos" src="../static/img/avalanche.svg" alt="Aval" /> 
           </nuxt-link>
-=======
->>>>>>> develop
           <nuxt-link to="/registered" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Alarmes cadastrados" src="../static/img/edit.svg" alt="Editalt" /> 
           </nuxt-link>
