@@ -632,6 +632,8 @@ export default {
         })
         this.disabling = false
         this.load = false
+
+        // $("modal-update").modal('hide');
      
       }
         
@@ -666,6 +668,7 @@ export default {
         setTimeout(() => {
           this.disabling = false
           this.loadEdit = false
+          // $("modal-update").modal('hide');
         }, 1000);
         
     }

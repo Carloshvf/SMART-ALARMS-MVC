@@ -130,6 +130,14 @@ export default {
     this.stopInterval = setInterval(() => {
         if (this.stop == true) {
           this.loadData()
+
+          // for (let index = 0; index < this.lists.length; index++) {
+          // if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
+          //     this.$router.push('/')
+          //     break
+          //   }
+          // }
+
           if (this.currentRouteName != 'detail-id') {
             this.stop = false 
           }
