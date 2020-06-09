@@ -21,7 +21,7 @@
               <div class="mt-2 col-4 d-flex justify-content-end">
                 <nuxt-link
                   :to="{ name: 'detail-id', params: { id: list.id } }"
-                  class="btn btn-primary"
+                  class="btn btn-primary pt-2"
                   >Mais detalhes
                 </nuxt-link>
               </div>
@@ -134,6 +134,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
+
+.card-avalanche {
+  width: 300px;
+}
 
 .shadow {
   box-shadow: none;

@@ -27,8 +27,8 @@
       <h6 class="mt-2">Canal:</h6>
       <ul class="detail-channel-input">
         <li class="detail-channel-input-item" v-for="value in alarm.channels" :key="value.item">
-          <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
-          <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
+          <input class type="checkbox" v-if="value.active == 1" onClick="return false" checked :id="value.item" />
+          <input class type="checkbox" v-if="value.active == 0" onClick="return false" :id="value.item" />
           <label :for="value.item">{{ value.item }}</label>
           <b-button class="card-button" v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
         </li>
@@ -54,6 +54,7 @@ export default {
       ende: "",
       stop: true,
       stopInterval: true,
+      disabling: true,
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
