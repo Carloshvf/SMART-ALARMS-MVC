@@ -16,12 +16,13 @@
           </li>
         </ul>
       </aside>
-      <div class="wrapper-content container">
-        <div class="row pt-5 mt-5 mb-3">
+      <div class="wrapper-content container-fluid">
+        <div class="row fluid-card pt-5 mt-5 mb-3">
           <div class="col-12" >
             <header
               class="detail-page-header d-flex align-items-center"
             >
+            <!-- Ta explodindo -->
               <h1 class="detail-page-name">{{ foo(value.id).name }}</h1>
               <div class="detail-page-count d-flex align-items-center">
 
@@ -37,7 +38,7 @@
         <!-- /.row -->
         <!-- AQUI -->
         
-        <div class="row">
+        <div class="row fluid-card">
           <div class="col-6" v-for="content in value.kks" :key="content.value">
             <div class="card">
               <top-detail :alarm="content" @loops="onClickChild"/>
@@ -70,7 +71,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      // lists: this.$store.state.all
+      arrSize: [],
       stop: true,
       stopInterval: "",
       // cond: [],
@@ -130,13 +131,16 @@ export default {
     this.stopInterval = setInterval(() => {
         if (this.stop == true) {
           this.loadData()
+          this.arrSize.splice(0)
 
-          // for (let index = 0; index < this.lists.length; index++) {
-          // if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
-          //     this.$router.push('/')
-          //     break
-          //   }
-          // }
+          for (let index = 0; index < this.lists.length; index++) {
+          if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
+              this.arrSize.push("5") 
+            }
+          }
+          if (this.arrSize.length == this.lists.length && this.currentRouteName == 'detail-id') {
+            this.$router.push('/')
+          }
 
           if (this.currentRouteName != 'detail-id') {
             this.stop = false 
@@ -156,6 +160,11 @@ export default {
 
 .detail-counter {
   font-weight: bold;
+}
+
+.fluid-card {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .detail-page {
@@ -190,7 +199,7 @@ export default {
   }
 
   &-count {
-    padding: 10px 400px;
+    padding: 10px 470px;
     // border-radius: $border-radius;
 
     h1 {
