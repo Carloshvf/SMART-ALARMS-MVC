@@ -459,7 +459,6 @@ export default {
     //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
      this.load = true
      this.disabling = true
-    //  console.log(this.endAtivacao)
      
       this.allData.push({ 
         tipo_desligamento: this.offType,
