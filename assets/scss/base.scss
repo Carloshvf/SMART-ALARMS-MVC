@@ -2,8 +2,6 @@
 // @import 'fonts';
 
 @font-face {
-<<<<<<< HEAD
-=======
   font-family: PetrobrasSansBold;
   src: url(~@/assets/fonts/PetrobrasSans_Bd.ttf) format("truetype");
 }
@@ -37,7 +35,6 @@
 }
 
 @font-face {
->>>>>>> develop
   font-family: 'petrobras-light--normal';
   src: url('/fonts/petrobrassans_lt-webfont.eot');
   src: url('/fonts/petrobrassans_lt-webfont.eot?#iefix')
@@ -191,11 +188,7 @@ ul {
 
 body {
   background-color: #F5F5F5;
-<<<<<<< HEAD
-  font-family: $petrobras--normal
-=======
   font-family: PetrobrasSans;
->>>>>>> develop
 }
 
 .alarmActive {
@@ -318,27 +311,12 @@ body {
 }
 
 .btn-primary {
-<<<<<<< HEAD
-  background-color: white;
-  color: $light-purple;
-=======
   background-color: $light-purple;
   color: white;
->>>>>>> develop
   border: none;
   transition: $transition;
   height: 40px;
 
-<<<<<<< HEAD
-  &:hover {
-    border: none !important;
-    color: $light-purple;
-    outline: none !important;
-    background-color: white !important;
-  }
-
-=======
->>>>>>> develop
   &:active {
     border: none !important;
     color: $light-purple;
