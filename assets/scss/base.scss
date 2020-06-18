@@ -2,6 +2,42 @@
 // @import 'fonts';
 
 @font-face {
+<<<<<<< HEAD
+=======
+  font-family: PetrobrasSansBold;
+  src: url(~@/assets/fonts/PetrobrasSans_Bd.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSans BoldItalic;
+  src: url(~@/assets/fonts/PetrobrasSans_BdIt.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSansItalic;
+  src: url(~@/assets/fonts/PetrobrasSans_It.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSansLight;
+  src: url(~@/assets/fonts/PetrobrasSans_Lt.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSans LightItalic;
+  src: url(~@/assets/fonts/PetrobrasSans_LtIt.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSans;
+  src: url(~@/assets/fonts/PetrobrasSans_Rg.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSans Xbold;
+  src: url(~@/assets/fonts/PetrobrasSans_XBd.ttf) format("truetype");
+}
+@font-face {
+  font-family: PetrobrasSans XboldItalic;
+  src: url(~@/assets/fonts/PetrobrasSans_XBdIt.ttf) format("truetype");
+}
+
+@font-face {
+>>>>>>> develop
   font-family: 'petrobras-light--normal';
   src: url('/fonts/petrobrassans_lt-webfont.eot');
   src: url('/fonts/petrobrassans_lt-webfont.eot?#iefix')
@@ -155,7 +191,11 @@ ul {
 
 body {
   background-color: #F5F5F5;
+<<<<<<< HEAD
   font-family: $petrobras--normal
+=======
+  font-family: PetrobrasSans;
+>>>>>>> develop
 }
 
 .alarmActive {
@@ -278,11 +318,18 @@ body {
 }
 
 .btn-primary {
+<<<<<<< HEAD
   background-color: white;
   color: $light-purple;
+=======
+  background-color: $light-purple;
+  color: white;
+>>>>>>> develop
   border: none;
   transition: $transition;
+  height: 40px;
 
+<<<<<<< HEAD
   &:hover {
     border: none !important;
     color: $light-purple;
@@ -290,6 +337,8 @@ body {
     background-color: white !important;
   }
 
+=======
+>>>>>>> develop
   &:active {
     border: none !important;
     color: $light-purple;

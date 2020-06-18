@@ -9,7 +9,7 @@
     <!-- .top-detail-header -->
     <div class="top-detail-kks">
       <h6 class="text-uppercase mt-3 mb-1">kks</h6>
-      <div class="d-flex">
+      <div class="d-flex align-items-center">
         <h5 class="mb-0">{{ alarm.value }}</h5>
         <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
       </div>
@@ -23,14 +23,14 @@
       <!--b-modal  -->
     </div>
     <!-- /.top-detail-kks -->
-    <div class="detail-channel">
+    <div class="detail-channel ">
       <h6 class="mt-2">Canal:</h6>
       <ul class="detail-channel-input">
-        <li class="detail-channel-input-item" v-for="value in alarm.channels" :key="value.item">
-          <input class type="checkbox" v-if="value.active == 1" checked :id="value.item" />
-          <input class type="checkbox" v-if="value.active == 0" :id="value.item" />
+        <li class="detail-channel-input-item d-flex align-items-center" v-for="value in alarm.channels" :key="value.item">
+          <input class type="checkbox" v-if="value.active == 1" onClick="return false" checked :id="value.item" />
+          <input class type="checkbox" v-if="value.active == 0" onClick="return false" :id="value.item" />
           <label :for="value.item">{{ value.item }}</label>
-          <b-button class="card-button" v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
+          <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
         </li>
       </ul>
       <!-- /.detail-channel-input -->
@@ -54,6 +54,7 @@ export default {
       ende: "",
       stop: true,
       stopInterval: true,
+      disabling: true,
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
@@ -189,6 +190,8 @@ export default {
 
 .card-button {
   background-color: #004165;
+  position: absolute;
+  right: 15px;
 }
 
 .header-top {
@@ -267,7 +270,7 @@ export default {
 
     input {
       margin-right: 10px;
-      margin-top: 5px;
+      margin-bottom: 7px;
     }
   }
 }

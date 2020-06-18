@@ -5,7 +5,7 @@
       v-for="list in lists"
       :key="list.name"
     >
-      <div class="row card mb-4" v-for="card in list.kks" :key="card.id">
+      <div class="row card card-avalanche mb-4" v-for="card in list.kks" :key="card.id">
         <div class="col-12 card-kks" v-if="list.active == 1">
             <div class="row">
               <div class="col-2 mt-3">
@@ -21,7 +21,7 @@
               <div class="mt-2 col-4 d-flex justify-content-end">
                 <nuxt-link
                   :to="{ name: 'detail-id', params: { id: list.id } }"
-                  class="btn btn-primary"
+                  class="btn btn-primary pt-2"
                   >Mais detalhes
                 </nuxt-link>
               </div>
@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       // lists: this.$store.state.all
+      arrSize: [],
       countTime: '',
       stop: true,
       stopInterval: ""
@@ -121,6 +122,17 @@ export default {
       this.stopInterval = setInterval(() => {
         if (this.stop == true) {
           this.loadData()
+          this.arrSize.splice(0)
+
+          for (let index = 0; index < this.lists.length; index++) {
+          if (this.lists[index].active == 0 && this.currentRouteName == 'alarm') {
+              this.arrSize.push("5") 
+            }
+          }
+          if (this.arrSize.length == this.lists.length && this.currentRouteName == 'alarm') {
+            this.$router.push('/')
+          }
+
           if (this.currentRouteName != 'alarm') {
             this.stop = false 
           }
@@ -134,6 +146,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
+
+.card-avalanche {
+  width: 80%;
+  margin: 0 auto;
+}
 
 .shadow {
   box-shadow: none;

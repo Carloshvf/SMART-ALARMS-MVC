@@ -369,6 +369,7 @@ export default {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
         this.pushed.push(this.textAlarme, "-", this.activation1)
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
         this.logic = this.separador
@@ -455,7 +456,7 @@ export default {
 
    async saveData(toaster) {
      this.allData.splice(0)
-     this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
+    //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
      this.load = true
      this.disabling = true
      
