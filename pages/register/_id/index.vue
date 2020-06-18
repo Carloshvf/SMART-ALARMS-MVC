@@ -272,8 +272,7 @@
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar" v-if="ok == false" disabled>Salvar</button>
-        <button class="btn btn-green btn-salvar" v-b-modal="'modal-update'" v-if="ok == true">Salvar</button>
+        <button class="btn btn-green btn-salvar" @click="validCheck('b-toaster-bottom-right')">Salvar</button>
         <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
       </div>
     </div>
@@ -314,9 +313,11 @@ export default {
   data() {
     return {
       types: 'Medida',
+      forOnce: true,
       backendCheck: "",
       backendAlarm: "",  
       ok: false,
+      stop: true,
       load: false,
       loadEdit: false,
       disabling: false,
@@ -333,6 +334,8 @@ export default {
       priority: "1",
       logicInfo: this.$store.state.edit.logica.toString(),
       endAtivacao: [],
+      endBack: [],
+      plusAlarme: [],
       separador: [],
       pushed: [this.$store.state.edit.logica],
       recom: [],
@@ -488,7 +491,9 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        this.pushed.push(this.textAlarme, "-", this.activation1)
+        this.pushed.push(this.textAlarme, "-", this.activation1) 
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+        console.log(this.endAtivacao)
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
         this.pushed.splice(0)
@@ -582,9 +587,24 @@ export default {
 
     },
 
+    validCheck(toaster) {
+      if (this.ok == false) {
+        this.$bvToast.toast('Por favor valide a logica antes de salvar.', {
+          title: `Validar`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.$bvModal.hide('modal-update')
+      } 
+      else if (this.ok == true) {
+        this.$bvModal.show('modal-update')
+      }
+    
+    },
+
    async saveData(toaster) {
      this.allData.splice(0)
-     this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
+    //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
      this.load = true
      this.disabling = true
     
@@ -640,7 +660,7 @@ export default {
     },
 
     updateCard(toaster, id) {
-      this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+      // this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
       this.loadEdit = true
       this.disabling = true
 
@@ -673,8 +693,15 @@ export default {
         
     }
 
-  
+  },
 
+   created() {
+      for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {
+        this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme, 
+        ativacao: this.$store.state.edit.ends_alarme[index].ativacao})
+        
+      }
+       
   },
 
   async asyncData({ store, route }) {

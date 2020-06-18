@@ -9,6 +9,7 @@
               class="detail-page-sidebar-link d-flex flex-column align-items-center justify-content-center"
               :to="{ name: 'detail-id', params: { id: link.id } }"
               v-if="link.active == 1"
+              @click="clickFalse()"
             >
               <h1 class="detail-counter">{{ link.id }}</h1>
               <counter :alarm="foo(link.id)" />
@@ -22,11 +23,10 @@
             <header
               class="detail-page-header d-flex align-items-center"
             >
-            <!-- Ta explodindo -->
-              <h1 class="detail-page-name">{{ foo(value.id).name }}</h1>
+              <h1 v-if="value.active == 1" class="detail-page-name">{{ value.id }}</h1>
               <div class="detail-page-count d-flex align-items-center">
 
-                <counter :alarm="foo(value.id)" />
+                <counter v-if="value.active == 1" :alarm="foo(value.id)" />
 
                 <!-- <h1>{{ value.kks[0].countTime }}</h1> -->
               </div>
@@ -74,6 +74,8 @@ export default {
       arrSize: [],
       stop: true,
       stopInterval: "",
+      stopPush: "",
+      cease: true,
       // cond: [],
     }
   },
@@ -87,6 +89,10 @@ export default {
 
     onClickChild (value) {
       this.stop = value
+    },
+
+    clickFalse() {
+      this.cease = false
     },
 
     foo(id) {
@@ -134,10 +140,19 @@ export default {
           this.arrSize.splice(0)
 
           for (let index = 0; index < this.lists.length; index++) {
-          if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
-              this.arrSize.push("5") 
-            }
+            if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
+                this.arrSize.push("5")
+                
+              }
           }
+          
+            for (let index = 0; index < this.lists.length; index++) {
+              if (this.lists[index].active == 1 && this.cardDetail[0].active == 0) { 
+                this.$router.push({ name: 'detail-id', params: { id: this.lists[index].id } })
+                clearInterval(this.stopInterval)
+              }
+            } 
+          
           if (this.arrSize.length == this.lists.length && this.currentRouteName == 'detail-id') {
             this.$router.push('/')
           }
