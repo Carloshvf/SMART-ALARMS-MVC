@@ -589,7 +589,7 @@ export default {
 
     validCheck(toaster) {
       if (this.ok == false) {
-        this.$bvToast.toast('Por favor valide a logica antes de salvar.', {
+        this.$bvToast.toast('Por favor, valide a lógica antes de salvar.', {
           title: `Validar`,
           toaster: toaster,
           solid: true,
