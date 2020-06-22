@@ -214,14 +214,14 @@ export default {
   background-color: #666666;
   padding: 2px 13px;
   border-radius: 40px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .disabling {
   opacity: 1.0;
   padding: 2px 13px;
   border-radius: 40px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .red {

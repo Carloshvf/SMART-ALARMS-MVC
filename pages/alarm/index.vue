@@ -1,12 +1,12 @@
 <template>
   <div class="py-5 mt-5">
     <div
-      class="wrapper-content container-fluid"
+      class="container-fluid"
       v-for="list in lists"
       :key="list.name"
     >
-      <div class="row card card-avalanche mb-4" v-for="card in list.kks" :key="card.id">
-        <div class="col-12 card-kks" v-if="list.active == 1">
+      <div class="card card-avalanche mb-4" v-for="card in list.kks" :key="card.id">
+        <div class="card-kks" v-if="list.active == 1">
             <div class="row">
               <div class="col-2 mt-3">
                 <h2 class="mb-0 ml-2 text-uppercase"> {{ card.name }} {{ card.complemento }}</h2>
