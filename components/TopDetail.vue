@@ -13,7 +13,7 @@
         <h5 class="mb-0">{{ alarm.value }}</h5>
         <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
       </div>
-      <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
+      <b-modal size="xl" :id="alarm.value" title="Gráfico" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
         <p class="my-4">Endereço: {{ ende }}</p>
         <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
