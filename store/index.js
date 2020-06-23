@@ -136,8 +136,8 @@ export const actions = {
   async sendLogic(context, { valid }) {
     await this.$axios
       .post(
-        HOST_API + '/regra/' +
-        "'" + valid + " '"
+        HOST_API + '/regra',
+        {'logica':"'" + valid + " '"}
       )
       .then(response => {
         this.validating = response.data.ok

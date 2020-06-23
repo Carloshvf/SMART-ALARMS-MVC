@@ -17,7 +17,7 @@
         <!-- /.card-detail-content-txt -->
         <b-button class="card-button mt-1" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
 
-        <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
+        <b-modal size="xl" :id="alarm.value" title="Gráfico" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
           <!-- <p class="ml-auto">Medida: C</p> -->
           <graph
