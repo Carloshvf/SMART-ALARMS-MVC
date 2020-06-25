@@ -24,9 +24,8 @@ export default {
 @import '~/assets/scss/base.scss';
 
 .card-recom-list {
-  padding-left: 20px;
+  padding-left: 24px;
   color: black;
-  max-height: 180px;
   overflow: auto;
 }
 
@@ -35,8 +34,8 @@ export default {
 }
 
 .card-recom-item {
-  font-weight: normal;
+  font-weight: bold;
   line-height: 30px;  
-  font-size: 18px;
+  font-size: 22px;
 }
 </style>

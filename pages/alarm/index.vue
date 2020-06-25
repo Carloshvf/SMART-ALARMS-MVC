@@ -30,12 +30,12 @@
         
         <!-- /.col-12 -->
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-5">
               <card-detail :unity="list" :alarm="card" @loops="transform"/>
               <status :alarm="card.status_one" />
             </div>
             <!-- /.col-sm-6 -->
-            <div class="col-sm-6">
+            <div class="col-sm-7">
               <recommendation :alarm="card.recom" />
             </div>
             <!-- /.col-sm-6 -->
@@ -148,7 +148,7 @@ export default {
 @import '~/assets/scss/base.scss';
 
 .card-avalanche {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
