@@ -2,7 +2,7 @@
   <div>
     <div class="card-content card-detail">
       <div class="card-detail-header">
-        <h6 class="mb-2">Causa básica:</h6>
+        <h6 class="mb-2">Causa imediata:</h6>
         <!-- <h3>Nível baixo do tambor de HP</h3> -->
         <h2 class="mb-3">{{ alarm.cause }}</h2>
       </div>
@@ -11,7 +11,7 @@
         class="card-detail-content d-flex flex-row align-items-center justify-content-between"
       >
         <div class="card-detail-content">
-          <h6 class="mb-1">KKS</h6>
+          <h6 class="mb-1">Endereço</h6>
           <p>{{ alarm.value }}</p>
         </div>
         <!-- /.card-detail-content-txt -->

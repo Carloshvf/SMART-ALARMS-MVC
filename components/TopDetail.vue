@@ -3,12 +3,12 @@
     <h1 class="header-top">{{ alarm.type }} {{ alarm.name }} {{ alarm.complemento }}</h1>
     <hr />
     <div class="top-detail-header ">
-      <h6>Causa básica:</h6>
+      <h6>Causa imediata:</h6>
       <h3 class="mb-0">{{ alarm.cause }}</h3>
     </div>
     <!-- .top-detail-header -->
     <div class="top-detail-kks">
-      <h6 class="text-uppercase mt-3 mb-1">kks</h6>
+      <h6 class="mt-3 mb-1">Endereço</h6>
       <div class="d-flex align-items-center">
         <h5 class="mb-0">{{ alarm.value }}</h5>
         <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
