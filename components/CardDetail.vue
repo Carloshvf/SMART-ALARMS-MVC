@@ -2,7 +2,7 @@
   <div>
     <div class="card-content card-detail">
       <div class="card-detail-header">
-        <h6 class="mb-2">Causa básica:</h6>
+        <h6 class="mb-2">Causa imediata:</h6>
         <!-- <h3>Nível baixo do tambor de HP</h3> -->
         <h2 class="mb-3">{{ alarm.cause }}</h2>
       </div>
@@ -11,13 +11,13 @@
         class="card-detail-content d-flex flex-row align-items-center justify-content-between"
       >
         <div class="card-detail-content">
-          <h6 class="mb-1">KKS</h6>
+          <h6 class="mb-1">Endereço</h6>
           <p>{{ alarm.value }}</p>
         </div>
         <!-- /.card-detail-content-txt -->
         <b-button class="card-button mt-1" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
 
-        <b-modal size="xl" :id="alarm.value" title="BootstrapVue" @hidden="onHidden" @show="onShow">
+        <b-modal size="xl" :id="alarm.value" title="Gráfico" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
           <!-- <p class="ml-auto">Medida: C</p> -->
           <graph

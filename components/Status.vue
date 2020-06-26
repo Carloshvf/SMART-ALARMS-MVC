@@ -8,17 +8,17 @@
       <div class="row">
         <div v-for="equip in alarm" :key="equip.id" class="col-12 col-sm-6">
           <div class="card-equip">
-            <b-modal size="xl" :id="equip.kks" title="BootstrapVue" @hidden="onHidden" @show="onShow">
+            <b-modal size="xl" :id="equip.kks" title="Gráfico" @hidden="onHidden" @show="onShow">
               <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
               <p class="my-4">Endereço: {{ ende }}</p>
               <!-- Não faz diferença de onde no codigo da pagina ele fica desde que ele esteja presente para passar os detalhes -->
               <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
               <b-button @click="reset">Reset zoom</b-button>
             </b-modal>
-            <b-button class="mb-3 p-2 btn-block medida-color" v-b-modal="equip.kks" @click="getGraph(equip.kks_grafico)" :disabled="disable" v-if="equip.tipo == 'medida'">
+            <b-button class="mb-3 p-2 medida-color" v-b-modal="equip.kks" @click="getGraph(equip.kks_grafico)" :disabled="disable" v-if="equip.tipo == 'medida'">
               <b class="spacing">{{ equip.kks }} - {{ equip.valor_medida }} </b>
             </b-button>
-            <b-button class="mb-3 p-2 btn-block disabling " v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
+            <b-button class="mb-3 p-2 disabling " v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
               <b class="spacing">{{ equip.kks }}</b>
             </b-button>
             <div class="card-equip-cause bg-light-purple p-2" :class="{ dNone: equip.isHidden }">
@@ -215,6 +215,7 @@ export default {
   padding: 2px 13px;
   border-radius: 40px;
   font-size: 18px;
+  width: 100%;
 }
 
 .disabling {
@@ -222,6 +223,7 @@ export default {
   padding: 2px 13px;
   border-radius: 40px;
   font-size: 18px;
+  width: 100%;
 }
 
 .red {
