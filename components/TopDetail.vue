@@ -182,6 +182,10 @@ export default {
     }
   },
 
+  created() {
+    this.$emit('kks', this.alarm.value)
+  }
+
 }
 </script>
 

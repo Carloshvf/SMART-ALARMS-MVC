@@ -12,7 +12,7 @@
               @click="clickFalse()"
             >
               <h1 class="detail-counter">{{ link.id }}</h1>
-              <counter :alarm="foo(link.id)" />
+              <counter :alarm="foo(link.id)" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check"  />
             </nuxt-link>
           </li>
         </ul>
@@ -26,7 +26,7 @@
               <h1 v-if="value.active == 1" class="detail-page-name">{{ value.id }}</h1>
               <div class="detail-page-count d-flex align-items-center">
 
-                <counter v-if="value.active == 1" :alarm="foo(value.id)" />
+                <counter v-if="value.active == 1" :alarm="foo(value.id)" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check" />
 
                 <!-- <h1>{{ value.kks[0].countTime }}</h1> -->
               </div>
@@ -41,7 +41,7 @@
         <div class="row fluid-card">
           <div class="col-6" v-for="content in value.kks" :key="content.value">
             <div class="card">
-              <top-detail :alarm="content" @loops="onClickChild"/>
+              <top-detail :alarm="content" @loops="onClickChild" @kks="teste"/>
               <status :alarm="content.status_two" @loops="onClickChild"/>
             </div>
           </div>
@@ -72,10 +72,15 @@ export default {
     return {
       id: this.$route.params.id,
       arrSize: [],
+      arrVa: [],
+      arrAleat: [],
+      incEnde: "",
       stop: true,
       stopInterval: "",
       stopPush: "",
       cease: true,
+      receive: "",
+      componentKey: 0,
       // cond: [],
     }
   },
@@ -86,6 +91,14 @@ export default {
 
   methods: {
     ...mapActions(['loadData']),
+
+    teste (value) {
+      this.incEnde = value
+    },
+
+    check (value) {
+      this.receive = value
+    },
 
     onClickChild (value) {
       this.stop = value
@@ -140,9 +153,14 @@ export default {
           this.arrSize.splice(0)
 
           for (let index = 0; index < this.lists.length; index++) {
+            for (let ind = 0; ind < this.lists[index].kks.length; index++) {
+              if (this.lists[index].active == 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length != this.receive.length) {
+                this.arrAleat.push('5')
+                this.componentKey += 1;
+              }
+          }
             if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
                 this.arrSize.push("5")
-                
               }
           }
           
