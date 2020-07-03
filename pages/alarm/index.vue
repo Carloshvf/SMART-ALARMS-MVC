@@ -16,7 +16,7 @@
               </div>
               <div class="col-4 d-flex justify-content-center">
                 <h1>{{ countTime }}</h1>
-                <counter :alarm="foo(list.id)" />
+                <counter :alarm="foo(list.id)" :kks="card.value" :arr="arrVa" :key="componentKey" @send="check" />
               </div>
               <div class="mt-2 col-4 d-flex justify-content-end">
                 <nuxt-link
@@ -71,14 +71,22 @@ export default {
     return {
       // lists: this.$store.state.all
       arrSize: [],
+      arrVa: [],
+      arrAleat: [],
       countTime: '',
       stop: true,
-      stopInterval: ""
+      stopInterval: "",
+      receive: "",
+      componentKey: 0,
     }
   },
 
    methods: {
     ...mapActions(['loadData']),
+
+    check (value) {
+      this.receive = value
+    },
 
     transform (value) {
       this.stop = value
@@ -125,6 +133,13 @@ export default {
           this.arrSize.splice(0)
 
           for (let index = 0; index < this.lists.length; index++) {
+            for (let ind = 0; ind < this.lists[index].kks.length; index++) {
+              if (this.lists[index].active == 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length != this.receive.length) {
+                this.arrAleat.push('5')
+                this.componentKey += 1;
+              }
+          }
+          
           if (this.lists[index].active == 0 && this.currentRouteName == 'alarm') {
               this.arrSize.push("5") 
             }

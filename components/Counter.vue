@@ -9,17 +9,23 @@ import main from '~/plugins/main'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['alarm'],
+  props: ['alarm', 'kks', 'arr'],
 
   data() {
     return {
-      countTime: ''
+      countTime: '',
+      stopInterval: "",
+      
     }
   },
   methods: {
     ...mapActions(['loadData']),
 
     loadCount() {
+      if (!this.arr.includes(this.kks)) {
+        this.arr.push(this.kks)
+        this.$emit('send', this.arr)
+      }
       const dateApi = this.alarm.date
       const typeData = this.alarm.type
       const dateNew = new Date()
@@ -38,7 +44,7 @@ export default {
           moDataApi.add(5, 'minutes')
         }
 
-        setInterval(() => {
+        this.stopInterval = setInterval(() => {
           let dateCurrent = this.$moment(new Date())
           let ms = moDataApi.diff(dateCurrent)
           this.alarm['countTimeDiff'] = ms
@@ -68,7 +74,7 @@ export default {
 
   created() {
     this.countTime = ''
-    this.loadCount()
+    this.loadCount() 
     // console.log(this.countTime)
   }
 }
