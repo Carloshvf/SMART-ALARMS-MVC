@@ -27,12 +27,12 @@ export default {
         this.$emit('send', this.arr)
       }
       const dateApi = this.alarm.date
-      const typeData = this.alarm.type
+      var typeData = this.alarm.type
       const dateNew = new Date()
       const moDataApi = this.$moment(dateApi)
 
       let dateCurrent = this.$moment(dateNew)
-      let ms = moDataApi
+      var ms = moDataApi
       this.alarm['countTimeDiff'] = ms
       let d = this.$moment.duration(ms)
       if (ms > 0) {
@@ -45,9 +45,18 @@ export default {
         }
 
         this.stopInterval = setInterval(() => {
-          let dateCurrent = this.$moment(new Date())
-          let ms = moDataApi.diff(dateCurrent)
-          this.alarm['countTimeDiff'] = ms
+          
+          var moDataApi2 = this.$moment(this.alarm.date);
+          if (typeData == 'PLS') {
+            moDataApi2.add(7, 'minutes')
+          } else if(typeData == 'PLST'){
+            moDataApi2.add(5, 'minutes')
+          }
+
+          
+          let dateCurrent = this.$moment(new Date());
+          ms = moDataApi2.diff(dateCurrent);
+          this.alarm['countTimeDiff'] = ms;
 
           if (ms > 0) {
             let d = this.$moment.duration(ms)
@@ -75,7 +84,6 @@ export default {
   created() {
     this.countTime = ''
     this.loadCount() 
-    // console.log(this.countTime)
   }
 }
 </script>
