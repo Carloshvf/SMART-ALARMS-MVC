@@ -9,24 +9,30 @@ import main from '~/plugins/main'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['alarm'],
+  props: ['alarm', 'kks', 'arr'],
 
   data() {
     return {
-      countTime: ''
+      countTime: '',
+      stopInterval: "",
+      
     }
   },
   methods: {
     ...mapActions(['loadData']),
 
     loadCount() {
+      if (!this.arr.includes(this.kks)) {
+        this.arr.push(this.kks)
+        this.$emit('send', this.arr)
+      }
       const dateApi = this.alarm.date
-      const typeData = this.alarm.type
+      var typeData = this.alarm.type
       const dateNew = new Date()
       const moDataApi = this.$moment(dateApi)
 
       let dateCurrent = this.$moment(dateNew)
-      let ms = moDataApi
+      var ms = moDataApi
       this.alarm['countTimeDiff'] = ms
       let d = this.$moment.duration(ms)
       if (ms > 0) {
@@ -38,10 +44,19 @@ export default {
           moDataApi.add(5, 'minutes')
         }
 
-        setInterval(() => {
-          let dateCurrent = this.$moment(new Date())
-          let ms = moDataApi.diff(dateCurrent)
-          this.alarm['countTimeDiff'] = ms
+        this.stopInterval = setInterval(() => {
+          
+          var moDataApi2 = this.$moment(this.alarm.date);
+          if (typeData == 'PLS') {
+            moDataApi2.add(7, 'minutes')
+          } else if(typeData == 'PLST'){
+            moDataApi2.add(5, 'minutes')
+          }
+
+          
+          let dateCurrent = this.$moment(new Date());
+          ms = moDataApi2.diff(dateCurrent);
+          this.alarm['countTimeDiff'] = ms;
 
           if (ms > 0) {
             let d = this.$moment.duration(ms)
@@ -57,19 +72,18 @@ export default {
                 .toString()
                 .padStart(2, '0')
           } else {
-            this.countTime = 'Expirou'
+            this.countTime = '00:00'
           }
         }, 1000)
       } else {
-        this.countTime = 'Expirou'
+        this.countTime = '00:00'
       }
     }
   },
 
   created() {
     this.countTime = ''
-    this.loadCount()
-    // console.log(this.countTime)
+    this.loadCount() 
   }
 }
 </script>

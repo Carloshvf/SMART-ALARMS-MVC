@@ -2,6 +2,7 @@
 
 //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
 export const HOST_API = process.env.baseURL; 
+export const strict = false;
 
 export const state = () => ({
   all: [],
