@@ -163,8 +163,8 @@ export default {
         }
 
       }
-      console.log('result.date:');
-      console.log(result.date);
+      // console.log('result.date:');
+      // console.log(result.date);
       return result;
     },
     
