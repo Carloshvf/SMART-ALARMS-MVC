@@ -6,7 +6,7 @@
             </div>
             <div class="col-6 mt-4">
                 <b-button class="btn-cadastrar"><img class="cross-img" src="../../static/img/plus.svg" alt="cross"/>
-                    <span class="">CADASTRAR</span> 
+                    <span>CADASTRAR</span> 
                 </b-button>
             </div>
         </div>
@@ -92,7 +92,7 @@ export default {
     position: absolute;
     width: 151px;
     height: 44px;
-    left: 400px;
+    left: 510px;
     top: 5px;
     color: $white;
     background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
