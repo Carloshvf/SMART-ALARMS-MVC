@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-11 mt-3 mb-3">
+                            <div class="col-11 mt-3 mb-2">
                                 <span>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
                                     labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
@@ -50,6 +50,15 @@
                             </div>
                             <div class="col-1">
                                 <b-button class="btn btn-consulta" v-b-modal="'my-modal'">CONSULTA</b-button>
+                            </div>
+                            <div class="col-3 mt-2 mb-3">
+                                <span style="color: #B5B5B5;">Nome: Diego Machado</span>
+                            </div>
+                             <div class="col-4 mt-2 mb-3">
+                                <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
+                            </div>
+                             <div class="col-4 mt-2 mb-3">
+                                <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
                             </div>
                         </div>
                         <!-- MODAL -->
