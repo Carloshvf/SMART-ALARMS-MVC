@@ -207,9 +207,14 @@ body {
   box-shadow: 0px 8px 16px rgba(50, 50, 71, 0.06), 0px 8px 8px rgba(50, 50, 71, 0.08);
 
   &-header,
+  &-suggest,
   &-kks,
   &-content {
     padding: $padding;
+  }
+
+  &-suggest {
+    color: #1F2041;
   }
 
   &-kks {
@@ -300,6 +305,10 @@ body {
   background-color: #008542;
   border-radius: 5px;
   color: #FFFFFF;
+}
+
+.btn-white {
+  background-color: white;
 }
 
 .btn-clean {
