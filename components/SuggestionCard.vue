@@ -43,11 +43,7 @@
         </div>
         <div class="col-3 card-suggest mt-2">
             <br>
-<<<<<<< HEAD
             <b-form-checkbox class="checkboxes" v-model="checked2">Aguardando implementação</b-form-checkbox>
-=======
-            <b-form-checkbox class="checkboxes" v-model="checked1">Aguardando aprovação</b-form-checkbox>
->>>>>>> develop
             <b-form-checkbox class="checkboxes">Recusada</b-form-checkbox>
         </div>
     </div>
@@ -60,10 +56,7 @@ export default {
   data() {
       return {
         checked1: true,
-<<<<<<< HEAD
         checked2: true,
-=======
->>>>>>> develop
       }
   }
 
