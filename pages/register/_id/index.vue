@@ -287,11 +287,11 @@
       <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')" :disabled="disabling">
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
         Salvar como alarme novo
-        </b-button>
+      </b-button>
       <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')" :disabled="disabling">
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loadEdit == true"></span>
         Salvar edição
-        </b-button>
+      </b-button>
     </b-modal>
     <!-- MODAL -->
   </div>
