@@ -5,7 +5,8 @@
                 <h1>Sugestões</h1>
             </div>
             <div class="col-6 mt-4">
-                <b-button class="btn-cadastrar"><img class="cross-img" src="../../static/img/plus.svg" alt="cross"/>
+                <b-button class="btn-cadastrar" v-b-modal="'modal-cadastrar'">
+                    <img class="cross-img" src="../../static/img/plus.svg" alt="cross"/>
                     <span>CADASTRAR</span> 
                 </b-button>
             </div>
@@ -27,6 +28,91 @@
                 <suggestion-detail/>
             </div>
         </div>
+        <!-- MODAL -->
+        <b-modal size="xl" id="modal-cadastrar">
+            <template v-slot:modal-title>
+                <div class="row">
+                    <div class="col-2 ">
+                        <label class="labels">SELECIONAR UG</label>
+                        <select class="form-control">
+                        <option>UG 11</option>
+                        <option>UG 12</option>
+                        <option>UG 18</option>
+                        <option>UG 21</option>
+                        <option>UG 22</option>
+                        <option>UG 28</option>
+                        <option>UG 31</option>
+                        <option>UG 32</option>
+                        <option>UG 38</option>
+                        <option>CAV1</option>
+                        <option>CAV2</option>
+                        <option>CAV3</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label class="labels">SELECIONAR TIPO</label>
+                        <select class="form-control">
+                        <option>PLS</option>
+                        <option>PLST</option>
+                        <option>TRIP</option>
+                        </select>
+                    </div>
+                    <div class="col-4 ">
+                        <label class="labels">CAUSA</label>
+                        <select class="form-control">
+                        <option>MUDANÇA DE MOTOR</option>
+                        <option>PLS</option>
+                        <option>PLST</option>
+                        <option>TRIP</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-modal btn-green rounded-circle">+</button>
+                    </div>
+                </div>
+            </template>
+            <template>
+                <div class="row mb-2">
+                    <div class="col-3 mb-3">
+                    <span style="color: #B5B5B5;">Nome: Diego Machado</span>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="col-12 cadastro-suggest">Sugestão:</span>
+                </div>
+                <div class="row card-suggest">
+                    <div class="col card-mod">
+                        <div class="row">
+                            <div class="col mt-2 mb-3">
+                                <span>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+                                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+                                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:modal-footer>
+                <b-button class="btn-cancel">
+                    <img src="../../static/img/cancelar.svg" alt="cancel"/>
+                    Cancelar
+                </b-button>
+                <b-button class="btn-enviar">
+                    <img src="../../static/img/aceitar.svg" alt="accept"/>
+                    Aceitar
+                </b-button>
+            </template>
+        </b-modal> 
     </div>
 </template>
 
@@ -66,6 +152,61 @@ export default {
         font-size: 12px;
     }
 } 
+
+.btn-cancel {
+    background-color: white;
+    color: #E17000;
+    border: none;
+
+    &:hover{
+        background-color: white;
+        color: #E17000;
+    }
+}
+
+.btn-enviar {
+    background-color: white;
+    color: #00C48C;
+    border: none;
+
+    &:hover{
+        background-color: white;
+        color: #00C48C;
+    }
+}
+
+.modal-title {
+    width: 100%;
+}
+
+.modal-footer {
+    border-top: 0px;
+}
+
+.card-mod {
+    background: #FFFFFF;
+    border: 1px solid rgba(31, 32, 65, 0.1);
+    box-sizing: border-box;
+    border-radius: 4px;
+
+}
+
+.cadastro-suggest {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 16px;
+    color: #226E48;
+}
+
+.labels {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn-modal {
+    position: absolute;
+    top: 50px;
+}
 
 .card-size {
     width: 70%;

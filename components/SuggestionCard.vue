@@ -43,7 +43,7 @@
         </div>
         <div class="col-3 card-suggest mt-2">
             <br>
-            <b-form-checkbox class="checkboxes" v-model="checked2">Aguardando aprovação</b-form-checkbox>
+            <b-form-checkbox class="checkboxes" v-model="checked2">Aguardando implementação</b-form-checkbox>
             <b-form-checkbox class="checkboxes">Recusada</b-form-checkbox>
         </div>
     </div>
