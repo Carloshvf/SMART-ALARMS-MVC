@@ -5,52 +5,56 @@
                 <div class="col-1">
                     <img src="../static/img/pencil-box.svg" alt="Edit" />   
                 </div>
-                <div class="col-1" style="color:#02592E;">31</div>
-                <div class="col-1" style="color:#02592E;">PLST</div>
-                <div class="col-5">Elevação de temperatura da turbina axial</div>
+                <div class="col-1" style="color:#02592E;">{{tab.ug}}</div>
+                <div class="col-1" style="color:#02592E;">{{tab.tipo}}</div>
+                <div class="col-5">{{tab.causa}}</div>
                 <div class="col-4 status-align">
-                    <span class="badge green mr-1">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    Implementada
-                </div>
-                <div class="row card-suggest">
-                    <div class="col-11 mt-1">
-                        <span>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                            sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </span>
-                    </div>
-                    <b-button class="btn btn-consulta" v-b-modal="'modal-consulta'">CONSULTA</b-button>
-                </div>
-                
-                <div class="col-3 mb-3">
-                    <span style="color: #B5B5B5;">Nome: Diego Machado</span>
-                </div>
-                <div class="col-4 mb-3">
-                    <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
-                </div>
-                <div class="col-4 mb-3">
-                    <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
+                    <span class="badge green mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada', 
+                    yellow: tab.status == 'Aguardando Aprovação', orange: tab.status == 'Aguardando Implementação' }">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    {{tab.status}}
                 </div>
             </div>
-        </div>
+                <div class="row card-suggest">
+                    <div class="col-11">
+                        <span>
+                            {{tab.sugestao}}
+                        </span>
+                    </div>
+                    <b-button class="btn btn-consulta" v-b-modal="modal_id">CONSULTA</b-button>
+                </div>
+
+                <div class="row card-suggest">
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Nome: {{tab.nome_usuario}}</span>
+                    </div>
+                    <div class="col-4">
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.chave}}</span>
+                    </div>
+                    <div class="col-5">
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.data}}</span>
+                    </div>
+                </div>
+            </div>
         <!-- MODAL -->
-        <b-modal size="xl" id="modal-consulta">
+        <b-modal size="xl" :id="modal_id">
             <template v-slot:modal-title>
                 <div class="card-consulta">
-                    <h1>PLST TG 31</h1>
+                    <h1>{{tab.tipo}} {{tab.ug}}</h1>
                     <span class="reason">Causa</span>
                     <div class="row">
-                        <div class="col-9">
-                            <p class="mb-1 titles">TEMPERATURA ELEVADA ROLAMENTO DO ESTATOR GERADOR</p>
+                        <div class="col-7">
+                            <p class="mb-1 titles">{{tab.causa}}</p>
                         </div>
-                        <div class="col-3" style="text-align: right;">
+                        <div class="col-5" style="text-align: right;">
                             <span class="titles">STATUS: </span>
                             <span>&nbsp;</span>
-                            <span class="badge refuse mr-1">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span class="refused">Recusada</span>
+                            <span class="badge refuse mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada', 
+                            yellow: tab.status == 'Aguardando Aprovação', orange: tab.status == 'Aguardando Implementação' }">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
+                            <span class="refused">{{tab.status}}</span>
                         </div>
                     </div>  
                 </div>
@@ -61,111 +65,108 @@
                 </div>
                 <div class="row">
                     <span class="col-12 card-suggest">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                        sunt in culpa qui officia deserunt mollit anim id est laborum.
+                       {{tab.sugestao}}
                     </span>
                     <div class="col border-line"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Nome: Diego Machado</span>
+                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_unidade[0].nome}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_unidade[0].chave}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_unidade[0].data}}</span>
                     </div>
                     <div class="col-3 mb-3" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Unidade:</span>
-                        <span style="color: #226E48">Em análise</span>
+                        <span style="color: #226E48">{{tab.gestao_unidade[0].status}}</span>
                     </div>
                 </div>
                 <div class="row"> 
                     <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
-                 <div class="row card-suggest">
-                     <div class="col-10 observ">
-                        <p>Digite aqui sua observação</p>
+                 <div class="row">
+                     <div class="col-10">
+                        <!-- <p>Digite aqui sua observação</p> -->
+                        <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer1">
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar">
+                         <b-button class="btn-enviar" @click="sendChoice(tipo1, accept, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise'">
                             <img src="../static/img/aceitar.svg" alt="accept"/>
                             Aceitar
                         </b-button>
-                         <b-button class="btn-cancel">
+                         <b-button class="btn-cancel" @click="sendChoice(tipo1, refuse, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise'">
                             <img src="../static/img/cancelar.svg" alt="cancel"/>
-                            Cancelar
+                            Recusar
                         </b-button>
                      </div>
                 </div>
                 <!-- 2 -->
                 <div class="row mt-3">
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Nome: Diego Machado</span>
+                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_sede[0].nome}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_sede[0].chave}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_sede[0].data}}</span>
                     </div>
                     <div class="col-3 mb-3" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Sede:</span>
-                        <span style="color: #226E48">Em análise</span>
+                        <span style="color: #226E48">{{tab.gestao_sede[0].status}}</span>
                     </div>
                 </div>
                 <div class="row"> 
                     <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
-                 <div class="row card-suggest">
-                     <div class="col-10 observ">
-                        <p>Digite aqui sua observação</p>
+                 <div class="row">
+                     <div class="col-10">
+                        <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer2">
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar">
+                         <b-button class="btn-enviar" @click="sendChoice(tipo2, accept, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise'">
                             <img src="../static/img/aceitar.svg" alt="accept"/>
                             Aceitar
                         </b-button>
-                         <b-button class="btn-cancel">
+                         <b-button class="btn-cancel" @click="sendChoice(tipo2, refuse, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise'">
                             <img src="../static/img/cancelar.svg" alt="cancel"/>
-                            Cancelar
+                            Recusar
                         </b-button>
                      </div>
                 </div>
                 <!-- 3 -->
                 <div class="row mt-3">
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Nome: Diego Machado</span>
+                        <span style="color: #B5B5B5;">Nome: {{tab.executor[0].nome}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.executor[0].chave}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.executor[0].data}}</span>
                     </div>
                     <div class="col-3 mb-3" style="text-align: right;">
                         <span class="consulta-suggest">Executor:</span>
-                        <span style="color: #226E48">Em análise</span>
+                        <span style="color: #226E48">{{tab.executor[0].status}}</span>
                     </div>
                 </div>
                 <div class="row"> 
                     <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
-                 <div class="row card-suggest">
-                     <div class="col-10 observ">
-                        <p>Digite aqui sua observação</p>
+                 <div class="row">
+                     <div class="col-10">
+                        <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer3">
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar">
-                            <img src="../static/img/aceitar.svg" alt="accept"/>
-                            Aceitar
+                         <b-button class="btn-enviar" @click="sendChoice(tipo3, implement, answer3)" v-if="tab.executor[0].status == 'Em análise'">
+                            <img src="../static/img/aceitar.svg" alt="Implement"/>
+                            Implementar
                         </b-button>
-                         <b-button class="btn-cancel">
-                            <img src="../static/img/cancelar.svg" alt="cancel"/>
+                         <b-button class="btn-cancel" @click="cancelConsulta()" v-if="tab.executor[0].status == 'Em análise'">
+                            <img src="../static/img/cancelar.svg" @click="cancelConsulta()" alt="cancel"/>
                             Cancelar
                         </b-button>
                      </div>
@@ -178,6 +179,62 @@
         <!--  -->
     </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex';
+
+export default {
+    props: ['tab', 'tab_modal'],
+
+    data() {
+        return {
+            accept: "Aceitar",
+            refuse: "Recusar",
+            implement: "Implementar",
+            tipo1: "GESTÃO UNIDADE",
+            tipo2: "GESTÃO SEDE",
+            tipo3: "EXECUTOR",
+            answer1: this.tab.gestao_unidade[0].observacao,
+            answer2: this.tab.gestao_sede[0].observacao,
+            answer3: this.tab.executor[0].observacao,
+            sugResponse: "",
+            allData: [],
+        }
+    },
+
+    methods: {
+        ...mapActions(['postSuggestions']),
+
+        cancelConsulta() {
+            this.$bvModal.hide(this.modal_id)
+        },
+
+        async sendChoice(tipos, choice, obs) {
+            this.allData.push({
+                tipo_usuario: tipos,
+                status: this.tab.status,
+                comando: choice,
+                observacao: obs,
+                nome:"Diego",
+                chave:"QRST"
+            })
+            await this.postSuggestions({id: this.tab_modal, info: this.allData[0]})
+            // this.sugResponse = this.$store.state.suggestChoice
+        }
+    },
+
+    computed: {
+        modal_id() {
+            return this.tab_modal.toString()
+        }
+    },
+
+    created() {
+        // console.log(this.tab_modal)
+    }
+}
+
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/scss/base.scss';
@@ -218,13 +275,12 @@
 
 .observ {
     background: #F7F7F7;
-    border-radius: 5px;
-
-    p {
-        color: #052F1A;
-        opacity: 0.6;
-    }
+    border: none;
 }
+
+// .form-control {
+//     box-shadow: none;
+// }
 
 .consulta-suggest {
     font-weight: bold;
@@ -233,7 +289,6 @@
 }
 
 .refuse {
-    background: #E17000;
     border-radius: 3px;
 }
 
