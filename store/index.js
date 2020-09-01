@@ -6,6 +6,8 @@ export const strict = false;
 
 export const state = () => ({
   all: [],
+  suggest: [],
+  suggestChoice: [],
   graph: [],
   salvarAlarm: '',
   validating: '',
@@ -21,6 +23,12 @@ export const state = () => ({
 export const mutations = {
   setAll(state, all) {
     state.all = all
+  },
+  setSuggest(state, suggest) {
+    state.suggest = suggest
+  },
+  setChoice(state, suggestChoice) {
+    state.suggestChoice = suggestChoice
   },
   setGraph(state, graph) {
     state.graph = graph
@@ -119,6 +127,31 @@ export const actions = {
     )
 
     context.commit('setAll', all)
+  },
+
+  //SUGESTÕES
+  async loadSuggestions(context) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes'
+    )
+    .then(response => {
+      this.suggest = response.data.sugestoes
+    })
+
+    context.commit('setSuggest', this.suggest)
+  },
+
+  // POST DE SUGESTÕES
+  async postSuggestions(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/sugestoes/' + dados.id,
+      dados.info
+      )
+    .then(response => {
+      this.suggestChoice = response
+    })
+
+    context.commit('setChoice', this.suggestChoice)
   },
   
   async sendAlarms(context, { info }) {
