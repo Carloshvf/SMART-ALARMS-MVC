@@ -26,7 +26,6 @@
                             <option>UG 22</option>
                             <option>UG 31</option>
                             <option>UG 32</option>
-                            <!-- <option>UG 11</option> -->
                         </select>
                     </div>
                     <div class="col-2 card-suggest">
@@ -88,82 +87,90 @@
                 <div class="row">
                     <div class="col-2 ">
                         <label class="labels">SELECIONAR UG</label>
-                        <select class="form-control">
-                        <option>UG 11</option>
-                        <option>UG 12</option>
-                        <option>UG 18</option>
-                        <option>UG 21</option>
-                        <option>UG 22</option>
-                        <option>UG 28</option>
-                        <option>UG 31</option>
-                        <option>UG 32</option>
-                        <option>UG 38</option>
-                        <option>CAV1</option>
-                        <option>CAV2</option>
-                        <option>CAV3</option>
+                        <select class="form-control" v-model="regModal1">
+                            <!-- <option v-for="item in sugRegister" :key="item.id">
+                                {{item.ug}}                
+                            </option> -->
+                            <option>UG 11</option>
+                            <option>UG 12</option>
+                            <option>UG 21</option>
+                            <option>UG 22</option>
+                            <option>UG 31</option>
+                            <option>UG 32</option>
                         </select>
                     </div>
                     <div class="col-2">
                         <label class="labels">SELECIONAR TIPO</label>
-                        <select class="form-control">
-                        <option>PLS</option>
-                        <option>PLST</option>
-                        <option>TRIP</option>
+                        <select class="form-control" v-model="regModal2">
+                            <!-- <option v-for="item in sugRegister" :key="item.id">
+                                {{item.tipo}}                
+                            </option> -->
+                            <option>PLS</option>
+                            <option>PLST</option>
+                            <option>TRIP</option>
                         </select>
                     </div>
                     <div class="col-4 ">
                         <label class="labels">CAUSA</label>
-                        <select class="form-control">
-                        <option>MUDANÇA DE MOTOR</option>
-                        <option>PLS</option>
-                        <option>PLST</option>
-                        <option>TRIP</option>
+                        <select class="form-control" v-model="regModal3">
+                            <!-- <option v-for="item in sugRegister" :key="item.id">
+                                {{item.causa}}                
+                            </option> -->
+                            <option>PROTEÇÃO INTERFACE CICLO ÁGUA VAPOR</option>
+                            <option>TEMPERATURA EGATROL 8 GABINETES</option>
+                            <option>Alto Diferencial (max 2) de Pressão do Filtro</option>
+                            <option>Nível Baixo (min 2) do Tanque de Surto</option>
+                            <option>DETECTOR DE FOGO NO MANCAL DE EXAUSTÃO</option>
                         </select>
                     </div>
                     <div>
-                        <button class="btn btn-modal btn-green rounded-circle">+</button>
+                        <button class="btn btn-modal btn-green rounded-circle" @click="sendOptions()">+</button>
                     </div>
                 </div>
             </template>
             <template>
-                <div class="row mb-2">
-                    <div class="col-3 mb-3">
-                    <span style="color: #B5B5B5;">Nome: Diego Machado</span>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: 123456789</span>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: 16/06/2020 às 12:00</span>
+                
+                <div class="row">
+                    <div class="col scroll"> 
+                        <table class="table" v-if="selects != ''">
+                            <thead>
+                            <tr class="">
+                            <th scope="col">UG</th>
+                            <th scope="col">Causa</th>
+                            
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in selects" :key="item.id">
+                                <td class="border-line">{{item.ug}}</td>
+                                <td class="border-line">{{item.causa}}</td>
+                            </tr>
+                            <!-- <tr v-for="item in editSug.lista_ugs" :key="item.id">
+                                <td>{{item.ug}}</td>
+                                <td>{{item.causa}}</td>
+                            </tr> -->
+                            </tbody>
+                        </table>    
                     </div>
                 </div>
+
                 <div class="row">
                     <span class="col-12 cadastro-suggest">Sugestão:</span>
                 </div>
-                <div class="row card-suggest">
-                    <div class="col card-mod">
-                        <div class="row">
-                            <div class="col mt-2 mb-3">
-                                <span>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-                                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-                                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </span>
-                            </div>
+                    <div class="row">
+                        <div class="col mt-3 mb-3">
+                            <input class="form-control" placeholder="Digite aqui sua observação" v-model="observacao">
                         </div>
                     </div>
-                </div>
             </template>
             <template v-slot:modal-footer>
-                <b-button class="btn-cancel">
+                <b-button class="btn-cancel" @click="cancelCadastro()">
                     <img src="../../static/img/cancelar.svg" alt="cancel"/>
                     Cancelar
                 </b-button>
-                <b-button class="btn-enviar">
-                    <img src="../../static/img/aceitar.svg" alt="accept"/>
-                    Aceitar
+                <b-button class="btn-enviar" @click="sendRegister()">
+                    <img src="../../static/img/aceitar.svg" alt="send"/>
+                    Enviar
                 </b-button>
             </template>
         </b-modal> 
@@ -171,13 +178,11 @@
 </template>
 
 <script>
-import SuggestionCard from '~/components/SuggestionCard.vue';
 import SuggestionDetail from '~/components/SuggestionDetail.vue';
 import { mapActions } from 'vuex';
 
 export default {
     components: {
-        SuggestionCard,
         SuggestionDetail
     },
 
@@ -188,22 +193,59 @@ export default {
             select1: "",
             select2: "",
             select3: "",
+            regModal1: "",
+            regModal2: "",
+            regModal3: "",
+            observacao: "",
             checkbox1:"",
             checkbox2:"",
             checkbox3:"",
             checkbox4:"",
-            uniqueDetails: [],
+            allRegister: [],
+            selects: []
         }
     },
 
     methods: {
-        ...mapActions(['loadSuggestions']),
+        ...mapActions(['loadSuggestions', 'getRegister', 'registerSuggestions']),
+
+        cancelCadastro() {
+            this.regModal1 = ""
+            this.regModal2 = ""
+            this.regModal3 = ""
+            this.observacao = ""
+            this.selects.splice(0)
+            this.$bvModal.hide('modal-cadastrar')
+        },
+
+        sendOptions() {
+            this.selects.push({ug: this.regModal1, tipo: this.regModal2, causa: this.regModal3})
+            // console.log(this.selects)
+        },
+
+        async sendRegister() {
+            this.allRegister.splice(0)
+            
+            this.allRegister.push({
+                sugestao: this.observacao,
+                nome:"Rodolfo Cavalcante",
+                chave:"QRST",
+                lista_ugs: this.selects,
+            })
+            await this.registerSuggestions({info: this.allRegister[0]})
+            this.loadSuggestions()
+        }
     },
 
     computed: {
         sugDetail() {
             return this.$store.state.suggest
         },
+
+        sugRegister() {
+            return this.$store.state.suggestRegister
+        },
+
         filteredOptions() {
             // for (let index = 0; index < this.sugDetail.length; index++) {
             //     const element = this.sugDetail[index];
@@ -261,7 +303,8 @@ export default {
 
     created() {
         this.loadSuggestions()
-        // console.log(this.filteredOptions)
+        this.getRegister()
+        // console.log(this.sugRegister)
     }
 }
 </script>   
@@ -285,6 +328,15 @@ export default {
         right: 35px;
         font-size: 12px;
     }
+}
+
+.scroll {
+    max-height: 180px;
+    overflow: auto;
+}
+
+.input-cadastrar {
+    border: none;
 }
 
 .labels {
@@ -328,14 +380,6 @@ export default {
 
 .modal-footer {
     border-top: 0px;
-}
-
-.card-mod {
-    background: #FFFFFF;
-    border: 1px solid rgba(31, 32, 65, 0.1);
-    box-sizing: border-box;
-    border-radius: 4px;
-
 }
 
 .cadastro-suggest {
