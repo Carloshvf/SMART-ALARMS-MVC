@@ -67,16 +67,15 @@
                     <span class="col-12 card-suggest">
                        {{tab.sugestao}}
                     </span>
-                    <!-- <div class="col border-line"></div> -->
                 </div>
-                <div class="row mt-3">
-                    <div class="col-12" style="text-align: right;">
+                <div class="row mt-3 border-edit"></div>
+               
+                <div class="row mt-3"> 
+                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Unidade:</span>
                         <span style="color: #226E48">{{tab.gestao_unidade[0].status}}</span>
                     </div>
-                </div>
-                <div class="row"> 
-                    <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
                  <div class="row">
                      <div class="col-10">
@@ -93,7 +92,7 @@
                         </b-button>
                      </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row ">
                     <div class="col-3">
                         <span style="color: #B5B5B5;">Nome: {{tab.gestao_unidade[0].nome}}</span>
                     </div>
@@ -104,15 +103,14 @@
                         <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_unidade[0].data}}</span>
                     </div>
                 </div>
+                <div class="row mt-3 border-edit"></div>
                 <!-- 2 -->
-                <div class="row mt-3">
-                    <div class="col-12" style="text-align: right;">
+                <div class="row mt-3"> 
+                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Sede:</span>
                         <span style="color: #226E48">{{tab.gestao_sede[0].status}}</span>
                     </div>
-                </div>
-                <div class="row"> 
-                    <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
                  <div class="row">
                      <div class="col-10">
@@ -140,14 +138,9 @@
                         <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_sede[0].data}}</span>
                     </div>
                 </div>
+                <div class="row mt-3 border-edit"></div>
                 <!-- 3 -->
-                <div class="row mt-3">
-                    <div class="col-12" style="text-align: right;">
-                        <span class="consulta-suggest">Executor:</span>
-                        <span style="color: #226E48">{{tab.executor[0].status}}</span>
-                    </div>
-                </div>
-                <div class="row"> 
+                <div class="row mt-3"> 
                     <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
                  <div class="row">
@@ -248,6 +241,7 @@
                         </table>
                     </div>
                 </div>
+                <!-- <div class="row border-edit"></div> -->
     
                 <div class="row">
                     <span class="col-12 cadastro-suggest mt-3">Sugestão:</span>
@@ -424,6 +418,8 @@ export default {
 
 .border-edit {
     border-bottom: 1px solid #dee2e6;
+    margin-right: 15px;
+    margin-left: 15px;
 }
 
 .list {
