@@ -8,8 +8,11 @@ export const state = () => ({
   all: [],
   suggest: [],
   suggestChoice: [],
+<<<<<<< HEAD
   suggestRegister: [],
   getSuggest: [],
+=======
+>>>>>>> develop
   graph: [],
   salvarAlarm: '',
   validating: '',
@@ -32,12 +35,15 @@ export const mutations = {
   setChoice(state, suggestChoice) {
     state.suggestChoice = suggestChoice
   },
+<<<<<<< HEAD
   setRegister(state, suggestRegister) {
     state.suggestRegister = suggestRegister
   },
   setEdit(state, getSuggest) {
     state.getSuggest = getSuggest
   },
+=======
+>>>>>>> develop
   setGraph(state, graph) {
     state.graph = graph
   },
@@ -137,7 +143,11 @@ export const actions = {
     context.commit('setAll', all)
   },
 
+<<<<<<< HEAD
   //GET DA PÁGINA DE SUGESTÕES
+=======
+  //SUGESTÕES
+>>>>>>> develop
   async loadSuggestions(context) {
     await this.$axios.get(
       HOST_API + '/sugestoes'
@@ -149,7 +159,11 @@ export const actions = {
     context.commit('setSuggest', this.suggest)
   },
 
+<<<<<<< HEAD
   // POST DE CONSULTA DE SUGESTÃO 
+=======
+  // POST DE SUGESTÕES
+>>>>>>> develop
   async postSuggestions(context, dados) {
     await this.$axios.post(
         HOST_API + '/sugestoes/' + dados.id,
@@ -161,6 +175,7 @@ export const actions = {
 
     context.commit('setChoice', this.suggestChoice)
   },
+<<<<<<< HEAD
 
   // GET DE CADASTRAR SUGESTÃO
   async getRegister(context) {
@@ -203,6 +218,8 @@ export const actions = {
       )
 
   },
+=======
+>>>>>>> develop
   
   async sendAlarms(context, { info }) {
     await this.$axios.post(
