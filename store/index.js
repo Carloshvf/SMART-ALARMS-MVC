@@ -8,6 +8,8 @@ export const state = () => ({
   all: [],
   suggest: [],
   suggestChoice: [],
+  suggestRegister: [],
+  getSuggest: [],
   graph: [],
   salvarAlarm: '',
   validating: '',
@@ -29,6 +31,12 @@ export const mutations = {
   },
   setChoice(state, suggestChoice) {
     state.suggestChoice = suggestChoice
+  },
+  setRegister(state, suggestRegister) {
+    state.suggestRegister = suggestRegister
+  },
+  setEdit(state, getSuggest) {
+    state.getSuggest = getSuggest
   },
   setGraph(state, graph) {
     state.graph = graph
@@ -56,7 +64,7 @@ export const mutations = {
     state.deleteAlarm = deleteAlarm
   },
 
-  // POPULANDO A PAGINA DE EDITAR
+  // POPULANDO A PAGINA DE EDITAR CADASTROS
   setLocal(state, local) {
     state.edit.local = local;
   },
@@ -129,7 +137,7 @@ export const actions = {
     context.commit('setAll', all)
   },
 
-  //SUGESTÕES
+  //GET DA PÁGINA DE SUGESTÕES
   async loadSuggestions(context) {
     await this.$axios.get(
       HOST_API + '/sugestoes'
@@ -141,7 +149,7 @@ export const actions = {
     context.commit('setSuggest', this.suggest)
   },
 
-  // POST DE SUGESTÕES
+  // POST DE CONSULTA DE SUGESTÃO 
   async postSuggestions(context, dados) {
     await this.$axios.post(
         HOST_API + '/sugestoes/' + dados.id,
@@ -153,6 +161,48 @@ export const actions = {
 
     context.commit('setChoice', this.suggestChoice)
   },
+
+  // GET DE CADASTRAR SUGESTÃO
+  async getRegister(context) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes/cadastro'
+    )
+    .then(response => {
+      this.suggestRegister = response.data.filtro
+    })
+
+    context.commit('setRegister', this.suggestRegister)
+  },
+
+  // POST DE CADASTRAR SUGESTÃO
+  async registerSuggestions(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/sugestoes/cadastro',
+      dados.info
+      )
+    
+  },
+
+  // GET DE EDITAR SUGESTÕES
+  async editingSuggestions(context, dados) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes/cadastro/' + dados
+    )
+    .then(response => {
+      this.getSuggest = response.data
+    })
+    // console.log(dados)
+    context.commit('setEdit', this.getSuggest)
+  },
+
+  // PUT DE EDITAR SUGESTÃO
+  async editSuggestions(context, dados) {
+    await this.$axios.put(
+        HOST_API + '/sugestoes/cadastro/' + dados.id,
+      dados.info
+      )
+
+  },
   
   async sendAlarms(context, { info }) {
     await this.$axios.post(
@@ -160,11 +210,11 @@ export const actions = {
         HOST_API + '/alarme',
       info
     )
-    .then(response => {
-      this.salvarAlarm = response.data.erro
-    })
+    // .then(response => {
+    //   this.salvarAlarm = response.data.erro
+    // })
 
-    context.commit('setAlarm', this.salvarAlarm)
+    // context.commit('setAlarm', this.salvarAlarm)
   },
 
   async sendLogic(context, { valid }) {

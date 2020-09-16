@@ -3,7 +3,7 @@
         <div class="col suggest-options">
             <div class="row mt-2">
                 <div class="col-1">
-                    <img src="../static/img/pencil-box.svg" alt="Edit" />   
+                    <img src="../static/img/pencil-box.svg" alt="Edit" @click="showModal(false)"/>
                 </div>
                 <div class="col-1" style="color:#02592E;">{{tab.ug}}</div>
                 <div class="col-1" style="color:#02592E;">{{tab.tipo}}</div>
@@ -22,7 +22,7 @@
                             {{tab.sugestao}}
                         </span>
                     </div>
-                    <b-button class="btn btn-consulta" v-b-modal="modal_id">CONSULTA</b-button>
+                    <b-button class="btn btn-consulta" @click="showModal(true)">CONSULTA</b-button>
                 </div>
 
                 <div class="row card-suggest">
@@ -37,8 +37,8 @@
                     </div>
                 </div>
             </div>
-        <!-- MODAL -->
-        <b-modal size="xl" :id="modal_id">
+        <!-- MODAL CONSULTA -->
+        <b-modal size="xl" :id="modal_id" v-if="modalEdit == true">
             <template v-slot:modal-title>
                 <div class="card-consulta">
                     <h1>{{tab.tipo}} {{tab.ug}}</h1>
@@ -67,29 +67,18 @@
                     <span class="col-12 card-suggest">
                        {{tab.sugestao}}
                     </span>
-                    <div class="col border-line"></div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_unidade[0].nome}}</span>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_unidade[0].chave}}</span>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_unidade[0].data}}</span>
-                    </div>
-                    <div class="col-3 mb-3" style="text-align: right;">
+                <div class="row mt-3 border-edit"></div>
+               
+                <div class="row mt-3"> 
+                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Unidade:</span>
                         <span style="color: #226E48">{{tab.gestao_unidade[0].status}}</span>
                     </div>
                 </div>
-                <div class="row"> 
-                    <span class="col-12 consulta-suggest">Observação:</span>
-                </div>
                  <div class="row">
                      <div class="col-10">
-                        <!-- <p>Digite aqui sua observação</p> -->
                         <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer1">
                      </div>
                      <div class="col-2" style="text-align: center;">
@@ -103,24 +92,25 @@
                         </b-button>
                      </div>
                 </div>
+                <div class="row ">
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_unidade[0].nome}}</span>
+                    </div>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_unidade[0].chave}}</span>
+                    </div>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_unidade[0].data}}</span>
+                    </div>
+                </div>
+                <div class="row mt-3 border-edit"></div>
                 <!-- 2 -->
-                <div class="row mt-3">
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_sede[0].nome}}</span>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_sede[0].chave}}</span>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_sede[0].data}}</span>
-                    </div>
-                    <div class="col-3 mb-3" style="text-align: right;">
+                <div class="row mt-3"> 
+                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Sede:</span>
                         <span style="color: #226E48">{{tab.gestao_sede[0].status}}</span>
                     </div>
-                </div>
-                <div class="row"> 
-                    <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
                  <div class="row">
                      <div class="col-10">
@@ -137,23 +127,20 @@
                         </b-button>
                      </div>
                 </div>
-                <!-- 3 -->
-                <div class="row mt-3">
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.executor[0].nome}}</span>
+                <div class="row">
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_sede[0].nome}}</span>
                     </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.executor[0].chave}}</span>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_sede[0].chave}}</span>
                     </div>
-                    <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.executor[0].data}}</span>
-                    </div>
-                    <div class="col-3 mb-3" style="text-align: right;">
-                        <span class="consulta-suggest">Executor:</span>
-                        <span style="color: #226E48">{{tab.executor[0].status}}</span>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_sede[0].data}}</span>
                     </div>
                 </div>
-                <div class="row"> 
+                <div class="row mt-3 border-edit"></div>
+                <!-- 3 -->
+                <div class="row mt-3"> 
                     <span class="col-12 consulta-suggest">Observação:</span>
                 </div>
                  <div class="row">
@@ -171,11 +158,123 @@
                         </b-button>
                      </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Nome: {{tab.executor[0].nome}}</span>
+                    </div>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.executor[0].chave}}</span>
+                    </div>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.executor[0].data}}</span>
+                    </div>
+                </div>
             </template>
             <template v-slot:modal-footer>
                 <span>&nbsp;</span>
             </template>           
         </b-modal> 
+        <!--  -->
+        <!-- MODAL EDITAR -->
+        <b-modal size="xl" :id="modal_id" v-if="modalEdit == false">
+            <template v-slot:modal-title>
+                <div class="row">
+                    <div class="col-2 ">
+                        <label class="labels">SELECIONAR UG</label>
+                        <select class="form-control" v-model="editModal1">
+                            <!-- <option v-for="item in sugEdit.filtro" :key="item.id">
+                                {{item.ug}}                
+                            </option> -->
+                            <option>UG 11</option>
+                            <option>UG 12</option>
+                            <option>UG 21</option>
+                            <option>UG 22</option>
+                            <option>UG 31</option>
+                            <option>UG 32</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label class="labels">SELECIONAR TIPO</label>
+                        <select class="form-control" v-model="editModal2">
+                            <!-- <option v-for="item in sugEdit.filtro" :key="item.id">
+                                {{item.tipo}}                
+                            </option> -->
+                            <option>PLS</option>
+                            <option>PLST</option>
+                            <option>TRIP</option>
+                        </select>
+                    </div>
+                    <div class="col-4 ">
+                        <label class="labels">CAUSA</label>
+                        <select class="form-control" v-model="editModal3">
+                            <!-- <option v-for="item in sugEdit.filtro" :key="item.id">
+                                {{item.causa}}                
+                            </option> -->
+                            <option>PROTEÇÃO INTERFACE CICLO ÁGUA VAPOR</option>
+                            <option>TEMPERATURA EGATROL 8 GABINETES</option>
+                            <option>Alto Diferencial (max 2) de Pressão do Filtro</option>
+                            <option>Nível Baixo (min 2) do Tanque de Surto</option>
+                            <option>DETECTOR DE FOGO NO MANCAL DE EXAUSTÃO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-modal btn-green rounded-circle" @click="editOptions()">+</button>
+                    </div>
+                </div>
+            </template>
+            <template>
+                <div class="row">
+                    <div class="col scroll">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">UG</th>
+                                <th scope="col">Causa</th>  
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in filterList" :key="item.id">
+                                <td>{{item.ug}}</td>
+                                <td>{{item.causa}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="row border-edit"></div> -->
+    
+                <div class="row">
+                    <span class="col-12 cadastro-suggest mt-3">Sugestão:</span>
+                </div>
+                <div class="row">
+                    <div class="col mt-3 mb-3">
+                        <input class="form-control" placeholder="Digite aqui sua observação" v-model="observac">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 mb-3">
+                    <span style="color: #B5B5B5;">Nome: {{filterNome}}</span>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <span style="color: #B5B5B5;">Chave de acesso: {{filterChave}}</span>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.data}}</span>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:modal-footer>
+                <b-button class="btn-cancel" @click="cancelEdit()">
+                    <img src="../static/img/cancelar.svg" alt="cancel"/>
+                    Cancelar
+                </b-button>
+                <b-button class="btn-enviar" @click="editRegister()">
+                    <img src="../static/img/aceitar.svg" alt="send"/>
+                    Enviar
+                </b-button>
+            </template>
+        </b-modal>
         <!--  -->
     </div>
 </template>
@@ -188,28 +287,63 @@ export default {
 
     data() {
         return {
+            modalEdit: null,
             accept: "Aceitar",
             refuse: "Recusar",
             implement: "Implementar",
             tipo1: "GESTÃO UNIDADE",
             tipo2: "GESTÃO SEDE",
             tipo3: "EXECUTOR",
+            editModal1: "",
+            editModal2: "",
+            editModal3: "",
+            observac: this.tab.sugestao,
             answer1: this.tab.gestao_unidade[0].observacao,
             answer2: this.tab.gestao_sede[0].observacao,
             answer3: this.tab.executor[0].observacao,
             sugResponse: "",
             allData: [],
+            allEdit: [],
+            lists: [],
+            allEdit: [],
         }
     },
 
     methods: {
-        ...mapActions(['postSuggestions']),
+        ...mapActions(['loadSuggestions','postSuggestions', 'editingSuggestions', 'editSuggestions']),
+
+        editOptions() {
+            this.lists = this.editSug.lista_ugs
+            this.lists.push({ug: this.editModal1, tipo: this.editModal2, causa: this.editModal3})
+
+        },
 
         cancelConsulta() {
             this.$bvModal.hide(this.modal_id)
         },
 
+        cancelEdit() {
+            this.editModal1 = ""
+            this.editModal2 = ""
+            this.editModal3 = ""
+            this.observac = ""
+            this.$bvModal.hide(this.modal_id)
+        },
+
+        showModal(value) {
+            this.modalEdit = value
+            this.editingSuggestions(this.modal_id)
+            
+            setTimeout(() => {
+                this.$bvModal.show(this.modal_id)
+                // console.log(this.editSug.nome)
+            }, 100);
+            
+        },
+
         async sendChoice(tipos, choice, obs) {
+            this.allData.splice(0)
+
             this.allData.push({
                 tipo_usuario: tipos,
                 status: this.tab.status,
@@ -219,18 +353,55 @@ export default {
                 chave:"QRST"
             })
             await this.postSuggestions({id: this.tab_modal, info: this.allData[0]})
+            this.loadSuggestions()
             // this.sugResponse = this.$store.state.suggestChoice
-        }
+        },
+
+        async editRegister() {
+        this.allEdit.splice(0)
+        
+        this.allEdit.push({
+            sugestao: this.observac,
+            nome:"Rodolfo Cavalcante",
+            chave:"QRST",
+            lista_ugs: this.lists,
+        })
+        // console.log(this.editSug.lista_ugs)
+        await this.editSuggestions({id: this.tab_modal, info: this.allEdit[0]})
+        this.loadSuggestions()
+    }
     },
 
     computed: {
         modal_id() {
             return this.tab_modal.toString()
+        },
+
+        sugEdit() {
+            return this.$store.state.getSuggest
+        },
+
+        editSug() {
+            return this.$store.state.getSuggest.sugestoes
+        },
+
+        filterList() {
+            return this.editSug != undefined ? this.editSug.lista_ugs : []
+        },
+
+        filterNome() {
+            return this.editSug != undefined ? this.editSug.nome : []
+        },
+
+        filterChave() {
+            return this.editSug != undefined ? this.editSug.chave : []
         }
+
     },
 
     created() {
-        // console.log(this.tab_modal)
+        
+        // console.log(this.modal_id)
     }
 }
 
@@ -243,6 +414,22 @@ export default {
     background: #FFFFFF;
     border: 1px solid #999999;
     border-radius: 4px;
+}
+
+.border-edit {
+    border-bottom: 1px solid #dee2e6;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.list {
+    position: relative;
+    left: 15px;
+}
+
+.scroll {
+    max-height: 180px;
+    overflow: auto;
 }
 
 .titles {
