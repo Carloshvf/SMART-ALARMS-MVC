@@ -8,12 +8,13 @@
       <div class="row">
         <div class="col-6">
             <label class="mt-4">NOME DA UNIDADE</label>
-            <input class="form-control" placeholder="Escreva aqui...">
+            <input class="form-control" placeholder="Escreva aqui..." v-model="unitName">
         </div>
         <div class="col-4">
             <label class="mt-4">TIPO DE CONEXÃO PRINCIPAL</label>
-            <select class="form-control">
-                <option>OPC A&E</option>
+            <select class="form-control" v-model="connectionType">
+                <option>OPC AE</option>
+                <option>OPC DA</option>
             </select>
         </div>
       </div>
@@ -21,27 +22,23 @@
       <div class="row">
           <div class="col-3">
             <label class="mt-4">TIPO DE EVENTO</label>
-            <select class="form-control">
-                <option>PLS</option>
-            </select>
+            <input class="form-control" v-model="eventUnit">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
           </div>
           <div class="col-3">
             <label class="mt-4">SISTEMAS MONITORADOS</label>
-            <select class="form-control">
-                <option>UG-11</option>
-            </select>
+            <input class="form-control" v-model="systemUnit">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
           </div>
       </div>
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="saveUnit()">Salvar</b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
@@ -59,7 +56,13 @@ export default {
 
   data() {
     return {
- 
+      unitName: "",
+      connectionType: "",
+      eventUnit: "",
+      systemUnit: "",
+      eventType: [],
+      systems: [],
+      unitData: []
     }
   },
 
@@ -68,7 +71,28 @@ export default {
   },
 
   methods: {
-    
+    ...mapActions(['registerUnit']),
+
+    pushEvent() {
+      this.eventType.push(this.eventUnit)
+    },
+
+    pushSystem() {
+      this.systems.push(this.systemUnit)
+    },
+
+    async saveUnit() {
+      this.unitData.splice(0)
+
+      this.unitData.push({
+        unidade: this.unitName,
+        tipo_conexao: this.connectionType,
+        tipo_evento: this.eventType,
+        sistemas: this.systems
+      })
+
+      await this.registerUnit(this.unitData[0])
+    }
 
   },
 

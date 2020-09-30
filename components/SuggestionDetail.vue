@@ -68,6 +68,17 @@
                        {{tab.sugestao}}
                     </span>
                 </div>
+                <div class="row ">
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Nome: {{tab.nome_usuario}}</span>
+                    </div>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.chave}}</span>
+                    </div>
+                    <div class="col-3">
+                        <span style="color: #B5B5B5;">Data e hora: {{tab.data}}</span>
+                    </div>
+                </div>
                 <div class="row mt-3 border-edit"></div>
                
                 <div class="row mt-3"> 
@@ -141,7 +152,11 @@
                 <div class="row mt-3 border-edit"></div>
                 <!-- 3 -->
                 <div class="row mt-3"> 
-                    <span class="col-12 consulta-suggest">Observação:</span>
+                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <div class="col-4" style="text-align: right;">
+                        <span class="consulta-suggest">Executor:</span>
+                        <span style="color: #226E48">{{tab.executor[0].status}}</span>
+                    </div>
                 </div>
                  <div class="row">
                      <div class="col-10">
@@ -182,39 +197,28 @@
                     <div class="col-2 ">
                         <label class="labels">SELECIONAR UG</label>
                         <select class="form-control" v-model="editModal1">
-                            <!-- <option v-for="item in sugEdit.filtro" :key="item.id">
-                                {{item.ug}}                
-                            </option> -->
-                            <option>UG 11</option>
-                            <option>UG 12</option>
-                            <option>UG 21</option>
-                            <option>UG 22</option>
-                            <option>UG 31</option>
-                            <option>UG 32</option>
+                            <option v-for="item in filterUg" :key="item.id">
+                                {{item}}                
+                            </option>
+                            
                         </select>
                     </div>
                     <div class="col-2">
                         <label class="labels">SELECIONAR TIPO</label>
                         <select class="form-control" v-model="editModal2">
-                            <!-- <option v-for="item in sugEdit.filtro" :key="item.id">
-                                {{item.tipo}}                
-                            </option> -->
-                            <option>PLS</option>
-                            <option>PLST</option>
-                            <option>TRIP</option>
+                            <option v-for="item in filterType" :key="item.id">
+                                {{item}}                
+                            </option>
+                           
                         </select>
                     </div>
                     <div class="col-4 ">
                         <label class="labels">CAUSA</label>
                         <select class="form-control" v-model="editModal3">
-                            <!-- <option v-for="item in sugEdit.filtro" :key="item.id">
-                                {{item.causa}}                
-                            </option> -->
-                            <option>PROTEÇÃO INTERFACE CICLO ÁGUA VAPOR</option>
-                            <option>TEMPERATURA EGATROL 8 GABINETES</option>
-                            <option>Alto Diferencial (max 2) de Pressão do Filtro</option>
-                            <option>Nível Baixo (min 2) do Tanque de Surto</option>
-                            <option>DETECTOR DE FOGO NO MANCAL DE EXAUSTÃO</option>
+                            <option v-for="item in filterCause" :key="item.id">
+                                {{item}}                
+                            </option>
+                         
                         </select>
                     </div>
                     <div>
@@ -306,11 +310,25 @@ export default {
             allEdit: [],
             lists: [],
             allEdit: [],
+            filterUg: [],
+            filterType: [],
+            filterCause: []
         }
     },
 
     methods: {
         ...mapActions(['loadSuggestions','postSuggestions', 'editingSuggestions', 'editSuggestions']),
+
+        filteredOptions() {
+            for (let index = 0; index < this.sugEdit.filtro.length; index++) {
+                this.filterUg.push(this.sugEdit.filtro[index].ug)
+                this.filterType.push(this.sugEdit.filtro[index].tipo)
+                this.filterCause.push(this.sugEdit.filtro[index].causa)
+            }
+            this.filterUg = [...new Set(this.filterUg)]
+            this.filterType = [...new Set(this.filterType)]
+            this.filterCause = [...new Set(this.filterCause)]
+        },
 
         editOptions() {
             this.lists = this.editSug.lista_ugs
@@ -333,6 +351,9 @@ export default {
         showModal(value) {
             this.modalEdit = value
             this.editingSuggestions(this.modal_id)
+            setTimeout(() => {
+                this.filteredOptions()    
+            }, 500);
             
             setTimeout(() => {
                 this.$bvModal.show(this.modal_id)
@@ -401,6 +422,7 @@ export default {
 
     created() {
         
+        // console.log(this.sugEdit)
         // console.log(this.modal_id)
     }
 }

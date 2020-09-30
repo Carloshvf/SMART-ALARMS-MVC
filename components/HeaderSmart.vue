@@ -24,6 +24,9 @@
           <nuxt-link to="/units" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Unidades" src="../static/img/unit.svg" alt="Unit" /> 
           </nuxt-link>
+          <nuxt-link to="/login" class="btn btn-links mt-2 mb-2"> 
+            Fazer login
+          </nuxt-link>
           <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
           Cadastrar Alarmes
           </nuxt-link>

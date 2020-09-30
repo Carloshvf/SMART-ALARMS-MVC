@@ -85,10 +85,6 @@ export default {
     }
   },
 
-  // methods: {
-  //   ...mapActions(['loadData'])
-  // },
-
   methods: {
     ...mapActions(['loadData']),
 

@@ -10,6 +10,8 @@ export const state = () => ({
   suggestChoice: [],
   suggestRegister: [],
   getSuggest: [],
+  getUnit: [],
+  getEdit: [],
   graph: [],
   salvarAlarm: '',
   validating: '',
@@ -17,6 +19,7 @@ export const state = () => ({
   deleteAlarm: [],
   todos: [],
   edit: {},
+  unit: {},
   update: [],
   // 
   
@@ -38,6 +41,12 @@ export const mutations = {
   setEdit(state, getSuggest) {
     state.getSuggest = getSuggest
   },
+  setUnit(state, getUnit) {
+    state.getUnit = getUnit
+  },
+  setEditing(state, getEdit) {
+    state.getEdit = getEdit
+  },
   setGraph(state, graph) {
     state.graph = graph
   },
@@ -56,15 +65,25 @@ export const mutations = {
   updateCard(state, update) {
     state.update = update
   },
-  // DELETE_CARD(state, id){
-  //   index = state.todos.findIndex(i => i.id == id)
-  //   state.todos.splice(index, 1)
-  //  },
   deleteCard(state, deleteAlarm) {
     state.deleteAlarm = deleteAlarm
   },
 
-  // POPULANDO A PAGINA DE EDITAR CADASTROS
+  // POPULANDO A PAGINA DE EDITAR UNIDADES
+  setUnitName(state, unitName) {
+    state.getEdit.unidade = unitName;
+  },
+  setConnectionType(state, connectionType) {
+    state.getEdit.tipo_conexao = connectionType;
+  },
+  setEventUnit(state, eventUnit) {
+    state.getEdit.tipo_evento = eventUnit;
+  },
+  setSystemUnit(state, systemUnit) {
+    state.getEdit.sistemas = systemUnit;
+  },
+
+  // POPULANDO A PAGINA DE EDITAR ALARMES CADASTRADOS
   setLocal(state, local) {
     state.edit.local = local;
   },
@@ -101,7 +120,7 @@ export const mutations = {
   setRecom(state, recomendacao) {
     state.edit.recomendacoes = recomendacao;
   },
-  // Mutations para alterar os arrays na página de editar
+  // Mutations para alterar os arrays na página de editar alarmes
   setNewRecom(state, recomendacao) {
     state.edit.recomendacoes.push({item: recomendacao})
   },
@@ -202,6 +221,50 @@ export const actions = {
       dados.info
       )
 
+  },
+
+  // GET DA PÁGINA DE SELEÇÃO DE UNIDADES
+  async gettingUnits(context) {
+    await this.$axios.get(
+      HOST_API + '/unidades'
+    )
+    .then(response => {
+      this.getUnit = response.data.unidades
+    })
+    // console.log(this.getUnit)
+    context.commit('setUnit', this.getUnit)
+  },
+
+  // GET DA PÁGINA DE EDIÇÃO DE UNIDADES
+  async gettingEdits(context, id) {
+    await this.$axios.get(
+      HOST_API + '/unidades/' + id
+    )
+    .then(response => {
+      this.getEdit = response.data
+    })
+    // console.log(this.getEdit)
+
+    context.commit('setEditing', this.getEdit)
+  },
+  
+  // PUT DA PÁGINA DE EDIÇÃO DE UNIDADES
+  async updateUnit(context, dados) {
+    await this.$axios
+      .put(
+        (HOST_API + '/unidades/' +
+          dados.id), dados.data
+      )
+
+  },
+
+  //POST DA PÁGINA DE CADASTRAR UNIDADES 
+  async registerUnit(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/unidades',
+      dados
+      )
+    
   },
   
   async sendAlarms(context, { info }) {
