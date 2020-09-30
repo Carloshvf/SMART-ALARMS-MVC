@@ -17,39 +17,28 @@
                     <div class="col-2 card-suggest">
                         <label class="labels">FILTRO UG</label>
                         <select class="form-control" v-model="select1">
-                            <!-- <option v-for="item in sugDetail" :key="item.id">
-                                {{item.ug}}                
-                            </option> -->
-                            <option>UG 11</option>
-                            <option>UG 12</option>
-                            <option>UG 21</option>
-                            <option>UG 22</option>
-                            <option>UG 31</option>
-                            <option>UG 32</option>
+                            <option v-for="item in filterUg" :key="item.id">
+                                {{item}}                
+                            </option>
+
                         </select>
                     </div>
                     <div class="col-2 card-suggest">
                         <label class="labels">FILTRO DE TIPO</label>
                         <select class="form-control" v-model="select2">
-                            <!-- <option v-for="item in sugDetail" :key="item.id">
-                                {{item.tipo}}
-                            </option> -->
-                            <option>PLS</option>
-                            <option>PLST</option>
-                            <option>TRIP</option>
+                            <option v-for="item in filterType" :key="item.id">
+                                {{item}}
+                            </option>
+
                         </select>
                     </div>
                     <div class="col-3 card-suggest">
                         <label class="labels">CAUSA BÁSICA</label>
                         <select class="form-control" v-model="select3">
-                            <!-- <option v-for="item in sugDetail" :key="item.id">
-                                {{item.causa}}
-                            </option> -->
-                            <option>PROTEÇÃO INTERFACE CICLO ÁGUA VAPOR</option>
-                            <option>TEMPERATURA EGATROL 8 GABINETES</option>
-                            <option>Alto Diferencial (max 2) de Pressão do Filtro</option>
-                            <option>Nível Baixo (min 2) do Tanque de Surto</option>
-                            <option>DETECTOR DE FOGO NO MANCAL DE EXAUSTÃO</option>
+                            <option v-for="item in filterCause" :key="item.id">
+                                {{item}}
+                            </option>
+
                         </select>
                     </div>
                     <div class="col-2 card-suggest">
@@ -88,39 +77,28 @@
                     <div class="col-2 ">
                         <label class="labels">SELECIONAR UG</label>
                         <select class="form-control" v-model="regModal1">
-                            <!-- <option v-for="item in sugRegister" :key="item.id">
-                                {{item.ug}}                
-                            </option> -->
-                            <option>UG 11</option>
-                            <option>UG 12</option>
-                            <option>UG 21</option>
-                            <option>UG 22</option>
-                            <option>UG 31</option>
-                            <option>UG 32</option>
+                            <option v-for="item in filterRegist1" :key="item.id">
+                                {{item}}                
+                            </option>
+                            
                         </select>
                     </div>
                     <div class="col-2">
                         <label class="labels">SELECIONAR TIPO</label>
                         <select class="form-control" v-model="regModal2">
-                            <!-- <option v-for="item in sugRegister" :key="item.id">
-                                {{item.tipo}}                
-                            </option> -->
-                            <option>PLS</option>
-                            <option>PLST</option>
-                            <option>TRIP</option>
+                            <option v-for="item in filterRegist2" :key="item.id">
+                                {{item}}                
+                            </option>
+                          
                         </select>
                     </div>
                     <div class="col-4 ">
                         <label class="labels">CAUSA</label>
                         <select class="form-control" v-model="regModal3">
-                            <!-- <option v-for="item in sugRegister" :key="item.id">
-                                {{item.causa}}                
-                            </option> -->
-                            <option>PROTEÇÃO INTERFACE CICLO ÁGUA VAPOR</option>
-                            <option>TEMPERATURA EGATROL 8 GABINETES</option>
-                            <option>Alto Diferencial (max 2) de Pressão do Filtro</option>
-                            <option>Nível Baixo (min 2) do Tanque de Surto</option>
-                            <option>DETECTOR DE FOGO NO MANCAL DE EXAUSTÃO</option>
+                            <option v-for="item in filterRegist3" :key="item.id">
+                                {{item}}                
+                            </option>
+                          
                         </select>
                     </div>
                     <div>
@@ -202,7 +180,13 @@ export default {
             checkbox3:"",
             checkbox4:"",
             allRegister: [],
-            selects: []
+            selects: [],
+            filterUg: [],
+            filterType: [],
+            filterCause: [],
+            filterRegist1: [],
+            filterRegist2: [],
+            filterRegist3: []
         }
     },
 
@@ -214,8 +198,31 @@ export default {
             this.regModal2 = ""
             this.regModal3 = ""
             this.observacao = ""
+            console.log(this.filterOptions)
             this.selects.splice(0)
             this.$bvModal.hide('modal-cadastrar')
+        },
+
+        filteredOptions() {
+            for (let index = 0; index < this.sugDetail.length; index++) {
+                this.filterUg.push(this.sugDetail[index].ug)
+                this.filterType.push(this.sugDetail[index].tipo)
+                this.filterCause.push(this.sugDetail[index].causa)
+            }
+            this.filterUg = [...new Set(this.filterUg)]
+            this.filterType = [...new Set(this.filterType)]
+            this.filterCause = [...new Set(this.filterCause)]
+        },
+
+        filteredRegister() {
+            for (let index = 0; index < this.sugRegister.length; index++) {
+                this.filterRegist1.push(this.sugRegister[index].ug)
+                this.filterRegist2.push(this.sugRegister[index].tipo)
+                this.filterRegist3.push(this.sugRegister[index].causa)
+            }
+            this.filterRegist1 = [...new Set(this.filterRegist1)]
+            this.filterRegist2 = [...new Set(this.filterRegist2)]
+            this.filterRegist3 = [...new Set(this.filterRegist3)]
         },
 
         sendOptions() {
@@ -234,6 +241,7 @@ export default {
             })
             await this.registerSuggestions({info: this.allRegister[0]})
             this.loadSuggestions()
+            this.filteredOptions()
         }
     },
 
@@ -246,13 +254,6 @@ export default {
             return this.$store.state.suggestRegister
         },
 
-        filteredOptions() {
-            // for (let index = 0; index < this.sugDetail.length; index++) {
-            //     const element = this.sugDetail[index];
-            //     return [...new Set(element.ug)]
-            // }
-            
-        },
         computed_items: function () {
         let filterUg= this.select1,
             filterType = this.select2,
@@ -304,7 +305,12 @@ export default {
     created() {
         this.loadSuggestions()
         this.getRegister()
+        setTimeout(() => {
+            this.filteredOptions()
+            this.filteredRegister()
+        }, 500);
         // console.log(this.sugRegister)
+
     }
 }
 </script>   

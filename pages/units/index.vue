@@ -6,78 +6,32 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-4">
+        <div class="col-4" v-for="item in unitDetail" :key="item.id">
           <div class="card mt-4">
             <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" />
-              <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-                <h1 class="unit-select">UTE TERMORIO</h1>
+              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)"/>
+              <nuxt-link
+                :to="{ name: 'registerunit-id', params: { id: item.id } }"
+                class="btn ml-5">
+                <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
+              </nuxt-link>
+              
+                <h1 class="unit-select">{{item.unidade}}</h1>
             </div>
           </div>
         </div>
         <!--  -->
-        <div class="col-4">
-          <div class="card mt-4">
-            <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" />
-              <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-                <h1 class="unit-select">UTGA</h1>
-            </div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="col-4">
-          <div class="card mt-4">
-            <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" />
-              <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-                <h1 class="unit-select">UTGA</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--  -->
-      <div class="row">
-        <div class="col-4">
-          <div class="card mt-4">
-            <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" />
-              <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-                <h1 class="unit-select">UTE TERMORIO</h1>
-            </div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="col-4">
-          <div class="card mt-4">
-            <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" />
-              <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-                <h1 class="unit-select">UTGA</h1>
-            </div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="col-4">
-          <div class="card mt-4">
-            <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" />
-              <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-                <h1 class="unit-select">UTGA</h1>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <div class="row">
         <div class="col">
-          <nuxt-link to="/register-unit" class="btn btn-green rounded-circle add mt-4">+</nuxt-link>
+          <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4">+</nuxt-link>
         </div>
       </div>
   </div>
 </template>
 
 <script>
-
 import { mapActions} from 'vuex'
 
 export const HOST_API = process.env.baseURL;
@@ -91,15 +45,29 @@ export default {
   },
 
   computed: {
-    
+    unitDetail() {
+      return this.$store.state.getUnit
+    }
   },
 
   methods: {
-    
+    ...mapActions(['gettingUnits']),
+
+    async deleteUnit(id) {
+      await this.$axios
+      .delete(
+        HOST_API + '/unidades/' +
+          id
+      )
+      .then(() => {
+        this.gettingUnits()
+      })
+    }
 
   },
 
   async created() {
+    this.gettingUnits()
     
   }
 }
