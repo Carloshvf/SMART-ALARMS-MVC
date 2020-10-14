@@ -8,8 +8,8 @@
             <span class="text-uppercase mb-0 ml-2">smart alarms</span>
           </nuxt-link>
         </div>
-        <div class="col-5 position">
-          <nuxt-link to="/" class="btn mt-2 mr-4">
+        <div class="col-5 position" v-if="headerButtons == true">
+          <nuxt-link to="/activealarm" class="btn mt-2 mr-4">
             <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" /> 
           </nuxt-link>
           <nuxt-link to="/alarm" class="btn mt-2 mr-4"> 
@@ -24,9 +24,10 @@
           <nuxt-link to="/units" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Unidades" src="../static/img/unit.svg" alt="Unit" /> 
           </nuxt-link>
-          <nuxt-link to="/login" class="btn btn-links mt-2 mb-2"> 
-            Fazer login
-          </nuxt-link>
+          <b-dropdown class=" mt-2 mb-2" :text="user" v-if="user != ''">
+            <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>
+          </b-dropdown>
+          <!-- <b-button class="drop mt-2 mb-2" v-if="user != ''">{{user}}</b-button> -->
           <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
           Cadastrar Alarmes
           </nuxt-link>
@@ -43,12 +44,58 @@
 <script>
 import HomeOutline from 'vue-material-design-icons/HomeOutline.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
     HomeOutline,
     PencilBoxOutline
   },
+
+  data() {
+      return {
+        user: "",
+        headerButtons: false,
+        headerId: "",
+        auth: "",
+      }
+  },
+
+  computed: {
+    currentRouteName() {
+        return this.$route.name;
+    },
+  },
+
+  methods: {
+    ...mapActions(['logOff']),
+
+    userKey() {
+      this.user = JSON.parse(localStorage.getItem('name')) || '';
+    },
+
+    async logout() {
+      this.auth = JSON.parse(localStorage.getItem('token')) || '';
+      await this.logOff({Authorization: this.auth})
+
+      localStorage.clear();
+      this.headerButtons = false
+      this.$router.push('/')
+    }
+    
+  },
+
+  mounted() {
+    this.userKey()
+    // this.headerId = localStorage.getItem('token')
+    setInterval(() => {
+      if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {
+        this.headerButtons = true
+      }
+    }, 3000);
+    
+  }
+
 }
 </script>
 
@@ -63,6 +110,11 @@ export default {
 .btn-links:hover {
   color: #ffffff;
   transition: $transition;
+}
+
+.drop {
+  color: #ffffff;
+  background-color: #00B2A9;
 }
 
 .icons {

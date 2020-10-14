@@ -35,6 +35,38 @@
               <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
           </div>
       </div>
+
+      <div class="row">
+        <div class="col-6 scroll">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">TIPOS DE EVENTO</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in eventType" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-6 scroll">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">SISTEMAS</th>  
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in systems" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       
       <div class="row">
           <div class="col">
@@ -62,7 +94,8 @@ export default {
       systemUnit: "",
       eventType: [],
       systems: [],
-      unitData: []
+      unitData: [],
+      tableData: {type: this.eventType, sys: this.systems}
     }
   },
 
@@ -104,6 +137,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
+
+.scroll {
+    max-height: 180px;
+    overflow: auto;
+}
 
 .btn-add {
     position: relative;

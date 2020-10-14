@@ -198,7 +198,7 @@ export default {
             this.regModal2 = ""
             this.regModal3 = ""
             this.observacao = ""
-            console.log(this.filterOptions)
+            // console.log(this.filterOptions)
             this.selects.splice(0)
             this.$bvModal.hide('modal-cadastrar')
         },

@@ -15,8 +15,9 @@
                 class="btn ml-5">
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
               </nuxt-link>
-              
+              <nuxt-link to="/activealarm">
                 <h1 class="unit-select">{{item.unidade}}</h1>
+              </nuxt-link>
             </div>
           </div>
         </div>
