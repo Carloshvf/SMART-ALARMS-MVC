@@ -97,7 +97,7 @@ export default {
     foo(id) {
       this.$moment.locale('pt-BR');
       var result = { countTimeDiff: 0 }
-
+      
       if (id && this.lists && this.lists.length > 0) {
         var arrays = this.lists;
 
@@ -163,6 +163,8 @@ export default {
         }
 
       }
+      // console.log('result.date:');
+      // console.log(result.date);
       return result;
     },
     
@@ -197,7 +199,7 @@ export default {
             }
           }
           if (this.arrSize.length == this.lists.length && this.currentRouteName == 'alarm') {
-            this.$router.push('/')
+            this.$router.push('/activealarm')
           }
 
           if (this.currentRouteName != 'alarm') {

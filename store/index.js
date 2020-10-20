@@ -6,14 +6,25 @@ export const strict = false;
 
 export const state = () => ({
   all: [],
+  suggest: [],
+  suggestChoice: [],
+  suggestRegister: [],
+  getSuggest: [],
+  getUnit: [],
+  getEdit: [],
+  getProfile: [],
   graph: [],
+  authorizationId:"",
+  userName: "",
   salvarAlarm: '',
   validating: '',
   cardAlarm: [],
   deleteAlarm: [],
   todos: [],
   edit: {},
+  unit: {},
   update: [],
+  valid: '',
   // 
   
 })
@@ -21,6 +32,24 @@ export const state = () => ({
 export const mutations = {
   setAll(state, all) {
     state.all = all
+  },
+  setSuggest(state, suggest) {
+    state.suggest = suggest
+  },
+  setChoice(state, suggestChoice) {
+    state.suggestChoice = suggestChoice
+  },
+  setRegister(state, suggestRegister) {
+    state.suggestRegister = suggestRegister
+  },
+  setEdit(state, getSuggest) {
+    state.getSuggest = getSuggest
+  },
+  setUnit(state, getUnit) {
+    state.getUnit = getUnit
+  },
+  setEditing(state, getEdit) {
+    state.getEdit = getEdit
   },
   setGraph(state, graph) {
     state.graph = graph
@@ -40,15 +69,31 @@ export const mutations = {
   updateCard(state, update) {
     state.update = update
   },
-  // DELETE_CARD(state, id){
-  //   index = state.todos.findIndex(i => i.id == id)
-  //   state.todos.splice(index, 1)
-  //  },
   deleteCard(state, deleteAlarm) {
     state.deleteAlarm = deleteAlarm
   },
+  setUser(state, valid) {
+    state.valid = valid
+  },
+  setProfile(state, getProfile) {
+    state.getProfile = getProfile
+  },
 
-  // POPULANDO A PAGINA DE EDITAR
+  // POPULANDO A PAGINA DE EDITAR UNIDADES
+  setUnitName(state, unitName) {
+    state.getEdit.unidade = unitName;
+  },
+  setConnectionType(state, connectionType) {
+    state.getEdit.tipo_conexao = connectionType;
+  },
+  setEventUnit(state, eventUnit) {
+    state.getEdit.tipo_evento = eventUnit;
+  },
+  setSystemUnit(state, systemUnit) {
+    state.getEdit.sistemas = systemUnit;
+  },
+
+  // POPULANDO A PAGINA DE EDITAR ALARMES CADASTRADOS
   setLocal(state, local) {
     state.edit.local = local;
   },
@@ -85,7 +130,7 @@ export const mutations = {
   setRecom(state, recomendacao) {
     state.edit.recomendacoes = recomendacao;
   },
-  // Mutations para alterar os arrays na página de editar
+  // Mutations para alterar os arrays na página de editar alarmes
   setNewRecom(state, recomendacao) {
     state.edit.recomendacoes.push({item: recomendacao})
   },
@@ -120,6 +165,171 @@ export const actions = {
 
     context.commit('setAll', all)
   },
+
+  //GET DA PÁGINA DE SUGESTÕES
+  async loadSuggestions(context) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes'
+    )
+    .then(response => {
+      this.suggest = response.data.sugestoes
+    })
+
+    context.commit('setSuggest', this.suggest)
+  },
+
+  // POST DE CONSULTA DE SUGESTÃO 
+  async postSuggestions(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/sugestoes/' + dados.id,
+      dados.info
+      )
+    .then(response => {
+      this.suggestChoice = response
+    })
+
+    context.commit('setChoice', this.suggestChoice)
+  },
+
+  // GET DE CADASTRAR SUGESTÃO
+  async getRegister(context) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes/cadastro'
+    )
+    .then(response => {
+      this.suggestRegister = response.data.filtro
+    })
+
+    context.commit('setRegister', this.suggestRegister)
+  },
+
+  // POST DE CADASTRAR SUGESTÃO
+  async registerSuggestions(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/sugestoes/cadastro',
+      dados.info
+      )
+    
+  },
+
+  // GET DE EDITAR SUGESTÕES
+  async editingSuggestions(context, dados) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes/cadastro/' + dados
+    )
+    .then(response => {
+      this.getSuggest = response.data
+    })
+    // console.log(dados)
+    context.commit('setEdit', this.getSuggest)
+  },
+
+  // PUT DE EDITAR SUGESTÃO
+  async editSuggestions(context, dados) {
+    await this.$axios.put(
+        HOST_API + '/sugestoes/cadastro/' + dados.id,
+      dados.info
+      )
+
+  },
+
+  // GET DA PÁGINA DE SELEÇÃO DE UNIDADES
+  async gettingUnits(context) {
+    await this.$axios.get(
+      HOST_API + '/unidades'
+    )
+    .then(response => {
+      this.getUnit = response.data.unidades
+    })
+   
+    context.commit('setUnit', this.getUnit)
+  },
+
+  // GET DA PÁGINA DE EDIÇÃO DE UNIDADES
+  async gettingEdits(context, id) {
+    await this.$axios.get(
+      HOST_API + '/unidades/' + id
+    )
+    .then(response => {
+      this.getEdit = response.data
+    })
+    
+    context.commit('setEditing', this.getEdit)
+  },
+  
+  // PUT DA PÁGINA DE EDIÇÃO DE UNIDADES
+  async updateUnit(context, dados) {
+    await this.$axios
+      .put(
+        (HOST_API + '/unidades/' +
+          dados.id), dados.data
+      )
+
+  },
+
+  //POST DA PÁGINA DE CADASTRAR UNIDADES 
+  async registerUnit(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/unidades',
+      dados
+      )
+    
+  },
+
+  // POST DA PÁGINA DE LOGIN
+  async loginUser(context, dados) {
+    this.valid = ''
+    await this.$axios.post(
+        HOST_API + '/login',
+      dados.info
+      )
+      .then(response => {
+      this.authorizationId = response.headers.authorization
+      this.userName = response.data.nome
+      if (response.status == 200) {
+        localStorage.setItem('token', JSON.stringify(this.authorizationId));
+        localStorage.setItem('name', JSON.stringify(this.userName));
+      }
+    })
+    .catch(error => {
+      this.valid = error.response.data.erro
+    })
+  
+    context.commit('setUser', this.valid)
+  },
+
+  // POST DE LOGOUT
+  async logOff(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/logout',
+      dados.Authorization
+      )
+  
+  },
+
+  //GET DA PÁGINA DE CADASTRAR PERFIS
+  async gettingProfile(context, id) {
+    await this.$axios.get(
+      HOST_API + '/perfis'
+    )
+    .then(response => {
+      this.getProfile = response.data
+    })
+    
+    context.commit('setProfile', this.getProfile)
+  },
+
+  // POST DA PÁGINA DE PERFIS
+  async postProfile(context, dados) {
+    await this.$axios.post(
+      HOST_API + '/perfis', dados.info
+    )
+    
+  },
+
+  // 
+  // 
+  // 
   
   async sendAlarms(context, { info }) {
     await this.$axios.post(
@@ -127,11 +337,11 @@ export const actions = {
         HOST_API + '/alarme',
       info
     )
-    .then(response => {
-      this.salvarAlarm = response.data.erro
-    })
+    // .then(response => {
+    //   this.salvarAlarm = response.data.erro
+    // })
 
-    context.commit('setAlarm', this.salvarAlarm)
+    // context.commit('setAlarm', this.salvarAlarm)
   },
 
   async sendLogic(context, { valid }) {

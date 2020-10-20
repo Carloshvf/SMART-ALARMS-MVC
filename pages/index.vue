@@ -1,93 +1,152 @@
 <template>
-  <div>
-    <!-- <header-smart></header-smart> -->
-    <div class="wrapper-content container pt-5 mt-5">
-      <div class="row">
-        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.id"> 
-          <nuxt-link
-            :class="{ alarmActive: alarm.active == 1 }"
-            class="box-alarm d-flex align-items-center justify-content-center"
-            :event="disabled ? '' : 'click'"
-            to="alarm"
-          >
-            <span class="box-alarm-number">{{ alarm.id }}</span>
-            <!-- :event="disabled ? '' : 'click'" -->
-          </nuxt-link>
-          <!-- /.box-alarm -->
+  <div class="container d-flex justify-content-center mt-5">
+    <div class="row mt-4">
+      <div class="col mt-5">
+        <div class="card card-login">
+          <h1 class="aligning mt-1">ACESSO</h1>
+          <div class="col">
+            <label class="labels mt-3">USUÁRIO:</label>
+            <input class="passwords form-control" minlength="1" v-model="name">
+          </div>
+          <div class="col">
+            <label class="labels mt-3">SENHA:</label>
+            <input class="passwords form-control" :type="passwordType" minlength="1" v-model="password">
+          </div>
+          <div class="col mt-4" v-if="validation == 'Login ou senha do usuário é inválido.'">
+            <p class="error">{{validation}}</p>
+          </div>
+          <div class="col">
+            <b-button class="btn btn-green btn-login mt-4 mb-4" @click="logging()" :disabled="disabling">Acessar</b-button>
+          </div>
+          
         </div>
-        <!-- /.col-3 -->
       </div>
-      <!-- /.row -->
     </div>
-    <!-- /.container -->
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
-
+  layout: "login",
   data() {
-    return {
-      disabled: true,
-      stop: true,
-    }
-  },
-
-  methods: {
-    ...mapActions(['loadData']),
-    
+      return {
+        name: "",
+        password: "",
+        userData: [],
+        userCheck: "",
+        passwordType: 'password'
+      }
   },
 
   computed: {
-    alarms() {
-      return this.$store.state.all
+    disabling() {
+      if (this.name == "" || this.password == "") {
+        return true
+      }
+      else {
+        return false
+      } 
     },
-     currentRouteName() {
-        return this.$route.name;
+
+    validation() {
+      return this.$store.state.valid
+    }
+
+  },
+
+  methods: {
+    ...mapActions(['loginUser',]),
+
+    async logging() {
+      this.userData.splice(0)
+
+      this.userData.push({
+        chave: this.name,
+        senha: this.password,
+      })
+      await this.loginUser({info: this.userData[0]})
+
+      if (this.validation == '') {
+        this.$router.push('/units')
+      }
+      
     }
   },
 
-  created() {
-    setInterval(() => {
-      if (this.stop == true) {
-      this.loadData()
-        for (let index = 0; index < this.alarms.length; index++) {
-          if (this.alarms[index].active == 1 && this.currentRouteName == 'index') {
-              this.$router.push('/alarm')
-              this.stop = false
-              break
-            }
-          }
-        }
-      }, 5000);
+  mounted() {
+    // Tentativa de fazer ele jogar pra página de unidades no caso de já ter um token no localStorage
+    this.userCheck = JSON.parse(localStorage.getItem('token')) || ''
+    if (this.userCheck != '') {
+      this.$router.push('/units')
+    }
     
-    this.loadData()
-   
-  },
+  }
 }
 </script>
-
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/scss/base.scss';
 
-.box-alarm {
+.positioning {
+  background-color: #008542;
+}
+
+.card-login {
+  padding: 20px;
+  background-color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+  width: 470px;
+}
+
+.error {
+  position: relative;
+  text-align: center;
+  line-height: 16px;
+  font-size: 14px;
+}
+
+.labels {
+  position: relative;
+  left: 30px;
+  line-height: 16px;
+  font-size: 14px;
+}
+
+.passwords {
+  position: relative;
+  left: 30px;
+  width: 340px;
+}
+
+.btn-cadastro {
+  position: relative;
+  left: 30px;
+  width: 340px;
+  color: white;
   background-color: #666666;
-  border-radius: $border-radius;
-  transition: $transition;
-  padding: 15px;
-  height: 190px;
+}
 
-  &-number {
-    font-size: 100px;
-    font-weight: 700;
-    color: white;
+.btn-login {
+  position: relative;
+  left: 30px;
+  width: 340px;
+
+  &:hover{
+    background-color: #008542;
   }
-
+  
 }
 
-.alarmActive {
-  background-color: #ED1313 !important;
+.aligning {
+  text-align: center;
+  color: #1F2041;
 }
+
+
 </style>
