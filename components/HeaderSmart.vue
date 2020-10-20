@@ -24,10 +24,11 @@
           <nuxt-link to="/units" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Unidades" src="../static/img/unit.svg" alt="Unit" /> 
           </nuxt-link>
-          <b-dropdown class=" mt-2 mb-2" :text="user" v-if="user != ''">
+          <b-dropdown class="mt-2 mb-2" :text="user" v-if="user != ''">
             <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>
           </b-dropdown>
-          <!-- <b-button class="drop mt-2 mb-2" v-if="user != ''">{{user}}</b-button> -->
+          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3">Cadastrar Perfis</nuxt-link>
+          <!-- <b-button class="drop mt-2 mb-2 ml-3" v-if="user != ''">{{user}}</b-button> -->
           <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
           Cadastrar Alarmes
           </nuxt-link>

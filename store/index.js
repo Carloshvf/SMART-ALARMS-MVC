@@ -12,6 +12,7 @@ export const state = () => ({
   getSuggest: [],
   getUnit: [],
   getEdit: [],
+  getProfile: [],
   graph: [],
   authorizationId:"",
   userName: "",
@@ -73,6 +74,9 @@ export const mutations = {
   },
   setUser(state, valid) {
     state.valid = valid
+  },
+  setProfile(state, getProfile) {
+    state.getProfile = getProfile
   },
 
   // POPULANDO A PAGINA DE EDITAR UNIDADES
@@ -302,6 +306,29 @@ export const actions = {
       )
   
   },
+
+  //GET DA PÁGINA DE CADASTRAR PERFIS
+  async gettingProfile(context, id) {
+    await this.$axios.get(
+      HOST_API + '/perfis'
+    )
+    .then(response => {
+      this.getProfile = response.data
+    })
+    
+    context.commit('setProfile', this.getProfile)
+  },
+
+  // POST DA PÁGINA DE PERFIS
+  async postProfile(context, dados) {
+    await this.$axios.post(
+      HOST_API + '/perfis', dados.info
+    )
+    
+  },
+
+  // 
+  // 
   // 
   
   async sendAlarms(context, { info }) {

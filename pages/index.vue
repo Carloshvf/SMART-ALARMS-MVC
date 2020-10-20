@@ -10,7 +10,7 @@
           </div>
           <div class="col">
             <label class="labels mt-3">SENHA:</label>
-            <input class="passwords form-control" minlength="1" v-model="password">
+            <input class="passwords form-control" :type="passwordType" minlength="1" v-model="password">
           </div>
           <div class="col mt-4" v-if="validation == 'Login ou senha do usuário é inválido.'">
             <p class="error">{{validation}}</p>
@@ -18,9 +18,7 @@
           <div class="col">
             <b-button class="btn btn-green btn-login mt-4 mb-4" @click="logging()" :disabled="disabling">Acessar</b-button>
           </div>
-          <div class="col">
-            <nuxt-link to="/registeruser" class="btn btn-cadastro mb-4">Cadastrar</nuxt-link>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -38,6 +36,7 @@ export default {
         password: "",
         userData: [],
         userCheck: "",
+        passwordType: 'password'
       }
   },
 
