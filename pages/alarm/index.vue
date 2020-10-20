@@ -199,7 +199,7 @@ export default {
             }
           }
           if (this.arrSize.length == this.lists.length && this.currentRouteName == 'alarm') {
-            this.$router.push('/')
+            this.$router.push('/activealarm')
           }
 
           if (this.currentRouteName != 'alarm') {

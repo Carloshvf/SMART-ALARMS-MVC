@@ -22,18 +22,50 @@
       <div class="row">
           <div class="col-3">
             <label class="mt-4">TIPO DE EVENTO</label>
-            <input class="form-control" v-model="eventUnit">
+            <input class="form-control" v-model="eventType">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
           </div>
           <div class="col-3">
             <label class="mt-4">SISTEMAS MONITORADOS</label>
-            <input class="form-control" v-model="systemUnit">
+            <input class="form-control" v-model="systems">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
           </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6 scroll">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">TIPOS DE EVENTO</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in eventUnit" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-6 scroll">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">SISTEMAS</th>  
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in systemUnit" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       
       <div class="row">
@@ -55,10 +87,6 @@ export default {
 
   data() {
     return {
-        // unitName: "",
-        // connectionType: "",
-        // eventUnit: "",
-        // systemUnit: "",
         eventType: [],
         systems: [],
         unitData: [],
@@ -100,18 +128,6 @@ export default {
         this.$store.commit('setSystemUnit', value)
       }
     },
-    // unitName() {
-    //   return this.$store.state.getEdit.unidade
-    // },
-    // connectionType() {
-    //   return this.$store.state.getEdit.tipo_conexao
-    // },
-    // eventUnit() {
-    //   return this.$store.state.getEdit.tipo_evento
-    // },
-    // systemUnit() {
-    //   return this.$store.state.getEdit.sistemas
-    // }
 
   },
 
@@ -119,11 +135,11 @@ export default {
     ...mapActions(['gettingEdits', 'updateUnit']),
 
     pushEvent() {
-      this.eventType.push(this.eventUnit)
+      this.eventUnit.push(this.eventType)
     },
 
     pushSystem() {
-      this.systems.push(this.systemUnit)
+      this.systemUnit.push(this.systems)
     },
 
     async editUnit() {
@@ -149,6 +165,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/scss/base.scss';
+
+.scroll {
+    max-height: 180px;
+    overflow: auto;
+}
 
 .btn-add {
     position: relative;

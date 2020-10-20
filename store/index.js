@@ -12,7 +12,10 @@ export const state = () => ({
   getSuggest: [],
   getUnit: [],
   getEdit: [],
+  getProfile: [],
   graph: [],
+  authorizationId:"",
+  userName: "",
   salvarAlarm: '',
   validating: '',
   cardAlarm: [],
@@ -21,6 +24,7 @@ export const state = () => ({
   edit: {},
   unit: {},
   update: [],
+  valid: '',
   // 
   
 })
@@ -67,6 +71,12 @@ export const mutations = {
   },
   deleteCard(state, deleteAlarm) {
     state.deleteAlarm = deleteAlarm
+  },
+  setUser(state, valid) {
+    state.valid = valid
+  },
+  setProfile(state, getProfile) {
+    state.getProfile = getProfile
   },
 
   // POPULANDO A PAGINA DE EDITAR UNIDADES
@@ -231,7 +241,7 @@ export const actions = {
     .then(response => {
       this.getUnit = response.data.unidades
     })
-    // console.log(this.getUnit)
+   
     context.commit('setUnit', this.getUnit)
   },
 
@@ -243,8 +253,7 @@ export const actions = {
     .then(response => {
       this.getEdit = response.data
     })
-    // console.log(this.getEdit)
-
+    
     context.commit('setEditing', this.getEdit)
   },
   
@@ -266,6 +275,61 @@ export const actions = {
       )
     
   },
+
+  // POST DA PÁGINA DE LOGIN
+  async loginUser(context, dados) {
+    this.valid = ''
+    await this.$axios.post(
+        HOST_API + '/login',
+      dados.info
+      )
+      .then(response => {
+      this.authorizationId = response.headers.authorization
+      this.userName = response.data.nome
+      if (response.status == 200) {
+        localStorage.setItem('token', JSON.stringify(this.authorizationId));
+        localStorage.setItem('name', JSON.stringify(this.userName));
+      }
+    })
+    .catch(error => {
+      this.valid = error.response.data.erro
+    })
+  
+    context.commit('setUser', this.valid)
+  },
+
+  // POST DE LOGOUT
+  async logOff(context, dados) {
+    await this.$axios.post(
+        HOST_API + '/logout',
+      dados.Authorization
+      )
+  
+  },
+
+  //GET DA PÁGINA DE CADASTRAR PERFIS
+  async gettingProfile(context, id) {
+    await this.$axios.get(
+      HOST_API + '/perfis'
+    )
+    .then(response => {
+      this.getProfile = response.data
+    })
+    
+    context.commit('setProfile', this.getProfile)
+  },
+
+  // POST DA PÁGINA DE PERFIS
+  async postProfile(context, dados) {
+    await this.$axios.post(
+      HOST_API + '/perfis', dados.info
+    )
+    
+  },
+
+  // 
+  // 
+  // 
   
   async sendAlarms(context, { info }) {
     await this.$axios.post(

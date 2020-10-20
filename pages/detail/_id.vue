@@ -168,7 +168,7 @@ export default {
             } 
           
           if (this.arrSize.length == this.lists.length && this.currentRouteName == 'detail-id') {
-            this.$router.push('/')
+            this.$router.push('/activealarm')
           }
 
           if (this.currentRouteName != 'detail-id') {
