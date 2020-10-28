@@ -287,7 +287,7 @@
 import { mapActions } from 'vuex';
 
 export default {
-    props: ['tab', 'tab_modal'],
+    props: ['tab', 'tab_modal', 'unit'],
 
     data() {
         return {
@@ -350,7 +350,7 @@ export default {
 
         showModal(value) {
             this.modalEdit = value
-            this.editingSuggestions(this.modal_id)
+            this.editingSuggestions({unit: this.unit, id:this.modal_id})
             setTimeout(() => {
                 this.filteredOptions()    
             }, 500);
@@ -373,8 +373,8 @@ export default {
                 nome:"Diego",
                 chave:"QRST"
             })
-            await this.postSuggestions({id: this.tab_modal, info: this.allData[0]})
-            this.loadSuggestions()
+            await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]})
+            this.loadSuggestions(this.unit)
             // this.sugResponse = this.$store.state.suggestChoice
         },
 
@@ -388,8 +388,8 @@ export default {
             lista_ugs: this.lists,
         })
         // console.log(this.editSug.lista_ugs)
-        await this.editSuggestions({id: this.tab_modal, info: this.allEdit[0]})
-        this.loadSuggestions()
+        await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]})
+        this.loadSuggestions(this.unit)
     }
     },
 

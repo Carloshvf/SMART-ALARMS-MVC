@@ -65,7 +65,7 @@
                 </div>
                 <ul class="remove-bullet">
                     <li v-for="sug in computed_items" :key="sug.id">
-                        <suggestion-detail :tab_modal="sug.id" :tab="sug"/>
+                        <suggestion-detail :unit="unitId" :tab_modal="sug.id" :tab="sug"/>
                     </li>
                 </ul>
             </div>
@@ -239,13 +239,17 @@ export default {
                 chave:"QRST",
                 lista_ugs: this.selects,
             })
-            await this.registerSuggestions({info: this.allRegister[0]})
-            this.loadSuggestions()
+            await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]})
+            this.loadSuggestions(this.unitId)
             this.filteredOptions()
         }
     },
 
     computed: {
+        unitId() {
+            return JSON.parse(localStorage.getItem('unit')) || '';
+        },
+
         sugDetail() {
             return this.$store.state.suggest
         },
@@ -303,12 +307,12 @@ export default {
     },
 
     created() {
-        this.loadSuggestions()
-        this.getRegister()
+        this.loadSuggestions(JSON.parse(localStorage.getItem('unit')) || '')
+        this.getRegister(JSON.parse(localStorage.getItem('unit')) || '')
         setTimeout(() => {
             this.filteredOptions()
             this.filteredRegister()
-        }, 500);
+        }, 1000);
         // console.log(this.sugRegister)
 
     }

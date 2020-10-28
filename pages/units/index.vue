@@ -15,7 +15,7 @@
                 class="btn ml-5">
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
               </nuxt-link>
-              <nuxt-link to="/activealarm">
+              <nuxt-link to="/activealarm" @click.native="sendId(item.id)">
                 <h1 class="unit-select">{{item.unidade}}</h1>
               </nuxt-link>
             </div>
@@ -63,6 +63,11 @@ export default {
       .then(() => {
         this.gettingUnits()
       })
+    },
+
+    sendId(id) {
+      localStorage.removeItem('unit')
+      localStorage.setItem('unit', JSON.stringify(id));
     }
 
   },

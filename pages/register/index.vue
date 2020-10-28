@@ -10,18 +10,10 @@
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
         <select class="form-control" v-model="local">
-          <option>UG 11</option>
-          <option>UG 12</option>
-          <option>UG 18</option>
-          <option>UG 21</option>
-          <option>UG 22</option>
-          <option>UG 28</option>
-          <option>UG 31</option>
-          <option>UG 32</option>
-          <option>UG 38</option>
-          <option>CAV1</option>
-          <option>CAV2</option>
-          <option>CAV3</option>
+          <!-- TO AQUI -->
+          <option v-for="item in selectFilters.local" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
@@ -29,14 +21,16 @@
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
       </div>
     </div>
-    <!-- Mexer nos hover -->
+  
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
         <select class="form-control" v-model="offType">
-          <option>PLS</option>
-          <option>PLST</option>
-          <option>TRIP</option>
+          <!-- E AQUI -->
+          <option v-for="item in selectFilters.tipo_desligamento" :key="item.id">
+            {{item}}
+          </option>
+          
         </select>
       </div>
       <div class="col-10">
@@ -335,8 +329,19 @@ export default {
     } 
   },
 
+  computed: {
+    unitId() {
+      return JSON.parse(localStorage.getItem('unit')) || '';
+    },
+
+    selectFilters() {
+      return this.$store.state.getAlarm
+    }
+
+  },
+
   methods: {
-    ...mapActions(['sendAlarms', 'sendLogic', 'updateData']),
+    ...mapActions(['sendAlarms', 'sendLogic', 'updateData', 'loadRegister']),
 
     sendOperator() {
       this.pushed.push(this.operators)
@@ -474,7 +479,7 @@ export default {
         recomendacoes: this.recom
        })
       
-      await this.sendAlarms({info: this.allData[0]})
+      await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
       if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
@@ -511,6 +516,10 @@ export default {
     },
 
   },
+
+  created() {
+    this.loadRegister(JSON.parse(localStorage.getItem('unit')) || '')
+  }
   
   
 }

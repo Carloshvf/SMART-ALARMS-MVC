@@ -52,7 +52,7 @@ export default {
   created() {
     setInterval(() => {
       if (this.stop == true) {
-      this.loadData()
+      this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
         for (let index = 0; index < this.alarms.length; index++) {
           // console.log(this.currentRouteName)
           if (this.alarms[index].active == 1 && this.currentRouteName == 'activealarm') {
@@ -64,7 +64,7 @@ export default {
         }
       }, 5000);
     
-    this.loadData()
+    this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
    
   },
 }

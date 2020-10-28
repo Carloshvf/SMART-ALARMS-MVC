@@ -2,13 +2,13 @@
   <section id="header">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-7 position">
+        <div class="col-5 position">
           <nuxt-link class="align-items-center py-2" to="/">
             <img class="mb-3" src="../static/img/alarm.svg" alt="Logo" />
             <span class="text-uppercase mb-0 ml-2">smart alarms</span>
           </nuxt-link>
         </div>
-        <div class="col-5 position" v-if="headerButtons == true">
+        <div class="col-7 position" v-if="headerButtons == true">
           <nuxt-link to="/activealarm" class="btn mt-2 mr-4">
             <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" /> 
           </nuxt-link>
