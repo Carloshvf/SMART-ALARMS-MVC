@@ -141,7 +141,7 @@ export default {
       if (this.currentRouteName == 'alarm') {
         this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
           if (this.currentRouteName != 'alarm') {
             this.stopRerun = false 
           }
@@ -154,7 +154,7 @@ export default {
       else if (this.currentRouteName == 'detail-id') {
         this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
           if (this.currentRouteName != 'detail-id') {
             this.stopRerun = false 
           }

@@ -10,18 +10,9 @@
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
         <select class="form-control" v-model="local">
-          <option>UG 11</option>
-          <option>UG 12</option>
-          <option>UG 18</option>
-          <option>UG 21</option>
-          <option>UG 22</option>
-          <option>UG 28</option>
-          <option>UG 31</option>
-          <option>UG 32</option>
-          <option>UG 38</option>
-          <option>CAV1</option>
-          <option>CAV2</option>
-          <option>CAV3</option>
+          <option v-for="item in selectFilters.local_banco" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
@@ -34,9 +25,9 @@
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
         <select class="form-control" v-model="offType">
-          <option>PLS</option>
-          <option>PLST</option>
-          <option>TRIP</option>
+          <option v-for="item in selectFilters.tipo_desligamento_banco" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col-10">
@@ -444,6 +435,12 @@ export default {
         this.$store.commit('setRecom', value)
       }
     },
+    unitId() {
+      return JSON.parse(localStorage.getItem('unit')) || '';
+    },
+    selectFilters() {
+      return this.$store.state.edit
+    }
  
   },
 
@@ -623,7 +620,7 @@ export default {
        })
       
       
-      await this.sendAlarms({info: this.allData[0]})
+      await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
       if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
@@ -678,7 +675,7 @@ export default {
         recomendacoes: this.recomendacao
        })
 
-      this.updateData({ id: this.id, data: this.allData[0]})
+      this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]})
 
       this.$bvToast.toast('Editado com sucesso.', {
           title: `Editar`,
@@ -706,7 +703,8 @@ export default {
 
   async asyncData({ store, route }) {
     const { id } = route.params
-    const teste = await store.dispatch('loadCard', id)
+    const unitId = JSON.parse(localStorage.getItem('unit')) || ''
+    const teste = await store.dispatch('loadCard',{unit: unitId, route: id})
 
     // console.log(teste)
 

@@ -35,6 +35,38 @@
               <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
           </div>
       </div>
+
+      <div class="row">
+        <div class="col-6 scroll" v-if="eventType != []">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">TIPOS DE EVENTO</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in eventType" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-6 scroll" v-if="systems != []">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">SISTEMAS</th>  
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in systems" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       
       <div class="row">
           <div class="col">

@@ -6,38 +6,27 @@
       </div>
       <div class="col-2 align-items-end mt-5">
         <label class="labels">FILTRO UG</label>
-        <select class="form-control" v-model="ug" v-on:change="changeCards()">
-          <option>Todos</option>
-          <option>UG 11</option>
-          <option>UG 12</option>
-          <option>UG 18</option>
-          <option>UG 21</option>
-          <option>UG 22</option>
-          <option>UG 28</option>
-          <option>UG 31</option>
-          <option>UG 32</option>
-          <option>UG 38</option>
-          <option>CAV1</option>
-          <option>CAV2</option>
-          <option>CAV3</option>
+        <select class="form-control" v-model="ug">
+          <option v-for="item in alarms.filtro_local" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col-2 mt-5">
         <label class="labels">FILTRO DE TIPO</label>
-        <select class="form-control" v-model="type" v-on:change="changeCards()">
-          <option>Todos</option>
-          <option>PLS</option>
-          <option>PLST</option>
-          <option>TRIP</option>
+        <select class="form-control" v-model="type">
+          <option v-for="item in alarms.filtro_tipos_desligamento" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-4" v-for="(item, i) in alarms" :key="i">
+      <div class="col-sm-4" v-for="item in computed_filter" :key="item.id">
         <div class="card mt-4">
           <div class="card-white">
-            <h1>{{ item.infos[0].name }}</h1>
+            <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
             <span>Causa</span>
             <p>{{ item.infos[0].causa }}</p>
             <hr />
@@ -78,9 +67,8 @@ export default {
 
   data() {
     return {
-      ug: 'Todos',
-      type: 'Todos',
-      env_ug: "",
+      ug: '',
+      type: '',
       registeredAlarms: [],
       deletionAlarms: [],
       persistAlarms: [],
@@ -96,6 +84,36 @@ export default {
   computed: {
     alarms() {
       return this.$store.state.cardAlarm
+    },
+
+    cardInfo() {
+      return this.$store.state.cardAlarm.todos
+    },
+    
+    unitId() {
+      return JSON.parse(localStorage.getItem('unit')) || '';
+    },
+
+    computed_filter: function () {
+      let filterUg = this.ug,
+          filterType = this.type
+      
+      return this.cardInfo.filter(function(item){
+          let filtered = true
+          
+          if(filtered){
+            if(filterUg && filterUg.length > 0){
+                filtered = item.infos[0].local == filterUg
+            }
+          }
+          if(filtered){
+            if(filterType && filterType.length > 0){
+                filtered = item.infos[0].tipo == filterType
+            }
+          }
+            
+              return filtered
+          })
     }
     
   },
@@ -103,21 +121,14 @@ export default {
   methods: {
     ...mapActions(['loadRegistered', 'deleteRegistered']),
 
-    changeCards() {
-      this.env_ug = this.ug.replace(/\s/g, '_')
-      this.loadRegistered({ local: this.env_ug, tipo_desligamento: this.type })
-      
-    },
-
     async deletion(id, toaster) {
-      this.env_ug = this.ug.replace(/\s/g, '_')
       await this.$axios
       .delete(
-        HOST_API + '/alarme/' +
-          id
+        HOST_API + '/alarme/' + 
+        this.unitId + '/' + id
       )
       .then(() => {
-        this.loadRegistered({ local: this.env_ug, tipo_desligamento: this.type })
+        this.loadRegistered({unit: this.unitId})
       })
       this.$bvToast.toast('Deletado com sucesso.', {
           title: `Deletar`,
@@ -127,21 +138,10 @@ export default {
       
     }
 
-    // async deletion(todos, id) {
-    //     this.$axios.delete('https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000/alarme/' + todos.id)
-    //       .then(() => {              
-    //           this.todos.splice(id, 1)
-    //       })
-    //       setTimeout(() => {
-    //         window.location.reload()
-    //       }, 2000);
-         
-    //   }
-
   },
 
   async created() {
-    this.loadRegistered({ local: this.ug, tipo_desligamento: this.type })
+    this.loadRegistered({unit: JSON.parse(localStorage.getItem('unit')) || ''})
   }
 }
 </script>

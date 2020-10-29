@@ -135,7 +135,7 @@ export default {
       this.stopRerun = true
       this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
           if (this.currentRouteName != 'detail-id') {
             this.stopRerun = false 
           }

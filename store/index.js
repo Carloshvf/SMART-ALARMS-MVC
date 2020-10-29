@@ -13,6 +13,7 @@ export const state = () => ({
   getUnit: [],
   getEdit: [],
   getProfile: [],
+  getProfileEdit: [],
   graph: [],
   authorizationId:"",
   userName: "",
@@ -25,6 +26,9 @@ export const state = () => ({
   unit: {},
   update: [],
   valid: '',
+  errSede: '',
+  errEditSede: '',
+  getAlarm: [],
   // 
   
 })
@@ -77,6 +81,18 @@ export const mutations = {
   },
   setProfile(state, getProfile) {
     state.getProfile = getProfile
+  },
+  setProfileEdit(state, getProfileEdit) {
+    state.getProfileEdit = getProfileEdit
+  },
+  setErrSede(state, errSede) {
+    state.errSede = errSede
+  },
+  setErrEditSede(state, errEditSede) {
+    state.errEditSede = errEditSede
+  },
+  setGetAlarm(state, getAlarm) {
+    state.getAlarm = getAlarm
   },
 
   // POPULANDO A PAGINA DE EDITAR UNIDADES
@@ -155,24 +171,25 @@ export const mutations = {
 
 export const actions = {
 
-  async loadData(context) {
+  async loadData(context, dados) {
     let {
       data: { all }
     } = await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/alarmes-ativos'
+      HOST_API + '/alarmes-ativos/' + dados
     )
 
     context.commit('setAll', all)
   },
 
   //GET DA PÁGINA DE SUGESTÕES
-  async loadSuggestions(context) {
+  async loadSuggestions(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes'
+      HOST_API + '/sugestoes/' + dados 
     )
     .then(response => {
       this.suggest = response.data.sugestoes
+      // console.log(response.data)
     })
 
     context.commit('setSuggest', this.suggest)
@@ -181,8 +198,8 @@ export const actions = {
   // POST DE CONSULTA DE SUGESTÃO 
   async postSuggestions(context, dados) {
     await this.$axios.post(
-        HOST_API + '/sugestoes/' + dados.id,
-      dados.info
+        HOST_API + '/sugestoes/' + 
+        dados.unit + '/' + dados.id, dados.info
       )
     .then(response => {
       this.suggestChoice = response
@@ -192,9 +209,9 @@ export const actions = {
   },
 
   // GET DE CADASTRAR SUGESTÃO
-  async getRegister(context) {
+  async getRegister(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro'
+      HOST_API + '/sugestoes/cadastro/' + dados
     )
     .then(response => {
       this.suggestRegister = response.data.filtro
@@ -206,7 +223,7 @@ export const actions = {
   // POST DE CADASTRAR SUGESTÃO
   async registerSuggestions(context, dados) {
     await this.$axios.post(
-        HOST_API + '/sugestoes/cadastro',
+        HOST_API + '/sugestoes/cadastro/' + dados.unit,
       dados.info
       )
     
@@ -215,7 +232,8 @@ export const actions = {
   // GET DE EDITAR SUGESTÕES
   async editingSuggestions(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro/' + dados
+      HOST_API + '/sugestoes/cadastro/' + 
+      dados.unit + '/' + dados.id 
     )
     .then(response => {
       this.getSuggest = response.data
@@ -227,8 +245,8 @@ export const actions = {
   // PUT DE EDITAR SUGESTÃO
   async editSuggestions(context, dados) {
     await this.$axios.put(
-        HOST_API + '/sugestoes/cadastro/' + dados.id,
-      dados.info
+        HOST_API + '/sugestoes/cadastro/' + 
+        dados.unit + '/' + dados.id, dados.info
       )
 
   },
@@ -321,21 +339,68 @@ export const actions = {
 
   // POST DA PÁGINA DE PERFIS
   async postProfile(context, dados) {
+    this.errSede = ""
     await this.$axios.post(
       HOST_API + '/perfis', dados.info
     )
+    .catch(error => {
+      
+      this.errSede = error.response.data.erro
+    })
+
+    context.commit('setErrSede', this.errSede)
     
+  },
+
+  // GET DO MODAL DA PÁGINA DE PERFIS
+  async gettingProfileEdit(context, id) {
+    await this.$axios.get(
+      HOST_API + '/perfis/' + id
+    )
+    .then(response => {
+      this.getProfileEdit = response.data
+    })
+    
+    context.commit('setProfileEdit', this.getProfileEdit)
+  },
+
+  // PUT DA PÁGINA DE PERFIS
+  async editProfile(context, dados) {
+    this.errEditSede = ""
+    await this.$axios.put(
+      HOST_API + '/perfis/' + dados.id,
+      dados.info
+    )
+    .catch(error => {
+      this.errEditSede = error.response.data.erro
+    })
+
+    context.commit('setErrEditSede', this.errEditSede)
+
   },
 
   // 
   // 
   // 
+
+  async loadRegister(context, dados) {
+    await this.$axios.get(
+      //CONCATENANDO O HOST COM A RODA
+      HOST_API + '/alarme/' +
+        dados
+    )
+    .then(response => {
+      this.getAlarm = response.data.filtro_alarmes[0]
+    })
+
+    context.commit('setGetAlarm', this.getAlarm)
+  },
   
-  async sendAlarms(context, { info }) {
+  async sendAlarms(context, dados ) {
     await this.$axios.post(
       //CONCATENANDO O HOST COM A RODA
-        HOST_API + '/alarme',
-      info
+        HOST_API + '/alarme/' + dados.unit,
+      dados.info
     )
     // .then(response => {
     //   this.salvarAlarm = response.data.erro
@@ -357,16 +422,15 @@ export const actions = {
     context.commit('setLogic', this.validating)
   },
 
-  async loadRegistered(context, { local, tipo_desligamento }) {
+  async loadRegistered(context, {unit}) {
     await this.$axios
       .get(
-        HOST_API + '/alarme/' +
-          local +
-          '/' +
-          tipo_desligamento
+        HOST_API + '/cadastrado/' + unit 
+        
       )
       .then(response => {
-        this.cardAlarm = response.data.todos
+        this.cardAlarm = response.data
+        // console.log(response.data)
       })
 
     context.commit('setCard', this.cardAlarm)
@@ -380,10 +444,11 @@ export const actions = {
     )
   },
 
-  async loadCard(context, id) {
+  async loadCard(context, dados) {
     return this.$axios
       .get(
-        HOST_API + '/cadastrado/' + id
+        HOST_API + '/cadastrado/' + 
+        dados.unit + '/' + dados.route
       )
       .then(response => {
         context.commit('loadInfo', response.data.todos[0])
@@ -395,8 +460,8 @@ export const actions = {
   async updateData(context, dados) {
     await this.$axios
       .put(
-        (HOST_API + '/alarme/' +
-          dados.id), dados.data
+        (HOST_API + '/alarme/' +  
+        dados.unit + '/' + dados.id), dados.data
       )
     //   .then(response => {
     //     this.update = response
