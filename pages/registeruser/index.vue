@@ -62,7 +62,7 @@
                             <img class="editing" src="../../static/img/editSelect.svg" alt="edit" @click="showModal(item.id.toString())"/>
                         </td>
                         <td>
-                            <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUser(item.id)"/>
+                            <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUser(item.id, 'b-toaster-bottom-right')"/>
                         </td>
                          <!-- MODAL -->
                         <b-modal size="lg" :id="item.id.toString()">
@@ -179,7 +179,7 @@ extends: VueTypeahead,
             
         },
 
-        async deleteUser(id) {
+        async deleteUser(id, toaster) {
             await this.$axios
             .delete(
                 HOST_API + '/perfis/' +
@@ -187,6 +187,12 @@ extends: VueTypeahead,
             )
             .then(() => {
                 this.gettingProfile()
+            })
+
+            this.$bvToast.toast('Perfil Deletado com sucesso', {
+                title: `Delete`,
+                toaster: toaster,
+                solid: true
             })
         },
 
@@ -210,6 +216,11 @@ extends: VueTypeahead,
                 solid: true
                 })
             } else {
+                this.$bvToast.toast('Perfil Editado com sucesso', {
+                    title: `Edit`,
+                    toaster: toaster,
+                    solid: true
+                })
                 this.$bvModal.hide(id)
             }
             

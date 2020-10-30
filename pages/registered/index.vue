@@ -95,6 +95,7 @@ export default {
     },
 
     computed_filter: function () {
+      if (this.cardInfo != undefined) {
       let filterUg = this.ug,
           filterType = this.type
       
@@ -114,6 +115,7 @@ export default {
             
               return filtered
           })
+      }
     }
     
   },
