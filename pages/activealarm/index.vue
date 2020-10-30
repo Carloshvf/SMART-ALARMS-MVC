@@ -46,13 +46,16 @@ export default {
     },
      currentRouteName() {
         return this.$route.name;
-    }
+    },
+    unitId() {
+      return JSON.parse(localStorage.getItem('unit')) || '';
+    },
   },
 
   created() {
     setInterval(() => {
       if (this.stop == true) {
-      this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
+      this.loadData(this.unitId || '')
         for (let index = 0; index < this.alarms.length; index++) {
           // console.log(this.currentRouteName)
           if (this.alarms[index].active == 1 && this.currentRouteName == 'activealarm') {
@@ -64,7 +67,7 @@ export default {
         }
       }, 5000);
     
-    this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
+    this.loadData(this.unitId || '')
    
   },
 }

@@ -121,6 +121,10 @@ export default {
     lists() {
       return this.$store.state.all
     },
+
+    unitId() {
+      return JSON.parse(localStorage.getItem('unit')) || '';
+    },
    
   },
   methods: {
@@ -169,7 +173,7 @@ export default {
       this.stopRerun = true
       this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
+          this.loadData(this.unitId || '')
           if (this.currentRouteName != 'alarm') {
             this.stopRerun = false 
           }

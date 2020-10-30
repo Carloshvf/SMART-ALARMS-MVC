@@ -518,7 +518,7 @@ export default {
   },
 
   created() {
-    this.loadRegister(JSON.parse(localStorage.getItem('unit')) || '')
+    this.loadRegister(this.unitId || '')
   }
   
   
