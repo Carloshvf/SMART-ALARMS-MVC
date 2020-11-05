@@ -176,7 +176,10 @@ export const actions = {
       data: { all }
     } = await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/alarmes-ativos/' + dados
+      HOST_API + '/alarmes-ativos/' + dados,  {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
 
     context.commit('setAll', all)

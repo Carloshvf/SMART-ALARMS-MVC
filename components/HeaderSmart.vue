@@ -30,7 +30,7 @@
           <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3">Cadastrar Perfis</nuxt-link>
           <!-- <b-button class="drop mt-2 mb-2 ml-3" v-if="user != ''">{{user}}</b-button> -->
           <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
-          Cadastrar Alarmes
+            Cadastrar Alarmes
           </nuxt-link>
          
         </div>

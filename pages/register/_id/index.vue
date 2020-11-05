@@ -37,20 +37,20 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-row align-items-end">
-          <div class="col-4">
+          <div class="col-6">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
-          <div class="col-2">
+          <div class="col-4">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
           </div>
           
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <div class="form-row align-items-end">
           <div class="col-2">
             <label class="sizing">OPERADORES</label>
@@ -64,6 +64,17 @@
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
+          <!-- AREA NOVA -->
+          <div class="col-2">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="operators">
+              <option>E</option>
+            </select>
+          </div>  
+          <div class="ml-2 mr-2">
+            <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
+          </div>
+          <!--  -->
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
@@ -75,7 +86,7 @@
               <option>0</option>
             </select>
           </div>
-          <div class="ml-3">
+          <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
           </div>
         </div>

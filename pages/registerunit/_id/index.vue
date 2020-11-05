@@ -67,6 +67,16 @@
           </table>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-3">
+          <label class="mt-4">SUBAREA</label>
+          <input class="form-control" v-model="eventUnit">
+        </div>
+        <div class="col-3">
+            <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
+        </div>
+      </div>
       
       <div class="row">
           <div class="col">
