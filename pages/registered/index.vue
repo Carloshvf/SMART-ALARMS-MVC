@@ -143,7 +143,7 @@ export default {
   },
 
   async created() {
-    this.loadRegistered({unit: JSON.parse(localStorage.getItem('unit')) || ''})
+    this.loadRegistered({unit: this.unitId || ''})
   }
 }
 </script>

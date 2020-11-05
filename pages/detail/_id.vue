@@ -138,14 +138,17 @@ export default {
 
     currentRouteName() {
         return this.$route.name;
-    }
+    },
+    unitId() {
+      return JSON.parse(localStorage.getItem('unit')) || '';
+    },
    
   },
 
   created() {
     this.stopInterval = setInterval(() => {
         if (this.stop == true) {
-          this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
+          this.loadData(this.unitId || '')
           this.arrSize.splice(0)
 
           for (let index = 0; index < this.lists.length; index++) {

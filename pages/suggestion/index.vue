@@ -307,8 +307,8 @@ export default {
     },
 
     created() {
-        this.loadSuggestions(JSON.parse(localStorage.getItem('unit')) || '')
-        this.getRegister(JSON.parse(localStorage.getItem('unit')) || '')
+        this.loadSuggestions(this.unitId || '')
+        this.getRegister(this.unitId || '')
         setTimeout(() => {
             this.filteredOptions()
             this.filteredRegister()
