@@ -257,7 +257,10 @@ export const actions = {
   // GET DA PÁGINA DE SELEÇÃO DE UNIDADES
   async gettingUnits(context) {
     await this.$axios.get(
-      HOST_API + '/unidades'
+      HOST_API + '/unidades', {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .then(response => {
       this.getUnit = response.data.unidades
@@ -390,7 +393,10 @@ export const actions = {
     await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
       HOST_API + '/alarme/' +
-        dados
+        dados, {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          }}
     )
     .then(response => {
       this.getAlarm = response.data.filtro_alarmes[0]
