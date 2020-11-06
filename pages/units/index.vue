@@ -12,7 +12,7 @@
               <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)"/>
               <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
-                class="btn ml-5">
+                class="btn ml-5" v-if="item.edicao == true">
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
               </nuxt-link>
               <nuxt-link to="/activealarm" @click.native="sendId(item.id)">
@@ -26,7 +26,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4">+</nuxt-link>
+          <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4" v-if="unitPermission == true">+</nuxt-link>
         </div>
       </div>
   </div>
@@ -47,7 +47,11 @@ export default {
 
   computed: {
     unitDetail() {
-      return this.$store.state.getUnit
+      return this.$store.state.getUnit.unidades
+    },
+
+    unitPermission() {
+      return this.$store.state.getUnit.cadastro
     }
   },
 
@@ -58,7 +62,10 @@ export default {
       await this.$axios
       .delete(
         HOST_API + '/unidades/' +
-          id
+          id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
       )
       .then(() => {
         this.gettingUnits()

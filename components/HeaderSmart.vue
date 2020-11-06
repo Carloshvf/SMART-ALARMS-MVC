@@ -92,6 +92,8 @@ export default {
     setInterval(() => {
       if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {
         this.headerButtons = true
+      } else if(this.currentRouteName == 'units') {
+        this.headerButtons = false
       }
     }, 3000);
     

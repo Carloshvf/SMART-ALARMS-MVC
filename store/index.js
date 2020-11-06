@@ -263,7 +263,7 @@ export const actions = {
         }}
     )
     .then(response => {
-      this.getUnit = response.data.unidades
+      this.getUnit = response.data
     })
    
     context.commit('setUnit', this.getUnit)
@@ -272,7 +272,10 @@ export const actions = {
   // GET DA PÁGINA DE EDIÇÃO DE UNIDADES
   async gettingEdits(context, id) {
     await this.$axios.get(
-      HOST_API + '/unidades/' + id
+      HOST_API + '/unidades/' + id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .then(response => {
       this.getEdit = response.data
@@ -286,7 +289,10 @@ export const actions = {
     await this.$axios
       .put(
         (HOST_API + '/unidades/' +
-          dados.id), dados.data
+          dados.id), dados.data, {
+            headers: {
+              'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            }}
       )
 
   },
@@ -295,7 +301,10 @@ export const actions = {
   async registerUnit(context, dados) {
     await this.$axios.post(
         HOST_API + '/unidades',
-      dados
+      dados, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
       )
     
   },
