@@ -100,7 +100,7 @@
             <tbody>
             <tr v-for="item in sub" :key="item.id">
                 <td>{{item.nome}}</td>
-                <td>{{item.model}}</td>
+                <td>{{item.modelo}}</td>
             </tr>
             </tbody>
           </table>
@@ -157,7 +157,7 @@ export default {
 
     pushSub(toaster) {
       if (this.subUnit != "" && this.subModel != "") {
-        this.sub.push({nome: this.subUnit, model: this.subModel})
+        this.sub.push({nome: this.subUnit, modelo: this.subModel})
       } else {
         this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
           title: `Erro`,
@@ -175,7 +175,8 @@ export default {
         unidade: this.unitName,
         tipo_conexao: this.connectionType,
         tipo_evento: this.eventType,
-        sistemas: this.systems
+        sistemas: this.systems,
+        sub_area: this.sub
       })
 
       await this.registerUnit(this.unitData[0])

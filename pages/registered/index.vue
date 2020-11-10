@@ -29,18 +29,16 @@
             <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
             <span>Causa</span>
             <p>{{ item.infos[0].causa }}</p>
-            <hr />
+            <hr v-if="permButtons == true"/>
             <div class="align options">
-              <button class="btn mr-5" @click="deletion(item.id,'b-toaster-bottom-right')">
+              <button class="btn mr-5" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
                 Excluir
                 <delete class="options"></delete>
               </button>
 
-              <!-- <a href="javascript:void(0);" @click.native="editing" class="btn options ml-5">Editar</a> -->
-
               <nuxt-link
                 :to="{ name: 'register-id', params: { id: item.id } }"
-                class="btn options ml-5"
+                class="btn options ml-5" v-if="permButtons == true"
               >Editar</nuxt-link>
             </div>
           </div>
@@ -88,6 +86,10 @@ export default {
 
     cardInfo() {
       return this.$store.state.cardAlarm.todos
+    },
+
+    permButtons() {
+      return this.$store.state.cardAlarm.editar_eventos
     },
     
     unitId() {

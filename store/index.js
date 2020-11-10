@@ -29,6 +29,7 @@ export const state = () => ({
   errSede: '',
   errEditSede: '',
   getAlarm: [],
+  getHeader: [],
   // 
   
 })
@@ -94,6 +95,9 @@ export const mutations = {
   setGetAlarm(state, getAlarm) {
     state.getAlarm = getAlarm
   },
+  setHeaderGet(state, getHeader) {
+    state.getHeader = getHeader
+  },
 
   // POPULANDO A PAGINA DE EDITAR UNIDADES
   setUnitName(state, unitName) {
@@ -108,7 +112,9 @@ export const mutations = {
   setSystemUnit(state, systemUnit) {
     state.getEdit.sistemas = systemUnit;
   },
-
+  setSub(state, SubUnit) {
+    state.getEdit.sub_area = SubUnit;
+  },
   // POPULANDO A PAGINA DE EDITAR ALARMES CADASTRADOS
   setLocal(state, local) {
     state.edit.local = local;
@@ -183,6 +189,21 @@ export const actions = {
     )
 
     context.commit('setAll', all)
+  },
+
+  // GET DO HEADER DAS PAGINAS
+  async headerGet(context, dados) {
+    await this.$axios.get(
+      HOST_API + '/header/' + dados, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
+    )
+    .then(response => {
+      this.getHeader = response.data
+    })
+
+    context.commit('setHeaderGet', this.getHeader)
   },
 
   //GET DA PÁGINA DE SUGESTÕES

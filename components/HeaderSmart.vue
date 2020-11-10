@@ -15,10 +15,10 @@
           <nuxt-link to="/alarm" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Alarmes ativos" src="../static/img/avalanche.svg" alt="Aval" /> 
           </nuxt-link>
-          <nuxt-link to="/registered" class="btn mt-2 mr-4"> 
+          <nuxt-link to="/registered" class="btn mt-2 mr-4" v-if="permButtons.alarmes_cadastrados == true"> 
             <img class="icons" v-b-tooltip.hover title="Alarmes cadastrados" src="../static/img/edit.svg" alt="Editalt" /> 
           </nuxt-link>
-          <nuxt-link to="/suggestion" class="btn mt-2 mr-4"> 
+          <nuxt-link to="/suggestion" class="btn mt-2 mr-4" v-if="permButtons.sugestoes == true"> 
             <img class="icons" v-b-tooltip.hover title="Sugestões" src="../static/img/article.svg" alt="Sug" /> 
           </nuxt-link>
           <nuxt-link to="/units" class="btn mt-2 mr-4"> 
@@ -27,9 +27,9 @@
           <b-dropdown class="mt-2 mb-2" :text="user" v-if="user != ''">
             <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>
           </b-dropdown>
-          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3">Cadastrar Perfis</nuxt-link>
+          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_perfis == true">Cadastrar Perfis</nuxt-link>
           <!-- <b-button class="drop mt-2 mb-2 ml-3" v-if="user != ''">{{user}}</b-button> -->
-          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
+          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_alarmes == true">
             Cadastrar Alarmes
           </nuxt-link>
          
@@ -66,10 +66,14 @@ export default {
     currentRouteName() {
         return this.$route.name;
     },
+
+    permButtons() {
+      return this.$store.state.getHeader
+    }
   },
 
   methods: {
-    ...mapActions(['logOff']),
+    ...mapActions(['logOff', 'headerGet']),
 
     userKey() {
       this.user = JSON.parse(localStorage.getItem('name')) || '';
@@ -88,6 +92,7 @@ export default {
 
   mounted() {
     this.userKey()
+    this.headerGet(JSON.parse(localStorage.getItem('unit')) || '')
     // this.headerId = localStorage.getItem('token')
     setInterval(() => {
       if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {

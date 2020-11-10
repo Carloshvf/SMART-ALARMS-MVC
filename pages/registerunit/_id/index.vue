@@ -70,11 +70,40 @@
 
       <div class="row">
         <div class="col-3">
-          <label class="mt-4">SUBAREA</label>
-          <input class="form-control" v-model="eventUnit">
+          <label class="mt-3 mb-0">SUBAREA:</label>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-3">
+          <label class="mt-4">NOME</label>
+          <input class="form-control" v-model="subUnit">
         </div>
         <div class="col-3">
-            <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
+          <label class="mt-4">MODELO</label>
+          <input class="form-control" v-model="subModel">
+        </div>
+        <div class="col-3">
+            <b-button class="btn btn-green btn-add" @click="pushSub('b-toaster-bottom-right')">Adicionar</b-button>
+        </div>
+      </div>
+
+      <div class="row">
+           <div class="col-6 scroll" >
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">NOME</th>
+                <th scope="col">MODELO</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in subInfo" :key="item.id">
+                <td>{{item.nome}}</td>
+                <td>{{item.modelo}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       
@@ -101,6 +130,8 @@ export default {
         systems: [],
         unitData: [],
         unitEditing: [],
+        subUnit: "",
+        subModel: "",
         id: this.$route.params.id
     }
   },
@@ -138,6 +169,14 @@ export default {
         this.$store.commit('setSystemUnit', value)
       }
     },
+    subInfo: {
+      get () {
+        return this.$store.state.getEdit.sub_area
+      },
+      set (value) {
+        this.$store.commit('setSub', value)
+      }
+    },
 
   },
 
@@ -152,6 +191,19 @@ export default {
       this.systemUnit.push(this.systems)
     },
 
+    pushSub(toaster) {
+      if (this.subUnit != "" && this.subModel != "") {
+        this.subInfo.push({nome: this.subUnit, modelo: this.subModel})
+      } else {
+        this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
+          title: `Erro`,
+          toaster: toaster,
+          solid: true,
+        })
+      }
+      
+    },
+
     async editUnit() {
       this.unitEditing.splice(0)
 
@@ -159,7 +211,8 @@ export default {
         unidade: this.unitName,
         tipo_conexao: this.connectionType,
         tipo_evento: this.eventUnit,
-        sistemas: this.systemUnit
+        sistemas: this.systemUnit,
+        sub_area: this.subInfo,
       })
 
       await this.updateUnit({ id:this.id, data:this.unitEditing[0]})
