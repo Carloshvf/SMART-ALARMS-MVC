@@ -53,7 +53,7 @@
       </div>
       <div class="col-sm-8">
         <div class="form-row align-items-end">
-          <div class="col-2">
+          <div class="col-1">
             <label class="sizing">OPERADORES</label>
             <select class="form-control" v-model="operators">
               <option>E</option>
@@ -65,7 +65,7 @@
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
-          <!-- AREA NOVA -->
+          <!-- SUBAREA -->
           <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subSelect">
@@ -74,9 +74,6 @@
               </option>
             </select>
           </div>  
-          <div class="ml-2 mr-2">
-            <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
-          </div>
           <!--  -->
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
@@ -84,10 +81,7 @@
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control" v-model="activation1">
-              <option>1</option>
-              <option>0</option>
-            </select>
+            <input maxlength="20" minlength="3" type="text" class="form-control" v-model="activation1">
           </div>
           <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
@@ -318,7 +312,7 @@ export default {
       subSelect: "",
       textMedida: "",
       textAlarme:"",
-      activation1: "1",
+      activation1: "",
       activation2: "1",
       activation3: "",
       unit1: "",

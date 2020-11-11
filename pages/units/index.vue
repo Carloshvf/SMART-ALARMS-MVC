@@ -27,6 +27,7 @@
       <div class="row">
         <div class="col">
           <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4" v-if="unitPermission == true">+</nuxt-link>
+          <nuxt-link to="/registeruser" class="btn btn-grey add mt-4 mr-3" v-if="profileReg == true">Cadastrar Perfis</nuxt-link>
         </div>
       </div>
   </div>
@@ -52,11 +53,15 @@ export default {
 
     unitPermission() {
       return this.$store.state.getUnit.cadastro
+    },
+
+    profileReg() {
+      return this.$store.state.getUnit.cadastrar_perfis
     }
   },
 
   methods: {
-    ...mapActions(['gettingUnits']),
+    ...mapActions(['gettingUnits', 'headerGet']),
 
     async deleteUnit(id) {
       await this.$axios
@@ -75,6 +80,7 @@ export default {
     sendId(id) {
       localStorage.removeItem('unit')
       localStorage.setItem('unit', JSON.stringify(id));
+      this.headerGet(JSON.parse(localStorage.getItem('unit')) || '')
     }
 
   },
@@ -100,6 +106,11 @@ export default {
   position: absolute;
   left: 290px;
   bottom: 85.35%;
+}
+
+.btn-grey {
+  color: white;
+  background-color: $light-purple;
 }
 
 .editing {

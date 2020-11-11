@@ -92,8 +92,7 @@ export default {
 
   mounted() {
     this.userKey()
-    this.headerGet(JSON.parse(localStorage.getItem('unit')) || '')
-    // this.headerId = localStorage.getItem('token')
+    // this.headerGet(JSON.parse(localStorage.getItem('unit')) || '')
     setInterval(() => {
       if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {
         this.headerButtons = true

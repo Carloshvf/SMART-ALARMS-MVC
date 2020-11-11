@@ -109,7 +109,7 @@
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save" @click="editUnit()">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="editUnit('b-toaster-bottom-right')">Salvar</b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
@@ -204,7 +204,7 @@ export default {
       
     },
 
-    async editUnit() {
+    async editUnit(toaster) {
       this.unitEditing.splice(0)
 
       this.unitEditing.push({
@@ -216,6 +216,11 @@ export default {
       })
 
       await this.updateUnit({ id:this.id, data:this.unitEditing[0]})
+       this.$bvToast.toast('Perfil editado com sucesso', {
+          title: `Edit`,
+          toaster: toaster,
+          solid: true,
+        })
     }
 
   },

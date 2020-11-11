@@ -182,8 +182,10 @@ extends: VueTypeahead,
         async deleteUser(id, toaster) {
             await this.$axios
             .delete(
-                HOST_API + '/perfis/' +
-                id
+                HOST_API + '/perfis/' + id, {
+                headers: {
+                'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+                }} 
             )
             .then(() => {
                 this.gettingProfile()

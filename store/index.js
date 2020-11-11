@@ -209,7 +209,10 @@ export const actions = {
   //GET DA PÁGINA DE SUGESTÕES
   async loadSuggestions(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/' + dados 
+      HOST_API + '/sugestoes/' + dados, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }} 
     )
     .then(response => {
       this.suggest = response.data.sugestoes
@@ -223,7 +226,10 @@ export const actions = {
   async postSuggestions(context, dados) {
     await this.$axios.post(
         HOST_API + '/sugestoes/' + 
-        dados.unit + '/' + dados.id, dados.info
+        dados.unit + '/' + dados.id, dados.info, {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          }}
       )
     .then(response => {
       this.suggestChoice = response
@@ -235,7 +241,10 @@ export const actions = {
   // GET DE CADASTRAR SUGESTÃO
   async getRegister(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro/' + dados
+      HOST_API + '/sugestoes/cadastro/' + dados, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .then(response => {
       this.suggestRegister = response.data.filtro
@@ -248,7 +257,10 @@ export const actions = {
   async registerSuggestions(context, dados) {
     await this.$axios.post(
         HOST_API + '/sugestoes/cadastro/' + dados.unit,
-      dados.info
+      dados.info, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
       )
     
   },
@@ -257,7 +269,10 @@ export const actions = {
   async editingSuggestions(context, dados) {
     await this.$axios.get(
       HOST_API + '/sugestoes/cadastro/' + 
-      dados.unit + '/' + dados.id 
+      dados.unit + '/' + dados.id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .then(response => {
       this.getSuggest = response.data
@@ -270,7 +285,10 @@ export const actions = {
   async editSuggestions(context, dados) {
     await this.$axios.put(
         HOST_API + '/sugestoes/cadastro/' + 
-        dados.unit + '/' + dados.id, dados.info
+        dados.unit + '/' + dados.id, dados.info, {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          }}
       )
 
   },
@@ -364,7 +382,10 @@ export const actions = {
   //GET DA PÁGINA DE CADASTRAR PERFIS
   async gettingProfile(context, id) {
     await this.$axios.get(
-      HOST_API + '/perfis'
+      HOST_API + '/perfis', {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .then(response => {
       this.getProfile = response.data
@@ -377,7 +398,10 @@ export const actions = {
   async postProfile(context, dados) {
     this.errSede = ""
     await this.$axios.post(
-      HOST_API + '/perfis', dados.info
+      HOST_API + '/perfis', dados.info, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .catch(error => {
       
@@ -391,7 +415,10 @@ export const actions = {
   // GET DO MODAL DA PÁGINA DE PERFIS
   async gettingProfileEdit(context, id) {
     await this.$axios.get(
-      HOST_API + '/perfis/' + id
+      HOST_API + '/perfis/' + id, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .then(response => {
       this.getProfileEdit = response.data
@@ -405,7 +432,10 @@ export const actions = {
     this.errEditSede = ""
     await this.$axios.put(
       HOST_API + '/perfis/' + dados.id,
-      dados.info
+      dados.info, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     .catch(error => {
       this.errEditSede = error.response.data.erro
@@ -439,7 +469,10 @@ export const actions = {
     await this.$axios.post(
       //CONCATENANDO O HOST COM A RODA
         HOST_API + '/alarme/' + dados.unit,
-      dados.info
+      dados.info, {
+        headers: {
+          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+        }}
     )
     // .then(response => {
     //   this.salvarAlarm = response.data.erro
@@ -464,7 +497,10 @@ export const actions = {
   async loadRegistered(context, {unit}) {
     await this.$axios
       .get(
-        HOST_API + '/cadastrado/' + unit 
+        HOST_API + '/cadastrado/' + unit, {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          }}
         
       )
       .then(response => {
@@ -487,7 +523,10 @@ export const actions = {
     return this.$axios
       .get(
         HOST_API + '/cadastrado/' + 
-        dados.unit + '/' + dados.route
+        dados.unit + '/' + dados.route, {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          }}
       )
       .then(response => {
         context.commit('loadInfo', response.data.todos[0])
