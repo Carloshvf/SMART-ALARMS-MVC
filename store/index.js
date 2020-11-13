@@ -152,6 +152,18 @@ export const mutations = {
   setRecom(state, recomendacao) {
     state.edit.recomendacoes = recomendacao;
   },
+  setSubArea1(state, subArea1) {
+    state.edit.sub_area = subArea1;
+  },
+  setSubArea2(state, subArea2) {
+    state.edit.ends_alarme[0].sub_area = subArea2;
+  },
+  setSubArea3(state, subArea3) {
+    state.edit.canais[0].sub_area = subArea3;
+  },
+  setSubArea4(state, subArea4) {
+    state.edit.status_medidas[0].sub_area = subArea4;
+  },
   // Mutations para alterar os arrays na página de editar alarmes
   setNewRecom(state, recomendacao) {
     state.edit.recomendacoes.push({item: recomendacao})
@@ -171,6 +183,7 @@ export const mutations = {
   setCleanRecom(state, index) {
     state.edit.recomendacoes.splice(index, 1)
   },
+  
   // 
 }
 
@@ -539,7 +552,10 @@ export const actions = {
     await this.$axios
       .put(
         (HOST_API + '/alarme/' +  
-        dados.unit + '/' + dados.id), dados.data
+        dados.unit + '/' + dados.id), dados.data, {
+          headers: {
+            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          }}
       )
     //   .then(response => {
     //     this.update = response

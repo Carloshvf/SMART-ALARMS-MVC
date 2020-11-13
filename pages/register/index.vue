@@ -45,6 +45,14 @@
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
           <div class="col-4">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect1">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>  
+          <div class="col-2">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
           </div>
@@ -68,9 +76,9 @@
           <!-- SUBAREA -->
           <div class="col-2">
             <label class="sizing">SUBAREA</label>
-            <select class="form-control" v-model="subSelect">
-              <option>
-                E
+            <select class="form-control" v-model="subSelect2">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
               </option>
             </select>
           </div>  
@@ -132,6 +140,14 @@
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
+          </div>  
+          <div class="col-2">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect3">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
           </div>  
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
@@ -210,6 +226,14 @@
               </select>
             </div>
           </div>
+          <div class="col-3">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect4">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>  
           <div class="ml-4">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
@@ -309,7 +333,10 @@ export default {
       offType: "PLS",
       reason: "",
       operators: "E",
-      subSelect: "",
+      subSelect1: "",
+      subSelect2: "",
+      subSelect3: "",
+      subSelect4: "",
       textMedida: "",
       textAlarme:"",
       activation1: "",
@@ -380,7 +407,7 @@ export default {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
         this.pushed.push(this.textAlarme, "-", this.activation1)
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2})
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
         this.logic = this.separador
@@ -396,13 +423,13 @@ export default {
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subSelect3 })
       
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3, sub_area: this.subSelect4 })
       this.unit3 = ""
       this.activation3 = ""
       
@@ -482,7 +509,8 @@ export default {
         ends_alarme: this.endAtivacao,
         canais: this.end,
         status_medidas: this.measures,
-        recomendacoes: this.recom
+        recomendacoes: this.recom,
+        sub_area: this.subSelect1,
        })
       
       await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
