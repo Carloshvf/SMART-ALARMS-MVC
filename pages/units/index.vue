@@ -9,7 +9,7 @@
         <div class="col-4" v-for="item in unitDetail" :key="item.id">
           <div class="card mt-4">
             <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)"/>
+              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)" v-if="item.edicao == true"/>
               <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
                 class="btn ml-5" v-if="item.edicao == true">

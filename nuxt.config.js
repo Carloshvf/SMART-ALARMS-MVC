@@ -5,7 +5,7 @@ export default {
     baseURL: process.env.baseURL || 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000'
   },
 
-  mode: 'universal',
+  mode: 'spa',
   /*
    ** Headers of the page
    */
