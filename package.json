@@ -19,6 +19,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "chart.js": "^2.9.3",
     "chartjs-plugin-zoom": "^0.7.5",
+    "cookie-universal-nuxt": "^2.1.4",
     "jquery": "^1.9.1",
     "nuxt": "^2.0.0",
     "vue-chartjs": "^3.5.0",
