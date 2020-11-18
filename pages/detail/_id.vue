@@ -140,7 +140,7 @@ export default {
         return this.$route.name;
     },
     unitId() {
-      return JSON.parse(localStorage.getItem('unit')) || '';
+      return this.$cookies.get('unit') || '';
     },
    
   },

@@ -69,7 +69,7 @@ export default {
         HOST_API + '/unidades/' +
           id, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
       )
       .then(() => {
@@ -78,9 +78,9 @@ export default {
     },
 
     sendId(id) {
-      localStorage.removeItem('unit')
-      localStorage.setItem('unit', JSON.stringify(id));
-      this.headerGet(JSON.parse(localStorage.getItem('unit')) || '')
+      this.$cookies.remove('unit')
+      this.$cookies.set('unit', JSON.stringify(id))
+      this.headerGet(this.$cookies.get('unit') || '')
     }
 
   },

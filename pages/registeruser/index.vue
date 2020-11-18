@@ -184,7 +184,7 @@ extends: VueTypeahead,
             .delete(
                 HOST_API + '/perfis/' + id, {
                 headers: {
-                'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+                'Authorization': this.$cookies.get('token') || '',
                 }} 
             )
             .then(() => {

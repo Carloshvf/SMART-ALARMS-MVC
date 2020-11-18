@@ -3,7 +3,7 @@
     <div class="row mt-4">
       <div class="col mt-5">
         <div class="card card-login">
-          <h1 class="aligning mt-1">ACESSO</h1>
+          <img class="aligning" src="../static/img/login.png" alt="Logo1" />
           <div class="col">
             <label class="labels mt-3">USUÁRIO:</label>
             <input class="passwords form-control" minlength="1" v-model="name">
@@ -76,8 +76,8 @@ export default {
   },
 
   mounted() {
-    // Tentativa de fazer ele jogar pra página de unidades no caso de já ter um token no localStorage
-    this.userCheck = JSON.parse(localStorage.getItem('token')) || ''
+    // Tentativa de fazer ele jogar pra página de unidades no caso de já ter um token
+    this.userCheck = this.$cookies.get('token') || ''
     if (this.userCheck != '') {
       this.$router.push('/units')
     }
@@ -144,8 +144,10 @@ export default {
 }
 
 .aligning {
-  text-align: center;
-  color: #1F2041;
+  position: relative;
+  left: 100px;
+  height: 150px;
+  width: 240px;
 }
 
 

@@ -502,7 +502,7 @@ export default {
       }
     },
     unitId() {
-      return JSON.parse(localStorage.getItem('unit')) || '';
+      return this.$cookies.get('unit') || '';
     },
     selectFilters() {
       return this.$store.state.edit
@@ -770,7 +770,7 @@ export default {
 
   async asyncData({ store, route }) {
     const { id } = route.params
-    const unitId = JSON.parse(localStorage.getItem('unit')) || ''
+    const unitId = this.$cookies.get('unit') || ''
     const teste = await store.dispatch('loadCard',{unit: unitId, route: id})
 
     // console.log(teste)

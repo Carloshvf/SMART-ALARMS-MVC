@@ -27,9 +27,9 @@
           <b-dropdown class="mt-2 mb-2" :text="user" v-if="user != ''">
             <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>
           </b-dropdown>
-          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_perfis == true">Cadastrar Perfis</nuxt-link>
-          <!-- <b-button class="drop mt-2 mb-2 ml-3" v-if="user != ''">{{user}}</b-button> -->
-          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_alarmes == true">
+          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" >Cadastrar Perfis</nuxt-link>
+
+          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" >
             Cadastrar Alarmes
           </nuxt-link>
          
@@ -76,14 +76,14 @@ export default {
     ...mapActions(['logOff', 'headerGet']),
 
     userKey() {
-      this.user = JSON.parse(localStorage.getItem('name')) || '';
+      this.user = this.$cookies.get('name') || '';
     },
 
     async logout() {
-      this.auth = JSON.parse(localStorage.getItem('token')) || '';
+      this.auth = this.$cookies.get('token') || '';
       await this.logOff({Authorization: this.auth})
 
-      localStorage.clear();
+      this.$cookies.removeAll();
       this.headerButtons = false
       this.$router.push('/')
     }
@@ -92,7 +92,7 @@ export default {
 
   mounted() {
     this.userKey()
-    // this.headerGet(JSON.parse(localStorage.getItem('unit')) || '')
+  
     setInterval(() => {
       if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {
         this.headerButtons = true

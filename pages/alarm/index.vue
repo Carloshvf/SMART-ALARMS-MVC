@@ -176,7 +176,7 @@ export default {
     },
 
     unitId() {
-      return JSON.parse(localStorage.getItem('unit')) || '';
+      return this.$cookies.get('unit') || '';
     },
 
     currentRouteName() {
@@ -187,7 +187,7 @@ export default {
   created() {
       this.stopInterval = setInterval(() => {
         if (this.stop == true) {
-          this.loadData(JSON.parse(localStorage.getItem('unit')) || '')
+          this.loadData(this.$cookies.get('unit') || '')
           this.arrSize.splice(0)
 
           for (let index = 0; index < this.lists.length; index++) {

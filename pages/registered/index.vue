@@ -93,7 +93,7 @@ export default {
     },
     
     unitId() {
-      return JSON.parse(localStorage.getItem('unit')) || '';
+      return this.$cookies.get('unit') || '';
     },
 
     computed_filter: function () {
@@ -129,7 +129,10 @@ export default {
       await this.$axios
       .delete(
         HOST_API + '/alarme/' + 
-        this.unitId + '/' + id
+        this.unitId + '/' + id, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
       )
       .then(() => {
         this.loadRegistered({unit: this.unitId})

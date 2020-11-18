@@ -197,7 +197,7 @@ export const actions = {
       //CONCATENANDO O HOST COM A RODA
       HOST_API + '/alarmes-ativos/' + dados,  {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
 
@@ -209,7 +209,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/header/' + dados, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -224,7 +224,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/sugestoes/' + dados, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }} 
     )
     .then(response => {
@@ -241,7 +241,7 @@ export const actions = {
         HOST_API + '/sugestoes/' + 
         dados.unit + '/' + dados.id, dados.info, {
           headers: {
-            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            'Authorization': this.$cookies.get('token') || '',
           }}
       )
     .then(response => {
@@ -256,7 +256,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/sugestoes/cadastro/' + dados, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -272,7 +272,7 @@ export const actions = {
         HOST_API + '/sugestoes/cadastro/' + dados.unit,
       dados.info, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
       )
     
@@ -284,7 +284,7 @@ export const actions = {
       HOST_API + '/sugestoes/cadastro/' + 
       dados.unit + '/' + dados.id, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -300,7 +300,7 @@ export const actions = {
         HOST_API + '/sugestoes/cadastro/' + 
         dados.unit + '/' + dados.id, dados.info, {
           headers: {
-            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            'Authorization': this.$cookies.get('token') || '',
           }}
       )
 
@@ -311,7 +311,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/unidades', {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -326,7 +326,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/unidades/' + id, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -343,7 +343,7 @@ export const actions = {
         (HOST_API + '/unidades/' +
           dados.id), dados.data, {
             headers: {
-              'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+              'Authorization': this.$cookies.get('token') || '',
             }}
       )
 
@@ -355,7 +355,7 @@ export const actions = {
         HOST_API + '/unidades',
       dados, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
       )
     
@@ -372,8 +372,8 @@ export const actions = {
       this.authorizationId = response.headers.authorization
       this.userName = response.data.nome
       if (response.status == 200) {
-        localStorage.setItem('token', JSON.stringify(this.authorizationId));
-        localStorage.setItem('name', JSON.stringify(this.userName));
+        this.$cookies.set('token', JSON.stringify(this.authorizationId))
+        this.$cookies.set('name', JSON.stringify(this.userName))
       }
     })
     .catch(error => {
@@ -397,7 +397,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/perfis', {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -413,7 +413,7 @@ export const actions = {
     await this.$axios.post(
       HOST_API + '/perfis', dados.info, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .catch(error => {
@@ -430,7 +430,7 @@ export const actions = {
     await this.$axios.get(
       HOST_API + '/perfis/' + id, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
@@ -447,7 +447,7 @@ export const actions = {
       HOST_API + '/perfis/' + dados.id,
       dados.info, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .catch(error => {
@@ -468,7 +468,7 @@ export const actions = {
       HOST_API + '/alarme/' +
         dados, {
           headers: {
-            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            'Authorization': this.$cookies.get('token') || '',
           }}
     )
     .then(response => {
@@ -484,7 +484,7 @@ export const actions = {
         HOST_API + '/alarme/' + dados.unit,
       dados.info, {
         headers: {
-          'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+          'Authorization': this.$cookies.get('token') || '',
         }}
     )
     // .then(response => {
@@ -512,7 +512,7 @@ export const actions = {
       .get(
         HOST_API + '/cadastrado/' + unit, {
           headers: {
-            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            'Authorization': this.$cookies.get('token') || '',
           }}
         
       )
@@ -538,7 +538,7 @@ export const actions = {
         HOST_API + '/cadastrado/' + 
         dados.unit + '/' + dados.route, {
           headers: {
-            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            'Authorization': this.$cookies.get('token') || '',
           }}
       )
       .then(response => {
@@ -554,7 +554,7 @@ export const actions = {
         (HOST_API + '/alarme/' +  
         dados.unit + '/' + dados.id), dados.data, {
           headers: {
-            'Authorization': JSON.parse(localStorage.getItem('token')) || '',
+            'Authorization': this.$cookies.get('token') || '',
           }}
       )
     //   .then(response => {
