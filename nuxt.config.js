@@ -34,7 +34,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{src: '~/plugins/main.js', mode: 'client'}],
+  plugins: [{src: '~/plugins/main.js.server.js'}],
   /*
    ** Nuxt.js modules
    */
