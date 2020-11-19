@@ -2,10 +2,9 @@
   <section id="header">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-5 position">
+        <div class="col-5">
           <nuxt-link class="align-items-center py-2" to="/">
-            <img class="mb-3" src="../static/img/alarm.svg" alt="Logo" />
-            <span class="text-uppercase mb-0 ml-2">smart alarms</span>
+            <img class="sizing mt-1 mb-2" src="../static/img/headerIcon.png" alt="Logo" />
           </nuxt-link>
         </div>
         <div class="col-7 position" v-if="headerButtons == true">
@@ -108,6 +107,10 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/base.scss';
+
+.sizing {
+  width: 200px !important;
+}
 
 .btn-links {
   color: #ffffff;
