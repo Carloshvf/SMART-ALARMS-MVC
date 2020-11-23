@@ -395,8 +395,8 @@ export default {
         })
       } 
       // 
-       else if(this.textMedida == "" || this.textAlarme == "") {
-        this.$bvToast.toast('Por favor preencha os campos de medida e alarme.', {
+       else if(this.textAlarme == "") {
+        this.$bvToast.toast('Por favor preencha o campo de alarme.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,

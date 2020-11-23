@@ -80,3 +80,5 @@ typings/
 
 .arquitetura-td-build/
 node_modules
+
+node_modules/hammerjs/hammer.js

@@ -13,16 +13,20 @@
         <div class="col-4">
             <label class="mt-4">TIPO DE CONEXÃO PRINCIPAL</label>
             <select class="form-control" v-model="connectionType">
-                <option>OPC AE</option>
+                <option>OPC AE/DA</option>
                 <option>OPC DA</option>
             </select>
         </div>
       </div>
       
       <div class="row">
-          <div class="col-3">
+          <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
             <input class="form-control" v-model="eventType">
+          </div>
+          <div class="col-1">
+            <label class="mt-4">CONTADOR</label>
+            <input class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
@@ -42,11 +46,13 @@
             <thead>
             <tr>
                 <th scope="col">TIPOS DE EVENTO</th> 
+                <th scope="col">CONTADOR</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="item in eventUnit" :key="item.id">
-                <td>{{item}}</td>
+                <td>{{item.tipo}}</td>
+                <td>{{item.contador}}</td>
             </tr>
             </tbody>
           </table>
@@ -130,6 +136,7 @@ export default {
         systems: [],
         unitData: [],
         unitEditing: [],
+        contUnit: "",
         subUnit: "",
         subModel: "",
         id: this.$route.params.id
@@ -184,7 +191,7 @@ export default {
     ...mapActions(['gettingEdits', 'updateUnit']),
 
     pushEvent() {
-      this.eventUnit.push(this.eventType)
+      this.eventUnit.push({tipo: this.eventType, contador: this.contUnit})
     },
 
     pushSystem() {
@@ -216,8 +223,8 @@ export default {
       })
 
       await this.updateUnit({ id:this.id, data:this.unitEditing[0]})
-       this.$bvToast.toast('Perfil editado com sucesso', {
-          title: `Edit`,
+       this.$bvToast.toast('Unidade editada com sucesso', {
+          title: `Edição`,
           toaster: toaster,
           solid: true,
         })

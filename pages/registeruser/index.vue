@@ -219,7 +219,7 @@ extends: VueTypeahead,
                 })
             } else {
                 this.$bvToast.toast('Perfil Editado com sucesso', {
-                    title: `Edit`,
+                    title: `Edição`,
                     toaster: toaster,
                     solid: true
                 })

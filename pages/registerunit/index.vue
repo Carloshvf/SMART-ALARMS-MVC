@@ -13,16 +13,20 @@
         <div class="col-4">
             <label class="mt-4">TIPO DE CONEXÃO PRINCIPAL</label>
             <select class="form-control" v-model="connectionType">
-                <option>OPC AE</option>
+                <option>OPC AE/DA</option>
                 <option>OPC DA</option>
             </select>
         </div>
       </div>
       
       <div class="row">
-          <div class="col-3">
+          <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
             <input class="form-control" v-model="eventUnit">
+          </div>
+          <div class="col-1">
+            <label class="mt-4">CONTADOR</label>
+            <input class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
@@ -41,12 +45,14 @@
           <table class="table mt-4">
             <thead>
             <tr>
-                <th scope="col">TIPOS DE EVENTO</th> 
+                <th scope="col">TIPOS DE EVENTO</th>
+                <th scope="col">CONTADOR</th> 
             </tr>
             </thead>
             <tbody>
             <tr v-for="item in eventType" :key="item.id">
-                <td>{{item}}</td>
+                <td>{{item.tipo}}</td>
+                <td>{{item.contador}}</td>
             </tr>
             </tbody>
           </table>
@@ -109,7 +115,7 @@
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save" @click="saveUnit()">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="saveUnit('b-toaster-bottom-right')">Salvar</b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
@@ -131,6 +137,7 @@ export default {
       connectionType: "",
       eventUnit: "",
       systemUnit: "",
+      contUnit: "",
       subUnit: "",
       subModel: "",
       eventType: [],
@@ -148,7 +155,7 @@ export default {
     ...mapActions(['registerUnit']),
 
     pushEvent() {
-      this.eventType.push(this.eventUnit)
+      this.eventType.push({tipo: this.eventUnit, contador: this.contUnit})
     },
 
     pushSystem() {
@@ -168,7 +175,7 @@ export default {
       
     },
 
-    async saveUnit() {
+    async saveUnit(toaster) {
       this.unitData.splice(0)
 
       this.unitData.push({
@@ -178,8 +185,12 @@ export default {
         sistemas: this.systems,
         sub_area: this.sub
       })
-
       await this.registerUnit(this.unitData[0])
+      this.$bvToast.toast('Unidade cadastrada com sucesso', {
+          title: `Cadastro`,
+          toaster: toaster,
+          solid: true,
+        })
     }
 
   },
