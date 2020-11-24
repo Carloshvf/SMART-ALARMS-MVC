@@ -86,12 +86,19 @@
             <label class="sizing">ENDEREÇO DE ALARME</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
+          <div class="col-1">
+            <label class="sizing">LOGICO</label>
+            <select class="form-control" v-model="operaLogic">
+              <option>></option>
+              <option>OU</option>
+              <option>==</option>
+              <option>)</option>
+              <option>)</option>
+            </select>
+          </div> 
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control" v-model="activation1">
-              <option>1</option>
-              <option>0</option>
-            </select>
+            <input maxlength="20" minlength="3" type="number" class="form-control" v-model="activation1">
           </div>
           <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
@@ -347,6 +354,7 @@ export default {
       loadEdit: false,
       disabling: false,
       operators: "E",
+      operaLogic: "==",
       activation2: "1",
       activation3: "",
       unit2: "",
@@ -554,8 +562,8 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        this.pushed.push(this.textAlarme, "-", this.activation1) 
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2})
+        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1) 
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
         // console.log(this.endAtivacao)
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
@@ -789,6 +797,10 @@ export default {
   h1 {
     font-size: 34px;
   }
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .border-line {
