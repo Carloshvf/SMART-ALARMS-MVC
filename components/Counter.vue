@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import main from '~/plugins/main.server'
+import main from '~/plugins/main'
 import { mapActions, mapState } from 'vuex'
 
 export default {
