@@ -42,7 +42,7 @@
 import Graph from '~/components/Graph.vue'
 import Counter from '~/components/Counter.vue'
 
-import main from '~/plugins/main'
+import main from '~/plugins/main.client'
 import { mapActions, mapState } from 'vuex'
 
 export default {
