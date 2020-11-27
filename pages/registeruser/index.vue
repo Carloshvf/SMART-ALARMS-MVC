@@ -152,7 +152,7 @@ extends: VueTypeahead,
                 this.modal3 = this.modalOption1.perfil
                 this.modal4 = this.modalOption1.unidade
                 this.$bvModal.show(id)
-            }, 400);
+            }, 1000);
             
         },
 
