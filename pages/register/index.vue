@@ -10,18 +10,9 @@
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
         <select class="form-control" v-model="local">
-          <option>UG 11</option>
-          <option>UG 12</option>
-          <option>UG 18</option>
-          <option>UG 21</option>
-          <option>UG 22</option>
-          <option>UG 28</option>
-          <option>UG 31</option>
-          <option>UG 32</option>
-          <option>UG 38</option>
-          <option>CAV1</option>
-          <option>CAV2</option>
-          <option>CAV3</option>
+          <option v-for="item in selectFilters.local" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
@@ -29,14 +20,15 @@
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
       </div>
     </div>
-    <!-- Mexer nos hover -->
+  
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
         <select class="form-control" v-model="offType">
-          <option>PLS</option>
-          <option>PLST</option>
-          <option>TRIP</option>
+          <option v-for="item in selectFilters.tipo_desligamento" :key="item.id">
+            {{item}}
+          </option>
+          
         </select>
       </div>
       <div class="col-10">
@@ -46,12 +38,20 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-row align-items-end">
-          <div class="col-4">
+          <div class="col-6">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
+          <div class="col-4">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect1">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>  
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
@@ -59,9 +59,9 @@
           
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <div class="form-row align-items-end">
-          <div class="col-2">
+          <div class="col-1">
             <label class="sizing">OPERADORES</label>
             <select class="form-control" v-model="operators">
               <option>E</option>
@@ -73,18 +73,34 @@
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
+          <!-- SUBAREA -->
+          <div class="col-2">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect2">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>  
+          <!--  -->
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
+          <div class="col-1">
+            <label class="sizing">LOGICO</label>
+            <select class="form-control" v-model="operaLogic">
+              <option v-for="item in selectFilters.operadores" :key="item.id">
+                {{item}}
+              </option>
+              
+            </select>
+          </div> 
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control" v-model="activation1">
-              <option>1</option>
-              <option>0</option>
-            </select>
+            <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
-          <div class="ml-3">
+          <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
           </div>
         </div>
@@ -133,6 +149,14 @@
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
+          </div>  
+          <div class="col-2">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect3">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
           </div>  
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
@@ -211,6 +235,14 @@
               </select>
             </div>
           </div>
+          <div class="col-3">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subSelect4">
+              <option v-for="item in selectFilters.sub_area" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>  
           <div class="ml-4">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
@@ -310,9 +342,14 @@ export default {
       offType: "PLS",
       reason: "",
       operators: "E",
+      operaLogic: "==",
+      subSelect1: "",
+      subSelect2: "",
+      subSelect3: "",
+      subSelect4: "",
       textMedida: "",
       textAlarme:"",
-      activation1: "1",
+      activation1: "",
       activation2: "1",
       activation3: "",
       unit1: "",
@@ -335,8 +372,19 @@ export default {
     } 
   },
 
+  computed: {
+    unitId() {
+      return this.$cookies.get('unit') || '';
+    },
+
+    selectFilters() {
+      return this.$store.state.getAlarm
+    }
+
+  },
+
   methods: {
-    ...mapActions(['sendAlarms', 'sendLogic', 'updateData']),
+    ...mapActions(['sendAlarms', 'sendLogic', 'updateData', 'loadRegister']),
 
     sendOperator() {
       this.pushed.push(this.operators)
@@ -357,8 +405,8 @@ export default {
         })
       } 
       // 
-       else if(this.textMedida == "" || this.textAlarme == "") {
-        this.$bvToast.toast('Por favor preencha os campos de medida e alarme.', {
+       else if(this.textAlarme == "") {
+        this.$bvToast.toast('Por favor preencha o campo de alarme.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
@@ -368,8 +416,8 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        this.pushed.push(this.textAlarme, "-", this.activation1)
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
+        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
         this.logic = this.separador
@@ -385,13 +433,13 @@ export default {
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subSelect3 })
       
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3, sub_area: this.subSelect4 })
       this.unit3 = ""
       this.activation3 = ""
       
@@ -471,10 +519,12 @@ export default {
         ends_alarme: this.endAtivacao,
         canais: this.end,
         status_medidas: this.measures,
-        recomendacoes: this.recom
+        recomendacoes: this.recom,
+        sub_area: this.subSelect1,
        })
+       
       
-      await this.sendAlarms({info: this.allData[0]})
+      await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
       if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
@@ -511,6 +561,10 @@ export default {
     },
 
   },
+
+  created() {
+    this.loadRegister(this.unitId || '')
+  }
   
   
 }
@@ -525,6 +579,10 @@ export default {
     font-size: 34px;
   }
 
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .border-line {

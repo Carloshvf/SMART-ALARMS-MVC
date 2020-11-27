@@ -175,6 +175,10 @@ export default {
       return this.$store.state.all
     },
 
+    unitId() {
+      return this.$cookies.get('unit') || '';
+    },
+
     currentRouteName() {
         return this.$route.name;
     }
@@ -183,7 +187,7 @@ export default {
   created() {
       this.stopInterval = setInterval(() => {
         if (this.stop == true) {
-          this.loadData()
+          this.loadData(this.$cookies.get('unit') || '')
           this.arrSize.splice(0)
 
           for (let index = 0; index < this.lists.length; index++) {

@@ -2,10 +2,10 @@ export default {
 
   env: {
     //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
-    baseURL: process.env.baseURL || 'https://smartalarms-backend.petrobras.com.br'
+    baseURL: process.env.baseURL || 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000'
   },
 
-  mode: 'universal',
+  mode: 'spa',
   /*
    ** Headers of the page
    */
@@ -41,6 +41,7 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
+    'cookie-universal-nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa'

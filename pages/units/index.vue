@@ -9,13 +9,13 @@
         <div class="col-4" v-for="item in unitDetail" :key="item.id">
           <div class="card mt-4">
             <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)"/>
+              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)" v-if="item.edicao == true"/>
               <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
-                class="btn ml-5">
+                class="btn ml-5" v-if="item.edicao == true">
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
               </nuxt-link>
-              <nuxt-link to="/activealarm">
+              <nuxt-link to="/activealarm" @click.native="sendId(item.id)">
                 <h1 class="unit-select">{{item.unidade}}</h1>
               </nuxt-link>
             </div>
@@ -26,7 +26,8 @@
       </div>
       <div class="row">
         <div class="col">
-          <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4">+</nuxt-link>
+          <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4" v-if="unitPermission == true">+</nuxt-link>
+          <nuxt-link to="/registeruser" class="btn btn-grey add mt-4 mr-3" v-if="profileReg == true">Cadastrar Perfis</nuxt-link>
         </div>
       </div>
   </div>
@@ -47,22 +48,39 @@ export default {
 
   computed: {
     unitDetail() {
-      return this.$store.state.getUnit
+      return this.$store.state.getUnit.unidades
+    },
+
+    unitPermission() {
+      return this.$store.state.getUnit.cadastro
+    },
+
+    profileReg() {
+      return this.$store.state.getUnit.cadastrar_perfis
     }
   },
 
   methods: {
-    ...mapActions(['gettingUnits']),
+    ...mapActions(['gettingUnits', 'headerGet']),
 
     async deleteUnit(id) {
       await this.$axios
       .delete(
         HOST_API + '/unidades/' +
-          id
+          id, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
       )
       .then(() => {
         this.gettingUnits()
       })
+    },
+
+    sendId(id) {
+      this.$cookies.remove('unit')
+      this.$cookies.set('unit', JSON.stringify(id))
+      this.headerGet(this.$cookies.get('unit') || '')
     }
 
   },
@@ -88,6 +106,11 @@ export default {
   position: absolute;
   left: 290px;
   bottom: 85.35%;
+}
+
+.btn-grey {
+  color: white;
+  background-color: $light-purple;
 }
 
 .editing {

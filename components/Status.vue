@@ -109,7 +109,11 @@ export default {
   computed: {
     currentRouteName() {
         return this.$route.name;
-    }
+    },
+
+    unitId() {
+      return this.$cookies.get('unit') || '';
+    },
    
   },
 
@@ -141,7 +145,7 @@ export default {
       if (this.currentRouteName == 'alarm') {
         this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(this.unitId || '')
           if (this.currentRouteName != 'alarm') {
             this.stopRerun = false 
           }
@@ -154,7 +158,7 @@ export default {
       else if (this.currentRouteName == 'detail-id') {
         this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(this.unitId || '')
           if (this.currentRouteName != 'detail-id') {
             this.stopRerun = false 
           }

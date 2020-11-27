@@ -13,16 +13,20 @@
         <div class="col-4">
             <label class="mt-4">TIPO DE CONEXÃO PRINCIPAL</label>
             <select class="form-control" v-model="connectionType">
-                <option>OPC AE</option>
+                <option>OPC AE/DA</option>
                 <option>OPC DA</option>
             </select>
         </div>
       </div>
       
       <div class="row">
-          <div class="col-3">
+          <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
             <input class="form-control" v-model="eventType">
+          </div>
+          <div class="col-1">
+            <label class="mt-4">CONTADOR</label>
+            <input class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
@@ -42,11 +46,13 @@
             <thead>
             <tr>
                 <th scope="col">TIPOS DE EVENTO</th> 
+                <th scope="col">CONTADOR</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="item in eventUnit" :key="item.id">
-                <td>{{item}}</td>
+                <td>{{item.tipo}}</td>
+                <td>{{item.contador}}</td>
             </tr>
             </tbody>
           </table>
@@ -67,10 +73,49 @@
           </table>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-3">
+          <label class="mt-3 mb-0">SUBAREA:</label>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-3">
+          <label class="mt-4">NOME</label>
+          <input class="form-control" v-model="subUnit">
+        </div>
+        <div class="col-3">
+          <label class="mt-4">MODELO</label>
+          <input class="form-control" v-model="subModel">
+        </div>
+        <div class="col-3">
+            <b-button class="btn btn-green btn-add" @click="pushSub('b-toaster-bottom-right')">Adicionar</b-button>
+        </div>
+      </div>
+
+      <div class="row">
+           <div class="col-6 scroll" >
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">NOME</th>
+                <th scope="col">MODELO</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in subInfo" :key="item.id">
+                <td>{{item.nome}}</td>
+                <td>{{item.modelo}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save" @click="editUnit()">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="editUnit('b-toaster-bottom-right')">Salvar</b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
@@ -91,6 +136,9 @@ export default {
         systems: [],
         unitData: [],
         unitEditing: [],
+        contUnit: "",
+        subUnit: "",
+        subModel: "",
         id: this.$route.params.id
     }
   },
@@ -128,6 +176,14 @@ export default {
         this.$store.commit('setSystemUnit', value)
       }
     },
+    subInfo: {
+      get () {
+        return this.$store.state.getEdit.sub_area
+      },
+      set (value) {
+        this.$store.commit('setSub', value)
+      }
+    },
 
   },
 
@@ -135,24 +191,43 @@ export default {
     ...mapActions(['gettingEdits', 'updateUnit']),
 
     pushEvent() {
-      this.eventUnit.push(this.eventType)
+      this.eventUnit.push({tipo: this.eventType, contador: this.contUnit})
     },
 
     pushSystem() {
       this.systemUnit.push(this.systems)
     },
 
-    async editUnit() {
+    pushSub(toaster) {
+      if (this.subUnit != "" && this.subModel != "") {
+        this.subInfo.push({nome: this.subUnit, modelo: this.subModel})
+      } else {
+        this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
+          title: `Erro`,
+          toaster: toaster,
+          solid: true,
+        })
+      }
+      
+    },
+
+    async editUnit(toaster) {
       this.unitEditing.splice(0)
 
       this.unitEditing.push({
         unidade: this.unitName,
         tipo_conexao: this.connectionType,
         tipo_evento: this.eventUnit,
-        sistemas: this.systemUnit
+        sistemas: this.systemUnit,
+        sub_area: this.subInfo,
       })
 
       await this.updateUnit({ id:this.id, data:this.unitEditing[0]})
+       this.$bvToast.toast('Unidade editada com sucesso', {
+          title: `Edição`,
+          toaster: toaster,
+          solid: true,
+        })
     }
 
   },

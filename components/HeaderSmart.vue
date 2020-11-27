@@ -2,23 +2,22 @@
   <section id="header">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-7 position">
+        <div class="col-5">
           <nuxt-link class="align-items-center py-2" to="/">
-            <img class="mb-3" src="../static/img/alarm.svg" alt="Logo" />
-            <span class="text-uppercase mb-0 ml-2">smart alarms</span>
+            <img class="sizing mt-1 mb-2" src="../static/img/headerIcon.png" alt="Logo" />
           </nuxt-link>
         </div>
-        <div class="col-5 position" v-if="headerButtons == true">
+        <div class="col-7 position" v-if="headerButtons == true">
           <nuxt-link to="/activealarm" class="btn mt-2 mr-4">
             <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" /> 
           </nuxt-link>
           <nuxt-link to="/alarm" class="btn mt-2 mr-4"> 
             <img class="icons" v-b-tooltip.hover title="Alarmes ativos" src="../static/img/avalanche.svg" alt="Aval" /> 
           </nuxt-link>
-          <nuxt-link to="/registered" class="btn mt-2 mr-4"> 
+          <nuxt-link to="/registered" class="btn mt-2 mr-4" v-if="permButtons.alarmes_cadastrados == true"> 
             <img class="icons" v-b-tooltip.hover title="Alarmes cadastrados" src="../static/img/edit.svg" alt="Editalt" /> 
           </nuxt-link>
-          <nuxt-link to="/suggestion" class="btn mt-2 mr-4"> 
+          <nuxt-link to="/suggestion" class="btn mt-2 mr-4" v-if="permButtons.sugestoes == true"> 
             <img class="icons" v-b-tooltip.hover title="Sugestões" src="../static/img/article.svg" alt="Sug" /> 
           </nuxt-link>
           <nuxt-link to="/units" class="btn mt-2 mr-4"> 
@@ -27,10 +26,10 @@
           <b-dropdown class="mt-2 mb-2" :text="user" v-if="user != ''">
             <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>
           </b-dropdown>
-          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3">Cadastrar Perfis</nuxt-link>
-          <!-- <b-button class="drop mt-2 mb-2 ml-3" v-if="user != ''">{{user}}</b-button> -->
-          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3">
-          Cadastrar Alarmes
+          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_perfis == true">Cadastrar Perfis</nuxt-link>
+
+          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_alarmes == true">
+            Cadastrar Alarmes
           </nuxt-link>
          
         </div>
@@ -66,20 +65,24 @@ export default {
     currentRouteName() {
         return this.$route.name;
     },
+
+    permButtons() {
+      return this.$store.state.getHeader
+    }
   },
 
   methods: {
-    ...mapActions(['logOff']),
+    ...mapActions(['logOff', 'headerGet']),
 
     userKey() {
-      this.user = JSON.parse(localStorage.getItem('name')) || '';
+      this.user = this.$cookies.get('name') || '';
     },
 
     async logout() {
-      this.auth = JSON.parse(localStorage.getItem('token')) || '';
+      this.auth = this.$cookies.get('token') || '';
       await this.logOff({Authorization: this.auth})
 
-      localStorage.clear();
+      this.$cookies.removeAll();
       this.headerButtons = false
       this.$router.push('/')
     }
@@ -88,10 +91,12 @@ export default {
 
   mounted() {
     this.userKey()
-    // this.headerId = localStorage.getItem('token')
+  
     setInterval(() => {
       if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {
         this.headerButtons = true
+      } else if(this.currentRouteName == 'units') {
+        this.headerButtons = false
       }
     }, 3000);
     
@@ -102,6 +107,10 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/base.scss';
+
+.sizing {
+  width: 200px !important;
+}
 
 .btn-links {
   color: #ffffff;

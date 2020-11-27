@@ -107,7 +107,11 @@ export default {
   computed: {
     currentRouteName() {
         return this.$route.name;
-    }
+    },
+
+    unitId() {
+      return this.$cookies.get('unit') || '';
+    },
    
   },
 
@@ -135,7 +139,7 @@ export default {
       this.stopRerun = true
       this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(this.unitId || '')
           if (this.currentRouteName != 'detail-id') {
             this.stopRerun = false 
           }

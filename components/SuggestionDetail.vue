@@ -93,11 +93,11 @@
                         <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer1">
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar" @click="sendChoice(tipo1, accept, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise'">
+                         <b-button class="btn-enviar" @click="sendChoice(tipo1, accept, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true">
                             <img src="../static/img/aceitar.svg" alt="accept"/>
                             Aceitar
                         </b-button>
-                         <b-button class="btn-cancel" @click="sendChoice(tipo1, refuse, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise'">
+                         <b-button class="btn-cancel" @click="sendChoice(tipo1, refuse, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true">
                             <img src="../static/img/cancelar.svg" alt="cancel"/>
                             Recusar
                         </b-button>
@@ -128,11 +128,11 @@
                         <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer2">
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar" @click="sendChoice(tipo2, accept, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise'">
+                         <b-button class="btn-enviar" @click="sendChoice(tipo2, accept, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true">
                             <img src="../static/img/aceitar.svg" alt="accept"/>
                             Aceitar
                         </b-button>
-                         <b-button class="btn-cancel" @click="sendChoice(tipo2, refuse, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise'">
+                         <b-button class="btn-cancel" @click="sendChoice(tipo2, refuse, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true">
                             <img src="../static/img/cancelar.svg" alt="cancel"/>
                             Recusar
                         </b-button>
@@ -163,11 +163,11 @@
                         <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer3">
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar" @click="sendChoice(tipo3, implement, answer3)" v-if="tab.executor[0].status == 'Em análise'">
+                         <b-button class="btn-enviar" @click="sendChoice(tipo3, implement, answer3)" v-if="tab.executor[0].status == 'Em análise' && tab.executor[0].botao == true">
                             <img src="../static/img/aceitar.svg" alt="Implement"/>
                             Implementar
                         </b-button>
-                         <b-button class="btn-cancel" @click="cancelConsulta()" v-if="tab.executor[0].status == 'Em análise'">
+                         <b-button class="btn-cancel" @click="cancelConsulta()" v-if="tab.executor[0].status == 'Em análise' && tab.executor[0].botao == true">
                             <img src="../static/img/cancelar.svg" @click="cancelConsulta()" alt="cancel"/>
                             Cancelar
                         </b-button>
@@ -287,7 +287,7 @@
 import { mapActions } from 'vuex';
 
 export default {
-    props: ['tab', 'tab_modal'],
+    props: ['tab', 'tab_modal', 'unit'],
 
     data() {
         return {
@@ -350,7 +350,7 @@ export default {
 
         showModal(value) {
             this.modalEdit = value
-            this.editingSuggestions(this.modal_id)
+            this.editingSuggestions({unit: this.unit, id:this.modal_id})
             setTimeout(() => {
                 this.filteredOptions()    
             }, 500);
@@ -373,8 +373,8 @@ export default {
                 nome:"Diego",
                 chave:"QRST"
             })
-            await this.postSuggestions({id: this.tab_modal, info: this.allData[0]})
-            this.loadSuggestions()
+            await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]})
+            this.loadSuggestions(this.unit)
             // this.sugResponse = this.$store.state.suggestChoice
         },
 
@@ -388,8 +388,8 @@ export default {
             lista_ugs: this.lists,
         })
         // console.log(this.editSug.lista_ugs)
-        await this.editSuggestions({id: this.tab_modal, info: this.allEdit[0]})
-        this.loadSuggestions()
+        await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]})
+        this.loadSuggestions(this.unit)
     }
     },
 

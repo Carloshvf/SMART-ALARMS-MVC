@@ -10,18 +10,9 @@
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
         <select class="form-control" v-model="local">
-          <option>UG 11</option>
-          <option>UG 12</option>
-          <option>UG 18</option>
-          <option>UG 21</option>
-          <option>UG 22</option>
-          <option>UG 28</option>
-          <option>UG 31</option>
-          <option>UG 32</option>
-          <option>UG 38</option>
-          <option>CAV1</option>
-          <option>CAV2</option>
-          <option>CAV3</option>
+          <option v-for="item in selectFilters.local_banco" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
@@ -29,14 +20,14 @@
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
       </div>
     </div>
-    <!-- Mexer nos hover -->
+
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
         <select class="form-control" v-model="offType">
-          <option>PLS</option>
-          <option>PLST</option>
-          <option>TRIP</option>
+          <option v-for="item in selectFilters.tipo_desligamento_banco" :key="item.id">
+            {{item}}
+          </option>
         </select>
       </div>
       <div class="col-10">
@@ -46,12 +37,20 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-row align-items-end">
-          <div class="col-4">
+          <div class="col-6">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
+          <div class="col-4">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subArea1">
+              <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div> 
           <div class="col-2">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
@@ -59,9 +58,9 @@
           
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <div class="form-row align-items-end">
-          <div class="col-2">
+          <div class="col-1">
             <label class="sizing">OPERADORES</label>
             <select class="form-control" v-model="operators">
               <option>E</option>
@@ -73,18 +72,33 @@
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
+          <!-- SUBAREA -->
+          <div class="col-2">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subArea2">
+              <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>  
+          <!--  -->
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
             <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
+          <div class="col-1">
+            <label class="sizing">LOGICO</label>
+            <select class="form-control" v-model="operaLogic">
+              <option v-for="item in selectFilters.operadores" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div> 
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <select class="form-control" v-model="activation1">
-              <option>1</option>
-              <option>0</option>
-            </select>
+            <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
-          <div class="ml-3">
+          <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
           </div>
         </div>
@@ -134,6 +148,14 @@
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
           </div>  
+          <div class="col-3">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subArea3">
+              <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div>
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
@@ -210,6 +232,14 @@
                 <option>0</option>
               </select>
             </div>
+          </div>
+          <div class="col-3">
+            <label class="sizing">SUBAREA</label>
+            <select class="form-control" v-model="subArea4">
+              <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
+                {{item}}
+              </option>
+            </select>
           </div>
           <div class="ml-4">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
@@ -412,6 +442,14 @@ export default {
         this.$store.commit('setActivation1', value)
       }
     },
+    operaLogic: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].operador
+      },
+      set (value) {
+        this.$store.commit('setOperaLogic', value)
+      }
+    },
     logic: {
       get () {
         return this.$store.state.edit.logica
@@ -444,6 +482,45 @@ export default {
         this.$store.commit('setRecom', value)
       }
     },
+    subArea1: {
+      get () {
+        return this.$store.state.edit.sub_area
+      },
+      set (value) {
+        this.$store.commit('setSubArea1', value)
+      }
+    },
+    subArea2: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].sub_area
+      },
+      set (value) {
+        this.$store.commit('setSubArea2', value)
+      }
+    },
+    subArea3: {
+      get () {
+        return this.$store.state.edit.canais[0].sub_area
+      },
+      set (value) {
+        this.$store.commit('setSubArea3', value)
+      }
+    },
+    subArea4: {
+      get () {
+        return this.$store.state.edit.status_medidas[0].sub_area
+      },
+      set (value) {
+        this.$store.commit('setSubArea4', value)
+      }
+    },
+    
+    unitId() {
+      return this.$cookies.get('unit') || '';
+    },
+    selectFilters() {
+      return this.$store.state.edit
+    }
  
   },
 
@@ -491,9 +568,9 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        this.pushed.push(this.textAlarme, "-", this.activation1) 
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
-        console.log(this.endAtivacao)
+        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1) 
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
+        // console.log(this.endAtivacao)
         this.separador = this.pushed.join(' ')
         this.separador = this.separador.replace(/\s-\s/g, "-")
         this.pushed.splice(0)
@@ -512,13 +589,13 @@ export default {
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2 })
+      this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subArea3 })
       
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.statusAdd({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3 })
+      this.statusAdd({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3, sub_area: this.subArea4 })
       this.unit3 = ""
       this.activation3 = ""
       
@@ -619,11 +696,11 @@ export default {
         ends_alarme: this.endAtivacao,
         canais: this.canal,
         status_medidas: this.status,
-        recomendacoes: this.recomendacao
+        recomendacoes: this.recomendacao,
+        sub_area: this.subArea1,
        })
       
-      
-      await this.sendAlarms({info: this.allData[0]})
+      await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
       if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
@@ -675,10 +752,11 @@ export default {
         ends_alarme: this.endAtivacao,
         canais: this.canal,
         status_medidas: this.status,
-        recomendacoes: this.recomendacao
+        recomendacoes: this.recomendacao,
+        sub_area: this.subArea1,
        })
 
-      this.updateData({ id: this.id, data: this.allData[0]})
+      this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]})
 
       this.$bvToast.toast('Editado com sucesso.', {
           title: `Editar`,
@@ -696,17 +774,32 @@ export default {
   },
 
    created() {
+     // TODA VEZ Q TIVER CAMPO NOVO DA LOGICA ELE TEM Q ENTRAR AQUI PRA DAR CERTO NA LOGICA
       for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {
         this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme, 
-        ativacao: this.$store.state.edit.ends_alarme[index].ativacao})
+        ativacao: this.$store.state.edit.ends_alarme[index].ativacao, sub_area: this.$store.state.edit.ends_alarme[index].sub_area, 
+        operador: this.$store.state.edit.ends_alarme[index].operador})
         
       }
+      
        
   },
 
   async asyncData({ store, route }) {
     const { id } = route.params
-    const teste = await store.dispatch('loadCard', id)
+    // const unitId = this.$cookies.get('unit') || ''
+    const unitId = document.cookie.split("; ")
+    let cookieGet = null
+    for (let index = 0; index < unitId.length; index++) {
+      const tes = unitId[index].split('=')
+      for (let index = 0; index < tes.length; index++) {
+        if (tes[0] == 'unit') {
+          cookieGet = tes[1]
+        }
+        
+      }
+    }
+    const teste = await store.dispatch('loadCard',{unit: cookieGet, route: id})
 
     // console.log(teste)
 
@@ -724,6 +817,10 @@ export default {
   h1 {
     font-size: 34px;
   }
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .border-line {

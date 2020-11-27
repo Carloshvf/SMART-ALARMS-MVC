@@ -13,6 +13,7 @@ export const state = () => ({
   getUnit: [],
   getEdit: [],
   getProfile: [],
+  getProfileEdit: [],
   graph: [],
   authorizationId:"",
   userName: "",
@@ -25,6 +26,10 @@ export const state = () => ({
   unit: {},
   update: [],
   valid: '',
+  errSede: '',
+  errEditSede: '',
+  getAlarm: [],
+  getHeader: [],
   // 
   
 })
@@ -78,6 +83,21 @@ export const mutations = {
   setProfile(state, getProfile) {
     state.getProfile = getProfile
   },
+  setProfileEdit(state, getProfileEdit) {
+    state.getProfileEdit = getProfileEdit
+  },
+  setErrSede(state, errSede) {
+    state.errSede = errSede
+  },
+  setErrEditSede(state, errEditSede) {
+    state.errEditSede = errEditSede
+  },
+  setGetAlarm(state, getAlarm) {
+    state.getAlarm = getAlarm
+  },
+  setHeaderGet(state, getHeader) {
+    state.getHeader = getHeader
+  },
 
   // POPULANDO A PAGINA DE EDITAR UNIDADES
   setUnitName(state, unitName) {
@@ -92,7 +112,9 @@ export const mutations = {
   setSystemUnit(state, systemUnit) {
     state.getEdit.sistemas = systemUnit;
   },
-
+  setSub(state, SubUnit) {
+    state.getEdit.sub_area = SubUnit;
+  },
   // POPULANDO A PAGINA DE EDITAR ALARMES CADASTRADOS
   setLocal(state, local) {
     state.edit.local = local;
@@ -130,6 +152,21 @@ export const mutations = {
   setRecom(state, recomendacao) {
     state.edit.recomendacoes = recomendacao;
   },
+  setSubArea1(state, subArea1) {
+    state.edit.sub_area = subArea1;
+  },
+  setSubArea2(state, subArea2) {
+    state.edit.ends_alarme[0].sub_area = subArea2;
+  },
+  setSubArea3(state, subArea3) {
+    state.edit.canais[0].sub_area = subArea3;
+  },
+  setSubArea4(state, subArea4) {
+    state.edit.status_medidas[0].sub_area = subArea4;
+  },
+  setOperaLogic(state, OperaLogic) {
+    state.edit.ends_alarme[0].operador = OperaLogic;
+  },
   // Mutations para alterar os arrays na página de editar alarmes
   setNewRecom(state, recomendacao) {
     state.edit.recomendacoes.push({item: recomendacao})
@@ -149,30 +186,53 @@ export const mutations = {
   setCleanRecom(state, index) {
     state.edit.recomendacoes.splice(index, 1)
   },
+  
   // 
 }
 
 
 export const actions = {
 
-  async loadData(context) {
+  async loadData(context, dados) {
     let {
       data: { all }
     } = await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/alarmes-ativos'
+      HOST_API + '/alarmes-ativos/' + dados,  {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
 
     context.commit('setAll', all)
   },
 
-  //GET DA PÁGINA DE SUGESTÕES
-  async loadSuggestions(context) {
+  // GET DO HEADER DAS PAGINAS
+  async headerGet(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes'
+      HOST_API + '/header/' + dados, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
+    )
+    .then(response => {
+      this.getHeader = response.data
+    })
+
+    context.commit('setHeaderGet', this.getHeader)
+  },
+
+  //GET DA PÁGINA DE SUGESTÕES
+  async loadSuggestions(context, dados) {
+    await this.$axios.get(
+      HOST_API + '/sugestoes/' + dados, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }} 
     )
     .then(response => {
       this.suggest = response.data.sugestoes
+      // console.log(response.data)
     })
 
     context.commit('setSuggest', this.suggest)
@@ -181,8 +241,11 @@ export const actions = {
   // POST DE CONSULTA DE SUGESTÃO 
   async postSuggestions(context, dados) {
     await this.$axios.post(
-        HOST_API + '/sugestoes/' + dados.id,
-      dados.info
+        HOST_API + '/sugestoes/' + 
+        dados.unit + '/' + dados.id, dados.info, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }}
       )
     .then(response => {
       this.suggestChoice = response
@@ -192,9 +255,12 @@ export const actions = {
   },
 
   // GET DE CADASTRAR SUGESTÃO
-  async getRegister(context) {
+  async getRegister(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro'
+      HOST_API + '/sugestoes/cadastro/' + dados, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
     .then(response => {
       this.suggestRegister = response.data.filtro
@@ -206,8 +272,11 @@ export const actions = {
   // POST DE CADASTRAR SUGESTÃO
   async registerSuggestions(context, dados) {
     await this.$axios.post(
-        HOST_API + '/sugestoes/cadastro',
-      dados.info
+        HOST_API + '/sugestoes/cadastro/' + dados.unit,
+      dados.info, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
       )
     
   },
@@ -215,7 +284,11 @@ export const actions = {
   // GET DE EDITAR SUGESTÕES
   async editingSuggestions(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro/' + dados
+      HOST_API + '/sugestoes/cadastro/' + 
+      dados.unit + '/' + dados.id, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
     .then(response => {
       this.getSuggest = response.data
@@ -227,8 +300,11 @@ export const actions = {
   // PUT DE EDITAR SUGESTÃO
   async editSuggestions(context, dados) {
     await this.$axios.put(
-        HOST_API + '/sugestoes/cadastro/' + dados.id,
-      dados.info
+        HOST_API + '/sugestoes/cadastro/' + 
+        dados.unit + '/' + dados.id, dados.info, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }}
       )
 
   },
@@ -236,10 +312,13 @@ export const actions = {
   // GET DA PÁGINA DE SELEÇÃO DE UNIDADES
   async gettingUnits(context) {
     await this.$axios.get(
-      HOST_API + '/unidades'
+      HOST_API + '/unidades', {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
     .then(response => {
-      this.getUnit = response.data.unidades
+      this.getUnit = response.data
     })
    
     context.commit('setUnit', this.getUnit)
@@ -248,7 +327,10 @@ export const actions = {
   // GET DA PÁGINA DE EDIÇÃO DE UNIDADES
   async gettingEdits(context, id) {
     await this.$axios.get(
-      HOST_API + '/unidades/' + id
+      HOST_API + '/unidades/' + id, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
     .then(response => {
       this.getEdit = response.data
@@ -262,7 +344,10 @@ export const actions = {
     await this.$axios
       .put(
         (HOST_API + '/unidades/' +
-          dados.id), dados.data
+          dados.id), dados.data, {
+            headers: {
+              'Authorization': this.$cookies.get('token') || '',
+            }}
       )
 
   },
@@ -271,7 +356,10 @@ export const actions = {
   async registerUnit(context, dados) {
     await this.$axios.post(
         HOST_API + '/unidades',
-      dados
+      dados, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
       )
     
   },
@@ -287,8 +375,8 @@ export const actions = {
       this.authorizationId = response.headers.authorization
       this.userName = response.data.nome
       if (response.status == 200) {
-        localStorage.setItem('token', JSON.stringify(this.authorizationId));
-        localStorage.setItem('name', JSON.stringify(this.userName));
+        this.$cookies.set('token', JSON.stringify(this.authorizationId))
+        this.$cookies.set('name', JSON.stringify(this.userName))
       }
     })
     .catch(error => {
@@ -310,7 +398,10 @@ export const actions = {
   //GET DA PÁGINA DE CADASTRAR PERFIS
   async gettingProfile(context, id) {
     await this.$axios.get(
-      HOST_API + '/perfis'
+      HOST_API + '/perfis', {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
     .then(response => {
       this.getProfile = response.data
@@ -321,21 +412,83 @@ export const actions = {
 
   // POST DA PÁGINA DE PERFIS
   async postProfile(context, dados) {
+    this.errSede = ""
     await this.$axios.post(
-      HOST_API + '/perfis', dados.info
+      HOST_API + '/perfis', dados.info, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
+    .catch(error => {
+      
+      this.errSede = error.response.data.erro
+    })
+
+    context.commit('setErrSede', this.errSede)
     
+  },
+
+  // GET DO MODAL DA PÁGINA DE PERFIS
+  async gettingProfileEdit(context, id) {
+    await this.$axios.get(
+      HOST_API + '/perfis/' + id, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
+    )
+    .then(response => {
+      this.getProfileEdit = response.data
+    })
+    
+    context.commit('setProfileEdit', this.getProfileEdit)
+  },
+
+  // PUT DA PÁGINA DE PERFIS
+  async editProfile(context, dados) {
+    this.errEditSede = ""
+    await this.$axios.put(
+      HOST_API + '/perfis/' + dados.id,
+      dados.info, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
+    )
+    .catch(error => {
+      this.errEditSede = error.response.data.erro
+    })
+
+    context.commit('setErrEditSede', this.errEditSede)
+
   },
 
   // 
   // 
   // 
+
+  async loadRegister(context, dados) {
+    await this.$axios.get(
+      //CONCATENANDO O HOST COM A RODA
+      HOST_API + '/alarme/' +
+        dados, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }}
+    )
+    .then(response => {
+      this.getAlarm = response.data.filtro_alarmes
+    })
+
+    context.commit('setGetAlarm', this.getAlarm)
+  },
   
-  async sendAlarms(context, { info }) {
+  async sendAlarms(context, dados ) {
     await this.$axios.post(
       //CONCATENANDO O HOST COM A RODA
-        HOST_API + '/alarme',
-      info
+        HOST_API + '/alarme/' + dados.unit,
+      dados.info, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
     // .then(response => {
     //   this.salvarAlarm = response.data.erro
@@ -357,16 +510,18 @@ export const actions = {
     context.commit('setLogic', this.validating)
   },
 
-  async loadRegistered(context, { local, tipo_desligamento }) {
+  async loadRegistered(context, {unit}) {
     await this.$axios
       .get(
-        HOST_API + '/alarme/' +
-          local +
-          '/' +
-          tipo_desligamento
+        HOST_API + '/cadastrado/' + unit, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }}
+        
       )
       .then(response => {
-        this.cardAlarm = response.data.todos
+        this.cardAlarm = response.data
+        // console.log(response.data)
       })
 
     context.commit('setCard', this.cardAlarm)
@@ -380,10 +535,14 @@ export const actions = {
     )
   },
 
-  async loadCard(context, id) {
+  async loadCard(context, dados) {
     return this.$axios
       .get(
-        HOST_API + '/cadastrado/' + id
+        HOST_API + '/cadastrado/' + 
+        dados.unit + '/' + dados.route, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }}
       )
       .then(response => {
         context.commit('loadInfo', response.data.todos[0])
@@ -395,8 +554,11 @@ export const actions = {
   async updateData(context, dados) {
     await this.$axios
       .put(
-        (HOST_API + '/alarme/' +
-          dados.id), dados.data
+        (HOST_API + '/alarme/' +  
+        dados.unit + '/' + dados.id), dados.data, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }}
       )
     //   .then(response => {
     //     this.update = response

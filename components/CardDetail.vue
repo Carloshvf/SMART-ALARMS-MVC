@@ -121,6 +121,10 @@ export default {
     lists() {
       return this.$store.state.all
     },
+
+    unitId() {
+      return this.$cookies.get('unit') || '';
+    },
    
   },
   methods: {
@@ -169,7 +173,7 @@ export default {
       this.stopRerun = true
       this.rerun = setInterval(() => {
         if (this.stopRerun == true) {
-          this.loadData()
+          this.loadData(this.unitId || '')
           if (this.currentRouteName != 'alarm') {
             this.stopRerun = false 
           }

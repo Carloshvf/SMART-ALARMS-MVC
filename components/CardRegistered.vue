@@ -43,7 +43,7 @@ export default {
             this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa})
             // await this.deleteRegistered(this.deletionAlarms[0])
             
-            console.log(this.ind)
+            // console.log(this.ind)
             this.alarm.splice(ind, 1)
             
             // this.delMessage = this.$store.state.deleteAlarm

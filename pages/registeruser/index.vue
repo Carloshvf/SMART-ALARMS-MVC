@@ -8,7 +8,7 @@
                 <label class="label-search">BUSCAR</label>
             </div>
             <div class="col-4 mt-5">
-                <input class="form-control search-input">
+                <input class="form-control search-input" v-model="search">
             </div>
         </div>
         <div class="row mt-4">
@@ -37,7 +37,7 @@
                 </select>
             </div>
             <div class="col-3">
-                <b-button class="btn btn-green btn-save" @click="saveUser()">Salvar</b-button>
+                <b-button class="btn btn-green btn-save" @click="saveUser('b-toaster-bottom-right')">Salvar</b-button>
             </div>
         </div>
         <div class="row mt-5">
@@ -53,73 +53,187 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in profileUser" :key="item.id">
+                    <tr v-for="item in computed_filter" :key="item.id">
                         <td>{{item.nome}}</td>
                         <td>{{item.chave}}</td>
                         <td>{{item.perfil}}</td>
                         <td>{{item.unidade}}</td>
                         <td>
-                            <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
+                            <img class="editing" src="../../static/img/editSelect.svg" alt="edit" @click="showModal(item.id.toString())"/>
                         </td>
                         <td>
-                            <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUser(item.id)"/>
+                            <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUser(item.id, 'b-toaster-bottom-right')"/>
                         </td>
+                         <!-- MODAL -->
+                        <b-modal size="lg" :id="item.id.toString()">
+                            <template v-slot:modal-title>
+                                <h1 class="modal-title">Edição de usuário</h1>
+                            </template>
+                            <template >
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="labels">NOME</label>
+                                        <input class="form-control" placeholder="Nome do usuário" v-model="modal1">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <label class="labels mt-4">CHAVE</label>
+                                        <input class="form-control" v-model="modal2" :disabled="true">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="labels mt-4">PERFIL</label>
+                                        <select class="form-control" v-model="modal3">
+                                            <option v-for="item in modalOption2" :key="item.id">
+                                                {{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="labels mt-4">UNIDADE</label>
+                                        <select class="form-control" v-model="modal4">
+                                            <option v-for="item in modalOption3" :key="item.id">
+                                                {{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-slot:modal-footer>
+                                <b-button class="btn-cancel" @click="cancelEdit(item.id.toString())">
+                                    Cancelar
+                                </b-button>
+                                <b-button class="btn-enviar" @click="editing(item.id.toString(),'b-toaster-bottom-right')">
+                                    Salvar
+                                </b-button>
+                            </template>
+                        </b-modal>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- MODAL -->
-        <!-- <b-modal size="xl" :id="modal_id">
-
-        </b-modal> -->
+       
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import VueTypeahead from 'vue-typeahead'
 export const HOST_API = process.env.baseURL;
 
 export default {
+extends: VueTypeahead,
 
     data() {
         return {
+            search: "",
             name: "",
             key: "",
             profile: "",
             unit: "",
+            modal1: "",
+            modal2: "",
+            modal3: "",
+            modal4: "",
             allData: [],
+            allEdit: [],
         }
     },
 
     methods: {
-        ...mapActions(['gettingProfile', 'postProfile']),
+        ...mapActions(['gettingProfile', 'postProfile', 'gettingProfileEdit', 'editProfile']),
 
-        async saveUser() {
+        async showModal(id) {
+            this.gettingProfileEdit(id)
+            setTimeout(() => {
+                this.modal1 = this.modalOption1.nome
+                this.modal2 = this.modalOption1.chave
+                this.modal3 = this.modalOption1.perfil
+                this.modal4 = this.modalOption1.unidade
+                this.$bvModal.show(id)
+            }, 400);
+            
+        },
+
+        async saveUser(toaster) {
             this.allData.splice(0)
             
             this.allData.push({
                 nome: this.name,
                 chave: this.key,
                 perfil: this.profile,
-                unidade: this.unit
-
+                unidade: this.unit,
             })
 
             await this.postProfile({info: this.allData[0]})
             this.gettingProfile()
+
+            if (this.errPost == 'Unidade sede só é válida para perfil de administrador') {
+                this.$bvToast.toast(this.errPost, {
+                title: `Erro`,
+                toaster: toaster,
+                solid: true
+                })
+            }
+            
         },
 
-        async deleteUser(id) {
+        async deleteUser(id, toaster) {
             await this.$axios
             .delete(
-                HOST_API + '/perfis/' +
-                id
+                HOST_API + '/perfis/' + id, {
+                headers: {
+                'Authorization': this.$cookies.get('token') || '',
+                }} 
             )
             .then(() => {
                 this.gettingProfile()
             })
-        }
+
+            this.$bvToast.toast('Perfil Deletado com sucesso', {
+                title: `Delete`,
+                toaster: toaster,
+                solid: true
+            })
+        },
+
+        async editing(id, toaster) {
+            this.allEdit.splice(0)
+
+            this.allEdit.push({
+                nome: this.modal1,
+                chave: this.modal2,
+                perfil: this.modal3,
+                unidade: this.modal4
+            })
+
+            await this.editProfile({id: id, info: this.allEdit[0]})
+            this.gettingProfile()
+
+            if (this.errEdit == 'Unidade sede só é válida para perfil de administrador') {
+                this.$bvToast.toast(this.errEdit, {
+                title: `Erro`,
+                toaster: toaster,
+                solid: true
+                })
+            } else {
+                this.$bvToast.toast('Perfil Editado com sucesso', {
+                    title: `Edição`,
+                    toaster: toaster,
+                    solid: true
+                })
+                this.$bvModal.hide(id)
+            }
+            
+        },
+
+        cancelEdit(id) {
+            this.modal1 = ""
+            this.modal2 = ""
+            this.modal3 = ""
+            this.$bvModal.hide(id)
+        },
 
     },
 
@@ -133,11 +247,58 @@ export default {
         profileUser() {
             return this.$store.state.getProfile.usuarios
         },
+        modalOption1() {
+            return this.$store.state.getProfileEdit
+        },
+        modalOption2() {
+            return this.$store.state.getProfileEdit.opcoes_perfil
+        },
+        modalOption3() {
+            return this.$store.state.getProfileEdit.opcoes_unidades
+        },
+
+        errPost() {
+            return this.$store.state.errSede
+        },
+
+        errEdit() {
+            return this.$store.state.errEditSede
+        },
+
+        computed_filter: function () {
+            if (this.profileUser != undefined) {
+                let filterName = this.search.toLowerCase(),
+                filterChave = this.search.toLowerCase(),
+                filterPerfil = this.search.toLowerCase(),
+                filterUnidade = this.search.toLowerCase()
+            
+            return this.profileUser.filter(function(item){
+                let filtered = true
+                
+                if(filterName && filterName.length > 0){
+                    filtered = item.nome.toLowerCase().includes(filterName)
+                }
+                if(filterChave && filterChave.length > 0 && filtered == false){
+                    filtered = item.chave.toLowerCase().includes(filterChave)
+                }
+                if(filterPerfil && filterPerfil.length > 0 && filtered == false){
+                    filtered = item.perfil.toLowerCase().includes(filterPerfil)
+                }
+                if(filterUnidade && filterUnidade.length > 0 && filtered == false){
+                    filtered = item.unidade.toLowerCase().includes(filterUnidade)
+                }
+            
+                    return filtered
+                })
+            }
+        
+        }
 
     },
 
     created() {
         this.gettingProfile()
+        
     }
 }
 
@@ -145,6 +306,32 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/base.scss';
+
+.btn-enviar {
+    background-color: #226E48;
+    color: white;
+    border: none;
+
+    &:hover{
+        background-color: #226E48;
+        color: white;
+    }
+}
+
+.btn-cancel {
+  color: #ffffff;
+  background-color: $dark-purple;
+
+  &:hover{
+        background-color: $dark-purple;
+        color: white;
+    }
+}
+
+.modal-title {
+    color: #1F2041;
+
+}
 
 .table-title {
     color: #226E48;

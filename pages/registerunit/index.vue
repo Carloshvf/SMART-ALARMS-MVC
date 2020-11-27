@@ -13,16 +13,20 @@
         <div class="col-4">
             <label class="mt-4">TIPO DE CONEXÃO PRINCIPAL</label>
             <select class="form-control" v-model="connectionType">
-                <option>OPC AE</option>
+                <option>OPC AE/DA</option>
                 <option>OPC DA</option>
             </select>
         </div>
       </div>
       
       <div class="row">
-          <div class="col-3">
+          <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
             <input class="form-control" v-model="eventUnit">
+          </div>
+          <div class="col-1">
+            <label class="mt-4">CONTADOR</label>
+            <input class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
@@ -35,10 +39,83 @@
               <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
           </div>
       </div>
+
+      <div class="row">
+        <div class="col-6 scroll" v-if="eventType != []">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">TIPOS DE EVENTO</th>
+                <th scope="col">CONTADOR</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in eventType" :key="item.id">
+                <td>{{item.tipo}}</td>
+                <td>{{item.contador}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-6 scroll" v-if="systems != []">
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">SISTEMAS</th>  
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in systems" :key="item.id">
+                <td>{{item}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-3">
+          <label class="mt-3 mb-0">SUBAREA:</label>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-3">
+          <label class="mt-4">NOME</label>
+          <input class="form-control" v-model="subUnit">
+        </div>
+        <div class="col-3">
+          <label class="mt-4">MODELO</label>
+          <input class="form-control" v-model="subModel">
+        </div>
+        <div class="col-3">
+            <b-button class="btn btn-green btn-add" @click="pushSub('b-toaster-bottom-right')">Adicionar</b-button>
+        </div>
+      </div>
+
+      <div class="row">
+           <div class="col-6 scroll" >
+          <table class="table mt-4">
+            <thead>
+            <tr>
+                <th scope="col">NOME</th>
+                <th scope="col">MODELO</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in sub" :key="item.id">
+                <td>{{item.nome}}</td>
+                <td>{{item.modelo}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save" @click="saveUnit()">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="saveUnit('b-toaster-bottom-right')">Salvar</b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
@@ -60,8 +137,12 @@ export default {
       connectionType: "",
       eventUnit: "",
       systemUnit: "",
+      contUnit: "",
+      subUnit: "",
+      subModel: "",
       eventType: [],
       systems: [],
+      sub: [],
       unitData: []
     }
   },
@@ -74,24 +155,42 @@ export default {
     ...mapActions(['registerUnit']),
 
     pushEvent() {
-      this.eventType.push(this.eventUnit)
+      this.eventType.push({tipo: this.eventUnit, contador: this.contUnit})
     },
 
     pushSystem() {
       this.systems.push(this.systemUnit)
     },
 
-    async saveUnit() {
+    pushSub(toaster) {
+      if (this.subUnit != "" && this.subModel != "") {
+        this.sub.push({nome: this.subUnit, modelo: this.subModel})
+      } else {
+        this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
+          title: `Erro`,
+          toaster: toaster,
+          solid: true,
+        })
+      }
+      
+    },
+
+    async saveUnit(toaster) {
       this.unitData.splice(0)
 
       this.unitData.push({
         unidade: this.unitName,
         tipo_conexao: this.connectionType,
         tipo_evento: this.eventType,
-        sistemas: this.systems
+        sistemas: this.systems,
+        sub_area: this.sub
       })
-
       await this.registerUnit(this.unitData[0])
+      this.$bvToast.toast('Unidade cadastrada com sucesso', {
+          title: `Cadastro`,
+          toaster: toaster,
+          solid: true,
+        })
     }
 
   },
