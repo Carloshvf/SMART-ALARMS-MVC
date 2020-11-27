@@ -164,6 +164,9 @@ export const mutations = {
   setSubArea4(state, subArea4) {
     state.edit.status_medidas[0].sub_area = subArea4;
   },
+  setOperaLogic(state, OperaLogic) {
+    state.edit.ends_alarme[0].operador = OperaLogic;
+  },
   // Mutations para alterar os arrays na página de editar alarmes
   setNewRecom(state, recomendacao) {
     state.edit.recomendacoes.push({item: recomendacao})
@@ -472,7 +475,7 @@ export const actions = {
           }}
     )
     .then(response => {
-      this.getAlarm = response.data.filtro_alarmes[0]
+      this.getAlarm = response.data.filtro_alarmes
     })
 
     context.commit('setGetAlarm', this.getAlarm)

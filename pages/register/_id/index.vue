@@ -89,16 +89,14 @@
           <div class="col-1">
             <label class="sizing">LOGICO</label>
             <select class="form-control" v-model="operaLogic">
-              <option>></option>
-              <option>OU</option>
-              <option>==</option>
-              <option>)</option>
-              <option>)</option>
+              <option v-for="item in selectFilters.operadores" :key="item.id">
+                {{item}}
+              </option>
             </select>
           </div> 
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <input maxlength="20" minlength="3" type="number" class="form-control" v-model="activation1">
+            <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
@@ -354,7 +352,6 @@ export default {
       loadEdit: false,
       disabling: false,
       operators: "E",
-      operaLogic: "==",
       activation2: "1",
       activation3: "",
       unit2: "",
@@ -445,6 +442,14 @@ export default {
         this.$store.commit('setActivation1', value)
       }
     },
+    operaLogic: {
+      get () {
+        return this.$store.state.edit.ends_alarme[0].operador
+      },
+      set (value) {
+        this.$store.commit('setOperaLogic', value)
+      }
+    },
     logic: {
       get () {
         return this.$store.state.edit.logica
@@ -509,6 +514,7 @@ export default {
         this.$store.commit('setSubArea4', value)
       }
     },
+    
     unitId() {
       return this.$cookies.get('unit') || '';
     },
@@ -768,18 +774,32 @@ export default {
   },
 
    created() {
+     // TODA VEZ Q TIVER CAMPO NOVO DA LOGICA ELE TEM Q ENTRAR AQUI PRA DAR CERTO NA LOGICA
       for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {
         this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme, 
-        ativacao: this.$store.state.edit.ends_alarme[index].ativacao, sub_area: this.$store.state.edit.ends_alarme[index].sub_area})
+        ativacao: this.$store.state.edit.ends_alarme[index].ativacao, sub_area: this.$store.state.edit.ends_alarme[index].sub_area, 
+        operador: this.$store.state.edit.ends_alarme[index].operador})
         
       }
+      
        
   },
 
   async asyncData({ store, route }) {
     const { id } = route.params
-    const unitId = this.$cookies.get('unit') || ''
-    const teste = await store.dispatch('loadCard',{unit: unitId, route: id})
+    // const unitId = this.$cookies.get('unit') || ''
+    const unitId = document.cookie.split("; ")
+    let cookieGet = null
+    for (let index = 0; index < unitId.length; index++) {
+      const tes = unitId[index].split('=')
+      for (let index = 0; index < tes.length; index++) {
+        if (tes[0] == 'unit') {
+          cookieGet = tes[1]
+        }
+        
+      }
+    }
+    const teste = await store.dispatch('loadCard',{unit: cookieGet, route: id})
 
     // console.log(teste)
 

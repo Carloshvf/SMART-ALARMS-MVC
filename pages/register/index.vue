@@ -90,15 +90,15 @@
           <div class="col-1">
             <label class="sizing">LOGICO</label>
             <select class="form-control" v-model="operaLogic">
-              <option>></option>
-              <option>OU</option>
-              <option>==</option>
-              <option>)</option>
+              <option v-for="item in selectFilters.operadores" :key="item.id">
+                {{item}}
+              </option>
+              
             </select>
           </div> 
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
-            <input maxlength="20" minlength="3" type="number" class="form-control" v-model="activation1">
+            <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
             <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
@@ -522,6 +522,7 @@ export default {
         recomendacoes: this.recom,
         sub_area: this.subSelect1,
        })
+       
       
       await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
