@@ -389,7 +389,7 @@ export const actions = {
   // POST DE LOGOUT
   async logOff(context, dados) {
     await this.$axios.post(
-        HOST_API + '/logout', {
+        HOST_API + '/logout', dados.logout, {
           headers: {
             'Authorization': this.$cookies.get('token') || '',
           }}
