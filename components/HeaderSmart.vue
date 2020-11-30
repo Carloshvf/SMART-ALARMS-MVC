@@ -79,8 +79,7 @@ export default {
     },
 
     async logout() {
-      this.auth = this.$cookies.get('token') || '';
-      await this.logOff({Authorization: this.auth})
+      await this.logOff()
 
       this.$cookies.removeAll();
       this.headerButtons = false
