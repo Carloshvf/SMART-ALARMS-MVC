@@ -79,7 +79,7 @@ export default {
     },
 
     async logout() {
-      await this.logOff()
+      await this.logOff({logout: "tes"})
 
       this.$cookies.removeAll();
       this.headerButtons = false
