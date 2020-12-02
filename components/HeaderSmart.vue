@@ -92,9 +92,9 @@ export default {
     this.userKey()
   
     setInterval(() => {
-      if (this.currentRouteName != 'index' && this.currentRouteName != 'units') {
+      if (this.currentRouteName != 'index' && this.currentRouteName != 'units' && this.currentRouteName != 'registerunit') {
         this.headerButtons = true
-      } else if(this.currentRouteName == 'units') {
+      } else if(this.currentRouteName == 'units' || this.currentRouteName == 'registerunit') {
         this.headerButtons = false
       }
     }, 3000);

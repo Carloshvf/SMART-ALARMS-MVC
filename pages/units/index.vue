@@ -3,6 +3,8 @@
       <div class="row mt-5">
         <div class="col mt-5">
             <h1 class="alarm-title">Seleção de Unidades Operacionais</h1>
+            <nuxt-link to="/registerunit" class="btn btn-green mt-4" v-if="unitPermission == true">Cadastrar Unidades</nuxt-link>
+            <nuxt-link to="/registeruser" class="btn btn-grey mt-4 ml-3" v-if="profileReg == true">Cadastrar Perfis</nuxt-link>
         </div>
       </div>
       <div class="row">
@@ -23,12 +25,6 @@
         </div>
         <!--  -->
         
-      </div>
-      <div class="row">
-        <div class="col">
-          <nuxt-link to="/registerunit" class="btn btn-green rounded-circle add mt-4" v-if="unitPermission == true">+</nuxt-link>
-          <nuxt-link to="/registeruser" class="btn btn-grey add mt-4 mr-3" v-if="profileReg == true">Cadastrar Perfis</nuxt-link>
-        </div>
       </div>
   </div>
 </template>
