@@ -32,6 +32,7 @@ export default {
     return {
       disabled: true,
       stop: true,
+      stopInterval: '',
     }
   },
 
@@ -53,7 +54,10 @@ export default {
   },
 
   created() {
-    setInterval(() => {
+    this.stopInterval = setInterval(() => {
+      if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined) {
+          clearInterval(this.stopInterval)
+        }
       if (this.stop == true) {
       this.loadData(this.unitId || '')
         for (let index = 0; index < this.alarms.length; index++) {

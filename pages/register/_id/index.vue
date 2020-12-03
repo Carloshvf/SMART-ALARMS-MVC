@@ -568,6 +568,9 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+        if (this.operaLogic == '=') {
+          this.operaLogic = '=='
+        }
         this.pushed.push(this.textAlarme, this.operaLogic, this.activation1) 
         this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
         // console.log(this.endAtivacao)

@@ -342,7 +342,7 @@ export default {
       offType: "PLS",
       reason: "",
       operators: "E",
-      operaLogic: "==",
+      operaLogic: "",
       subSelect1: "",
       subSelect2: "",
       subSelect3: "",
@@ -416,6 +416,9 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+        if (this.operaLogic == '=') {
+          this.operaLogic = '=='
+        }
         this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
         this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
         this.separador = this.pushed.join(' ')
