@@ -144,7 +144,7 @@ extends: VueTypeahead,
             this.gettingProfileEdit(id)
             setTimeout(() => {
                 this.$bvModal.show(id)
-            }, 400);
+            }, 1000);
             
         },
 
