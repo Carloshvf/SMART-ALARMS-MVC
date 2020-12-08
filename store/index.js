@@ -124,6 +124,19 @@ export const mutations = {
   setCleanSub(state, index) {
     state.getEdit.sub_area.splice(index, 1)
   },
+  // POPULANDO MODAL DE EDITAR PERFIS
+  setModal1(state, modal1) {
+    state.getProfileEdit.nome = modal1;
+  },
+  setModal2(state, modal2) {
+    state.getProfileEdit.chave = modal2;
+  },
+  setModal3(state, modal3) {
+    state.getProfileEdit.perfil = modal3;
+  },
+  setModal4(state, modal4) {
+    state.getProfileEdit.unidade = modal4;
+  },
   // POPULANDO A PAGINA DE EDITAR ALARMES CADASTRADOS
   setLocal(state, local) {
     state.edit.local = local;

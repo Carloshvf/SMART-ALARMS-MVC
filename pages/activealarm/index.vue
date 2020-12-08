@@ -55,7 +55,7 @@ export default {
 
   created() {
     this.stopInterval = setInterval(() => {
-      if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined) {
+      if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'activealarm') {
           clearInterval(this.stopInterval)
         }
       if (this.stop == true) {
@@ -69,7 +69,7 @@ export default {
             }
           }
         }
-      }, 5000);
+      }, 3000);
     
     this.loadData(this.unitId || '')
    
