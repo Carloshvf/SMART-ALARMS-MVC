@@ -50,9 +50,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in eventUnit" :key="item.id">
+            <tr v-for="(item, index) in eventUnit" :key="item.id">
                 <td>{{item.tipo}}</td>
                 <td>{{item.contador}}</td>
+                <td>
+                  <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanType(index)"/>
+                </td>
             </tr>
             </tbody>
           </table>
@@ -66,8 +69,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in systemUnit" :key="item.id">
+            <tr v-for="(item, index) in systemUnit" :key="item.id">
                 <td>{{item}}</td>
+                <td>
+                  <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanSystem(index)"/>
+                </td>
             </tr>
             </tbody>
           </table>
@@ -104,9 +110,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in subInfo" :key="item.id">
+            <tr v-for="(item, index) in subInfo" :key="item.id">
                 <td>{{item.nome}}</td>
                 <td>{{item.modelo}}</td>
+                <td>
+                  <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanSub(index)"/>
+                </td>
             </tr>
             </tbody>
           </table>
@@ -124,7 +133,7 @@
 </template>
 
 <script>
-import { mapActions} from 'vuex'
+import { mapActions, mapMutations} from 'vuex'
 
 export const HOST_API = process.env.baseURL;
 
@@ -189,6 +198,24 @@ export default {
 
   methods: {
     ...mapActions(['gettingEdits', 'updateUnit']),
+    ...mapMutations({
+      cleanTypes: 'setCleanType',
+      cleanSystems: 'setCleanSystem',
+      cleanSubs: 'setCleanSub',
+      
+    }),
+
+    cleanType(index) {
+      this.cleanTypes(index)
+    },
+
+    cleanSystem(index) {
+      this.cleanSystems(index)
+    },
+
+    cleanSub(index) {
+      this.cleanSubs(index)
+    },
 
     pushEvent() {
       this.eventUnit.push({tipo: this.eventType, contador: this.contUnit})
@@ -260,6 +287,11 @@ export default {
   right: 30px;
   top: 70px;
   float: right;
+  
+  &:hover{
+    color: $white;
+    background-color: $dark-purple;
+  } 
 }
 
 .btn-save {

@@ -12,7 +12,7 @@
               @click="clickFalse()"
             >
               <h1 class="detail-counter">{{ link.id }}</h1>
-              <counter :alarm="foo(link.id)" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check"  />
+              <counter :alarm="foo(link.id)" :cont="link.kks[0].contador" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check"  />
             </nuxt-link>
           </li>
         </ul>
@@ -26,7 +26,7 @@
               <h1 v-if="value.active == 1" class="detail-page-name">{{ value.id }}</h1>
               <div class="detail-page-count d-flex align-items-center">
 
-                <counter v-if="value.active == 1" :alarm="foo(value.id)" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check" />
+                <counter v-if="value.active == 1" :alarm="foo(value.id)" :cont="value.kks[0].contador" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check" />
 
                 <!-- <h1>{{ value.kks[0].countTime }}</h1> -->
               </div>

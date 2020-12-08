@@ -115,6 +115,15 @@ export const mutations = {
   setSub(state, SubUnit) {
     state.getEdit.sub_area = SubUnit;
   },
+  setCleanType(state, index) {
+    state.getEdit.tipo_evento.splice(index, 1)
+  },
+  setCleanSystem(state, index) {
+    state.getEdit.sistemas.splice(index, 1)
+  },
+  setCleanSub(state, index) {
+    state.getEdit.sub_area.splice(index, 1)
+  },
   // POPULANDO A PAGINA DE EDITAR ALARMES CADASTRADOS
   setLocal(state, local) {
     state.edit.local = local;
