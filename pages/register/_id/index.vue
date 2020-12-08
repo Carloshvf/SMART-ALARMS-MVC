@@ -41,7 +41,7 @@
         <div class="form-row align-items-end">
           <div class="col-6">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
+            <input maxlength="30" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
           <div class="col-4">
             <label class="sizing">SUBAREA</label>
@@ -84,7 +84,7 @@
           <!--  -->
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE ALARME</label>
-            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
+            <input maxlength="30" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
           <div class="col-1">
             <label class="sizing">LOGICO</label>
@@ -547,18 +547,43 @@ export default {
     },
 
     sendActivation(toaster) {
-      if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
-        isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
-          
-        this.$bvToast.toast('Os endereços precisam possuir dois números como os primeiros caracteres.', {
-          title: `Endereços`,
-          toaster: toaster,
-          solid: true
-        })
-      } 
+      if (this.$cookies.get('unit') == 1) {
+        if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
+          isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
+            
+          this.$bvToast.toast('Os endereços precisam possuir dois números como os primeiros caracteres.', {
+            title: `Endereços`,
+            toaster: toaster,
+            solid: true
+          })
+        } 
+          else if(this.textAlarme == "") {
+          this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+            title: `Preencher`,
+            toaster: toaster,
+            solid: true,
+          })
+        }
+        // 
+        else  {
+          this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
+          this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+          if (this.operaLogic == '=') {
+            this.operaLogic = '=='
+          }
+          this.pushed.push(this.textAlarme, this.operaLogic, this.activation1) 
+          this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
+          // console.log(this.endAtivacao)
+          this.separador = this.pushed.join(' ')
+          // this.separador = this.separador.replace(/\s-\s/g, "-")
+          this.pushed.splice(0)
+          this.pushed.push(this.separador)
+          this.logicInfo = this.pushed.toString()
+        }
+      }
       // 
-       else if(this.textMedida == "" || this.textAlarme == "") {
-        this.$bvToast.toast('Por favor, preencha os campos de medida e alarme.', {
+       else if(this.textAlarme == "") {
+        this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
@@ -575,7 +600,7 @@ export default {
         this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
         // console.log(this.endAtivacao)
         this.separador = this.pushed.join(' ')
-        this.separador = this.separador.replace(/\s-\s/g, "-")
+        // this.separador = this.separador.replace(/\s-\s/g, "-")
         this.pushed.splice(0)
         this.pushed.push(this.separador)
         this.logicInfo = this.pushed.toString()

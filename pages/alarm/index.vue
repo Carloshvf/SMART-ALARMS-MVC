@@ -16,7 +16,7 @@
               </div>
               <div class="col-4 d-flex justify-content-center">
                 <h1>{{ countTime }}</h1>
-                <counter :alarm="foo(list.id)" :kks="card.value" :arr="arrVa" :key="componentKey" @send="check" />
+                <counter :alarm="foo(list.id)" :cont="card.contador" :kks="card.value" :arr="arrVa" :key="componentKey" @send="check" />
               </div>
               <div class="mt-2 col-4 d-flex justify-content-end">
                 <nuxt-link

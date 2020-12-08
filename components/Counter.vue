@@ -9,7 +9,7 @@ import main from '~/plugins/main'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['alarm', 'kks', 'arr'],
+  props: ['alarm', 'kks', 'arr', 'cont'],
 
   data() {
     return {
@@ -18,6 +18,13 @@ export default {
       
     }
   },
+
+  computed: {
+    teste() {
+      
+    }
+  },
+
   methods: {
     ...mapActions(['loadData']),
 
@@ -82,6 +89,7 @@ export default {
   },
 
   created() {
+    console.log(this.cont)
     this.countTime = ''
     this.loadCount() 
   }

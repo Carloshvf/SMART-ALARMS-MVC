@@ -11,7 +11,7 @@
         <div class="col-4" v-for="item in unitDetail" :key="item.id">
           <div class="card mt-4">
             <div class="card-white">
-              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="deleteUnit(item.id)" v-if="item.edicao == true"/>
+              <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="showModal(item.id.toString())" v-if="item.edicao == true"/>
               <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
                 class="btn ml-5" v-if="item.edicao == true">
@@ -22,9 +22,20 @@
               </nuxt-link>
             </div>
           </div>
+          <!-- MODAL DELETE -->
+          <b-modal :id="item.id.toString()" hide-footer>
+            <template v-slot:modal-title>
+              Deletando unidade
+            </template>
+            <div>
+              <p>Tem certeza que deseja deletar a unidade?</p>
+            </div>
+            <b-button class="modal-buttons bg-dark-red mt-3 mr-2" @click="deleteUnit(item.id, 'b-toaster-bottom-right')">
+              Deletar unidade
+            </b-button>
+          </b-modal>
         </div>
         <!--  -->
-        
       </div>
   </div>
 </template>
@@ -59,7 +70,11 @@ export default {
   methods: {
     ...mapActions(['gettingUnits', 'headerGet']),
 
-    async deleteUnit(id) {
+    async showModal(id) {
+      this.$bvModal.show(id)
+    },
+
+    async deleteUnit(id, toaster) {
       await this.$axios
       .delete(
         HOST_API + '/unidades/' +
@@ -71,6 +86,15 @@ export default {
       .then(() => {
         this.gettingUnits()
       })
+
+      this.$bvToast.toast('Unidade deletada com sucesso', {
+        title: `Delete`,
+        toaster: toaster,
+        solid: true
+      })
+      setTimeout(() => {
+        this.$bvModal.hide(id)
+      }, 1000);
     },
 
     sendId(id) {
@@ -96,6 +120,10 @@ export default {
   font-weight: 300;
   line-height: 120px;
   text-align: center;
+}
+
+.modal-buttons {
+  float: right;
 }
 
 .deleting {

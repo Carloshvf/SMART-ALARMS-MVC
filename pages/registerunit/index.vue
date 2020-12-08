@@ -50,9 +50,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in eventType" :key="item.id">
+            <tr v-for="(item, index) in eventType" :key="item.id">
                 <td>{{item.tipo}}</td>
                 <td>{{item.contador}}</td>
+                <td>
+                  <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanType(index)"/>
+                </td>
             </tr>
             </tbody>
           </table>
@@ -66,8 +69,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in systems" :key="item.id">
+            <tr v-for="(item, index) in systems" :key="item.id">
                 <td>{{item}}</td>
+                <td>
+                  <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanSystem(index)"/>
+                </td>
             </tr>
             </tbody>
           </table>
@@ -104,9 +110,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in sub" :key="item.id">
+            <tr v-for="(item, index) in sub" :key="item.id">
                 <td>{{item.nome}}</td>
                 <td>{{item.modelo}}</td>
+                <td>
+                  <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanSub(index)"/>
+                </td>
             </tr>
             </tbody>
           </table>
@@ -147,12 +156,20 @@ export default {
     }
   },
 
-  computed: {
-    
-  },
-
   methods: {
     ...mapActions(['registerUnit']),
+
+    cleanType(index) {
+      this.eventType.splice(index, 1)
+    },
+
+    cleanSystem(index) {
+      this.systems.splice(index, 1)
+    },
+
+    cleanSub(index) {
+      this.sub.splice(index, 1)
+    },
 
     pushEvent() {
       this.eventType.push({tipo: this.eventUnit, contador: this.contUnit})
@@ -218,6 +235,11 @@ export default {
   right: 30px;
   top: 70px;
   float: right;
+
+  &:hover{
+    color: $white;
+    background-color: $dark-purple;
+  } 
 }
 
 .btn-save {

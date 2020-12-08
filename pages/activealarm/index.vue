@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- <header-smart></header-smart> -->
-    <div class="wrapper-content container pt-5 mt-5">
-      <div class="row">
-        <div class="col-6 col-sm-4 mb-4" v-for="alarm in alarms" :key="alarm.id"> 
+    <div class="container-fluid pt-5 mt-5">
+      <div class="row adjust">
+        <div class="col-4 mb-4" v-for="alarm in alarms" :key="alarm.id"> 
           <nuxt-link
             :class="{ alarmActive: alarm.active == 1 }"
             class="box-alarm d-flex align-items-center justify-content-center"
@@ -80,15 +80,22 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/base.scss';
 
+.adjust {
+  width: 70%;
+  margin: 0 auto;
+}
+
 .box-alarm {
   background-color: #666666;
   border-radius: $border-radius;
   transition: $transition;
-  padding: 15px;
   height: 190px;
 
   &-number {
-    font-size: 100px;
+    font-size: 70px;
+    line-height: 80px;
+    width: 400px;
+    text-align: center;
     font-weight: 700;
     color: white;
   }
