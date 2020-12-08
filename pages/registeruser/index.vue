@@ -38,6 +38,7 @@
             </div>
             <div class="col-3">
                 <b-button class="btn btn-green btn-save" @click="saveUser('b-toaster-bottom-right')">Salvar</b-button>
+                <nuxt-link to="/units" class="btn btn-return">Cancelar</nuxt-link>
             </div>
         </div>
         <div class="row mt-5">
@@ -336,6 +337,20 @@ extends: VueTypeahead,
     }
 }
 
+.btn-return {
+    position: relative;
+    top: 55px;
+    left: 10px;
+    width: 120px;
+    color: #ffffff;
+    background-color: $dark-purple;
+
+    &:hover{
+        background-color: $dark-purple;
+        color: white;
+    }
+}
+
 .btn-cancel {
   color: #ffffff;
   background-color: $dark-purple;
@@ -385,7 +400,7 @@ extends: VueTypeahead,
 .btn-save {
     position: relative;
     top: 55px;
-    width: 255px;
+    width: 120px;
 }
 
 </style>

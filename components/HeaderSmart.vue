@@ -92,9 +92,11 @@ export default {
     this.userKey()
   
     setInterval(() => {
-      if (this.currentRouteName != 'index' && this.currentRouteName != 'units' && this.currentRouteName != 'registerunit') {
+      if (this.currentRouteName != 'index' && this.currentRouteName != 'units' && this.currentRouteName != 'registerunit' 
+      && this.currentRouteName != 'registerunit-id' && this.currentRouteName != 'registeruser') {
         this.headerButtons = true
-      } else if(this.currentRouteName == 'units' || this.currentRouteName == 'registerunit') {
+      } else if(this.currentRouteName == 'units' || this.currentRouteName == 'registerunit' 
+      || this.currentRouteName == 'registerunit-id' || this.currentRouteName == 'registeruser') {
         this.headerButtons = false
       }
     }, 3000);
