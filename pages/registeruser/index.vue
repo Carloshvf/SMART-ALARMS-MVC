@@ -132,10 +132,6 @@ extends: VueTypeahead,
             key: "",
             profile: "",
             unit: "",
-            modal1: "",
-            modal2: "",
-            modal3: "",
-            modal4: "",
             allData: [],
             allEdit: [],
         }
@@ -147,10 +143,6 @@ extends: VueTypeahead,
         async showModal(id) {
             this.gettingProfileEdit(id)
             setTimeout(() => {
-                this.modal1 = this.modalOption1.nome
-                this.modal2 = this.modalOption1.chave
-                this.modal3 = this.modalOption1.perfil
-                this.modal4 = this.modalOption1.unidade
                 this.$bvModal.show(id)
             }, 400);
             
@@ -229,9 +221,6 @@ extends: VueTypeahead,
         },
 
         cancelEdit(id) {
-            this.modal1 = ""
-            this.modal2 = ""
-            this.modal3 = ""
             this.$bvModal.hide(id)
         },
 
@@ -247,8 +236,37 @@ extends: VueTypeahead,
         profileUser() {
             return this.$store.state.getProfile.usuarios
         },
-        modalOption1() {
-            return this.$store.state.getProfileEdit
+        modal1: {
+            get () {
+                return this.$store.state.getProfileEdit.nome
+            },
+            set (value) {
+                this.$store.commit('setModal1', value)
+            }
+        },
+        modal2: {
+            get () {
+                return this.$store.state.getProfileEdit.chave
+            },
+            set (value) {
+                this.$store.commit('setModal2', value)
+            }
+        },
+        modal3: {
+            get () {
+                return this.$store.state.getProfileEdit.perfil
+            },
+            set (value) {
+                this.$store.commit('setModal3', value)
+            }
+        },
+        modal4: {
+            get () {
+                return this.$store.state.getProfileEdit.unidade
+            },
+            set (value) {
+                this.$store.commit('setModal4', value)
+            }
         },
         modalOption2() {
             return this.$store.state.getProfileEdit.opcoes_perfil
