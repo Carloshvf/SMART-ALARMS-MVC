@@ -69,7 +69,7 @@ export default {
             }
           }
         }
-      }, 3000);
+      }, 5000);
     
     this.loadData(this.unitId || '')
    
