@@ -20,13 +20,15 @@ export default {
   },
 
   computed: {
-    teste() {
-      
-    }
+  
   },
 
   methods: {
     ...mapActions(['loadData']),
+
+    newCount() {
+      
+    },
 
     loadCount() {
       if (!this.arr.includes(this.kks)) {
@@ -89,9 +91,15 @@ export default {
   },
 
   created() {
-    console.log(this.cont)
     this.countTime = ''
     this.loadCount() 
+    // if (this.cont == '' || this.cont == undefined) {
+    //   this.loadCount()
+    // } else if (this.cont != '' || this.cont !== undefined) {
+    //   this.newCount()
+    // }
+    
+     
   }
 }
 </script>

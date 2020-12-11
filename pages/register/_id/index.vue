@@ -436,6 +436,7 @@ export default {
     },
     activation1: {
       get () {
+        console.log(this.$store.state.edit.ends_alarme[0].ativacao)
         return this.$store.state.edit.ends_alarme[0].ativacao
       },
       set (value) {
@@ -500,7 +501,11 @@ export default {
     },
     subArea3: {
       get () {
-        return this.$store.state.edit.canais[0].sub_area
+        if (this.$store.state.edit.canais != '') {
+          // console.log(this.$store.state.edit.canais)
+          return this.$store.state.edit.canais[0].sub_area
+        }
+        
       },
       set (value) {
         this.$store.commit('setSubArea3', value)
