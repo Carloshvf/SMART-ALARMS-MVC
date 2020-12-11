@@ -14,7 +14,7 @@
               <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="showModal(item.id.toString())" v-if="item.edicao == true"/>
               <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
-                class="btn ml-5" v-if="item.edicao == true">
+                class="btn ml-5" >
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
               </nuxt-link>
               <nuxt-link to="/activealarm" @click.native="sendId(item.id)">

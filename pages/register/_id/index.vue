@@ -436,7 +436,7 @@ export default {
     },
     activation1: {
       get () {
-        console.log(this.$store.state.edit.ends_alarme[0].ativacao)
+        // console.log(this.$store.state.edit.ends_alarme[0].ativacao)
         return this.$store.state.edit.ends_alarme[0].ativacao
       },
       set (value) {
@@ -513,7 +513,11 @@ export default {
     },
     subArea4: {
       get () {
-        return this.$store.state.edit.status_medidas[0].sub_area
+        if (this.$store.state.edit.status_medidas != '') {
+          // console.log(this.$store.state.edit.canais)
+          return this.$store.state.edit.status_medidas[0].sub_area
+        }
+
       },
       set (value) {
         this.$store.commit('setSubArea4', value)
