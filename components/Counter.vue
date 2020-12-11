@@ -46,7 +46,7 @@ export default {
         if (this.cont != '00:00') {
           moDataApi.add(parseInt(this.cont.split(':')[0]), 'minutes')
         } else if(this.cont == '00:00') {
-          moDataApi.add(0, 'minutes')
+          this.countTime = ''
         }
 
         this.stopInterval = setInterval(() => {
@@ -55,7 +55,7 @@ export default {
           if (this.cont != '00:00') {
             moDataApi2.add(parseInt(this.cont.split(':')[0]), 'minutes')
           } else if(this.cont == '00:00') {
-            moDataApi2.add(0, 'minutes')
+            this.countTime = ''
           }
 
           
@@ -77,11 +77,11 @@ export default {
                 .toString()
                 .padStart(2, '0')
           } else {
-            this.countTime = '00:00'
+            this.countTime = ''
           }
         }, 1000)
       } else {
-        this.countTime = '00:00'
+        this.countTime = ''
       }
     },
 
