@@ -43,19 +43,19 @@ export default {
       if (ms > 0) {
         this.$moment.locale('pt-BR')
 
-        if (typeData == 'PLS') {
-          moDataApi.add(this.cont, 'minutes')
-        } else if(typeData == 'PLST'){
-          moDataApi.add(this.cont, 'minutes')
+        if (this.cont != '00:00') {
+          moDataApi.add(parseInt(this.cont.split(':')[0]), 'minutes')
+        } else if(this.cont == '00:00') {
+          moDataApi.add(0, 'minutes')
         }
 
         this.stopInterval = setInterval(() => {
           
           var moDataApi2 = this.$moment(this.alarm.date);
-          if (typeData == 'PLS') {
-            moDataApi2.add(this.cont, 'minutes')
-          } else if(typeData == 'PLST'){
-            moDataApi2.add(this.cont, 'minutes')
+          if (this.cont != '00:00') {
+            moDataApi2.add(parseInt(this.cont.split(':')[0]), 'minutes')
+          } else if(this.cont == '00:00') {
+            moDataApi2.add(0, 'minutes')
           }
 
           
@@ -147,7 +147,7 @@ export default {
 
   created() {
     this.countTime = ''
-    this.loadCount() 
+    this.newCount()
     // if (this.cont == '' || this.cont == undefined) {
     //   this.loadCount()
     // } else if (this.cont != '' || this.cont !== undefined) {
