@@ -34,12 +34,20 @@ workbox.precaching.precacheAndRoute([
     "revision": "a2f0aebcec5ac62c3413c0d8e8a6bfa7"
   },
   {
+    "url": "/_nuxt/80558c5483347e52a558.js",
+    "revision": "7eb0611f0aed03dee2a94ad169aa1094"
+  },
+  {
     "url": "/_nuxt/806589aafeb611ad03f9.js",
     "revision": "74f6925dddde78a139c3db0c0049f5a9"
   },
   {
-    "url": "/_nuxt/8fc8ae533ad9a3c11214.js",
-    "revision": "cac16ba2cb23b5875fb3cad6e57e89e6"
+    "url": "/_nuxt/900c9ebad570cc42a2ca.js",
+    "revision": "316ede4a3078ac81542f3950fd6350ea"
+  },
+  {
+    "url": "/_nuxt/902fc80a15bdea339bd4.js",
+    "revision": "248f9a06b8ae35c41b6071645a724be6"
   },
   {
     "url": "/_nuxt/9ce500e4257627e25c1f.js",
@@ -70,16 +78,8 @@ workbox.precaching.precacheAndRoute([
     "revision": "950f8bcb9fe43c42c61312a8978a7328"
   },
   {
-    "url": "/_nuxt/e3cee1167bfd78677a4b.js",
-    "revision": "42de54b54aa74ce86963942c7a5c3849"
-  },
-  {
     "url": "/_nuxt/efbf05cb72d3c5ac90f0.js",
     "revision": "8970dc0e339f67543345dc78430efdf8"
-  },
-  {
-    "url": "/_nuxt/f7f58555f74f65e1b582.js",
-    "revision": "72e0be8f30fae7637e338ee5421ca327"
   }
 ], {
   "cacheId": "smart-alarms",
