@@ -45,7 +45,7 @@ export default {
 
         if (this.cont != '00:00') {
           moDataApi.add(parseInt(this.cont.split(':')[0]), 'minutes')
-        } else if(this.cont == '00:00') {
+        } else if(this.cont == '00:00' || this.cont == '') {
           this.countTime = ''
         }
 
@@ -54,7 +54,7 @@ export default {
           var moDataApi2 = this.$moment(this.alarm.date);
           if (this.cont != '00:00') {
             moDataApi2.add(parseInt(this.cont.split(':')[0]), 'minutes')
-          } else if(this.cont == '00:00') {
+          } else if(this.cont == '00:00' || this.cont == '') {
             this.countTime = ''
           }
 
