@@ -26,7 +26,7 @@
           </div>
           <div class="col-1">
             <label class="mt-4">CONTADOR</label>
-            <input class="form-control" v-model="contUnit">
+            <input v-mask="'##:##'" class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>

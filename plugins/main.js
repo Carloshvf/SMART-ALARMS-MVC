@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import 'vue-material-design-icons/styles.css';
+import VueMask from 'v-mask'
+
+Vue.use(VueMask);
 
 Vue.use(require('vue-moment'))
 

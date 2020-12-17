@@ -207,7 +207,7 @@ export default {
   border-radius: 20px;
   color: $white;
   font-weight: bold;
-  width: 150px;
+  width: 180px;
 }
 
 .top-detail {
