@@ -4,7 +4,7 @@
         <div class="col mt-5">
             <h1 class="alarm-title">Seleção de Unidades Operacionais</h1>
             <nuxt-link to="/registerunit" class="btn btn-green mt-4" v-if="unitPermission == true">Cadastrar Unidades</nuxt-link>
-            <nuxt-link to="/registeruser" class="btn btn-grey mt-4 ml-3" v-if="profileReg == true">Cadastrar Perfis</nuxt-link>
+            <nuxt-link to="/registeruser" class="btn btn-grey mt-4 ml-3" v-if="profileReg == true">Cadastrar Usuários</nuxt-link>
         </div>
       </div>
       <div class="row">
@@ -12,11 +12,12 @@
           <div class="card mt-4">
             <div class="card-white">
               <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="showModal(item.id.toString())" v-if="item.edicao == true"/>
-              <nuxt-link
+              <!-- <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
                 class="btn ml-5" v-if="item.edicao == true">
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-              </nuxt-link>
+              </nuxt-link> -->
+              <!-- TEM Q REATIVAR DPS -->
               <nuxt-link to="/activealarm" @click.native="sendId(item.id)">
                 <h1 class="unit-select">{{item.unidade}}</h1>
               </nuxt-link>
