@@ -133,6 +133,10 @@ export default {
   position: absolute;
 }
 
+.btn:focus {
+  box-shadow: none;
+}
+
 .position {
   display: flex;
   position: relative;
