@@ -18,7 +18,7 @@
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
               </nuxt-link> -->
               <!-- TEM Q REATIVAR DPS -->
-              <nuxt-link to="/activealarm" @click.native="sendId(item.id)">
+              <nuxt-link to="/activealarm" @click.native="sendId(item.id)" :event="disable ? '' : 'click'">
                 <h1 class="unit-select">{{item.unidade}}</h1>
               </nuxt-link>
             </div>
@@ -50,7 +50,7 @@ export default {
 
   data() {
     return {
- 
+      disable: true,
     }
   },
 
@@ -108,6 +108,9 @@ export default {
 
   async created() {
     this.gettingUnits()
+    setTimeout(() => {
+      this.disable = false
+    }, 3000);
     
   }
 }
