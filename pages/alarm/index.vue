@@ -186,6 +186,9 @@ export default {
 
   created() {
       this.stopInterval = setInterval(() => {
+        if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'alarm') {
+          clearInterval(this.stopInterval)
+        }
         if (this.stop == true) {
           this.loadData(this.$cookies.get('unit') || '')
           this.arrSize.splice(0)
