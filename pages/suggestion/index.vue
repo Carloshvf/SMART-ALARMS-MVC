@@ -71,7 +71,7 @@
             </div>
         </div>
         <!-- MODAL -->
-        <b-modal size="xl" id="modal-cadastrar">
+        <b-modal size="xl" id="modal-cadastrar" @hidden="onHidden">
             <template v-slot:modal-title>
                 <div class="row">
                     <div class="col-2 ">
@@ -230,6 +230,14 @@ export default {
             // console.log(this.selects)
         },
 
+        onHidden() {
+            this.regModal1 = ""
+            this.regModal2 = ""
+            this.regModal3 = ""
+            this.observacao = ""
+            this.selects.splice(0)
+        },
+
         async sendRegister() {
             this.allRegister.splice(0)
             
@@ -242,6 +250,7 @@ export default {
             await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]})
             this.loadSuggestions(this.unitId)
             this.filteredOptions()
+            this.$bvModal.hide('modal-cadastrar')
         }
     },
 

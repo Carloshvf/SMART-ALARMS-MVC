@@ -147,6 +147,9 @@ export default {
 
   created() {
     this.stopInterval = setInterval(() => {
+        if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'detail-id') {
+            clearInterval(this.stopInterval)
+          }
         if (this.stop == true) {
           this.loadData(this.unitId || '')
           this.arrSize.splice(0)
