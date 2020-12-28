@@ -137,7 +137,8 @@
                 </div>
                     <div class="row">
                         <div class="col mt-3 mb-3">
-                            <input class="form-control" placeholder="Digite aqui sua observação" v-model="observacao">
+                            <textarea class="form-control" placeholder="Digite aqui sua observação" rows="4" v-model="observacao">
+                            </textarea>
                         </div>
                     </div>
             </template>
@@ -347,6 +348,14 @@ export default {
         right: 35px;
         font-size: 12px;
     }
+}
+
+.table thead tr th{
+    border: none;
+}
+
+textarea {
+  resize: none;
 }
 
 .scroll {
