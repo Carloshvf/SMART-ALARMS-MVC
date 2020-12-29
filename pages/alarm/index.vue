@@ -215,7 +215,7 @@ export default {
         }  else {
           clearInterval(this.stopInterval)
         }
-      }, 5000);
+      }, 3000);
   },
 }
 </script>
