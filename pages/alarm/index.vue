@@ -104,6 +104,7 @@ export default {
         result = arrays.filter(i => i.id === id)
         result = result[0].kks
         let result2 = result.slice()
+        // console.log(result2)
         result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
         result = result.filter(
           (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
@@ -215,7 +216,7 @@ export default {
         }  else {
           clearInterval(this.stopInterval)
         }
-      }, 5000);
+      }, 3000);
   },
 }
 </script>
