@@ -350,7 +350,11 @@ export default {
     }
 }
 
-.table thead tr th{
+// .table thead tr th{
+//     border: none;
+// }
+
+.alter {
     border: none;
 }
 

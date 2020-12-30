@@ -1,10 +1,12 @@
 <template>
   <div class="container">
-      <div class="row mt-5">
-        <div class="col mt-5">
-            <h1 class="alarm-title">Criação/edição de novas unidades operacionais</h1>
-        </div>
+    <div class="row mt-5">
+      <div class="col mt-5 mb-3">
+          <h1 class="alarm-title">Criação/edição de novas unidades operacionais</h1>
       </div>
+    </div>
+    <div class="row">
+      <div class="col card">
       <div class="row">
         <div class="col-6">
             <label class="mt-4">NOME DA UNIDADE</label>
@@ -29,14 +31,14 @@
             <input v-mask="'##:##'" class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add rounded-circle" @click="pushEvent()">+</b-button>
           </div>
           <div class="col-3">
             <label class="mt-4">SISTEMAS MONITORADOS</label>
             <input class="form-control" v-model="systemUnit">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add rounded-circle" @click="pushSystem()">+</b-button>
           </div>
       </div>
 
@@ -96,7 +98,7 @@
           <input class="form-control" v-model="subModel">
         </div>
         <div class="col-3">
-            <b-button class="btn btn-green btn-add" @click="pushSub('b-toaster-bottom-right')">Adicionar</b-button>
+            <b-button class="btn btn-green btn-add rounded-circle" @click="pushSub('b-toaster-bottom-right')">+</b-button>
         </div>
       </div>
 
@@ -129,6 +131,8 @@
           </div>
           
       </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -224,7 +228,7 @@ export default {
 .btn-add {
     position: relative;
     top: 55px;
-    width: 255px;
+    right: 10px;
 }
 
 .btn-cancel {

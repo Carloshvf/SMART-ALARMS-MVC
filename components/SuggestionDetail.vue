@@ -448,9 +448,9 @@ textarea {
   resize: none;
 }
 
-.table thead tr th{
-    border: none;
-}
+// .table thead tr th{
+//     border: none;
+// }
 
 .border-edit {
     border-bottom: 1px solid #dee2e6;
