@@ -126,7 +126,10 @@
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save" @click="editUnit('b-toaster-bottom-right')">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="editUnit('b-toaster-bottom-right')">
+                <img class="cross-img" src="../../../static/img/plus.svg" alt="cross"/>
+                <span>Salvar</span>
+                </b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
@@ -291,6 +294,7 @@ export default {
   right: 30px;
   top: 70px;
   float: right;
+  border-radius: 22px;
   
   &:hover{
     color: $white;
@@ -298,11 +302,25 @@ export default {
   } 
 }
 
+.cross-img {
+    position: absolute;
+    right: 68%;
+    bottom: 2px;
+}
+
 .btn-save {
     position: relative;
     top: 70px;
     width: 105px;
     float: right;
+    background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
+    border-radius: 22px;
+
+    span {
+        position: relative;
+        left: 5px;       
+        
+    }
 }
 
 </style>

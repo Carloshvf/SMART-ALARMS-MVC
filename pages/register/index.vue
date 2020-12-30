@@ -305,7 +305,10 @@
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar" v-if="ok == false" @click="saveData('b-toaster-bottom-right')" disabled>Salvar</button>
+        <button class="btn btn-green btn-salvar" v-if="ok == false" @click="saveData('b-toaster-bottom-right')" disabled>
+          <img class="cross-img" src="../../static/img/plus.svg" alt="cross"/>
+          Salvar
+          </button>
         <button class="btn btn-green btn-salvar" v-if="ok == true" @click="saveData('b-toaster-bottom-right')" :disabled="disabling">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
           Salvar
@@ -632,6 +635,8 @@ input[type=number] {
 .btn-validar {
   width: 156px;
   height: 52px;
+  background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
+  border-radius: 22px;
 }
 
 .area {
@@ -646,12 +651,15 @@ input[type=number] {
 .btn-salvar {
   width: 105px;
   float: right;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
 }
 
 .btn-cadastrados {
   color: #ffffff;
   background-color: $dark-purple;
   float: right;
+  border-radius: 22px;
 }
 
 .push-area {
