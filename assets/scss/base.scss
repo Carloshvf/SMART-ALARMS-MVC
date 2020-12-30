@@ -270,7 +270,7 @@ select {
     }
 
     p {
-      font-size: 12px;
+      font-size: 14px;
     }
 
     h1 {
@@ -338,3 +338,7 @@ select {
   }
 }
 
+button {
+    outline: none;
+    border: 0 !important;
+}

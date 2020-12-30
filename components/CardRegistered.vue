@@ -1,9 +1,9 @@
 <template>
         <div class="card mt-4">
-            <div class="card-white">
-                <h1>{{ alarm.name }}</h1>
+            <div class="card-white card-min-heigh">
+                <h1 class="card-font-size">{{ alarm.name }}</h1>
                 <span>Causa</span>
-                <p>{{ alarm.causa }}</p>
+                <p class="card-font-size">{{ alarm.causa }}</p>
                 <hr>
                 <div class="align options">
                     <button class="btn mr-5" @click="deletion(ind)">Excluir <delete class="options"></delete></button>
