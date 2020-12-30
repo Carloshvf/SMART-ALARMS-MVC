@@ -25,10 +25,14 @@
     <div class="row">
       <div class="col-sm-4" v-for="item in computed_filter" :key="item.id">
         <div class="card mt-4">
-          <div class="card-white">
-            <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
+          <div class="card-white card-min-height">
+            <div class="scroll-h1">
+              <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
+            </div>
             <span>Causa</span>
-            <p>{{ item.infos[0].causa }}</p>
+            <div class="scroll-causa">
+              <p>{{ item.infos[0].causa }}</p>
+            </div>
             <hr v-if="permButtons == true"/>
             <div class="align options">
               <button class="btn mr-5" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
@@ -190,5 +194,19 @@ button:hover {
 .options:hover {
   color: #008542;
   transition: $transition;
+}
+
+.card-min-height {
+    height: 220px;
+}
+
+.scroll-causa {
+  overflow: auto;
+  height: 60px;
+}
+
+.scroll-h1 {
+  overflow: auto;
+  
 }
 </style>
