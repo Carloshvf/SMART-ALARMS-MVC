@@ -35,13 +35,13 @@
             </div>
             
             <div class="align options mb-5">
-              <button class="btn mr-5 pb-4" @click="deletion(item.id,'b-toaster-bottom-right')" >
+              <button class="btn mr-5 pb-4" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
                 Excluir
               </button>
 
               <nuxt-link
                 :to="{ name: 'register-id', params: { id: item.id } }"
-                class="btn options ml-5 pb-4" 
+                class="btn options ml-5 pb-4" v-if="permButtons == true"
               >Editar</nuxt-link>
             </div>
           </div>
