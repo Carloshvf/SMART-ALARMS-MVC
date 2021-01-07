@@ -377,8 +377,8 @@ export default {
                 status: this.tab.status,
                 comando: choice,
                 observacao: obs,
-                nome:"Diego",
-                chave:"QRST"
+                nome: this.tab.nome_usuario,
+                chave: this.tab.chave
             })
             await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]})
             this.loadSuggestions(this.unit)
@@ -390,11 +390,11 @@ export default {
         
         this.allEdit.push({
             sugestao: this.observac,
-            nome:"Rodolfo Cavalcante",
-            chave:"QRST",
+            nome: this.tab.nome_usuario,
+            chave: this.tab.chave,
             lista_ugs: this.lists,
         })
-        // console.log(this.editSug.lista_ugs)
+
         await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]})
         this.loadSuggestions(this.unit)
     }

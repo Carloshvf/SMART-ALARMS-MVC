@@ -30,6 +30,7 @@ export const state = () => ({
   errEditSede: '',
   getAlarm: [],
   getHeader: [],
+  checkingSession: []
   // 
   
 })
@@ -97,6 +98,9 @@ export const mutations = {
   },
   setHeaderGet(state, getHeader) {
     state.getHeader = getHeader
+  },
+  setIdCheck(state, checkingSession) {
+    state.checkingSession = checkingSession
   },
 
   // POPULANDO A PAGINA DE EDITAR UNIDADES
@@ -229,6 +233,21 @@ export const actions = {
     context.commit('setAll', all)
   },
 
+// GET PARA CHECAR O ID DA SESSÃO
+  async idCheck(context, dados) {
+    await this.$axios.get(
+      HOST_API + '/header/' + dados, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
+    )
+    .then(response => {
+      this.checkingSession = response.data
+    })
+
+    context.commit('setIdCheck', this.checkingSession)
+  },
+
   // GET DO HEADER DAS PAGINAS
   async headerGet(context, dados) {
     await this.$axios.get(
@@ -285,7 +304,7 @@ export const actions = {
         }}
     )
     .then(response => {
-      this.suggestRegister = response.data.filtro
+      this.suggestRegister = response.data
     })
 
     context.commit('setRegister', this.suggestRegister)

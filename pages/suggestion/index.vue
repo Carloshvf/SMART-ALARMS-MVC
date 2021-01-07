@@ -244,10 +244,11 @@ export default {
             
             this.allRegister.push({
                 sugestao: this.observacao,
-                nome:"Rodolfo Cavalcante",
-                chave:"QRST",
+                nome: this.realUser.nome,
+                chave: this.realUser.chave,
                 lista_ugs: this.selects,
             })
+            // console.log(this.realUser.chave)
             await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]})
             this.loadSuggestions(this.unitId)
             this.filteredOptions()
@@ -265,6 +266,10 @@ export default {
         },
 
         sugRegister() {
+            return this.$store.state.suggestRegister.filtro
+        },
+
+        realUser() {
             return this.$store.state.suggestRegister
         },
 
@@ -323,6 +328,7 @@ export default {
             this.filteredOptions()
             this.filteredRegister()
         }, 1000);
+        // console.log(this.realUser)
         // console.log(this.sugRegister)
 
     }
