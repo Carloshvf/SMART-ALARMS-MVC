@@ -71,7 +71,7 @@
             </div>
         </div>
         <!-- MODAL -->
-        <b-modal size="xl" id="modal-cadastrar" @hidden="onHidden">
+        <b-modal size="xl" id="modal-cadastrar" @hidden="onHidden" @show="onShow">
             <template v-slot:modal-title>
                 <div class="row">
                     <div class="col-2 ">
