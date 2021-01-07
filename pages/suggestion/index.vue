@@ -194,6 +194,10 @@ export default {
     methods: {
         ...mapActions(['loadSuggestions', 'getRegister', 'registerSuggestions']),
 
+        onShow() {
+            this.filteredRegister()
+        },
+
         cancelCadastro() {
             this.regModal1 = ""
             this.regModal2 = ""
