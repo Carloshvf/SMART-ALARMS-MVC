@@ -11,7 +11,8 @@
                 <input class="form-control search-input" v-model="search">
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="card p-2 pb-4 mt-4">
+        <div class="row m-0">
             <div class="col-3">
                 <label class="labels mt-4">NOME</label>
                 <input class="form-control" placeholder="Nome do usuário" v-model="name">
@@ -37,9 +38,13 @@
                 </select>
             </div>
             <div class="col-3">
-                <b-button class="btn btn-green btn-save" @click="saveUser('b-toaster-bottom-right')">Salvar</b-button>
+                <b-button class="btn btn-green btn-save" @click="saveUser('b-toaster-bottom-right')">
+                    <img class="cross-img" src="../../static/img/plus.svg" alt="cross"/>
+                    <span>Salvar</span>
+                </b-button>
                 <nuxt-link to="/units" class="btn btn-return">Cancelar</nuxt-link>
             </div>
+        </div>
         </div>
         <div class="row mt-5">
             <div class="col card card-user">
@@ -344,6 +349,7 @@ extends: VueTypeahead,
     width: 120px;
     color: #ffffff;
     background-color: $dark-purple;
+    border-radius: 22px;
 
     &:hover{
         background-color: $dark-purple;
@@ -397,10 +403,24 @@ extends: VueTypeahead,
     top: 10px;
 }
 
+.cross-img {
+    position: absolute;
+    right: 68%;
+    bottom: 2px;
+}
+
 .btn-save {
     position: relative;
     top: 55px;
     width: 120px;
+    background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
+    border-radius: 22px;
+
+    span {
+        position: relative;
+        left: 5px;       
+        
+    }
 }
 
 </style>

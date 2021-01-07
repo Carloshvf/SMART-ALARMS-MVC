@@ -88,9 +88,13 @@
                         <span style="color: #226E48">{{tab.gestao_unidade[0].status}}</span>
                     </div>
                 </div>
+                <div class="row">
+                    <!-- div.col-10+div.col-2|c -->
+                </div>
                  <div class="row">
                      <div class="col-10">
-                        <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer1">
+                        <textarea class="form-control observ mt-2" placeholder="Digite aqui sua observação" rows="4" v-model="answer1">
+                        </textarea>
                      </div>
                      <div class="col-2" style="text-align: center;">
                          <b-button class="btn-enviar" @click="sendChoice(tipo1, accept, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true">
@@ -125,7 +129,8 @@
                 </div>
                  <div class="row">
                      <div class="col-10">
-                        <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer2">
+                        <textarea class="form-control observ mt-2" placeholder="Digite aqui sua observação" rows="4" v-model="answer2">
+                        </textarea>
                      </div>
                      <div class="col-2" style="text-align: center;">
                          <b-button class="btn-enviar" @click="sendChoice(tipo2, accept, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true">
@@ -160,7 +165,8 @@
                 </div>
                  <div class="row">
                      <div class="col-10">
-                        <input class="form-control observ mt-2" placeholder="Digite aqui sua observação" v-model="answer3">
+                        <textarea class="form-control observ mt-2" placeholder="Digite aqui sua observação" rows="4" v-model="answer3">
+                        </textarea>
                      </div>
                      <div class="col-2" style="text-align: center;">
                          <b-button class="btn-enviar" @click="sendChoice(tipo3, implement, answer3)" v-if="tab.executor[0].status == 'Em análise' && tab.executor[0].botao == true">
@@ -252,7 +258,8 @@
                 </div>
                 <div class="row">
                     <div class="col mt-3 mb-3">
-                        <input class="form-control" placeholder="Digite aqui sua observação" v-model="observac">
+                        <textarea class="form-control" placeholder="Digite aqui sua observação" rows="4" v-model="observac">
+                        </textarea>
                     </div>
                 </div>
 
@@ -370,8 +377,8 @@ export default {
                 status: this.tab.status,
                 comando: choice,
                 observacao: obs,
-                nome:"Diego",
-                chave:"QRST"
+                nome: this.tab.nome_usuario,
+                chave: this.tab.chave
             })
             await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]})
             this.loadSuggestions(this.unit)
@@ -383,11 +390,11 @@ export default {
         
         this.allEdit.push({
             sugestao: this.observac,
-            nome:"Rodolfo Cavalcante",
-            chave:"QRST",
+            nome: this.tab.nome_usuario,
+            chave: this.tab.chave,
             lista_ugs: this.lists,
         })
-        // console.log(this.editSug.lista_ugs)
+
         await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]})
         this.loadSuggestions(this.unit)
     }
@@ -437,6 +444,13 @@ export default {
     border: 1px solid #999999;
     border-radius: 4px;
 }
+textarea {
+  resize: none;
+}
+
+// .table thead tr th{
+//     border: none;
+// }
 
 .border-edit {
     border-bottom: 1px solid #dee2e6;

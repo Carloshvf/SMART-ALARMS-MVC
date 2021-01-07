@@ -104,6 +104,7 @@ export default {
         result = arrays.filter(i => i.id === id)
         result = result[0].kks
         let result2 = result.slice()
+        // console.log(result2)
         result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
         result = result.filter(
           (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
@@ -172,6 +173,8 @@ export default {
 
   computed: {
     lists() {
+      //const state = [{"id": "UG 11", "active": 0, "kks": [{"value": "11teste20logica", "valor_medida": "", "date": "12/29/2020 18:40:00", "name": "UG 11", "type": "PLS", "complemento": "", "contador": "08:00", "cause": "teste obrigatoriedade medida", "status_one": [], "status_two": [], "recom": [], "channels": []}]},  {"id": "UG 21", "active": 1, "kks": [{"value": "11teste20logica2", "valor_medida": "", "date": "12/29/2020 19:11:00", "name": "UG 21", "type": "PLS", "complemento": "", "contador": "08:00", "cause": "teste obrigatoriedade medida 2", "status_one": [], "status_two": [], "recom": [], "channels": []}]}, {"id": "UG 21", "active": 1, "kks": [{"value": "11teste20logica3", "valor_medida": "", "date": "12/29/2020 19:11:01", "name": "UG 21", "type": "PLS", "complemento": "", "contador": "05:00", "cause": "teste obrigatoriedade medida 2", "status_one": [], "status_two": [], "recom": [], "channels": []}]}, {"id": "UG 31", "active": 0, "kks": []}, {"id": "UG 12", "active": 0, "kks": []}, {"id": "UG 22", "active": 0, "kks": []}, {"id": "UG 32", "active": 0, "kks": []}, {"id": "UG 18", "active": 0, "kks": []}, {"id": "UG 28", "active": 0, "kks": []}, {"id": "UG 38", "active": 0, "kks": []}, {"id": "CAV1", "active": 0, "kks": []}, {"id": "CAV2", "active": 0, "kks": []}, {"id": "CAV3", "active": 0, "kks": []}]
+      
       return this.$store.state.all
     },
 
@@ -215,7 +218,7 @@ export default {
         }  else {
           clearInterval(this.stopInterval)
         }
-      }, 5000);
+      }, 3000);
   },
 }
 </script>
