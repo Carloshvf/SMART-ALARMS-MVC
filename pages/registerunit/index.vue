@@ -1,10 +1,12 @@
 <template>
   <div class="container">
-      <div class="row mt-5">
-        <div class="col mt-5">
-            <h1 class="alarm-title">Criação/edição de novas unidades operacionais</h1>
-        </div>
+    <div class="row mt-5">
+      <div class="col mt-5 mb-3">
+          <h1 class="alarm-title">Criação/edição de novas unidades operacionais</h1>
       </div>
+    </div>
+    <div class="row">
+      <div class="col card">
       <div class="row">
         <div class="col-6">
             <label class="mt-4">NOME DA UNIDADE</label>
@@ -29,14 +31,14 @@
             <input v-mask="'##:##'" class="form-control" v-model="contUnit">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add" @click="pushEvent()">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add rounded-circle" @click="pushEvent()">+</b-button>
           </div>
           <div class="col-3">
             <label class="mt-4">SISTEMAS MONITORADOS</label>
             <input class="form-control" v-model="systemUnit">
           </div>
           <div class="col-3">
-              <b-button class="btn btn-green btn-add" @click="pushSystem()">Adicionar</b-button>
+              <b-button class="btn btn-green btn-add rounded-circle" @click="pushSystem()">+</b-button>
           </div>
       </div>
 
@@ -96,7 +98,7 @@
           <input class="form-control" v-model="subModel">
         </div>
         <div class="col-3">
-            <b-button class="btn btn-green btn-add" @click="pushSub('b-toaster-bottom-right')">Adicionar</b-button>
+            <b-button class="btn btn-green btn-add rounded-circle" @click="pushSub('b-toaster-bottom-right')">+</b-button>
         </div>
       </div>
 
@@ -124,11 +126,16 @@
       
       <div class="row">
           <div class="col">
-              <b-button class="btn btn-green btn-save" @click="saveUnit('b-toaster-bottom-right')">Salvar</b-button>
+              <b-button class="btn btn-green btn-save" @click="saveUnit('b-toaster-bottom-right')">
+                <img class="cross-img" src="../../static/img/plus.svg" alt="cross"/>
+                <span>Salvar</span>
+                </b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
           
       </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -224,7 +231,7 @@ export default {
 .btn-add {
     position: relative;
     top: 55px;
-    width: 255px;
+    right: 10px;
 }
 
 .btn-cancel {
@@ -235,6 +242,7 @@ export default {
   right: 30px;
   top: 70px;
   float: right;
+  border-radius: 22px;  
 
   &:hover{
     color: $white;
@@ -242,11 +250,25 @@ export default {
   } 
 }
 
+.cross-img {
+    position: absolute;
+    right: 68%;
+    bottom: 2px;
+}
+
 .btn-save {
     position: relative;
     top: 70px;
     width: 105px;
     float: right;
+    background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
+    border-radius: 22px;
+
+    span {
+        position: relative;
+        left: 5px;       
+        
+    }
 }
 
 </style>

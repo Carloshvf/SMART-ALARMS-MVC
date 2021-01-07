@@ -25,20 +25,23 @@
     <div class="row">
       <div class="col-sm-4" v-for="item in computed_filter" :key="item.id">
         <div class="card mt-4">
-          <div class="card-white">
-            <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
+          <div class="card-white card-min-height">
+            <div class="scroll-h1">
+              <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
+            </div>
             <span>Causa</span>
-            <p>{{ item.infos[0].causa }}</p>
-            <hr v-if="permButtons == true"/>
-            <div class="align options">
-              <button class="btn mr-5" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
+            <div class="scroll-causa">
+              <p>{{ item.infos[0].causa }}</p>
+            </div>
+            
+            <div class="align options mb-5">
+              <button class="btn mr-5 pb-4" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
                 Excluir
-                <delete class="options"></delete>
               </button>
 
               <nuxt-link
                 :to="{ name: 'register-id', params: { id: item.id } }"
-                class="btn options ml-5" v-if="permButtons == true"
+                class="btn options ml-5 pb-4" v-if="permButtons == true"
               >Editar</nuxt-link>
             </div>
           </div>
@@ -190,5 +193,19 @@ button:hover {
 .options:hover {
   color: #008542;
   transition: $transition;
+}
+
+.card-min-height {
+    height: 220px;
+}
+
+.scroll-causa {
+  overflow: auto;
+  height: 60px;
+}
+
+.scroll-h1 {
+  overflow: auto;
+  height: 58px;
 }
 </style>

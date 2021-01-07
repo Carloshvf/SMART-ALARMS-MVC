@@ -1,12 +1,13 @@
 <template>
   <div class="container">
-    <div class="form-row align-items-end mt-4">
+    <div class="form-row align-items-end mt-4 mb-2">
       <div class="col">
         <h1 class="mt-5 titles">Cadastro de alarme</h1>
       </div>
     </div>
-
-    <div class="form-row mt-4">
+    <div class="row">
+      <div class="col card">
+    <div class="form-row ">
       <div class="col-2">
         <label class="mt-4 sizing">LOCAL</label>
         <select class="form-control" v-model="local">
@@ -280,7 +281,7 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="form-row mt-5">
-        <div class="col-3">
+        <div class="col-5">
           <h4 class="titles">Recomendações</h4>
         </div>
       </div>
@@ -288,7 +289,7 @@
         <div class="col-12">
           <textarea class="form-control area" placeholder="Escreva aqui..." rows="3" v-model="recommendation"></textarea>
         </div>
-        <div class="mt-4">
+        <div class="mt-3 mb-3">
           <button class="btn btn-green rounded-circle" @click="sendRecommendation()">+</button>
         </div>
       </div>
@@ -324,6 +325,8 @@
       </b-button>
     </b-modal>
     <!-- MODAL -->
+  </div>
+    </div>
   </div>
 
   </div>

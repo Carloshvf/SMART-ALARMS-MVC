@@ -137,7 +137,8 @@
                 </div>
                     <div class="row">
                         <div class="col mt-3 mb-3">
-                            <input class="form-control" placeholder="Digite aqui sua observação" v-model="observacao">
+                            <textarea class="form-control" placeholder="Digite aqui sua observação" rows="4" v-model="observacao">
+                            </textarea>
                         </div>
                     </div>
             </template>
@@ -243,10 +244,11 @@ export default {
             
             this.allRegister.push({
                 sugestao: this.observacao,
-                nome:"Rodolfo Cavalcante",
-                chave:"QRST",
+                nome: this.realUser.nome,
+                chave: this.realUser.chave,
                 lista_ugs: this.selects,
             })
+            // console.log(this.realUser.chave)
             await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]})
             this.loadSuggestions(this.unitId)
             this.filteredOptions()
@@ -264,6 +266,10 @@ export default {
         },
 
         sugRegister() {
+            return this.$store.state.suggestRegister.filtro
+        },
+
+        realUser() {
             return this.$store.state.suggestRegister
         },
 
@@ -322,6 +328,7 @@ export default {
             this.filteredOptions()
             this.filteredRegister()
         }, 1000);
+        // console.log(this.realUser)
         // console.log(this.sugRegister)
 
     }
@@ -347,6 +354,18 @@ export default {
         right: 35px;
         font-size: 12px;
     }
+}
+
+// .table thead tr th{
+//     border: none;
+// }
+
+.alter {
+    border: none;
+}
+
+textarea {
+  resize: none;
 }
 
 .scroll {

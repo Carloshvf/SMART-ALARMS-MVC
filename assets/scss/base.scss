@@ -270,7 +270,7 @@ select {
     }
 
     p {
-      font-size: 12px;
+      font-size: 14px;
     }
 
     h1 {
@@ -321,6 +321,7 @@ select {
   color: #FFFFFF;
   width: 156px;
   height: 52px;
+  border-radius: 22px;
 }
 
 .btn-primary {
@@ -338,3 +339,7 @@ select {
   }
 }
 
+button {
+    outline: none;
+    border: 0 !important;
+}
