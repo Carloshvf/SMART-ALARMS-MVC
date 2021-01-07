@@ -3,7 +3,6 @@ export default {
   env: {
     //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
     baseURL: process.env.baseURL || 'https://smartalarms-backend-hmg.petrobras.com.br'
-    
   },
 
   mode: 'spa',
