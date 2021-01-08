@@ -331,7 +331,7 @@ export default {
         this.getRegister(this.unitId || '')
         setTimeout(() => {
             this.filteredOptions()
-        }, 1000);
+        }, 3000);
         // console.log(this.realUser)
         // console.log(this.sugRegister)
 
