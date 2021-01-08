@@ -196,6 +196,7 @@ export default {
 
         onShow() {
             this.filteredRegister()
+            console.log("teste se subiu")
         },
 
         cancelCadastro() {
