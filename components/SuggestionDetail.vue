@@ -355,12 +355,10 @@ export default {
             this.$bvModal.hide(this.modal_id)
         },
 
-        showModal(value) {
+        async showModal(value) {
             this.modalEdit = value
-            this.editingSuggestions({unit: this.unit, id:this.modal_id})
-            setTimeout(() => {
-                this.filteredOptions()    
-            }, 500);
+            await this.editingSuggestions({unit: this.unit, id:this.modal_id})
+            this.filteredOptions()
             
             setTimeout(() => {
                 this.$bvModal.show(this.modal_id)
@@ -381,7 +379,8 @@ export default {
                 chave: this.tab.chave
             })
             await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]})
-            await this.loadSuggestions(this.unit)
+            this.loadSuggestions(this.unit)
+            this.$bvModal.hide(this.modal_id)
             // this.sugResponse = this.$store.state.suggestChoice
         },
 
@@ -396,7 +395,8 @@ export default {
         })
 
         await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]})
-        await this.loadSuggestions(this.unit)
+        this.loadSuggestions(this.unit)
+        this.$bvModal.hide(this.modal_id)
     }
     },
 
