@@ -196,7 +196,7 @@ export default {
 
         onShow() {
             this.filteredRegister()
-            console.log("teste")
+            console.log("teste se subiu")
         },
 
         cancelCadastro() {
@@ -331,8 +331,7 @@ export default {
         this.getRegister(this.unitId || '')
         setTimeout(() => {
             this.filteredOptions()
-            this.filteredRegister()
-        }, 1000);
+        }, 3000);
         // console.log(this.realUser)
         // console.log(this.sugRegister)
 
