@@ -196,7 +196,7 @@ export default {
 
         onShow() {
             this.filteredRegister()
-            console.log("teste se subiu")
+            // console.log("teste se subiu")
         },
 
         cancelCadastro() {
@@ -326,12 +326,10 @@ export default {
         }
     },
 
-    created() {
-        this.loadSuggestions(this.unitId || '')
+    async created() {
+        await this.loadSuggestions(this.unitId || '')
         this.getRegister(this.unitId || '')
-        setTimeout(() => {
-            this.filteredOptions()
-        }, 3000);
+        this.filteredOptions()
         // console.log(this.realUser)
         // console.log(this.sugRegister)
 
