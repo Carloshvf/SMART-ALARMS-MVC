@@ -194,7 +194,8 @@ export default {
     methods: {
         ...mapActions(['loadSuggestions', 'getRegister', 'registerSuggestions']),
 
-        onShow() {
+        async onShow() {
+            await this.getRegister(this.unitId || '')
             this.filteredRegister()
             // console.log("teste se subiu")
         },
@@ -255,7 +256,7 @@ export default {
             })
             // console.log(this.realUser.chave)
             await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]})
-            this.loadSuggestions(this.unitId)
+            await this.loadSuggestions(this.unitId)
             this.filteredOptions()
             this.$bvModal.hide('modal-cadastrar')
         }
@@ -328,7 +329,6 @@ export default {
 
     async created() {
         await this.loadSuggestions(this.unitId || '')
-        this.getRegister(this.unitId || '')
         this.filteredOptions()
         // console.log(this.realUser)
         // console.log(this.sugRegister)
