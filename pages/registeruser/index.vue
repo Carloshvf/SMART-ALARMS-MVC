@@ -19,7 +19,7 @@
             </div>
             <div class="col-2">
                 <label class="labels mt-4">CHAVE</label>
-                <input class="form-control" placeholder="ABCD" v-model="key">
+                <input class="form-control" style="text-transform: uppercase;" placeholder="ABCD" v-model="key">
             </div>
             <div class="col-2">
                 <label class="labels mt-4">PERFIL</label>
@@ -147,7 +147,7 @@ extends: VueTypeahead,
         ...mapActions(['gettingProfile', 'postProfile', 'gettingProfileEdit', 'editProfile']),
 
         async showModal(id) {
-            this.gettingProfileEdit(id)
+            await this.gettingProfileEdit(id)
             setTimeout(() => {
                 this.$bvModal.show(id)
             }, 400);
@@ -159,7 +159,7 @@ extends: VueTypeahead,
             
             this.allData.push({
                 nome: this.name,
-                chave: this.key,
+                chave: this.key.toUpperCase(),
                 perfil: this.profile,
                 unidade: this.unit,
             })
