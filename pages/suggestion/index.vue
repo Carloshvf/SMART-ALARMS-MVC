@@ -192,7 +192,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['loadSuggestions', 'getRegister', 'registerSuggestions']),
+        ...mapActions(['loadSuggestions', 'getRegister', 'registerSuggestions', 'idCheck', 'logOff']),
 
         async onShow() {
             await this.getRegister(this.unitId || '')
@@ -267,6 +267,10 @@ export default {
             return this.$cookies.get('unit') || '';
         },
 
+        session() {
+            return this.$store.state.checkingSession
+        },
+
         sugDetail() {
             return this.$store.state.suggest
         },
@@ -328,6 +332,15 @@ export default {
     },
 
     async created() {
+        // Logoff automatico
+        await this.idCheck()
+        if (this.session == false) {
+            this.logOff({logout: "tes"})
+            this.$cookies.removeAll();
+            this.$router.push('/')
+        }
+        //
+
         await this.loadSuggestions(this.unitId || '')
         this.filteredOptions()
         // console.log(this.realUser)

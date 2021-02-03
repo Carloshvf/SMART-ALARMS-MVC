@@ -59,6 +59,10 @@ export default {
       return this.$store.state.getUnit.unidades
     },
 
+    session() {
+      return this.$store.state.checkingSession
+    },
+
     unitPermission() {
       return this.$store.state.getUnit.cadastro
     },
@@ -69,7 +73,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['gettingUnits', 'headerGet']),
+    ...mapActions(['gettingUnits', 'headerGet', 'idCheck', 'logOff']),
 
     async showModal(id) {
       this.$bvModal.show(id)
@@ -107,6 +111,23 @@ export default {
   },
 
   async created() {
+    // Logoff automatico
+      await this.idCheck()
+        if (this.session == false) {
+          this.logOff({logout: "tes"})
+          this.$cookies.removeAll();
+          this.$router.push('/')
+        }
+      setInterval(() => {
+        this.idCheck()
+        if (this.session == false) {
+          this.logOff({logout: "tes"})
+          this.$cookies.removeAll();
+          this.$router.push('/')
+        }
+      }, 3600000);
+      // 3600000
+      // 
     this.gettingUnits()
     setTimeout(() => {
       this.disable = false

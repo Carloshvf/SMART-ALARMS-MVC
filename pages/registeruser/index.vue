@@ -144,7 +144,7 @@ extends: VueTypeahead,
     },
 
     methods: {
-        ...mapActions(['gettingProfile', 'postProfile', 'gettingProfileEdit', 'editProfile']),
+        ...mapActions(['gettingProfile', 'postProfile', 'gettingProfileEdit', 'editProfile', 'idCheck', 'logOff']),
 
         async showModal(id) {
             await this.gettingProfileEdit(id)
@@ -233,6 +233,9 @@ extends: VueTypeahead,
     },
 
     computed: {
+        session() {
+            return this.$store.state.checkingSession
+        },
         profileOptions() {
             return this.$store.state.getProfile.opcoes_perfil
         },
@@ -320,7 +323,16 @@ extends: VueTypeahead,
 
     },
 
-    created() {
+    async created() {
+        // Logoff automatico
+        await this.idCheck()
+        if (this.session == false) {
+            this.logOff({logout: "tes"})
+            this.$cookies.removeAll();
+            this.$router.push('/')
+        }
+        //
+
         this.gettingProfile()
         
     }
