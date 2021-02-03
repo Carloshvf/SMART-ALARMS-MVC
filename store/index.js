@@ -233,16 +233,17 @@ export const actions = {
     context.commit('setAll', all)
   },
 
-// GET PARA CHECAR O ID DA SESSÃO
+// GET PARA CHECAR O TOKEN DA SESSÃO
   async idCheck(context, dados) {
     await this.$axios.get(
-      HOST_API + '/header/' + dados, {
+      HOST_API + '/validacao_id_sessao', {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
-      this.checkingSession = response.data
+      this.checkingSession = response.data.value
+      // console.log(response.data.value)
     })
 
     context.commit('setIdCheck', this.checkingSession)

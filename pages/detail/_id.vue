@@ -86,7 +86,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadData']),
+    ...mapActions(['loadData', 'idCheck', 'logOff']),
 
     teste (value) {
       this.incEnde = value
@@ -136,6 +136,10 @@ export default {
       return this.$store.state.all
     },
 
+    session() {
+      return this.$store.state.checkingSession
+    },
+
     currentRouteName() {
         return this.$route.name;
     },
@@ -145,7 +149,16 @@ export default {
    
   },
 
-  created() {
+  async created() {
+    // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+    // 
+
     this.stopInterval = setInterval(() => {
         if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'detail-id') {
             clearInterval(this.stopInterval)
