@@ -128,6 +128,7 @@ export default {
       }, 3600000);
       // 3600000
       // 
+      
     this.gettingUnits()
     setTimeout(() => {
       this.disable = false
