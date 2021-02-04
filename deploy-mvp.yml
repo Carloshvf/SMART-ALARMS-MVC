@@ -2,7 +2,8 @@ version: 0.2
 env: 
   variables: 
       projectName: "smartalarms-frontend-vue"
-      slackChannel: "CR288CXPW"   
+      slackChannel: "CR288CXPW"
+      gitLabToken: "v1RKjduCfzD73wNNvJmL"
 phases:
  install:
    runtime-versions:
@@ -10,6 +11,7 @@ phases:
    commands:
     - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer o deploy da aplicação 
     - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//') 
+    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     - apt-get update 
     - cd $CODEBUILD_SRC_DIR 
     - mkdir .arquitetura-td-build 
