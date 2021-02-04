@@ -9,7 +9,8 @@ phases:
       nodejs: 10
    commands:
     - echo 1º Passo - Instalar os requisitos para o servidor de Build conseguir fazer o deploy da aplicação 
-    - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//') 
+    - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//')
+    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     - apt-get update 
     - cd $CODEBUILD_SRC_DIR 
     - mkdir .arquitetura-td-build 
