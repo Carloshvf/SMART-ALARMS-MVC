@@ -381,6 +381,10 @@ export default {
   },
 
   computed: { 
+    session() {
+      return this.$store.state.checkingSession
+    },
+    
     local: {
       get () {
         return this.$store.state.edit.local
@@ -537,7 +541,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['sendAlarms', 'sendLogic', 'updateData']),
+    ...mapActions(['sendAlarms', 'sendLogic', 'updateData', 'idCheck', 'logOff']),
     ...mapMutations({
       recomAdd: 'setNewRecom',
       canaisAdd: 'setNewCanal',
@@ -813,7 +817,16 @@ export default {
 
   },
 
-   created() {
+   async created() {
+     // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+    //
+
      // TODA VEZ Q TIVER CAMPO NOVO DA LOGICA ELE TEM Q ENTRAR AQUI PRA DAR CERTO NA LOGICA
       for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {
         this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme, 

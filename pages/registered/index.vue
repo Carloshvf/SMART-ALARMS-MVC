@@ -87,6 +87,10 @@ export default {
       return this.$store.state.cardAlarm
     },
 
+    session() {
+      return this.$store.state.checkingSession
+    },
+
     cardInfo() {
       return this.$store.state.cardAlarm.todos
     },
@@ -126,7 +130,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadRegistered', 'deleteRegistered']),
+    ...mapActions(['loadRegistered', 'deleteRegistered', 'idCheck', 'logOff']),
 
     async deletion(id, toaster) {
       await this.$axios
@@ -151,6 +155,15 @@ export default {
   },
 
   async created() {
+    // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+    //
+
     this.loadRegistered({unit: this.unitId || ''})
   }
 }

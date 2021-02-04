@@ -383,6 +383,10 @@ export default {
       return this.$cookies.get('unit') || '';
     },
 
+    session() {
+      return this.$store.state.checkingSession
+    },
+
     selectFilters() {
       return this.$store.state.getAlarm
     }
@@ -390,7 +394,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['sendAlarms', 'sendLogic', 'updateData', 'loadRegister']),
+    ...mapActions(['sendAlarms', 'sendLogic', 'updateData', 'loadRegister', 'idCheck', 'logOff']),
 
     sendOperator() {
       this.pushed.push(this.operators)
@@ -591,7 +595,16 @@ export default {
 
   },
 
-  created() {
+  async created() {
+    // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+    //
+    
     this.loadRegister(this.unitId || '')
   }
   

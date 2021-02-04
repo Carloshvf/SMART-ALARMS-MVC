@@ -85,7 +85,7 @@ export default {
   },
 
    methods: {
-    ...mapActions(['loadData']),
+    ...mapActions(['loadData', 'idCheck', 'logOff']),
 
     check (value) {
       this.receive = value
@@ -178,6 +178,10 @@ export default {
       return this.$store.state.all
     },
 
+    session() {
+      return this.$store.state.checkingSession
+    },
+
     unitId() {
       return this.$cookies.get('unit') || '';
     },
@@ -187,7 +191,16 @@ export default {
     }
   },
 
-  created() {
+  async created() {
+      // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+      // 
+      
       this.stopInterval = setInterval(() => {
         if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'alarm') {
           clearInterval(this.stopInterval)

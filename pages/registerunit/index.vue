@@ -164,7 +164,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['registerUnit']),
+    ...mapActions(['registerUnit', 'idCheck', 'logOff']),
 
     cleanType(index) {
       this.eventType.splice(index, 1)
@@ -219,8 +219,21 @@ export default {
 
   },
 
+  computed: {
+    session() {
+      return this.$store.state.checkingSession
+    }
+  },
+
   async created() {
-    
+    // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+    //
   }
 }
 </script>

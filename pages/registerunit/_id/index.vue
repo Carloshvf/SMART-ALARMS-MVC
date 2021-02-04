@@ -160,6 +160,10 @@ export default {
   },
 
   computed: {
+    session() {
+      return this.$store.state.checkingSession
+    },
+    
     unitName: {
       get () {
         return this.$store.state.getEdit.unidade
@@ -204,7 +208,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['gettingEdits', 'updateUnit']),
+    ...mapActions(['gettingEdits', 'updateUnit', 'idCheck', 'logOff']),
     ...mapMutations({
       cleanTypes: 'setCleanType',
       cleanSystems: 'setCleanSystem',
@@ -267,6 +271,15 @@ export default {
   },
 
   async created() {
+    // Logoff automatico
+      await this.idCheck()
+      if (this.session == false) {
+        this.logOff({logout: "tes"})
+        this.$cookies.removeAll();
+        this.$router.push('/')
+      }
+    //
+
     this.gettingEdits(this.id)
   }
 }
