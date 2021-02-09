@@ -118,15 +118,6 @@ export default {
           this.$cookies.removeAll();
           this.$router.push('/')
         }
-      setInterval(() => {
-        this.idCheck()
-        if (this.session == false) {
-          this.logOff({logout: "tes"})
-          this.$cookies.removeAll();
-          this.$router.push('/')
-        }
-      }, 3600000);
-      // 3600000
       // 
       
     this.gettingUnits()
