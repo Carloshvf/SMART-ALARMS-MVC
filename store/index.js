@@ -590,6 +590,7 @@ export const actions = {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }}
+        
     )
   },
 
