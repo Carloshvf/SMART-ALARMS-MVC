@@ -586,8 +586,10 @@ export const actions = {
   async loadGraph(context, idGraph) {
     return this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/grafico/' +
-        idGraph
+      HOST_API + '/grafico/' + idGraph, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
   },
 
