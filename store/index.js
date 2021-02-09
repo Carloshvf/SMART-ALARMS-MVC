@@ -30,7 +30,8 @@ export const state = () => ({
   errEditSede: '',
   getAlarm: [],
   getHeader: [],
-  checkingSession: []
+  checkingSession: [],
+  clear: null
   // 
   
 })
@@ -247,6 +248,17 @@ export const actions = {
     })
 
     context.commit('setIdCheck', this.checkingSession)
+
+    if (this.clear == null) {
+      this.clear = setInterval(() => {
+        if (this.checkingSession == false) {
+          this.logOff({logout: "tes"})
+          this.$cookies.removeAll();
+          this.$router.push('/')
+        }
+      }, 3600000);
+    }
+    
   },
 
   // GET DO HEADER DAS PAGINAS
@@ -574,8 +586,10 @@ export const actions = {
   async loadGraph(context, idGraph) {
     return this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/grafico/' +
-        idGraph
+      HOST_API + '/grafico/' + idGraph, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }}
     )
   },
 
