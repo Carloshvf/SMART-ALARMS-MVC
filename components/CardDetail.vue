@@ -63,7 +63,7 @@ export default {
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
-      disable: false,
+      disable: true,
       fillData: {},
       chartOptions: {
         pan: {
@@ -226,6 +226,7 @@ export default {
 
 .card-button {
   background-color: #004165;
+  opacity: 1.0;
 }
 
 .type-background {
