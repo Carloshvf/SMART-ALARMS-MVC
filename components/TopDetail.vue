@@ -58,7 +58,7 @@ export default {
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
-      disable: false,
+      disable: true,
       fillData: {},
       chartOptions: {
         pan: {
@@ -200,6 +200,7 @@ export default {
   background-color: #004165;
   position: absolute;
   right: 15px;
+  opacity: 1.0;
 }
 
 .header-top {

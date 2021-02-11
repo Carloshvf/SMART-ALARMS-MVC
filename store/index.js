@@ -247,6 +247,10 @@ export const actions = {
       // console.log(response.data.value)
     })
 
+    .catch(error => {
+      this.checkingSession = error.response.data.erro
+    })
+
     context.commit('setIdCheck', this.checkingSession)
 
     if (this.clear == null) {
