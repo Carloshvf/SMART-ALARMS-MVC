@@ -60,7 +60,7 @@ export default {
       rerun: true,
       stopRerun: true,
       ceaseLoop: true,
-      disable: false,
+      disable: true,
       fillData: {},
       chartOptions: {
         pan: {
@@ -220,6 +220,7 @@ export default {
   border-radius: 40px;
   font-size: 18px;
   width: 100%;
+  opacity: 1.0;
 }
 
 .disabling {
