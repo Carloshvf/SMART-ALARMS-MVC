@@ -60,6 +60,11 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (this.session == false) {
+        this._vm.$bvToast.toast('O tempo da sessão expirou', {
+            title: `Logoff`,
+            toaster: toaster,
+            solid: true
+          })
         this.logOff({logout: "tes"})
         this.$cookies.removeAll();
         this.$router.push('/')
