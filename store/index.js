@@ -245,6 +245,7 @@ export const actions = {
     .then(response => {
       this.checkingSession = response.data.value
       // console.log(response.data.value)
+      
     })
 
     .catch(error => {
@@ -256,6 +257,11 @@ export const actions = {
     if (this.clear == null) {
       this.clear = setInterval(() => {
         if (this.checkingSession == false) {
+          this._vm.$bvToast.toast('O tempo da sessão expirou', {
+            title: `Logoff`,
+            toaster: 'b-toaster-bottom-right',
+            solid: true
+          })
           this.logOff({logout: "tes"})
           this.$cookies.removeAll();
           this.$router.push('/')
