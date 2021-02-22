@@ -155,7 +155,7 @@ export default {
       if (this.session == false) {
         this.$bvToast.toast('O tempo da sessão expirou', {
             title: `Logoff`,
-            toaster: toaster,
+            toaster: 'b-toaster-bottom-right',
             solid: true
           })
         this.logOff({logout: "tes"})

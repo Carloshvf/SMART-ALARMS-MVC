@@ -235,7 +235,7 @@ export const actions = {
   },
 
 // GET PARA CHECAR O TOKEN DA SESSÃO
-  async idCheck(context, dados, toaster) {
+  async idCheck(context, dados) {
     await this.$axios.get(
       HOST_API + '/validacao_id_sessao', {
         headers: {
@@ -259,7 +259,7 @@ export const actions = {
         if (this.checkingSession == false) {
           this._vm.$bvToast.toast('O tempo da sessão expirou', {
             title: `Logoff`,
-            toaster: toaster,
+            toaster: 'b-toaster-bottom-right',
             solid: true
           })
           this.logOff({logout: "tes"})
