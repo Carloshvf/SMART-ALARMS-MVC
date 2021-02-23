@@ -17,6 +17,7 @@ export const state = () => ({
   graph: [],
   authorizationId:"",
   userName: "",
+  keyName: "",
   salvarAlarm: '',
   validating: '',
   cardAlarm: [],
@@ -237,19 +238,19 @@ export const actions = {
 // GET PARA CHECAR O TOKEN DA SESSÃO
   async idCheck(context, dados) {
     await this.$axios.get(
-      HOST_API + '/validacao_id_sessao', {
+      HOST_API + '/validacao_id_sessao/' + this.$cookies.get('key') || '', {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }}
     )
     .then(response => {
       this.checkingSession = response.data.value
-      // console.log(response.data.value)
+      // console.log(this.$cookies.get('key') || '')
       
     })
 
     .catch(error => {
-      this.checkingSession = error.response.data.erro
+      this.checkingSession = false
     })
 
     context.commit('setIdCheck', this.checkingSession)
@@ -438,10 +439,13 @@ export const actions = {
       .then(response => {
       this.authorizationId = response.headers.authorization
       this.userName = response.data.nome
+      this.keyName = response.data.chave
       if (response.status == 200) {
         this.$cookies.set('token', JSON.stringify(this.authorizationId))
         this.$cookies.set('name', JSON.stringify(this.userName))
+        this.$cookies.set('key', JSON.stringify(this.keyName))
       }
+      // console.log(response.data.chave)
     })
     .catch(error => {
       this.valid = error.response.data.erro
