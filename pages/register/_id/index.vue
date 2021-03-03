@@ -179,7 +179,7 @@
                     <td class="border-line"> {{ item.end_medida }}</td>
                     <td class="border-line">{{ item.unidade }}</td>
                     <td class="border-line">
-                      <delete-outline @click="cleanCanais(index)"/>
+                      <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanCanais(index)"/>
                     </td>
                   </tr>
                 </tbody>
@@ -266,7 +266,7 @@
                   <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
                   <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
                   <td class="border-line">
-                      <delete-outline @click="cleanStatus(index)"/>
+                      <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanStatus(index)"/>
                   </td>
                 </tr>
               </tbody>
@@ -299,7 +299,7 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} <delete-outline @click="cleanRecom(index)"/></li>
+            <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/></li>
           </ul>
         </div>
       <div class="mt-5">
