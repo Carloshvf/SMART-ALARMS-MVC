@@ -12,11 +12,11 @@
           <div class="card mt-4">
             <div class="card-white">
               <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="showModal(item.id.toString())" v-if="item.edicao == true"/>
-              <!-- <nuxt-link
+              <nuxt-link
                 :to="{ name: 'registerunit-id', params: { id: item.id } }"
                 class="btn ml-5" v-if="item.edicao == true">
                 <img class="editing" src="../../static/img/editSelect.svg" alt="edit" />
-              </nuxt-link> -->
+              </nuxt-link>
               <!-- TEM Q REATIVAR DPS -->
               <nuxt-link to="/activealarm" @click.native="sendId(item.id)" :event="disable ? '' : 'click'">
                 <h1 class="unit-select">{{item.unidade}}</h1>

@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-6">
             <label class="mt-4">NOME DA UNIDADE</label>
-            <input class="form-control" placeholder="Escreva aqui..." v-model="unitName">
+            <input class="form-control" :disabled="disabling" placeholder="Escreva aqui..." v-model="unitName">
         </div>
         <div class="col-4">
             <label class="mt-4">TIPO DE CONEXÃO PRINCIPAL</label>
@@ -152,6 +152,7 @@ export default {
         systems: [],
         unitData: [],
         unitEditing: [],
+        disabling: true,
         contUnit: "",
         subUnit: "",
         subModel: "",
