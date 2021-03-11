@@ -6,11 +6,11 @@
           <img class="aligning" src="../static/img/login.png" alt="Logo1" />
           <div class="col">
             <label class="labels mt-3">USUÁRIO:</label>
-            <input class="passwords form-control" minlength="1" v-model="name">
+            <input class="passwords form-control" @keyup.enter="logging()" minlength="1" v-model="name">
           </div>
           <div class="col">
             <label class="labels mt-3">SENHA:</label>
-            <input class="passwords form-control" :type="passwordType" minlength="1" v-model="password">
+            <input class="passwords form-control" :type="passwordType" @keyup.enter="logging()" minlength="1" v-model="password">
           </div>
           <div class="col mt-4" v-if="validation == 'Login ou senha do usuário é inválido.'">
             <p class="error">{{validation}}</p>
