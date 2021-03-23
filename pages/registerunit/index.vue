@@ -24,7 +24,7 @@
       <div class="row">
           <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
-            <input class="form-control" v-model="eventUnit">
+            <input class="form-control" maxlength="15" v-model="eventUnit">
           </div>
           <div class="col-1">
             <label class="mt-4">CONTADOR</label>
@@ -35,7 +35,7 @@
           </div>
           <div class="col-3">
             <label class="mt-4">SISTEMAS MONITORADOS</label>
-            <input class="form-control" v-model="systemUnit">
+            <input class="form-control" maxlength="15" v-model="systemUnit">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add rounded-circle" @click="pushSystem()">+</b-button>
