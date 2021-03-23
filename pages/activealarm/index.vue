@@ -109,7 +109,7 @@ export default {
   height: 190px;
 
   &-number {
-    font-size: 55px;
+    font-size: 40px;
     line-height: 80px;
     width: 400px;
     text-align: center;
