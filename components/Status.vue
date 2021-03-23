@@ -15,7 +15,7 @@
               <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
               <b-button @click="reset">Reset zoom</b-button>
             </b-modal>
-            <b-button class="mb-3 p-2 medida-color" v-b-modal="equip.kks" @click="getGraph(equip.kks_grafico)" :disabled="disable" v-if="equip.tipo == 'medida'">
+            <b-button class="mb-3 p-2 medida-color" v-b-modal="equip.kks" @click="getGraph(equip.kks_grafico)" v-if="equip.tipo == 'medida'">
               <b class="spacing">{{ equip.kks }} - {{ equip.valor_medida }} </b>
             </b-button>
             <b-button class="mb-3 p-2 disabling " v-if="equip.tipo == 'status'" :disabled="unavailable" :class="{ red: equip.color == 'red', green: equip.color == 'green' }">
