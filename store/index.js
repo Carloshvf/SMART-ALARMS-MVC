@@ -255,20 +255,20 @@ export const actions = {
 
     context.commit('setIdCheck', this.checkingSession)
 
-    if (this.clear == null) {
-      this.clear = setInterval(() => {
-        if (this.checkingSession == false) {
-          this._vm.$bvToast.toast('O tempo da sessão expirou', {
-            title: `Logoff`,
-            toaster: 'b-toaster-bottom-right',
-            solid: true
-          })
-          this.logOff({logout: "tes"})
-          this.$cookies.removeAll();
-          this.$router.push('/')
-        }
-      }, 3600000);
-    }
+    // if (this.clear == null) {
+    //   this.clear = setInterval(() => {
+    //     if (this.checkingSession == false) {
+    //       this._vm.$bvToast.toast('O tempo da sessão expirou', {
+    //         title: `Logoff`,
+    //         toaster: 'b-toaster-bottom-right',
+    //         solid: true
+    //       })
+    //       this.logOff({logout: "tes"})
+    //       this.$cookies.removeAll();
+    //       this.$router.push('/')
+    //     }
+    //   }, 86400);
+    // }
     
   },
 
