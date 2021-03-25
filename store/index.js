@@ -251,6 +251,7 @@ export const actions = {
 
     .catch(error => {
       this.checkingSession = false
+      
     })
 
     context.commit('setIdCheck', this.checkingSession)
