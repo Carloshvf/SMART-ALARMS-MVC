@@ -2,6 +2,10 @@ importScripts('/_nuxt/workbox.4c4f5ca6.js')
 
 workbox.precaching.precacheAndRoute([
   {
+    "url": "/_nuxt/0131f64b63f73933f7f5.js",
+    "revision": "f36336d237986575885bb27d2a28bd6e"
+  },
+  {
     "url": "/_nuxt/097f77de6539d6b0ca00.js",
     "revision": "c9259445207ee0622e4ca6c750cc0124"
   },
@@ -22,6 +26,10 @@ workbox.precaching.precacheAndRoute([
     "revision": "9cbab4be3032a6ff780a03ac65fe5620"
   },
   {
+    "url": "/_nuxt/52c95567e0eed30faec9.js",
+    "revision": "8e2d4c81a5403510538c4c3333c3cabf"
+  },
+  {
     "url": "/_nuxt/5300792b90251cdb821e.js",
     "revision": "cf275c91000e338b15c06357f36c8f32"
   },
@@ -38,14 +46,6 @@ workbox.precaching.precacheAndRoute([
     "revision": "45d56c6dd7871d0b2329dd7e6fc0b78c"
   },
   {
-    "url": "/_nuxt/a20e1f1f53bd6ca1f0c6.js",
-    "revision": "b808664c0ce7911ad0c4bc7807033273"
-  },
-  {
-    "url": "/_nuxt/a8212ae2c9c6d15e6874.js",
-    "revision": "70aae9db5f4e9fc0d20da6a78099449d"
-  },
-  {
     "url": "/_nuxt/b1a60761b14882243461.js",
     "revision": "68cb531eb0a12acf1e1b9980a1a0b856"
   },
@@ -54,8 +54,8 @@ workbox.precaching.precacheAndRoute([
     "revision": "47b8d8199ef4e9e48c0730221a4bed1b"
   },
   {
-    "url": "/_nuxt/cf97d367d6bb23b85934.js",
-    "revision": "6a7a0158741470e9a031e65ee0db0a19"
+    "url": "/_nuxt/c716178b9bb2481d7b35.js",
+    "revision": "b2cb586d2831d8e40147182ad89594cd"
   },
   {
     "url": "/_nuxt/ded164e346d99d93a8e3.js",
@@ -66,16 +66,16 @@ workbox.precaching.precacheAndRoute([
     "revision": "a16c8fddc86784639d6b81262d02b784"
   },
   {
+    "url": "/_nuxt/ef2cb6671151478fff10.js",
+    "revision": "f657d766872cb574066edbf7004d6ec7"
+  },
+  {
     "url": "/_nuxt/f12e3fb9f09ac6ce7be9.js",
     "revision": "9edf0beb32afdf666954a39e52da3ea6"
   },
   {
     "url": "/_nuxt/fd0f0799de60dd515ef6.js",
     "revision": "ca44a16c0d9f01b6d4f7f485818ca043"
-  },
-  {
-    "url": "/_nuxt/ff4db666740b8672075e.js",
-    "revision": "981c0558627bc754a6cdb405078ce204"
   }
 ], {
   "cacheId": "smart-alarms",
