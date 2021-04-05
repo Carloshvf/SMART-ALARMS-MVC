@@ -11,7 +11,7 @@
       <h6 class="mt-3 mb-1">Endereço</h6>
       <div class="d-flex align-items-center">
         <h5 class="mb-0">{{ alarm.value }}</h5>
-        <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(alarm.value)" :disabled="disable">{{ alarm.valor_medida }}</b-button>
+        <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(alarm.value)" >{{ alarm.valor_medida }}</b-button>
       </div>
       <b-modal size="xl" :id="alarm.value" title="Gráfico" @hidden="onHidden" @show="onShow">
         <!-- Essas são as caracteristicas do modal (o prompt do grafico) -->
@@ -30,7 +30,7 @@
           <input class type="checkbox" v-if="value.active == 1" onClick="return false" checked :id="value.item" />
           <input class type="checkbox" v-if="value.active == 0" onClick="return false" :id="value.item" />
           <label :for="value.item">{{ value.item }}</label>
-          <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" :disabled="disable">{{ value.valor_medida }}</b-button>
+          <b-button class="card-button ml-3" v-b-modal="alarm.value" @click="getGraph(value.medida)" v-if="value.valor_medida != ''" >{{ value.valor_medida }}</b-button>
         </li>
       </ul>
       <!-- /.detail-channel-input -->
