@@ -29,7 +29,7 @@
           <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_perfis == true">Cadastrar Usuários</nuxt-link>
 
           <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_alarmes == true">
-            Cadastrar Alarmes
+            Cadastrar Eventos
           </nuxt-link>
          
         </div>

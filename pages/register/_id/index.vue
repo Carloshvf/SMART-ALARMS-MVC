@@ -2,7 +2,7 @@
   <div class="container">
     <div class="form-row align-items-end mt-4 mb-2">
       <div class="col">
-        <h1 class="mt-5 titles">Cadastro de alarme</h1>
+        <h1 class="mt-5 titles">Cadastro de evento</h1>
       </div>
     </div>
     <div class="row">
