@@ -319,7 +319,7 @@
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
         Salvar como alarme novo
       </b-button>
-      <b-button class="modal-buttons btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')" :disabled="disabling">
+      <b-button class="modal-buttons btn-edit btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')" :disabled="disabling">
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loadEdit == true"></span>
         Salvar edição
       </b-button>
@@ -896,6 +896,7 @@ input[type=number] {
 
 .modal-buttons {
   float: right;
+  border-radius: 22px;
 }
 
 .justify {
@@ -905,6 +906,8 @@ input[type=number] {
 .btn-validar {
   width: 156px;
   height: 52px;
+  background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
+  border-radius: 22px;
 }
 
 .area {
@@ -919,12 +922,19 @@ input[type=number] {
 .btn-salvar {
   width: 105px;
   float: right;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
+}
+
+.btn-edit {
+  background: linear-gradient(180deg, #008D46 0%, #00B75B 100%);
 }
 
 .btn-cadastrados {
   color: #ffffff;
   background-color: $dark-purple;
   float: right;
+  border-radius: 22px;
 }
 
 .push-area {
