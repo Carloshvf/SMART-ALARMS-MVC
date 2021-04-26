@@ -548,6 +548,7 @@ export const actions = {
       this.getAlarm = response.data.filtro_alarmes
     })
 
+    
     context.commit('setGetAlarm', this.getAlarm)
   },
   
