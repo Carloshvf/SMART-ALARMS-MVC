@@ -132,7 +132,7 @@
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
             <label class="sizing">ENDEREÇO DO ALARME</label>
-            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
+            <input maxlength="30" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-2">
             <label class="sizing">ATIVAÇÃO</label>
@@ -144,7 +144,7 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
+            <input maxlength="30" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
           </div>
 
           <div class="col-1">
@@ -212,7 +212,7 @@
           </div>
           <div class="col-4">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
-            <input maxlength="20" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
+            <input maxlength="30" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
           </div>
         </div>
         <div class="form-row align-items-end mt-4">
