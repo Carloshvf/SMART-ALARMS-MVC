@@ -16,9 +16,25 @@
           </option>
         </select>
       </div>
-      <div class="col" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
+      <div class="col-5" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
         <label class="mt-4 sizing">COMPLEMENTO</label>
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
+      </div>
+      <div class="col-3">
+        <label class="mt-4 sizing">ENDEREÇO DE MEDIDA</label>
+        <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
+      </div>
+      <div class="col-1">
+        <label class="mt-4 sizing">SUBAREA</label>
+        <select class="form-control" v-model="subSelect1">
+          <option v-for="item in selectFilters.sub_area" :key="item.id">
+            {{item}}
+          </option>
+        </select>
+      </div>  
+      <div class="col-1">
+        <label class="mt-4 sizing">UNIDADE</label>
+        <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
       </div>
     </div>
   
@@ -39,29 +55,37 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col-sm-4">
+      <div class="col-sm">
         <div class="form-row align-items-end">
-          <div class="col-6">
-            <label class="sizing">ENDEREÇO DE MEDIDA</label>
-            <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
-          </div>
-          <div class="col-4">
+          <!-- SUBAREA -->
+          <div class="col-1">
             <label class="sizing">SUBAREA</label>
-            <select class="form-control" v-model="subSelect1">
+            <select class="form-control" v-model="subSelect2">
               <option v-for="item in selectFilters.sub_area" :key="item.id">
                 {{item}}
               </option>
             </select>
           </div>  
-          <div class="col-2">
-            <label class="sizing">UNIDADE</label>
-            <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
+          <!--  -->
+          <div class="col-3">
+            <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
+            <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
-          
-        </div>
-      </div>
-      <div class="col-sm-8">
-        <div class="form-row align-items-end">
+          <div class="col-1">
+            <label class="sizing">LOGICO</label>
+            <select class="form-control" v-model="operaLogic">
+              <option v-for="item in selectFilters.operadores" :key="item.id">
+                {{item}}
+              </option>
+            </select>
+          </div> 
+          <div class="col-1">
+            <label class="sizing">VALOR</label>
+            <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
+          </div>
+          <div>
+            <button class="btn mr-2 btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
+          </div>
           <div class="col-1">
             <label class="sizing">OPERADORES</label>
             <select class="form-control" v-model="operators">
@@ -73,36 +97,6 @@
           </div>  
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
-          </div>
-          <!-- SUBAREA -->
-          <div class="col-2">
-            <label class="sizing">SUBAREA</label>
-            <select class="form-control" v-model="subSelect2">
-              <option v-for="item in selectFilters.sub_area" :key="item.id">
-                {{item}}
-              </option>
-            </select>
-          </div>  
-          <!--  -->
-          <div class="col-4">
-            <label class="sizing">ENDEREÇO DE ALARME</label>
-            <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
-          </div>
-          <div class="col-1">
-            <label class="sizing">LOGICO</label>
-            <select class="form-control" v-model="operaLogic">
-              <option v-for="item in selectFilters.operadores" :key="item.id">
-                {{item}}
-              </option>
-              
-            </select>
-          </div> 
-          <div class="col-2">
-            <label class="sizing">ATIVAÇÃO</label>
-            <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
-          </div>
-          <div>
-            <button class="btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
           </div>
         </div>
       </div>
@@ -131,11 +125,11 @@
       
         <div class="form-row align-items-end mt-3">
           <div class="col-4">
-            <label class="sizing">ENDEREÇO DO ALARME</label>
+            <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-2">
-            <label class="sizing">ATIVAÇÃO</label>
+            <label class="sizing">VALOR</label>
             <select class="form-control" v-model="activation2">
               <option>1</option>
               <option>0</option>
@@ -168,8 +162,8 @@
               <table class="table">
                 <thead>
                   <tr class="address border-line">
-                    <th scope="col">ENDEREÇO DO ALARME</th>
-                    <th scope="col">ATIVAÇÃO</th>
+                    <th scope="col">ENDEREÇO</th>
+                    <th scope="col">VALOR</th>
                     <th scope="col">ENDEREÇO DE MEDIDA</th>
                     <th scope="col">UNIDADE</th>
                   </tr>
@@ -180,8 +174,11 @@
                     <td class="border-line">{{ item.ativacao }}</td>
                     <td class="border-line"> {{ item.end_medida }}</td>
                     <td class="border-line">{{ item.unidade }}</td>
+                    <!-- <td class="border-line">
+                      <img class="deleting" src="../../static/img/editSelect.svg" alt="del" />
+                    </td> -->
                     <td class="border-line">
-                      <img class="deleting" src="../../static/img/delete.svg" alt="del" @click="cleanCanais(index)"/>
+                      <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanCanais(index)"/>
                     </td>
                   </tr>
                 </tbody>
@@ -229,7 +226,7 @@
               <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3">
             </div>
             <div v-else-if="types == 'Status'">
-              <label class="sizing">ATIVAÇÃO</label>
+              <label class="sizing">VALOR</label>
               <select class="form-control" v-model="activation3">
                 <option>1</option>
                 <option>0</option>
@@ -256,7 +253,7 @@
                   <th scope="col">NOME</th>
                   <th scope="col">ENDEREÇO</th>
                   <th scope="col">PRIORIDADE</th>
-                  <th scope="col">UNIDADE/ATIVAÇÃO</th>
+                  <th scope="col">UNIDADE/VALOR</th>
                 </tr>
               </thead>
               <tbody>
@@ -267,8 +264,11 @@
                   <td class="border-line">{{ value.prioridade }}</td>
                   <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
                   <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
+                  <!-- <td class="border-line">
+                      <img class="deleting" src="../../static/img/editSelect.svg" alt="del" />
+                  </td> -->
                   <td class="border-line">
-                      <img class="deleting" src="../../static/img/delete.svg" alt="del" @click="cleanStatus(index)"/>
+                      <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanStatus(index)"/>
                   </td>
                 </tr>
               </tbody>
