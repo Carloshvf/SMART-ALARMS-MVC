@@ -173,18 +173,66 @@
                     <td class="border-line">{{ item.ativacao }}</td>
                     <td class="border-line"> {{ item.end_medida }}</td>
                     <td class="border-line">{{ item.unidade }}</td>
-                    <!-- <td class="border-line">
-                      <img class="deleting" src="../../../static/img/editSelect.svg" alt="del" />
-                    </td> -->
+                    <td class="border-line">
+                      <img class="editing" src="../../../static/img/editSelect.svg" alt="edit" @click="showModal(index.toString(), true)"/>
+                    </td>
                     <td class="border-line">
                       <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanCanais(index)"/>
                     </td>
+                    <!-- MODAL EDITAR CANAIS-->
+                    <b-modal size="lg" :id="index.toString()" v-if="modalEdit == true">
+                      <template v-slot:modal-title>
+                        <h1 class="modal-title">Edição de Canais</h1>
+                      </template>
+                      <template>
+                        <div class="row">
+                          <div class="col-5">
+                            <label class="labels">ENDEREÇO</label>
+                            <input class="form-control" style="text-transform: uppercase;" v-model="editC1">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-2">
+                            <label class="labels mt-4">VALOR</label>
+                            <select class="form-control" v-model="editC2">
+                              <option>1</option>
+                              <option>0</option>
+                              <option></option>
+                            </select>
+                          </div>
+                          <div class="col-3">
+                            <label class="labels mt-4">ENDEREÇO DE MEDIDA</label>
+                            <input class="form-control" style="text-transform: uppercase;" v-model="editC3">
+                          </div>
+                          <div class="col-2">
+                            <label class="labels mt-4">UNIDADE</label>
+                            <input class="form-control" v-model="editC4">
+                          </div>
+                          <div class="col-2">
+                            <label class="labels mt-4">SUBAREA</label>
+                            <select class="form-control" v-model="editC5">
+                              <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
+                                  {{ item }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </template>
+                      <template v-slot:modal-footer>
+                        <b-button class="btn-cancel" @click="cancelEdit(index.toString())">
+                            Cancelar
+                        </b-button>
+                        <b-button class="btn-enviar" @click="editingCanais(index.toString())">
+                            Salvar
+                        </b-button>
+                      </template>
+                    </b-modal>
+                  <!--  -->
                   </tr>
                 </tbody>
               </table>
             </div>
 
-          
         </div>
       </div>
       <!-- CANAIS -->
@@ -263,12 +311,74 @@
                   <td class="border-line">{{ value.prioridade }}</td>
                   <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
                   <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
-                  <!-- <td class="border-line">
-                      <img class="deleting" src="../../../static/img/editSelect.svg" alt="del" />
-                  </td> -->
+                  <td class="border-line">
+                      <img class="editing" src="../../../static/img/editSelect.svg" alt="edit" @click="showModal(index.toString(), false)"/>
+                  </td>
                   <td class="border-line">
                       <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanStatus(index)"/>
                   </td>
+                <!-- MODAL EDITAR STATUS-->
+                  <b-modal size="lg" :id="index.toString()" v-if="modalEdit == false">
+                    <template v-slot:modal-title>
+                      <h1 class="modal-title">Edição de Status/Medidas</h1>
+                    </template>
+                    <template>
+                      <div class="row">
+                        <div class="col-2">
+                          <label class="labels">TIPO</label>
+                          <select class="form-control" v-model="editS1">
+                            <option>Medida</option>
+                            <option>Status</option>
+                          </select>
+                        </div>
+                        <div class="col-6">
+                          <label class="labels">NOME</label>
+                          <input class="form-control" v-model="editS2">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-3">
+                          <label class="labels mt-4">ENDEREÇO</label>
+                          <input class="form-control" style="text-transform: uppercase;" v-model="editS3">
+                        </div>
+                        <div class="col-2">
+                          <label class="labels mt-4">PRIORIDADE</label>
+                          <select class="form-control" v-model="editS4">
+                            <option>1</option>
+                            <option>2</option>
+                          </select>
+                        </div>
+                        <div class="col-2" v-if="value.unidade != '' ">
+                          <label class="labels mt-4">UNIDADE</label>
+                          <input class="form-control" v-model="editS5">
+                        </div>
+                        <div class="col-2" v-else-if="value.valor_operacao != '' ">
+                          <label class="labels mt-4">VALOR</label>
+                          <select class="form-control" v-model="editS6">
+                            <option>1</option>
+                            <option>0</option>
+                          </select>
+                        </div>
+                        <div class="col-3">
+                          <label class="labels mt-4">SUBAREA</label>
+                          <select class="form-control" v-model="editS7">
+                            <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
+                              {{item}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-slot:modal-footer>
+                      <b-button class="btn-cancel" @click="cancelEdit(index.toString())">
+                          Cancelar
+                      </b-button>
+                      <b-button class="btn-enviar" @click="editingStatus(index.toString())">
+                          Salvar
+                      </b-button>
+                    </template>
+                  </b-modal>
+                <!--  -->
                 </tr>
               </tbody>
             </table>
@@ -366,6 +476,19 @@ export default {
       infoSuper: "",
       name: "",
       priority: "1",
+      editC1: "",
+      editC2: "",
+      editC3: "",
+      editC4: "",
+      editC5: "",
+      editS1: "",
+      editS2: "",
+      editS3: "",
+      editS4: "",
+      editS5: "",
+      editS6: "",
+      editS7: "",
+      modalEdit: null,
       logicInfo: this.$store.state.edit.logica.toString(),
       endAtivacao: [],
       endBack: [],
@@ -531,6 +654,7 @@ export default {
         this.$store.commit('setSubArea4', value)
       }
     },
+
     
     unitId() {
       return this.$cookies.get('unit') || '';
@@ -551,6 +675,52 @@ export default {
       statusClean: 'setCleanStatus',
       recomClean: 'setCleanRecom'
     }),
+
+    async showModal(index, value) {
+      this.modalEdit = value
+      // console.log(this.canal[index])
+      // console.log(this.status[index])
+      if (value == false) {
+        this.editS1 = this.status[index].tipo
+        this.editS2 = this.status[index].nome
+        this.editS3 = this.status[index].end_supervisorio
+        this.editS4 = this.status[index].prioridade
+        this.editS5 = this.status[index].unidade
+        this.editS6 = this.status[index].valor_operacao
+        this.editS7 = this.status[index].sub_area
+      } else if(value == true) {
+        this.editC1 = this.canal[index].end_alarme
+        this.editC2 = this.canal[index].ativacao 
+        this.editC3 = this.canal[index].end_medida
+        this.editC4 = this.canal[index].unidade
+        this.editC5 = this.canal[index].sub_area
+      }
+    
+      setTimeout(() => {
+        this.$bvModal.show(index)
+      }, 100);
+    },
+
+    cancelEdit(index) {
+      this.$bvModal.hide(index)
+    },
+
+    editingCanais(index) {
+      this.canal.splice(index, 1)
+      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase()
+      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase()
+      this.canal.push({ end_alarme: this.editC1, ativacao: this.editC2 ,end_medida: this.editC3, unidade: this.editC4, sub_area: this.editC5 })
+      this.$bvModal.hide(index)
+    },
+
+    editingStatus(index) {
+      this.status.splice(index, 1)
+      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
+      this.status.push({ tipo: this.editS1, nome: this.editS2, end_supervisorio: this.editS3, prioridade:this.editS4, unidade: this.editS5, valor_operacao: this.editS6, sub_area: this.editS7 })
+      this.$bvModal.hide(index)
+      this.editS5 = ""
+      this.editS6 = ""
+    },
 
     sendOperator() {
       this.pushed.push(this.operators)
