@@ -2,7 +2,7 @@ version: 0.2
 env: 
   variables: 
       projectName: "smartalarms-frontend-vue"
-      slackChannel: "CR288CXPW"
+      slackChannel: "CR288CXPW"   
       gitLabToken: "v1RKjduCfzD73wNNvJmL"
 phases:
  install:
@@ -33,7 +33,7 @@ phases:
      - git config --global http.sslVerify false
      - git config --global user.email "arquitetura@spassu.com"
      - git config --global user.name "Arquitetura Spassu"
-     - git remote add origin https://oauth2:xXxAhfjo4YEhEyuR8wzY@codigo-externo.petrobras.com.br/esteiras-digitais-tic/spassu/smartalarms/$projectName.git
+     - git remote add origin https://oauth2:$gitLabToken@codigo-externo.petrobras.com.br/esteiras-digitais-tic/spassu/smartalarms/$projectName.git
      - git fetch
      - git reset origin/master
      - git add --all
