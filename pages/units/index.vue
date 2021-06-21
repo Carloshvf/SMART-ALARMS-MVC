@@ -8,6 +8,18 @@
         </div>
       </div>
       <div class="row">
+        <!-- CARD SEDE -->
+        <!-- v-if="sede == true" -->
+        <!-- <div class="col-4" >
+          <div class="card mt-4">
+            <div class="card-white">
+              <nuxt-link to="/activeunit" :event="disable ? '' : 'click'">
+                <h1 class="unit-select">SEDE</h1>
+              </nuxt-link>
+            </div>
+          </div>
+        </div> -->
+          <!--  -->
         <div class="col-4" v-for="item in unitDetail" :key="item.id">
           <div class="card mt-4">
             <div class="card-white">
@@ -51,6 +63,7 @@ export default {
   data() {
     return {
       disable: true,
+      sede: false,
     }
   },
 
@@ -124,11 +137,16 @@ export default {
           this.$router.push('/')
         }
       // 
-    this.gettingUnits()
+    await this.gettingUnits()
     setTimeout(() => {
       this.disable = false
     }, 3000);
-    
+
+    if (this.unitDetail[0].edicao == true) {
+      this.sede = true
+    } else if(this.unitDetail[0].edicao == false || this.unitDetail[0].edicao == undefined){
+      this.sede = false
+    }
   }
 }
 </script>
