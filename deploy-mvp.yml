@@ -4,6 +4,7 @@ env:
       projectName: "smartalarms-frontend-vue"
       slackChannel: "CR288CXPW"   
       gitLabToken: "v1RKjduCfzD73wNNvJmL"
+      
 phases:
  install:
    runtime-versions:
