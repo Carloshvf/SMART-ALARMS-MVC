@@ -137,6 +137,7 @@ export default {
           this.$router.push('/')
         }
       // 
+      
     await this.gettingUnits()
     setTimeout(() => {
       this.disable = false
