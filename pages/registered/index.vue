@@ -224,6 +224,6 @@ button:hover {
 
 .scroll-h4 {
   overflow: auto;
-  height: 58px;
+  height: 70px;
 }
 </style>
