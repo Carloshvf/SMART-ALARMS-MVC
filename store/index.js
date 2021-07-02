@@ -443,6 +443,7 @@ export const actions = {
       this.userName = response.data.nome
       this.keyName = response.data.chave
       // this.caName = response.headers.ca
+      // console.log(response.headers.authorization)
       if (response.status == 200) {
         this.$cookies.set('token', JSON.stringify(this.authorizationId))
         this.$cookies.set('name', JSON.stringify(this.userName))
