@@ -115,7 +115,7 @@
     </div>
     <!-- LISTA DE ALARMES -->
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm">
         <div class="form-row mt-5">
           <div class="col-3">
             <h4 class="titles">Canais</h4>
@@ -123,11 +123,11 @@
         </div>
       
         <div class="form-row align-items-end mt-3">
-          <div class="col-4">
+          <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
-          <div class="col-2">
+          <div class="col-1">
             <label class="sizing">VALOR</label>
             <select class="form-control" v-model="activation2">
               <option>1</option>
@@ -135,7 +135,7 @@
               <option></option>
             </select>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <label class="sizing">ENDEREÇO DE MEDIDA</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
           </div>
@@ -144,7 +144,7 @@
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
           </div>  
-          <div class="col-3">
+          <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subArea3">
               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
@@ -235,44 +235,49 @@
 
         </div>
       </div>
-      <!-- CANAIS -->
-      <div class="col-sm-6">
+    </div>
+    <!-- CANAIS -->
+    <div class="row">
+      <div class="col-sm">
         <div class="form-row mt-5">
           <div class="col-10 mb-3">
             <h4 class="titles">Status e Medidas</h4>
           </div>
-
-          <div class="col-3">
-            <label class="sizing">TIPO</label>
-            <select class="form-control" v-model="types">
-              <option>Medida</option>
-              <option>Status</option>
-            </select>
-            
-          </div>
-          <div class="col-5">
-            <label class="sizing">NOME</label>
-            <input type="text" class="form-control" v-model="name">
-          </div>
-          <div class="col-4">
-            <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
-            <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
-          </div>
         </div>
+
+          <div class="form-row">
+            <div class="col-3">
+              <label class="sizing">TIPO</label>
+              <select class="form-control" v-model="types">
+                <option>medida</option>
+                <option>status</option>
+              </select>
+              
+            </div>
+            <div class="col-5">
+              <label class="sizing">NOME</label>
+              <input type="text" class="form-control" v-model="name">
+            </div>
+            <div class="col-3">
+              <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
+              <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
+            </div>
+          </div>
+        
         <div class="form-row align-items-end mt-4">
-          <div class="col-2">
+          <div class="col-1">
             <label class="sizing">PRIORIDADE</label>
             <select class="form-control" v-model="priority">
               <option>1</option>
               <option>2</option>
             </select>
           </div>
-          <div class="col-2">
-            <div v-if="types == 'Medida'">
+          <div class="col-1">
+            <div v-if="types == 'medida'">
               <label class="sizing">UNIDADE</label>
               <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3">
             </div>
-            <div v-else-if="types == 'Status'">
+            <div v-else-if="types == 'status'">
               <label class="sizing">VALOR</label>
               <select class="form-control" v-model="activation3">
                 <option>1</option>
@@ -280,7 +285,7 @@
               </select>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subArea4">
               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
@@ -288,7 +293,7 @@
               </option>
             </select>
           </div>
-          <div class="ml-4">
+          <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
           
@@ -327,8 +332,8 @@
                         <div class="col-2">
                           <label class="labels">TIPO</label>
                           <select class="form-control" v-model="editS1">
-                            <option>Medida</option>
-                            <option>Status</option>
+                            <option>medida</option>
+                            <option>status</option>
                           </select>
                         </div>
                         <div class="col-6">
@@ -456,7 +461,7 @@ export default {
 
   data() {
     return {
-      types: 'Medida',
+      types: 'medida',
       forOnce: true,
       backendCheck: "",
       backendAlarm: "",  
