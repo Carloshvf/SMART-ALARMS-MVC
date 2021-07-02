@@ -261,11 +261,13 @@ select {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 
     h1,
+    h4,
     p {
       color: #02592E;
     }
 
-    h1 {
+    h1,
+    h4 {
       font-weight: 300;
     }
 

@@ -26,8 +26,8 @@
       <div class="col-sm-4" v-for="item in computed_filter" :key="item.id">
         <div class="card mt-4">
           <div class="card-white card-min-height">
-            <div class="scroll-h1">
-              <h1>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h1>
+            <div class="scroll-h4">
+              <h4>{{ item.infos[0].tipo }} {{ item.infos[0].local }} {{ item.infos[0].complemento }}</h4>
             </div>
             <span>Causa</span>
             <div class="scroll-causa">
@@ -35,13 +35,13 @@
             </div>
             
             <div class="align options mb-5">
-              <button class="btn mr-5 pb-4" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
+              <button class="btn mt-3 mr-5" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
                 Excluir
               </button>
 
               <nuxt-link
                 :to="{ name: 'register-id', params: { id: item.id } }"
-                class="btn options ml-5 pb-4" v-if="permButtons == true"
+                class="btn options mt-3 ml-5" v-if="permButtons == true"
               >Editar</nuxt-link>
             </div>
           </div>
@@ -214,7 +214,7 @@ button:hover {
 }
 
 .card-min-height {
-    height: 220px;
+    height: 240px;
 }
 
 .scroll-causa {
@@ -222,7 +222,7 @@ button:hover {
   height: 60px;
 }
 
-.scroll-h1 {
+.scroll-h4 {
   overflow: auto;
   height: 58px;
 }
