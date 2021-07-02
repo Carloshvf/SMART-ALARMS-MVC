@@ -430,7 +430,6 @@ export const actions = {
       )
     
   },
-  
 
   // POST DA PÁGINA DE LOGIN
   async loginUser(context, dados) {
