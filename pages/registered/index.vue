@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mt-4">
       <div class="col mt-5">
-        <h1 class="alarm-title">Alarmes Cadastrados</h1>
+        <h1 class="alarm-title">Eventos Cadastrados</h1>
       </div>
       <div class="col-2 align-items-end mt-5">
         <label class="labels">FILTRO UG</label>
