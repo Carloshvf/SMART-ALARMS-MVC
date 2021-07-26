@@ -657,6 +657,7 @@ export default {
       this.separador = ""
       this.logic = ""
       this.ok = false
+      this.endAtivacao.splice(0)
       this.pushed.splice(0)
     },
 
