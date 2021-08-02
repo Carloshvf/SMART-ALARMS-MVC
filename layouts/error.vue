@@ -1,9 +1,9 @@
 <template>
   <div class="error-container">
-    <div class="error-content" >
+    <div class="error-content">
       <div>
-        <h1>Sorry, the page you were looking for doesn't exist.</h1>
-        <p>You can return to our <nuxt-link to="/">home page</nuxt-link></p>
+        <h1>A página não pode ser carregada porque ocorreu um erro.</h1>
+        <span>Retorne para a tela principal aqui:<nuxt-link to="/units"> Retornar para tela de unidades</nuxt-link></span>
       </div>
     </div>
   </div>  
@@ -31,11 +31,8 @@ export default {
 
 .error-content {
   width: 90%;
+  margin-top: 250px;
   max-width: 800px;
-  margin: auto;
-  display: grid;
-  grid-template: auto / auto 200px;
-  grid-column-gap: 10px;
   text-align: center;
 }
 
