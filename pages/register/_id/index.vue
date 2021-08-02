@@ -424,7 +424,7 @@
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
-     <b-modal id="modal-update" hide-footer>
+    <b-modal id="modal-update" hide-footer>
       <template v-slot:modal-title>
         Salvando o alarme
       </template>
@@ -1003,9 +1003,9 @@ export default {
             toaster: 'b-toaster-bottom-right',
             solid: true
           })
-        this.logOff({logout: "tes"})
-        this.$cookies.removeAll();
-        this.$router.push('/')
+        // this.logOff({logout: "tes"})
+        // this.$cookies.removeAll();
+        // this.$router.push('/')
       }
     //
 

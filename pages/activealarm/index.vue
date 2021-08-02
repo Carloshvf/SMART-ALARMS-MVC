@@ -65,9 +65,9 @@ export default {
             toaster: 'b-toaster-bottom-right',
             solid: true
           })
-        this.logOff({logout: "tes"})
-        this.$cookies.removeAll();
-        this.$router.push('/')
+        // this.logOff({logout: "tes"})
+        // this.$cookies.removeAll();
+        // this.$router.push('/')
       }
     //
 
