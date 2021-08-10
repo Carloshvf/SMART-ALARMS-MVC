@@ -233,6 +233,11 @@ export const actions = {
         }}
     )
 
+    // .catch(error => {
+    //   // console.log(error.response.data.erro)
+    //   all = error.response.data.erro
+    // })
+
     context.commit('setAll', all)
   },
 
@@ -453,6 +458,7 @@ export const actions = {
       // console.log(response.headers)
     })
     .catch(error => {
+      // console.log(error.response.data.erro)
       this.valid = error.response.data.erro
     })
   

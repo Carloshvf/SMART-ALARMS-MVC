@@ -71,6 +71,13 @@ export default {
       if (this.validation == '') {
         this.$router.push('/units')
       }
+      else {
+        this.$bvToast.toast(this.validation, {
+          title: `Erro`,
+          toaster: 'b-toaster-bottom-right',
+          solid: true
+        })
+      }
       
     }
   },
