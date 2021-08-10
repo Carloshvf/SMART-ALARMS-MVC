@@ -48,8 +48,8 @@ export default {
     session() {
       return this.$store.state.checkingSession
     },
-     currentRouteName() {
-        return this.$route.name;
+    currentRouteName() {
+      return this.$route.name;
     },
     unitId() {
       return this.$cookies.get('unit') || '';
