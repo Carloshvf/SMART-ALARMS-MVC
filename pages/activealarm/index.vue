@@ -59,12 +59,13 @@ export default {
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session == false) {
-        this.$bvToast.toast('O tempo da sessão expirou', {
-            title: `Logoff`,
-            toaster: 'b-toaster-bottom-right',
-            solid: true
-          })
+      if (this.session.value == false) {
+        // console.log(this.session)
+        this.$bvToast.toast(this.session.logoff, {
+          title: `Logoff`,
+          toaster: 'b-toaster-bottom-right',
+          solid: true
+        })
         // this.logOff({logout: "tes"})
         // this.$cookies.removeAll();
         // this.$router.push('/')
@@ -77,18 +78,38 @@ export default {
         }
       if (this.stop == true) {
       this.loadData(this.unitId || '')
-        for (let index = 0; index < this.alarms.length; index++) {
-          // console.log(this.currentRouteName)
-          if (this.alarms[index].active == 1 && this.currentRouteName == 'activealarm') {
-              this.$router.push('/alarm')
-              this.stop = false
-              break
+      if (this.alarms instanceof Array) {
+          for (let index = 0; index < this.alarms.length; index++) {
+            // console.log(this.currentRouteName)
+            if (this.alarms[index].active == 1 && this.currentRouteName == 'activealarm') {
+                this.$router.push('/alarm')
+                this.stop = false
+                break
+              }
             }
+          }
+          else {
+            this.$bvToast.toast(this.alarms, {
+              title: `Logoff`,
+              toaster: 'b-toaster-bottom-right',
+              solid: true
+            })
+            clearInterval(this.stopInterval)
           }
         }
       }, 3000);
     
     this.loadData(this.unitId || '')
+    
+      // console.log(this.alarms instanceof Array)
+      if (this.alarms == 'unidade não encontrada no banco') {
+        this.$bvToast.toast(this.alarms, {
+          title: `Logoff`,
+          toaster: 'b-toaster-bottom-right',
+          solid: true
+        })
+      }
+    
    
   },
 }

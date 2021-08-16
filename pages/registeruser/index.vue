@@ -326,15 +326,16 @@ extends: VueTypeahead,
     async created() {
         // Logoff automatico
         await this.idCheck()
-        if (this.session == false) {
-            this.$bvToast.toast('O tempo da sessão expirou', {
-                title: `Logoff`,
-                toaster: 'b-toaster-bottom-right',
-                solid: true
-            })
-            // this.logOff({logout: "tes"})
-            // this.$cookies.removeAll();
-            // this.$router.push('/')
+        if (this.session.value == false) {
+          // console.log(this.session)
+          this.$bvToast.toast(this.session.logoff, {
+            title: `Logoff`,
+            toaster: 'b-toaster-bottom-right',
+            solid: true
+          })
+          // this.logOff({logout: "tes"})
+          // this.$cookies.removeAll();
+          // this.$router.push('/')
         }
         //
 

@@ -194,12 +194,13 @@ export default {
   async created() {
       // Logoff automatico
       await this.idCheck()
-      if (this.session == false) {
-        this.$bvToast.toast('O tempo da sessão expirou', {
-            title: `Logoff`,
-            toaster: 'b-toaster-bottom-right',
-            solid: true
-          })
+      if (this.session.value == false) {
+        // console.log(this.session)
+        this.$bvToast.toast(this.session.logoff, {
+          title: `Logoff`,
+          toaster: 'b-toaster-bottom-right',
+          solid: true
+        })
         // this.logOff({logout: "tes"})
         // this.$cookies.removeAll();
         // this.$router.push('/')
@@ -214,24 +215,33 @@ export default {
           this.loadData(this.$cookies.get('unit') || '')
           this.arrSize.splice(0)
 
-          for (let index = 0; index < this.lists.length; index++) {
-            for (let ind = 0; ind < this.lists[index].kks.length; index++) {
-              if (this.lists[index].active == 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length != this.receive.length) {
-                this.arrAleat.push('5')
-                this.componentKey += 1;
-              }
-          }
-          
-          if (this.lists[index].active == 0 && this.currentRouteName == 'alarm') {
-              this.arrSize.push("5") 
+          if (this.lists instanceof Array) {
+            for (let index = 0; index < this.lists.length; index++) {
+              for (let ind = 0; ind < this.lists[index].kks.length; index++) {
+                if (this.lists[index].active == 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length != this.receive.length) {
+                  this.arrAleat.push('5')
+                  this.componentKey += 1;
+                }
             }
-          }
-          if (this.arrSize.length == this.lists.length && this.currentRouteName == 'alarm') {
-            this.$router.push('/activealarm')
-          }
+            
+            if (this.lists[index].active == 0 && this.currentRouteName == 'alarm') {
+                this.arrSize.push("5") 
+              }
+            }
+            if (this.arrSize.length == this.lists.length && this.currentRouteName == 'alarm') {
+              this.$router.push('/activealarm')
+            }
 
-          if (this.currentRouteName != 'alarm') {
-            this.stop = false 
+            if (this.currentRouteName != 'alarm') {
+              this.stop = false 
+            }
+          } else {
+              this.$bvToast.toast(this.lists, {
+                title: `Logoff`,
+                toaster: 'b-toaster-bottom-right',
+                solid: true
+              })
+              clearInterval(this.stopInterval)
           }
         }  else {
           clearInterval(this.stopInterval)
