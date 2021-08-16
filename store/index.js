@@ -223,22 +223,24 @@ export const mutations = {
 export const actions = {
 
   async loadData(context, dados) {
-    let {
-      data: { all }
-    } = await this.$axios.get(
+    await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
       HOST_API + '/alarmes-ativos/' + dados,  {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }}
     )
+    .then(response => {
+      this.all = response.data.all
+      // console.log(response.data.all)
+    })
 
-    // .catch(error => {
-    //   // console.log(error.response.data.erro)
-    //   all = error.response.data.erro
-    // })
+    .catch(error => {
+      this.all = error.response.data.erro
+      // console.log(this.all)
+    })
 
-    context.commit('setAll', all)
+    context.commit('setAll', this.all)
   },
 
 // GET PARA CHECAR O TOKEN DA SESSÃO
@@ -250,15 +252,14 @@ export const actions = {
         }}
     )
     .then(response => {
-      this.checkingSession = response.data.value
+      this.checkingSession = response.data
       // console.log(this.$cookies.get('key') || '')
       
     })
 
     .catch(error => {
       // console.log(error.response)
-      this.checkingSession = false
-      
+      this.checkingSession = error.response.data.erro
     })
 
     context.commit('setIdCheck', this.checkingSession)
