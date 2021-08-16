@@ -90,11 +90,11 @@ export default {
           }
           else {
             this.$bvToast.toast(this.alarms, {
-              title: `Logoff`,
+              title: `Erro`,
               toaster: 'b-toaster-bottom-right',
               solid: true
             })
-            clearInterval(this.stopInterval)
+            // clearInterval(this.stopInterval)
           }
         }
       }, 3000);
