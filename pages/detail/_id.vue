@@ -202,11 +202,11 @@ export default {
             }
           } else {
               this.$bvToast.toast(this.lists, {
-                title: `Logoff`,
+                title: `Erro`,
                 toaster: 'b-toaster-bottom-right',
                 solid: true
               })
-              clearInterval(this.stopInterval)
+              // clearInterval(this.stopInterval)
           }
         } else {
           clearInterval(this.stopInterval)
