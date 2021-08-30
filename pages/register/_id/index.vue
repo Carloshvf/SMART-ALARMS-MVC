@@ -660,6 +660,9 @@ export default {
       }
     },
 
+    errUpdate() {
+      return this.$store.state.update
+    },
     
     unitId() {
       return this.$cookies.get('unit') || '';
@@ -942,6 +945,15 @@ export default {
         this.disabling = false
         this.load = false
       }
+      else if(this.backendAlarm != 200) {
+        this.$bvToast.toast('Ocorreu um erro', {
+          title: `Erro`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.disabling = false
+        this.load = false
+      }
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
           title: `Sucesso`,
@@ -979,16 +991,28 @@ export default {
 
       this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]})
 
-      this.$bvToast.toast('Editado com sucesso.', {
-          title: `Editar`,
+
+      if (this.errUpdate != 200) {
+        this.$bvToast.toast('Ocorreu um erro', {
+          title: `Erro`,
           toaster: toaster,
           solid: true,
         })
-        setTimeout(() => {
-          this.disabling = false
-          this.loadEdit = false
-          this.$bvModal.hide('modal-update')
-        }, 1000);
+        this.disabling = false
+        this.loadEdit = false
+      } else if (this.errUpdate == 200) {
+          this.$bvToast.toast('Editado com sucesso.', {
+            title: `Editar`,
+            toaster: toaster,
+            solid: true,
+          })
+          setTimeout(() => {
+            this.disabling = false
+            this.loadEdit = false
+            this.$bvModal.hide('modal-update')
+          }, 1000);
+      }
+      
         
     }
 

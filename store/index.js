@@ -573,11 +573,16 @@ export const actions = {
           'Authorization': this.$cookies.get('token') || '',
         }}
     )
-    // .then(response => {
-    //   this.salvarAlarm = response.data.erro
-    // })
+    .then(response => {
+      this.salvarAlarm = response.data.erro
+    })
 
-    // context.commit('setAlarm', this.salvarAlarm)
+    .catch(error => {
+      console.log(error.response)
+      this.salvarAlarm = error.response.status
+    })
+
+    context.commit('setAlarm', this.salvarAlarm)
   },
 
   async sendLogic(context, { valid }) {
@@ -645,11 +650,16 @@ export const actions = {
             'Authorization': this.$cookies.get('token') || '',
           }}
       )
-    //   .then(response => {
-    //     this.update = response
-    //   })
+      .then(response => {
+        this.update = response.data.erro
+      })
+
+      .catch(error => {
+        // console.log(error.response)
+        this.update = error.response.status
+      })
       
-    // context.commit('updateCard', this.update)
+    context.commit('updateCard', this.update)
   },
   
   treatGraph(context, response) {

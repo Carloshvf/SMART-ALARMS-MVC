@@ -751,6 +751,15 @@ export default {
         this.disabling = false
         this.load = false
       }
+      else if(this.backendAlarm != 200) {
+        this.$bvToast.toast('Ocorreu um erro', {
+          title: `Erro`,
+          toaster: toaster,
+          solid: true,
+        })
+        this.disabling = false
+        this.load = false
+      }
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
           title: `Sucesso`,
