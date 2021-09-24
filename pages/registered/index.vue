@@ -78,10 +78,6 @@ export default {
     }
   },
 
-  components: {
-    Delete
-  },
-
   computed: {
     alarms() {
       return this.$store.state.cardAlarm
