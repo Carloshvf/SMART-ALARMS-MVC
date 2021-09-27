@@ -565,7 +565,15 @@ export default {
     editingStatus(index) {
       this.measures.splice(index, 1)
       this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.editS1, nome: this.editS2, end_supervisorio: this.editS3, prioridade:this.editS4, unidade: this.editS5, valor_operacao: this.editS6, sub_area: this.editS7 })
+      this.measures.push({
+        tipo: this.editS1,
+        nome: this.editS2,
+        end_supervisorio: this.editS3,
+        prioridade:this.editS4,
+        unidade: this.editS5,
+        valor_operacao: this.editS6,
+        sub_area: this.editS7
+      })
       this.$bvModal.hide(index)
       this.editS5 = ""
       this.editS6 = ""
@@ -656,10 +664,17 @@ export default {
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3, sub_area: this.subSelect4 })
+      this.measures.push({
+        tipo: this.types,
+        nome: this.name,
+        end_supervisorio: this.infoSuper,
+        prioridade:this.priority,
+        unidade: this.unit3,
+        valor_operacao: this.activation3,
+        sub_area: this.subSelect4
+      })
       this.unit3 = ""
       this.activation3 = ""
-      
     },
 
     validation(pushed, value) {
@@ -698,7 +713,7 @@ export default {
         })
         this.ok = false
       }
-      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+      else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parenteses da lógica.', {
           title: `Parenteses`,
           toaster: toaster,

@@ -695,7 +695,7 @@ export default {
         this.editS7 = this.status[index].sub_area
       } else if(value === true) {
         this.editC1 = this.canal[index].end_alarme
-        this.editC2 = this.canal[index].ativacao 
+        this.editC2 = this.canal[index].ativacao
         this.editC3 = this.canal[index].end_medida
         this.editC4 = this.canal[index].unidade
         this.editC5 = this.canal[index].sub_area
@@ -727,7 +727,15 @@ export default {
     editingStatus(index) {
       this.status.splice(index, 1)
       this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
-      this.status.push({ tipo: this.editS1, nome: this.editS2, end_supervisorio: this.editS3, prioridade:this.editS4, unidade: this.editS5, valor_operacao: this.editS6, sub_area: this.editS7 })
+      this.status.push({
+        tipo: this.editS1,
+        nome: this.editS2,
+        end_supervisorio: this.editS3,
+        prioridade:this.editS4,
+        unidade: this.editS5,
+        valor_operacao: this.editS6,
+        sub_area: this.editS7
+      })
       this.$bvModal.hide(index)
       this.editS5 = ""
       this.editS6 = ""
@@ -741,7 +749,6 @@ export default {
       this.pushed.splice(0)
       this.pushed.push(this.separador)
       this.logicInfo = this.pushed.toString()
-      
     },
 
     sendActivation(toaster) {
@@ -798,7 +805,7 @@ export default {
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        if (this.operaLogic == '=') {
+        if (this.operaLogic === '=') {
           this.operaLogic = '=='
         }
         if (this.activation1 < 10) {
@@ -881,7 +888,7 @@ export default {
         })
         this.ok = false
       }
-      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+      else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parênteses da lógica.', {
           title: `Parenteses`,
           toaster: toaster,
@@ -980,11 +987,8 @@ export default {
         })
         this.disabling = false
         this.load = false
-
         this.$bvModal.hide('modal-update')
-     
       }
-        
     },
 
     updateCard(toaster, id) {
