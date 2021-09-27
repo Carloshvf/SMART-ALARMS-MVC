@@ -584,8 +584,8 @@ export default {
             solid: true
           })
         }
-          else if(this.textAlarme == "") {
-          this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+          else if(this.textAlarme == "" || this.operaLogic == "" || this.activation1 == "") {
+          this.$bvToast.toast('Por favor, preencha todos os campos.', {
             title: `Preencher`,
             toaster: toaster,
             solid: true,
@@ -598,15 +598,24 @@ export default {
           if (this.operaLogic == '=') {
             this.operaLogic = '=='
           }
-          this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
-          this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
-          this.separador = this.pushed.join(' ')
-          this.logic = this.separador
+          if (this.activation1 < 10) {
+            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
+            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
+            this.separador = this.pushed.join(' ')
+            this.logic = this.separador
+          } else {
+            this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
+              title: `Preencher`,
+              toaster: toaster,
+              solid: true,
+            })
+          }
+          
         }
       }
       // 
-       else if(this.textAlarme == "") {
-        this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+       else if(this.textAlarme == "" || this.operaLogic == "" || this.activation1 == "") {
+        this.$bvToast.toast('Por favor, preencha todos os campos.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,

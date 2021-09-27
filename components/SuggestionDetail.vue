@@ -316,7 +316,6 @@ export default {
             allData: [],
             allEdit: [],
             lists: [],
-            allEdit: [],
             filterUg: [],
             filterType: [],
             filterCause: []
