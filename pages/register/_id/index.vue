@@ -511,11 +511,11 @@ export default {
     }
   },
 
-  computed: { 
+  computed: {
     session() {
       return this.$store.state.checkingSession
     },
-    
+
     local: {
       get () {
         return this.$store.state.edit.local
@@ -753,7 +753,7 @@ export default {
             toaster: toaster,
             solid: true
           })
-        } 
+        }
           else if(this.textAlarme == "" || this.operaLogic == "" || this.activation1 == "") {
           this.$bvToast.toast('Por favor, preencha todos os campos.', {
             title: `Preencher`,
@@ -816,7 +816,7 @@ export default {
               toaster: toaster,
               solid: true,
             })
-          }   
+          }
         
       }
       
@@ -843,7 +843,7 @@ export default {
 
     validation(pushed, value) {
       return this.pushed.filter((v) => (v === value)).length;
-    },  
+    },
 
     cleanArea() {
       this.separador = ""
@@ -877,7 +877,7 @@ export default {
           solid: true,
         })
         this.ok = false
-      } 
+      }
       else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parênteses da lógica.', {
           title: `Parenteses`,
@@ -913,7 +913,7 @@ export default {
           solid: true,
         })
         this.$bvModal.hide('modal-update')
-      } 
+      }
       else if (this.ok == true) {
         this.$bvModal.show('modal-update')
       }
@@ -952,7 +952,7 @@ export default {
         })
         this.disabling = false
         this.load = false
-      } 
+      }
       else if(this.backendAlarm == "Preencha a causa") {
         this.$bvToast.toast('Preencha o campo da causa.', {
           title: `Causa`,

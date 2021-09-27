@@ -658,7 +658,7 @@ export default {
 
     validation(pushed, value) {
       return this.pushed.filter((v) => (v === value)).length;
-    },  
+    },
 
     cleanArea() {
       this.separador = ""
@@ -720,7 +720,7 @@ export default {
      this.load = true
      this.disabling = true
      
-      this.allData.push({ 
+      this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
         complemento: this.complement,
