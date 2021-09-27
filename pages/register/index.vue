@@ -443,7 +443,7 @@ export default {
   components: {
     DeleteOutline,
   },
-  
+
   data() {
     return {
       types: 'medida',
@@ -498,7 +498,7 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-    } 
+    }
   },
 
   computed: {
@@ -521,7 +521,7 @@ export default {
 
     async showModal(index, value) {
       this.modalEdit = value
-      if (value == false) {
+      if (value === false) {
         this.editS1 = this.measures[index].tipo
         // console.log(this.measures[index])
         this.editS2 = this.measures[index].nome
@@ -530,15 +530,15 @@ export default {
         this.editS5 = this.measures[index].unidade
         this.editS6 = this.measures[index].valor_operacao
         this.editS7 = this.measures[index].sub_area
-      } else if(value == true) {
+      } else if(value === true) {
         this.editC1 = this.end[index].end_alarme
         // console.log(this.end[index])
-        this.editC2 = this.end[index].ativacao 
+        this.editC2 = this.end[index].ativacao
         this.editC3 = this.end[index].end_medida
         this.editC4 = this.end[index].unidade
         this.editC5 = this.end[index].sub_area
       }
-    
+
       setTimeout(() => {
         this.$bvModal.show(index)
       }, 100);
@@ -552,7 +552,13 @@ export default {
       this.end.splice(index, 1)
       this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase()
       this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.editC1, ativacao: this.editC2 ,end_medida: this.editC3, unidade: this.editC4, sub_area: this.editC5 })
+      this.end.push({
+        end_alarme: this.editC1,
+        ativacao: this.editC2,
+        end_medida: this.editC3,
+        unidade: this.editC4,
+        sub_area: this.editC5
+      })
       this.$bvModal.hide(index)
     },
 
@@ -570,32 +576,30 @@ export default {
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
-      
     },
 
     sendActivation(toaster) {
-      if (this.$cookies.get('unit') == 1) {
-        if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
-          isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
-            
+      if (this.$cookies.get('unit') === 1) {
+        if (isNaN(this.textMedida.charAt(0)) === true && isNaN(this.textMedida.charAt(1)) === true ||
+          isNaN(this.textAlarme.charAt(0)) === true && isNaN(this.textAlarme.charAt(1)) === true) {
           this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
             title: `Endereços`,
             toaster: toaster,
             solid: true
           })
         }
-          else if(this.textAlarme == "" || this.operaLogic == "" || this.activation1 == "") {
+          else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
           this.$bvToast.toast('Por favor, preencha todos os campos.', {
             title: `Preencher`,
             toaster: toaster,
             solid: true,
           })
         }
-        // 
+
         else  {
           this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
           this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-          if (this.operaLogic == '=') {
+          if (this.operaLogic === '=') {
             this.operaLogic = '=='
           }
           if (this.activation1 < 10) {
@@ -610,31 +614,28 @@ export default {
               solid: true,
             })
           }
-          
         }
       }
-      // 
-       else if(this.textAlarme == "" || this.operaLogic == "" || this.activation1 == "") {
+
+       else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
         this.$bvToast.toast('Por favor, preencha todos os campos.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
         })
       }
-      // 
+
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        if (this.operaLogic == '=') {
+        if (this.operaLogic === '=') {
           this.operaLogic = '=='
         }
         this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
         this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
         this.separador = this.pushed.join(' ')
         this.logic = this.separador
-        
       }
-      
     },
 
     sendRecommendation() {
@@ -644,8 +645,13 @@ export default {
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subSelect3 })
-      
+      this.end.push({
+        end_alarme: this.infoAlarme,
+        ativacao: this.activation2,
+        end_medida: this.infoMedida,
+        unidade: this.unit2,
+        sub_area: this.subSelect3
+      })
     },
 
     sendMeasures() {
@@ -668,14 +674,12 @@ export default {
       this.pushed.splice(0)
     },
 
-
     cleanCanais(index) {
       this.end.splice(index, 1)
     },
 
     cleanStatus(index) {
       this.measures.splice(index, 1)
-      
     },
 
     cleanRecom(index) {
@@ -686,14 +690,14 @@ export default {
       await this.sendLogic({valid: this.logic})
       this.backendCheck = this.$store.state.validating
 
-      if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+      if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
         this.$bvToast.toast('A lógica não esta válida.', {
           title: `Logica invalida`,
           toaster: toaster,
           solid: true,
         })
         this.ok = false
-      } 
+      }
       else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parenteses da lógica.', {
           title: `Parenteses`,
@@ -702,24 +706,21 @@ export default {
         })
         this.ok = false
       }
-      else if(this.backendCheck == "expressão correta") {
+      else if(this.backendCheck === "expressão correta") {
         this.$bvToast.toast('A expressão esta correta.', {
           title: `Validação`,
           toaster: toaster,
           solid: true,
         })
         this.ok = true
-
       }
-
     },
 
    async saveData(toaster) {
-     this.allData.splice(0)
+      this.allData.splice(0)
     //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-     this.load = true
-     this.disabling = true
-     
+      this.load = true
+      this.disabling = true
       this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
@@ -733,13 +734,12 @@ export default {
         status_medidas: this.measures,
         recomendacoes: this.recom,
         sub_area: this.subSelect1,
-       })
-       
-      
+        })
+
       await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
-      if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
+      if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
         this.$bvToast.toast('Verifique a logica.', {
           title: `Logica`,
           toaster: toaster,
@@ -747,9 +747,8 @@ export default {
         })
         this.disabling = false
         this.load = false
-
-      } 
-      else if(this.backendAlarm == "Preencha a causa") {
+      }
+      else if(this.backendAlarm === "Preencha a causa") {
         this.$bvToast.toast('Preencha o campo da causa.', {
           title: `Causa`,
           toaster: toaster,
@@ -758,7 +757,7 @@ export default {
         this.disabling = false
         this.load = false
       }
-      else if(this.backendAlarm != 200) {
+      else if(this.backendAlarm !== 200) {
         this.$bvToast.toast('Ocorreu um erro', {
           title: `Erro`,
           toaster: toaster,
@@ -775,18 +774,14 @@ export default {
         })
         this.disabling = false
         this.load = false
-
       }
-        
-      
     },
-
   },
 
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
@@ -797,12 +792,8 @@ export default {
         // this.$cookies.removeAll();
         // this.$router.push('/')
       }
-    //
-    
     this.loadRegister(this.unitId || '')
   }
-  
-  
 }
 </script>
 
