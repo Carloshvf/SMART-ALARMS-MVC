@@ -31,13 +31,13 @@
             {{item}}
           </option>
         </select>
-      </div>  
+      </div>
       <div class="col-1">
         <label class="mt-4 sizing">UNIDADE</label>
         <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
       </div>
     </div>
-  
+
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
@@ -45,7 +45,6 @@
           <option v-for="item in selectFilters.tipo_desligamento" :key="item.id">
             {{item}}
           </option>
-          
         </select>
       </div>
       <div class="col-10">
@@ -65,8 +64,8 @@
                 {{item}}
               </option>
             </select>
-          </div>  
-          <!--  -->
+          </div>
+          <!-- ENDEREÇO NO SUPERVISÓRIO -->
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
@@ -78,13 +77,13 @@
                 {{item}}
               </option>
             </select>
-          </div> 
+          </div>
           <div class="col-1">
             <label class="sizing">VALOR</label>
             <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
-            <button class="btn mr-2 btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
+            <button class="btn mr-2 btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button>
           </div>
           <div class="col-1">
             <label class="sizing">OPERADORES</label>
@@ -94,7 +93,7 @@
               <option>(</option>
               <option>)</option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
@@ -122,7 +121,7 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-      
+
         <div class="form-row align-items-end mt-3">
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
@@ -144,7 +143,7 @@
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
-          </div>  
+          </div>
           <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subSelect3">
@@ -152,7 +151,7 @@
                 {{item}}
               </option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
@@ -251,7 +250,6 @@
               <option>medida</option>
               <option>status</option>
             </select>
-            
           </div>
           <div class="col-5">
             <label class="sizing">NOME</label>
@@ -262,7 +260,7 @@
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
           </div>
         </div>
-        
+
         <div class="form-row align-items-end mt-4">
           <div class="col-1">
             <label class="sizing">PRIORIDADE</label>
@@ -291,11 +289,11 @@
                 {{item}}
               </option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
-          
+
           <div class="col-12 mt-3 scroll">
             <table class="table">
               <thead>
@@ -438,19 +436,19 @@
 
 <script>
 import { mapActions } from 'vuex'
-import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';  
+import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
 export default {
 
   components: {
     DeleteOutline,
   },
-  
+
   data() {
     return {
       types: 'medida',
       backendCheck: "",
-      backendAlarm: "",  
+      backendAlarm: "",
       local: "UG 11",
       complement: "",
       ok: false,
@@ -500,7 +498,7 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-    } 
+    }
   },
 
   computed: {
@@ -523,7 +521,7 @@ export default {
 
     async showModal(index, value) {
       this.modalEdit = value
-      if (value == false) {
+      if (value === false) {
         this.editS1 = this.measures[index].tipo
         // console.log(this.measures[index])
         this.editS2 = this.measures[index].nome
@@ -532,15 +530,15 @@ export default {
         this.editS5 = this.measures[index].unidade
         this.editS6 = this.measures[index].valor_operacao
         this.editS7 = this.measures[index].sub_area
-      } else if(value == true) {
+      } else if(value === true) {
         this.editC1 = this.end[index].end_alarme
         // console.log(this.end[index])
-        this.editC2 = this.end[index].ativacao 
+        this.editC2 = this.end[index].ativacao
         this.editC3 = this.end[index].end_medida
         this.editC4 = this.end[index].unidade
         this.editC5 = this.end[index].sub_area
       }
-    
+
       setTimeout(() => {
         this.$bvModal.show(index)
       }, 100);
@@ -554,14 +552,28 @@ export default {
       this.end.splice(index, 1)
       this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase()
       this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.editC1, ativacao: this.editC2 ,end_medida: this.editC3, unidade: this.editC4, sub_area: this.editC5 })
+      this.end.push({
+        end_alarme: this.editC1,
+        ativacao: this.editC2,
+        end_medida: this.editC3,
+        unidade: this.editC4,
+        sub_area: this.editC5
+      })
       this.$bvModal.hide(index)
     },
 
     editingStatus(index) {
       this.measures.splice(index, 1)
       this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.editS1, nome: this.editS2, end_supervisorio: this.editS3, prioridade:this.editS4, unidade: this.editS5, valor_operacao: this.editS6, sub_area: this.editS7 })
+      this.measures.push({
+        tipo: this.editS1,
+        nome: this.editS2,
+        end_supervisorio: this.editS3,
+        prioridade:this.editS4,
+        unidade: this.editS5,
+        valor_operacao: this.editS6,
+        sub_area: this.editS7
+      })
       this.$bvModal.hide(index)
       this.editS5 = ""
       this.editS6 = ""
@@ -572,62 +584,66 @@ export default {
       this.separador = this.pushed.join(' ')
       this.separador = this.separador.replace(/\s-\s/g, "-")
       this.logic = this.separador
-      
     },
 
     sendActivation(toaster) {
-      if (this.$cookies.get('unit') == 1) {
-        if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
-          isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
-            
+      if (this.$cookies.get('unit') === 1) {
+        if (isNaN(this.textMedida.charAt(0)) === true && isNaN(this.textMedida.charAt(1)) === true ||
+          isNaN(this.textAlarme.charAt(0)) === true && isNaN(this.textAlarme.charAt(1)) === true) {
           this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
             title: `Endereços`,
             toaster: toaster,
             solid: true
           })
         }
-          else if(this.textAlarme == "") {
-          this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+          else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+          this.$bvToast.toast('Por favor, preencha todos os campos.', {
             title: `Preencher`,
             toaster: toaster,
             solid: true,
           })
         }
-        // 
+
         else  {
           this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
           this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-          if (this.operaLogic == '=') {
+          if (this.operaLogic === '=') {
             this.operaLogic = '=='
           }
-          this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
-          this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
-          this.separador = this.pushed.join(' ')
-          this.logic = this.separador
+          if (this.activation1 < 10) {
+            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
+            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
+            this.separador = this.pushed.join(' ')
+            this.logic = this.separador
+          } else {
+            this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
+              title: `Preencher`,
+              toaster: toaster,
+              solid: true,
+            })
+          }
         }
       }
-      // 
-       else if(this.textAlarme == "") {
-        this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+
+       else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+        this.$bvToast.toast('Por favor, preencha todos os campos.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
         })
       }
-      // 
+
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        if (this.operaLogic == '=') {
+        if (this.operaLogic === '=') {
           this.operaLogic = '=='
         }
         this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
         this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
         this.separador = this.pushed.join(' ')
         this.logic = this.separador
-        
       }
-      
     },
 
     sendRecommendation() {
@@ -637,21 +653,33 @@ export default {
     sendEnderecos() {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.end.push({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subSelect3 })
-      
+      this.end.push({
+        end_alarme: this.infoAlarme,
+        ativacao: this.activation2,
+        end_medida: this.infoMedida,
+        unidade: this.unit2,
+        sub_area: this.subSelect3
+      })
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.measures.push({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3, sub_area: this.subSelect4 })
+      this.measures.push({
+        tipo: this.types,
+        nome: this.name,
+        end_supervisorio: this.infoSuper,
+        prioridade:this.priority,
+        unidade: this.unit3,
+        valor_operacao: this.activation3,
+        sub_area: this.subSelect4
+      })
       this.unit3 = ""
       this.activation3 = ""
-      
     },
 
     validation(pushed, value) {
       return this.pushed.filter((v) => (v === value)).length;
-    },  
+    },
 
     cleanArea() {
       this.separador = ""
@@ -661,14 +689,12 @@ export default {
       this.pushed.splice(0)
     },
 
-
     cleanCanais(index) {
       this.end.splice(index, 1)
     },
 
     cleanStatus(index) {
       this.measures.splice(index, 1)
-      
     },
 
     cleanRecom(index) {
@@ -679,15 +705,15 @@ export default {
       await this.sendLogic({valid: this.logic})
       this.backendCheck = this.$store.state.validating
 
-      if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+      if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
         this.$bvToast.toast('A lógica não esta válida.', {
           title: `Logica invalida`,
           toaster: toaster,
           solid: true,
         })
         this.ok = false
-      } 
-      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+      }
+      else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parenteses da lógica.', {
           title: `Parenteses`,
           toaster: toaster,
@@ -695,25 +721,22 @@ export default {
         })
         this.ok = false
       }
-      else if(this.backendCheck == "expressão correta") {
+      else if(this.backendCheck === "expressão correta") {
         this.$bvToast.toast('A expressão esta correta.', {
           title: `Validação`,
           toaster: toaster,
           solid: true,
         })
         this.ok = true
-
       }
-
     },
 
    async saveData(toaster) {
-     this.allData.splice(0)
+      this.allData.splice(0)
     //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-     this.load = true
-     this.disabling = true
-     
-      this.allData.push({ 
+      this.load = true
+      this.disabling = true
+      this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
         complemento: this.complement,
@@ -726,13 +749,12 @@ export default {
         status_medidas: this.measures,
         recomendacoes: this.recom,
         sub_area: this.subSelect1,
-       })
-       
-      
+        })
+
       await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
-      if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
+      if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
         this.$bvToast.toast('Verifique a logica.', {
           title: `Logica`,
           toaster: toaster,
@@ -740,9 +762,8 @@ export default {
         })
         this.disabling = false
         this.load = false
-
-      } 
-      else if(this.backendAlarm == "Preencha a causa") {
+      }
+      else if(this.backendAlarm === "Preencha a causa") {
         this.$bvToast.toast('Preencha o campo da causa.', {
           title: `Causa`,
           toaster: toaster,
@@ -751,7 +772,7 @@ export default {
         this.disabling = false
         this.load = false
       }
-      else if(this.backendAlarm != 200) {
+      else if(this.backendAlarm !== 200) {
         this.$bvToast.toast('Ocorreu um erro', {
           title: `Erro`,
           toaster: toaster,
@@ -768,18 +789,14 @@ export default {
         })
         this.disabling = false
         this.load = false
-
       }
-        
-      
     },
-
   },
 
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
@@ -790,12 +807,8 @@ export default {
         // this.$cookies.removeAll();
         // this.$router.push('/')
       }
-    //
-    
     this.loadRegister(this.unitId || '')
   }
-  
-  
 }
 </script>
 

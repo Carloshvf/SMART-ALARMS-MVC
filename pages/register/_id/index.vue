@@ -31,7 +31,7 @@
                 {{item}}
               </option>
             </select>
-          </div> 
+          </div>
           <div class="col-1">
             <label class="mt-4 sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
@@ -64,7 +64,7 @@
                 {{item}}
               </option>
             </select>
-          </div>  
+          </div>
           <!--  -->
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
@@ -77,13 +77,13 @@
                 {{item}}
               </option>
             </select>
-          </div> 
+          </div>
           <div class="col-1">
             <label class="sizing">VALOR</label>
             <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
-            <button class="mr-2 btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
+            <button class="mr-2 btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button>
           </div>
           <div class="col-1">
             <label class="sizing">OPERADORES</label>
@@ -93,7 +93,7 @@
               <option>(</option>
               <option>)</option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
@@ -121,7 +121,7 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-      
+
         <div class="form-row align-items-end mt-3">
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
@@ -143,7 +143,7 @@
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
-          </div>  
+          </div>
           <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subArea3">
@@ -156,7 +156,6 @@
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
 
-          
             <div class="col-12 mt-4 scroll">
               <table class="table">
                 <thead>
@@ -252,7 +251,7 @@
                 <option>medida</option>
                 <option>status</option>
               </select>
-              
+
             </div>
             <div class="col-5">
               <label class="sizing">NOME</label>
@@ -263,7 +262,7 @@
               <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
             </div>
           </div>
-        
+
         <div class="form-row align-items-end mt-4">
           <div class="col-1">
             <label class="sizing">PRIORIDADE</label>
@@ -296,7 +295,7 @@
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
-          
+
           <div class="col-12 mt-3 scroll">
             <table class="table">
               <thead>
@@ -415,7 +414,10 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/></li>
+            <li v-for="(lista,index) in recomendacao" :key="lista.id">{
+              { lista.item }
+            } <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/>
+            </li>
           </ul>
         </div>
       <div class="mt-5">
@@ -449,10 +451,10 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue'
 
-import axios from 'axios'
+import { axios } from 'axios'
 
 export default {
   components: {
@@ -464,7 +466,7 @@ export default {
       types: 'medida',
       forOnce: true,
       backendCheck: "",
-      backendAlarm: "",  
+      backendAlarm: "",
       ok: false,
       stop: true,
       load: false,
@@ -509,11 +511,11 @@ export default {
     }
   },
 
-  computed: { 
+  computed: {
     session() {
       return this.$store.state.checkingSession
     },
-    
+
     local: {
       get () {
         return this.$store.state.edit.local
@@ -641,7 +643,6 @@ export default {
           // console.log(this.$store.state.edit.canais)
           return this.$store.state.edit.canais[0].sub_area
         }
-        
       },
       set (value) {
         this.$store.commit('setSubArea3', value)
@@ -653,24 +654,20 @@ export default {
           // console.log(this.$store.state.edit.canais)
           return this.$store.state.edit.status_medidas[0].sub_area
         }
-
       },
       set (value) {
         this.$store.commit('setSubArea4', value)
       }
     },
-
     errUpdate() {
       return this.$store.state.update
     },
-    
     unitId() {
       return this.$cookies.get('unit') || '';
     },
     selectFilters() {
       return this.$store.state.edit
     }
- 
   },
 
   methods: {
@@ -688,7 +685,7 @@ export default {
       this.modalEdit = value
       // console.log(this.canal[index])
       // console.log(this.status[index])
-      if (value == false) {
+      if (value === false) {
         this.editS1 = this.status[index].tipo
         this.editS2 = this.status[index].nome
         this.editS3 = this.status[index].end_supervisorio
@@ -696,14 +693,14 @@ export default {
         this.editS5 = this.status[index].unidade
         this.editS6 = this.status[index].valor_operacao
         this.editS7 = this.status[index].sub_area
-      } else if(value == true) {
+      } else if(value === true) {
         this.editC1 = this.canal[index].end_alarme
-        this.editC2 = this.canal[index].ativacao 
+        this.editC2 = this.canal[index].ativacao
         this.editC3 = this.canal[index].end_medida
         this.editC4 = this.canal[index].unidade
         this.editC5 = this.canal[index].sub_area
       }
-    
+
       setTimeout(() => {
         this.$bvModal.show(index)
       }, 100);
@@ -717,14 +714,28 @@ export default {
       this.canal.splice(index, 1)
       this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase()
       this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase()
-      this.canal.push({ end_alarme: this.editC1, ativacao: this.editC2 ,end_medida: this.editC3, unidade: this.editC4, sub_area: this.editC5 })
+      this.canal.push({
+        end_alarme: this.editC1,
+        ativacao: this.editC2,
+        end_medida: this.editC3,
+        unidade: this.editC4,
+        sub_area: this.editC5
+      })
       this.$bvModal.hide(index)
     },
 
     editingStatus(index) {
       this.status.splice(index, 1)
       this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
-      this.status.push({ tipo: this.editS1, nome: this.editS2, end_supervisorio: this.editS3, prioridade:this.editS4, unidade: this.editS5, valor_operacao: this.editS6, sub_area: this.editS7 })
+      this.status.push({
+        tipo: this.editS1,
+        nome: this.editS2,
+        end_supervisorio: this.editS3,
+        prioridade:this.editS4,
+        unidade: this.editS5,
+        valor_operacao: this.editS6,
+        sub_area: this.editS7
+      })
       this.$bvModal.hide(index)
       this.editS5 = ""
       this.editS6 = ""
@@ -738,71 +749,82 @@ export default {
       this.pushed.splice(0)
       this.pushed.push(this.separador)
       this.logicInfo = this.pushed.toString()
-      
     },
 
     sendActivation(toaster) {
-      if (this.$cookies.get('unit') == 1) {
-        if (isNaN(this.textMedida.charAt(0)) == true && isNaN(this.textMedida.charAt(1)) == true ||
-          isNaN(this.textAlarme.charAt(0)) == true && isNaN(this.textAlarme.charAt(1)) == true) {
-            
+      if (this.$cookies.get('unit') === 1) {
+        if (isNaN(this.textMedida.charAt(0)) ===true && isNaN(this.textMedida.charAt(1)) === true ||
+          isNaN(this.textAlarme.charAt(0)) === true && isNaN(this.textAlarme.charAt(1)) === true) {
           this.$bvToast.toast('Os endereços precisam possuir dois números como os primeiros caracteres.', {
             title: `Endereços`,
             toaster: toaster,
             solid: true
           })
-        } 
-          else if(this.textAlarme == "") {
-          this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+        }
+          else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+          this.$bvToast.toast('Por favor, preencha todos os campos.', {
             title: `Preencher`,
             toaster: toaster,
             solid: true,
           })
         }
-        // 
+
         else  {
           this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
           this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-          if (this.operaLogic == '=') {
-            this.operaLogic = '=='
+          if (this.operaLogic === '=') {
+            this.operaLogic = '==';
           }
-          this.pushed.push(this.textAlarme, this.operaLogic, this.activation1) 
-          this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
-          // console.log(this.endAtivacao)
-          this.separador = this.pushed.join(' ')
-          // this.separador = this.separador.replace(/\s-\s/g, "-")
-          this.pushed.splice(0)
-          this.pushed.push(this.separador)
-          this.logicInfo = this.pushed.toString()
+          if (this.activation1 < 10) {
+              this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
+              this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
+              // console.log(this.endAtivacao)
+              this.separador = this.pushed.join(' ')
+              // this.separador = this.separador.replace(/\s-\s/g, "-")
+              this.pushed.splice(0)
+              this.pushed.push(this.separador)
+              this.logicInfo = this.pushed.toString()
+            } else {
+              this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
+                title: `Preencher`,
+                toaster: toaster,
+                solid: true,
+            })
+          }
         }
       }
-      // 
-       else if(this.textAlarme == "") {
-        this.$bvToast.toast('Por favor, preencha o campo de alarme.', {
+
+       else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+        this.$bvToast.toast('Por favor, preencha todos os campos.', {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
         })
       }
-      // 
+
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
         this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
-        if (this.operaLogic == '=') {
+        if (this.operaLogic === '=') {
           this.operaLogic = '=='
         }
-        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1) 
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
-        // console.log(this.endAtivacao)
-        this.separador = this.pushed.join(' ')
-        // this.separador = this.separador.replace(/\s-\s/g, "-")
-        this.pushed.splice(0)
-        this.pushed.push(this.separador)
-        this.logicInfo = this.pushed.toString()
-       
-        
+        if (this.activation1 < 10) {
+            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
+            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
+            // console.log(this.endAtivacao)
+            this.separador = this.pushed.join(' ')
+            // this.separador = this.separador.replace(/\s-\s/g, "-")
+            this.pushed.splice(0)
+            this.pushed.push(this.separador)
+            this.logicInfo = this.pushed.toString()
+          } else {
+            this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
+              title: `Preencher`,
+              toaster: toaster,
+              solid: true,
+            })
+          }
       }
-      
     },
 
     sendRecommendation() {
@@ -813,20 +835,26 @@ export default {
       this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
       this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
       this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subArea3 })
-      
     },
 
     sendMeasures() {
       this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
-      this.statusAdd({ tipo: this.types, nome: this.name, end_supervisorio: this.infoSuper, prioridade:this.priority, unidade: this.unit3, valor_operacao: this.activation3, sub_area: this.subArea4 })
+      this.statusAdd({
+        tipo: this.types,
+        nome: this.name,
+        end_supervisorio: this.infoSuper,
+        prioridade: this.priority,
+        unidade: this.unit3,
+        valor_operacao: this.activation3,
+        sub_area: this.subArea4
+      })
       this.unit3 = ""
       this.activation3 = ""
-      
     },
 
     validation(pushed, value) {
       return this.pushed.filter((v) => (v === value)).length;
-    },  
+    },
 
     cleanArea() {
       this.separador = ""
@@ -843,25 +871,24 @@ export default {
     cleanStatus(index) {
       this.statusClean(index)
     },
-    
+
     cleanRecom(index) {
       this.recomClean(index)
     },
 
     async validate(toaster) {
-     
       await this.sendLogic({valid: this.logicInfo})
       this.backendCheck = this.$store.state.validating
 
-      if (this.pushed[this.pushed.length - 1] == 'E'|| this.pushed[0] == 'E' || this.pushed[this.pushed.length - 1] == 'OU' || this.pushed[0] == 'OU') {
+      if (this.pushed[this.pushed.length - 1] === 'E' || this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
         this.$bvToast.toast('A lógica não está válida.', {
           title: `Lógica inválida`,
           toaster: toaster,
           solid: true,
         })
         this.ok = false
-      } 
-      else if(this.validation(this.pushed, '(') != this.validation(this.pushed, ')')) {
+      }
+      else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parênteses da lógica.', {
           title: `Parenteses`,
           toaster: toaster,
@@ -869,7 +896,7 @@ export default {
         })
         this.ok = false
       }
-      else if(this.backendCheck == "expressão correta") {
+      else if(this.backendCheck === "expressão correta") {
         this.$bvToast.toast('A expressão está correta.', {
           title: `Validação`,
           toaster: toaster,
@@ -889,27 +916,25 @@ export default {
     },
 
     validCheck(toaster) {
-      if (this.ok == false) {
+      if (this.ok === false) {
         this.$bvToast.toast('Por favor, valide a lógica antes de salvar.', {
           title: `Validar`,
           toaster: toaster,
           solid: true,
         })
         this.$bvModal.hide('modal-update')
-      } 
-      else if (this.ok == true) {
+      }
+      else if (this.ok === true) {
         this.$bvModal.show('modal-update')
       }
-    
     },
 
    async saveData(toaster) {
-     this.allData.splice(0)
+      this.allData.splice(0)
     //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-     this.load = true
-     this.disabling = true
-    
-      this.allData.push({ 
+      this.load = true
+      this.disabling = true
+      this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
         complemento: this.complement,
@@ -922,12 +947,12 @@ export default {
         status_medidas: this.status,
         recomendacoes: this.recomendacao,
         sub_area: this.subArea1,
-       })
-      
+      })
+
       await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
       this.backendAlarm = this.$store.state.salvarAlarm
 
-      if (this.backendAlarm == 'Preencha os endereços de alarme/medida') {
+      if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
         this.$bvToast.toast('Verifique a lógica e/ou o endereço de medida.', {
           title: `Lógica`,
           toaster: toaster,
@@ -935,8 +960,8 @@ export default {
         })
         this.disabling = false
         this.load = false
-      } 
-      else if(this.backendAlarm == "Preencha a causa") {
+      }
+      else if(this.backendAlarm === "Preencha a causa") {
         this.$bvToast.toast('Preencha o campo da causa.', {
           title: `Causa`,
           toaster: toaster,
@@ -945,7 +970,7 @@ export default {
         this.disabling = false
         this.load = false
       }
-      else if(this.backendAlarm != 200) {
+      else if(this.backendAlarm !== 200) {
         this.$bvToast.toast('Ocorreu um erro', {
           title: `Erro`,
           toaster: toaster,
@@ -962,11 +987,8 @@ export default {
         })
         this.disabling = false
         this.load = false
-
         this.$bvModal.hide('modal-update')
-     
       }
-        
     },
 
     updateCard(toaster, id) {
@@ -974,7 +996,7 @@ export default {
       this.loadEdit = true
       this.disabling = true
 
-      this.allData.push({ 
+      this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
         complemento: this.complement,
@@ -992,7 +1014,7 @@ export default {
       this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]})
 
 
-      if (this.errUpdate != 200) {
+      if (this.errUpdate !== 200) {
         this.$bvToast.toast('Ocorreu um erro', {
           title: `Erro`,
           toaster: toaster,
@@ -1000,7 +1022,7 @@ export default {
         })
         this.disabling = false
         this.loadEdit = false
-      } else if (this.errUpdate == 200) {
+      } else if (this.errUpdate === 200) {
           this.$bvToast.toast('Editado com sucesso.', {
             title: `Editar`,
             toaster: toaster,
@@ -1012,16 +1034,13 @@ export default {
             this.$bvModal.hide('modal-update')
           }, 1000);
       }
-      
-        
     }
-
   },
 
    async created() {
      // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
@@ -1036,13 +1055,10 @@ export default {
 
      // TODA VEZ Q TIVER CAMPO NOVO DA LOGICA ELE TEM Q ENTRAR AQUI PRA DAR CERTO NA LOGICA
       for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {
-        this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme, 
-        ativacao: this.$store.state.edit.ends_alarme[index].ativacao, sub_area: this.$store.state.edit.ends_alarme[index].sub_area, 
+        this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme,
+        ativacao: this.$store.state.edit.ends_alarme[index].ativacao, sub_area: this.$store.state.edit.ends_alarme[index].sub_area,
         operador: this.$store.state.edit.ends_alarme[index].operador})
-        
       }
-      
-       
   },
 
   async asyncData({ store, route }) {
@@ -1053,10 +1069,9 @@ export default {
     for (let index = 0; index < unitId.length; index++) {
       const tes = unitId[index].split('=')
       for (let index = 0; index < tes.length; index++) {
-        if (tes[0] == 'unit') {
+        if (tes[0] === 'unit') {
           cookieGet = tes[1]
         }
-        
       }
     }
     const teste = await store.dispatch('loadCard',{unit: cookieGet, route: id})
@@ -1064,7 +1079,6 @@ export default {
     // console.log(teste)
 
     return { detail: teste.data.todos[0]}
-    
   }
 }
 </script>
