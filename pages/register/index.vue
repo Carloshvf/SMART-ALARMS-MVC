@@ -31,13 +31,13 @@
             {{item}}
           </option>
         </select>
-      </div>  
+      </div>
       <div class="col-1">
         <label class="mt-4 sizing">UNIDADE</label>
         <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
       </div>
     </div>
-  
+
     <div class="form-row mt-4">
       <div class="col">
         <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
@@ -45,7 +45,6 @@
           <option v-for="item in selectFilters.tipo_desligamento" :key="item.id">
             {{item}}
           </option>
-          
         </select>
       </div>
       <div class="col-10">
@@ -65,8 +64,8 @@
                 {{item}}
               </option>
             </select>
-          </div>  
-          <!--  -->
+          </div>
+          <!-- ENDEREÇO NO SUPERVISÓRIO -->
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
@@ -78,13 +77,13 @@
                 {{item}}
               </option>
             </select>
-          </div> 
+          </div>
           <div class="col-1">
             <label class="sizing">VALOR</label>
             <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
-            <button class="btn mr-2 btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
+            <button class="btn mr-2 btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button>
           </div>
           <div class="col-1">
             <label class="sizing">OPERADORES</label>
@@ -94,7 +93,7 @@
               <option>(</option>
               <option>)</option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
@@ -122,7 +121,7 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-      
+
         <div class="form-row align-items-end mt-3">
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
@@ -144,7 +143,7 @@
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
-          </div>  
+          </div>
           <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subSelect3">
@@ -152,7 +151,7 @@
                 {{item}}
               </option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
@@ -251,7 +250,6 @@
               <option>medida</option>
               <option>status</option>
             </select>
-            
           </div>
           <div class="col-5">
             <label class="sizing">NOME</label>
@@ -262,7 +260,7 @@
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
           </div>
         </div>
-        
+
         <div class="form-row align-items-end mt-4">
           <div class="col-1">
             <label class="sizing">PRIORIDADE</label>
@@ -291,11 +289,11 @@
                 {{item}}
               </option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
-          
+
           <div class="col-12 mt-3 scroll">
             <table class="table">
               <thead>
@@ -438,7 +436,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';  
+import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
 export default {
 
@@ -450,7 +448,7 @@ export default {
     return {
       types: 'medida',
       backendCheck: "",
-      backendAlarm: "",  
+      backendAlarm: "",
       local: "UG 11",
       complement: "",
       ok: false,

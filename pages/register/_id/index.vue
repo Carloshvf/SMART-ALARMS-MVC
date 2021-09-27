@@ -31,7 +31,7 @@
                 {{item}}
               </option>
             </select>
-          </div> 
+          </div>
           <div class="col-1">
             <label class="mt-4 sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
@@ -64,7 +64,7 @@
                 {{item}}
               </option>
             </select>
-          </div>  
+          </div>
           <!--  -->
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
@@ -77,13 +77,13 @@
                 {{item}}
               </option>
             </select>
-          </div> 
+          </div>
           <div class="col-1">
             <label class="sizing">VALOR</label>
             <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
-            <button class="mr-2 btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button> 
+            <button class="mr-2 btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button>
           </div>
           <div class="col-1">
             <label class="sizing">OPERADORES</label>
@@ -93,7 +93,7 @@
               <option>(</option>
               <option>)</option>
             </select>
-          </div>  
+          </div>
           <div class="ml-2 mr-2">
             <button class="btn btn-green rounded-circle" @click="sendOperator()">+</button>
           </div>
@@ -121,7 +121,7 @@
             <h4 class="titles">Canais</h4>
           </div>
         </div>
-      
+
         <div class="form-row align-items-end mt-3">
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
@@ -143,7 +143,7 @@
           <div class="col-1">
             <label class="sizing">UNIDADE</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
-          </div>  
+          </div>
           <div class="col-2">
             <label class="sizing">SUBAREA</label>
             <select class="form-control" v-model="subArea3">
@@ -156,7 +156,6 @@
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
 
-          
             <div class="col-12 mt-4 scroll">
               <table class="table">
                 <thead>
@@ -252,7 +251,7 @@
                 <option>medida</option>
                 <option>status</option>
               </select>
-              
+
             </div>
             <div class="col-5">
               <label class="sizing">NOME</label>
@@ -263,7 +262,7 @@
               <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
             </div>
           </div>
-        
+
         <div class="form-row align-items-end mt-4">
           <div class="col-1">
             <label class="sizing">PRIORIDADE</label>
@@ -296,7 +295,7 @@
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendMeasures()">+</button>
           </div>
-          
+
           <div class="col-12 mt-3 scroll">
             <table class="table">
               <thead>
@@ -415,7 +414,10 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/></li>
+            <li v-for="(lista,index) in recomendacao" :key="lista.id">{
+              { lista.item }
+            } <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/>
+            </li>
           </ul>
         </div>
       <div class="mt-5">
@@ -464,7 +466,7 @@ export default {
       types: 'medida',
       forOnce: true,
       backendCheck: "",
-      backendAlarm: "",  
+      backendAlarm: "",
       ok: false,
       stop: true,
       load: false,
