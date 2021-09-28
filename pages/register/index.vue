@@ -435,7 +435,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
 export default {
@@ -507,11 +507,11 @@ export default {
     },
 
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
 
     selectFilters() {
-      return this.$store.state.getAlarm
+      return this.$store.state.getAlarm;
     }
 
   },

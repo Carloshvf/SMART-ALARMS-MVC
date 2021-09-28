@@ -451,10 +451,10 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
-import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue'
+import { mapActions, mapMutations } from 'vuex';
+import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
-import { axios } from 'axios'
+import { axios } from 'axios';
 
 export default {
   components: {
@@ -513,12 +513,12 @@ export default {
 
   computed: {
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
 
     local: {
       get () {
-        return this.$store.state.edit.local
+        return this.$store.state.edit.local;
       },
       set (value) {
         this.$store.commit('setLocal', value)
@@ -526,7 +526,7 @@ export default {
     },
     complement: {
       get () {
-        return this.$store.state.edit.complemento
+        return this.$store.state.edit.complemento;
       },
       set (value) {
         this.$store.commit('setComplemento', value)
@@ -534,7 +534,7 @@ export default {
     },
     offType: {
       get () {
-        return this.$store.state.edit.tipo_desligamento
+        return this.$store.state.edit.tipo_desligamento;
       },
       set (value) {
         this.$store.commit('setOffType', value)
@@ -542,7 +542,7 @@ export default {
     },
     reason: {
       get () {
-        return this.$store.state.edit.causa
+        return this.$store.state.edit.causa;
       },
       set (value) {
         this.$store.commit('setCausa', value)
@@ -550,7 +550,7 @@ export default {
     },
     textMedida: {
       get () {
-        return this.$store.state.edit.endereco_medida
+        return this.$store.state.edit.endereco_medida;
       },
       set (value) {
         this.$store.commit('setTextMedida', value)
@@ -558,7 +558,7 @@ export default {
     },
     unit1: {
       get () {
-        return this.$store.state.edit.unidade
+        return this.$store.state.edit.unidade;
       },
       set (value) {
         this.$store.commit('setUnit1', value)
@@ -566,7 +566,7 @@ export default {
     },
     textAlarme: {
       get () {
-        return this.$store.state.edit.ends_alarme[0].end_alarme
+        return this.$store.state.edit.ends_alarme[0].end_alarme;
       },
       set (value) {
         this.$store.commit('setTextAlarme', value)
@@ -575,7 +575,7 @@ export default {
     activation1: {
       get () {
         // console.log(this.$store.state.edit.ends_alarme[0].ativacao)
-        return this.$store.state.edit.ends_alarme[0].ativacao
+        return this.$store.state.edit.ends_alarme[0].ativacao;
       },
       set (value) {
         this.$store.commit('setActivation1', value)
@@ -583,7 +583,7 @@ export default {
     },
     operaLogic: {
       get () {
-        return this.$store.state.edit.ends_alarme[0].operador
+        return this.$store.state.edit.ends_alarme[0].operador;
       },
       set (value) {
         this.$store.commit('setOperaLogic', value)
@@ -591,7 +591,7 @@ export default {
     },
     logic: {
       get () {
-        return this.$store.state.edit.logica
+        return this.$store.state.edit.logica;
       },
       set (value) {
         this.$store.commit('setLogica', value)
@@ -599,7 +599,7 @@ export default {
     },
     canal: {
       get () {
-        return this.$store.state.edit.canais
+        return this.$store.state.edit.canais;
       },
       set (value) {
         this.$store.commit('setCanais', value)
@@ -607,7 +607,7 @@ export default {
     },
     status: {
       get () {
-        return this.$store.state.edit.status_medidas
+        return this.$store.state.edit.status_medidas;
       },
       set (value) {
         this.$store.commit('setStatus', value)
@@ -615,7 +615,7 @@ export default {
     },
     recomendacao: {
       get () {
-        return this.$store.state.edit.recomendacoes
+        return this.$store.state.edit.recomendacoes;
       },
       set (value) {
         this.$store.commit('setRecom', value)
@@ -623,7 +623,7 @@ export default {
     },
     subArea1: {
       get () {
-        return this.$store.state.edit.sub_area
+        return this.$store.state.edit.sub_area;
       },
       set (value) {
         this.$store.commit('setSubArea1', value)
@@ -631,7 +631,7 @@ export default {
     },
     subArea2: {
       get () {
-        return this.$store.state.edit.ends_alarme[0].sub_area
+        return this.$store.state.edit.ends_alarme[0].sub_area;
       },
       set (value) {
         this.$store.commit('setSubArea2', value)
@@ -641,7 +641,7 @@ export default {
       get () {
         if (this.$store.state.edit.canais != '') {
           // console.log(this.$store.state.edit.canais)
-          return this.$store.state.edit.canais[0].sub_area
+          return this.$store.state.edit.canais[0].sub_area;
         }
       },
       set (value) {
@@ -652,7 +652,7 @@ export default {
       get () {
         if (this.$store.state.edit.status_medidas != '') {
           // console.log(this.$store.state.edit.canais)
-          return this.$store.state.edit.status_medidas[0].sub_area
+          return this.$store.state.edit.status_medidas[0].sub_area;
         }
       },
       set (value) {
@@ -660,13 +660,13 @@ export default {
       }
     },
     errUpdate() {
-      return this.$store.state.update
+      return this.$store.state.update;
     },
     unitId() {
       return this.$cookies.get('unit') || '';
     },
     selectFilters() {
-      return this.$store.state.edit
+      return this.$store.state.edit;
     }
   },
 
@@ -1078,7 +1078,7 @@ export default {
 
     // console.log(teste)
 
-    return { detail: teste.data.todos[0]}
+    return { detail: teste.data.todos[0] };
   }
 }
 </script>
