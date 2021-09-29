@@ -178,7 +178,7 @@
                     <td class="border-line">
                       <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanCanais(index)"/>
                     </td>
-                    <!-- MODAL EDITAR CANAIS-->
+                    <!-- MODAL EDITAR CANAIS -->
                     <b-modal size="lg" :id="index.toString()" v-if="modalEdit == true">
                       <template v-slot:modal-title>
                         <h1 class="modal-title">Edição de Canais</h1>
@@ -319,7 +319,7 @@
                   <td class="border-line">
                       <img class="deleting" src="../../static/img/deleteSelect.svg" alt="del" @click="cleanStatus(index)"/>
                   </td>
-                  <!-- MODAL EDITAR STATUS-->
+                  <!-- MODAL EDITAR STATUS -->
                     <b-modal size="lg" :id="index.toString()" v-if="modalEdit == false">
                       <template v-slot:modal-title>
                         <h1 class="modal-title">Edição de Status/Medidas</h1>
@@ -498,7 +498,7 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-    }
+    };
   },
 
   computed: {
@@ -519,51 +519,51 @@ export default {
     ...mapActions(['sendAlarms', 'sendLogic', 'updateData', 'loadRegister', 'idCheck', 'logOff']),
 
     async showModal(index, value) {
-      this.modalEdit = value
+      this.modalEdit = value;
       if (value === false) {
-        this.editS1 = this.measures[index].tipo
+        this.editS1 = this.measures[index].tipo;
         // console.log(this.measures[index])
-        this.editS2 = this.measures[index].nome
-        this.editS3 = this.measures[index].end_supervisorio
-        this.editS4 = this.measures[index].prioridade
-        this.editS5 = this.measures[index].unidade
-        this.editS6 = this.measures[index].valor_operacao
-        this.editS7 = this.measures[index].sub_area
+        this.editS2 = this.measures[index].nome;
+        this.editS3 = this.measures[index].end_supervisorio;
+        this.editS4 = this.measures[index].prioridade;
+        this.editS5 = this.measures[index].unidade;
+        this.editS6 = this.measures[index].valor_operacao;
+        this.editS7 = this.measures[index].sub_area;
       } else if(value === true) {
-        this.editC1 = this.end[index].end_alarme
+        this.editC1 = this.end[index].end_alarme;
         // console.log(this.end[index])
-        this.editC2 = this.end[index].ativacao
-        this.editC3 = this.end[index].end_medida
-        this.editC4 = this.end[index].unidade
-        this.editC5 = this.end[index].sub_area
+        this.editC2 = this.end[index].ativacao;
+        this.editC3 = this.end[index].end_medida;
+        this.editC4 = this.end[index].unidade;
+        this.editC5 = this.end[index].sub_area;
       }
 
       setTimeout(() => {
-        this.$bvModal.show(index)
+        this.$bvModal.show(index);
       }, 100);
     },
 
     cancelEdit(index) {
-      this.$bvModal.hide(index)
+      this.$bvModal.hide(index);
     },
 
     editingCanais(index) {
-      this.end.splice(index, 1)
-      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase()
-      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase()
+      this.end.splice(index, 1);
+      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase();
+      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase();
       this.end.push({
         end_alarme: this.editC1,
         ativacao: this.editC2,
         end_medida: this.editC3,
         unidade: this.editC4,
         sub_area: this.editC5
-      })
-      this.$bvModal.hide(index)
+      });
+      this.$bvModal.hide(index);
     },
 
     editingStatus(index) {
-      this.measures.splice(index, 1)
-      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
+      this.measures.splice(index, 1);
+      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase();
       this.measures.push({
         tipo: this.editS1,
         nome: this.editS2,
@@ -573,16 +573,16 @@ export default {
         valor_operacao: this.editS6,
         sub_area: this.editS7
       })
-      this.$bvModal.hide(index)
-      this.editS5 = ""
-      this.editS6 = ""
+      this.$bvModal.hide(index);
+      this.editS5 = "";
+      this.editS6 = "";
     },
 
     sendOperator() {
-      this.pushed.push(this.operators)
-      this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(/\s-\s/g, "-")
-      this.logic = this.separador
+      this.pushed.push(this.operators);
+      this.separador = this.pushed.join(' ');
+      this.separador = this.separador.replace(/\s-\s/g, "-");
+      this.logic = this.separador;
     },
 
     sendActivation(toaster) {
@@ -593,33 +593,33 @@ export default {
             title: `Endereços`,
             toaster: toaster,
             solid: true
-          })
+          });
         }
           else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
           this.$bvToast.toast('Por favor, preencha todos os campos.', {
             title: `Preencher`,
             toaster: toaster,
             solid: true,
-          })
+          });
         }
 
         else  {
-          this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
-          this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+          this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
+          this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
           if (this.operaLogic === '=') {
-            this.operaLogic = '=='
+            this.operaLogic = '==';
           }
           if (this.activation1 < 10) {
-            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
-            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
-            this.separador = this.pushed.join(' ')
-            this.logic = this.separador
+            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
+            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic});
+            this.separador = this.pushed.join(' ');
+            this.logic = this.separador;
           } else {
             this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
               title: `Preencher`,
               toaster: toaster,
               solid: true,
-            })
+            });
           }
         }
       }
@@ -629,40 +629,40 @@ export default {
           title: `Preencher`,
           toaster: toaster,
           solid: true,
-        })
+        });
       }
 
       else  {
-        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
-        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
+        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
         if (this.operaLogic === '=') {
-          this.operaLogic = '=='
+          this.operaLogic = '==';
         }
-        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic})
-        this.separador = this.pushed.join(' ')
-        this.logic = this.separador
+        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
+        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic});
+        this.separador = this.pushed.join(' ');
+        this.logic = this.separador;
       }
     },
 
     sendRecommendation() {
-      this.recom.push({item: this.recommendation})
+      this.recom.push({item: this.recommendation});
     },
 
     sendEnderecos() {
-      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
-      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
+      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase();
+      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase();
       this.end.push({
         end_alarme: this.infoAlarme,
         ativacao: this.activation2,
         end_medida: this.infoMedida,
         unidade: this.unit2,
         sub_area: this.subSelect3
-      })
+      });
     },
 
     sendMeasures() {
-      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
+      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase();
       this.measures.push({
         tipo: this.types,
         nome: this.name,
@@ -671,9 +671,9 @@ export default {
         unidade: this.unit3,
         valor_operacao: this.activation3,
         sub_area: this.subSelect4
-      })
-      this.unit3 = ""
-      this.activation3 = ""
+      });
+      this.unit3 = "";
+      this.activation3 = "";
     },
 
     validation(pushed, value) {
@@ -681,60 +681,60 @@ export default {
     },
 
     cleanArea() {
-      this.separador = ""
-      this.logic = ""
-      this.ok = false
-      this.endAtivacao.splice(0)
-      this.pushed.splice(0)
+      this.separador = "";
+      this.logic = "";
+      this.ok = false;
+      this.endAtivacao.splice(0);
+      this.pushed.splice(0);
     },
 
     cleanCanais(index) {
-      this.end.splice(index, 1)
+      this.end.splice(index, 1);
     },
 
     cleanStatus(index) {
-      this.measures.splice(index, 1)
+      this.measures.splice(index, 1);
     },
 
     cleanRecom(index) {
-      this.recom.splice(index, 1)
+      this.recom.splice(index, 1);
     },
 
     async validate(toaster) {
-      await this.sendLogic({valid: this.logic})
-      this.backendCheck = this.$store.state.validating
+      await this.sendLogic({valid: this.logic});
+      this.backendCheck = this.$store.state.validating;
 
       if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
         this.$bvToast.toast('A lógica não esta válida.', {
           title: `Logica invalida`,
           toaster: toaster,
           solid: true,
-        })
-        this.ok = false
+        });
+        this.ok = false;
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parenteses da lógica.', {
           title: `Parenteses`,
           toaster: toaster,
           solid: true,
-        })
-        this.ok = false
+        });
+        this.ok = false;
       }
       else if(this.backendCheck === "expressão correta") {
         this.$bvToast.toast('A expressão esta correta.', {
           title: `Validação`,
           toaster: toaster,
           solid: true,
-        })
-        this.ok = true
+        });
+        this.ok = true;
       }
     },
 
    async saveData(toaster) {
-      this.allData.splice(0)
+      this.allData.splice(0);
     //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-      this.load = true
-      this.disabling = true
+      this.load = true;
+      this.disabling = true;
       this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
@@ -748,10 +748,10 @@ export default {
         status_medidas: this.measures,
         recomendacoes: this.recom,
         sub_area: this.subSelect1,
-        })
+        });
 
-      await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
-      this.backendAlarm = this.$store.state.salvarAlarm
+      await this.sendAlarms({unit: this.unitId, info: this.allData[0]});
+      this.backendAlarm = this.$store.state.salvarAlarm;
 
       if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
         this.$bvToast.toast('Verifique a logica.', {
@@ -759,8 +759,8 @@ export default {
           toaster: toaster,
           solid: true,
         })
-        this.disabling = false
-        this.load = false
+        this.disabling = false;
+        this.load = false;
       }
       else if(this.backendAlarm === "Preencha a causa") {
         this.$bvToast.toast('Preencha o campo da causa.', {
@@ -768,45 +768,45 @@ export default {
           toaster: toaster,
           solid: true,
         })
-        this.disabling = false
-        this.load = false
+        this.disabling = false;
+        this.load = false;
       }
       else if(this.backendAlarm !== 200) {
         this.$bvToast.toast('Ocorreu um erro', {
           title: `Erro`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.load = false
+        });
+        this.disabling = false;
+        this.load = false;
       }
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
           title: `Sucesso`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.load = false
+        });
+        this.disabling = false;
+        this.load = false;
       }
     },
   },
 
   async created() {
     // Logoff automatico
-      await this.idCheck()
+      await this.idCheck();
       if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
+        });
         // this.logOff({logout: "tes"})
         // this.$cookies.removeAll();
         // this.$router.push('/')
       }
-    this.loadRegister(this.unitId || '')
+    this.loadRegister(this.unitId || '');
   }
 }
 </script>

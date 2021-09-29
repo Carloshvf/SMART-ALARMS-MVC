@@ -178,7 +178,7 @@
                     <td class="border-line">
                       <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanCanais(index)"/>
                     </td>
-                    <!-- MODAL EDITAR CANAIS-->
+                    <!-- MODAL EDITAR CANAIS -->
                     <b-modal size="lg" :id="index.toString()" v-if="modalEdit == true">
                       <template v-slot:modal-title>
                         <h1 class="modal-title">Edição de Canais</h1>
@@ -321,7 +321,7 @@
                   <td class="border-line">
                       <img class="deleting" src="../../../static/img/deleteSelect.svg" alt="del" @click="cleanStatus(index)"/>
                   </td>
-                <!-- MODAL EDITAR STATUS-->
+                <!-- MODAL EDITAR STATUS -->
                   <b-modal size="lg" :id="index.toString()" v-if="modalEdit == false">
                     <template v-slot:modal-title>
                       <h1 class="modal-title">Edição de Status/Medidas</h1>
@@ -508,7 +508,7 @@ export default {
       allData: [],
       editData: [],
       id: this.$route.params.id
-    }
+    };
   },
 
   computed: {
@@ -521,7 +521,7 @@ export default {
         return this.$store.state.edit.local;
       },
       set (value) {
-        this.$store.commit('setLocal', value)
+        this.$store.commit('setLocal', value);
       }
     },
     complement: {
@@ -529,7 +529,7 @@ export default {
         return this.$store.state.edit.complemento;
       },
       set (value) {
-        this.$store.commit('setComplemento', value)
+        this.$store.commit('setComplemento', value);
       }
     },
     offType: {
@@ -537,7 +537,7 @@ export default {
         return this.$store.state.edit.tipo_desligamento;
       },
       set (value) {
-        this.$store.commit('setOffType', value)
+        this.$store.commit('setOffType', value);
       }
     },
     reason: {
@@ -545,7 +545,7 @@ export default {
         return this.$store.state.edit.causa;
       },
       set (value) {
-        this.$store.commit('setCausa', value)
+        this.$store.commit('setCausa', value);
       }
     },
     textMedida: {
@@ -553,7 +553,7 @@ export default {
         return this.$store.state.edit.endereco_medida;
       },
       set (value) {
-        this.$store.commit('setTextMedida', value)
+        this.$store.commit('setTextMedida', value);
       }
     },
     unit1: {
@@ -561,7 +561,7 @@ export default {
         return this.$store.state.edit.unidade;
       },
       set (value) {
-        this.$store.commit('setUnit1', value)
+        this.$store.commit('setUnit1', value);
       }
     },
     textAlarme: {
@@ -569,7 +569,7 @@ export default {
         return this.$store.state.edit.ends_alarme[0].end_alarme;
       },
       set (value) {
-        this.$store.commit('setTextAlarme', value)
+        this.$store.commit('setTextAlarme', value);
       }
     },
     activation1: {
@@ -578,7 +578,7 @@ export default {
         return this.$store.state.edit.ends_alarme[0].ativacao;
       },
       set (value) {
-        this.$store.commit('setActivation1', value)
+        this.$store.commit('setActivation1', value);
       }
     },
     operaLogic: {
@@ -586,15 +586,15 @@ export default {
         return this.$store.state.edit.ends_alarme[0].operador;
       },
       set (value) {
-        this.$store.commit('setOperaLogic', value)
+        this.$store.commit('setOperaLogic', value);
       }
     },
     logic: {
       get () {
-        return this.$store.state.edit.logica;
+        return this.$store.state.edit.logica;;
       },
       set (value) {
-        this.$store.commit('setLogica', value)
+        this.$store.commit('setLogica', value);
       }
     },
     canal: {
@@ -602,7 +602,7 @@ export default {
         return this.$store.state.edit.canais;
       },
       set (value) {
-        this.$store.commit('setCanais', value)
+        this.$store.commit('setCanais', value);
       }
     },
     status: {
@@ -610,7 +610,7 @@ export default {
         return this.$store.state.edit.status_medidas;
       },
       set (value) {
-        this.$store.commit('setStatus', value)
+        this.$store.commit('setStatus', value);
       }
     },
     recomendacao: {
@@ -618,7 +618,7 @@ export default {
         return this.$store.state.edit.recomendacoes;
       },
       set (value) {
-        this.$store.commit('setRecom', value)
+        this.$store.commit('setRecom', value);
       }
     },
     subArea1: {
@@ -626,7 +626,7 @@ export default {
         return this.$store.state.edit.sub_area;
       },
       set (value) {
-        this.$store.commit('setSubArea1', value)
+        this.$store.commit('setSubArea1', value);
       }
     },
     subArea2: {
@@ -634,7 +634,7 @@ export default {
         return this.$store.state.edit.ends_alarme[0].sub_area;
       },
       set (value) {
-        this.$store.commit('setSubArea2', value)
+        this.$store.commit('setSubArea2', value);
       }
     },
     subArea3: {
@@ -645,7 +645,7 @@ export default {
         }
       },
       set (value) {
-        this.$store.commit('setSubArea3', value)
+        this.$store.commit('setSubArea3', value);
       }
     },
     subArea4: {
@@ -656,7 +656,7 @@ export default {
         }
       },
       set (value) {
-        this.$store.commit('setSubArea4', value)
+        this.$store.commit('setSubArea4', value);
       }
     },
     errUpdate() {
@@ -682,38 +682,38 @@ export default {
     }),
 
     async showModal(index, value) {
-      this.modalEdit = value
+      this.modalEdit = value;
       // console.log(this.canal[index])
       // console.log(this.status[index])
       if (value === false) {
-        this.editS1 = this.status[index].tipo
-        this.editS2 = this.status[index].nome
-        this.editS3 = this.status[index].end_supervisorio
-        this.editS4 = this.status[index].prioridade
-        this.editS5 = this.status[index].unidade
-        this.editS6 = this.status[index].valor_operacao
-        this.editS7 = this.status[index].sub_area
+        this.editS1 = this.status[index].tipo;
+        this.editS2 = this.status[index].nome;
+        this.editS3 = this.status[index].end_supervisorio;
+        this.editS4 = this.status[index].prioridade;
+        this.editS5 = this.status[index].unidade;
+        this.editS6 = this.status[index].valor_operacao;
+        this.editS7 = this.status[index].sub_area;
       } else if(value === true) {
-        this.editC1 = this.canal[index].end_alarme
-        this.editC2 = this.canal[index].ativacao
-        this.editC3 = this.canal[index].end_medida
-        this.editC4 = this.canal[index].unidade
-        this.editC5 = this.canal[index].sub_area
+        this.editC1 = this.canal[index].end_alarme;
+        this.editC2 = this.canal[index].ativacao;
+        this.editC3 = this.canal[index].end_medida;
+        this.editC4 = this.canal[index].unidade;
+        this.editC5 = this.canal[index].sub_area;
       }
 
       setTimeout(() => {
-        this.$bvModal.show(index)
+        this.$bvModal.show(index);
       }, 100);
     },
 
     cancelEdit(index) {
-      this.$bvModal.hide(index)
+      this.$bvModal.hide(index);
     },
 
     editingCanais(index) {
-      this.canal.splice(index, 1)
-      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase()
-      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase()
+      this.canal.splice(index, 1);
+      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase();
+      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase();
       this.canal.push({
         end_alarme: this.editC1,
         ativacao: this.editC2,
@@ -721,12 +721,12 @@ export default {
         unidade: this.editC4,
         sub_area: this.editC5
       })
-      this.$bvModal.hide(index)
+      this.$bvModal.hide(index);
     },
 
     editingStatus(index) {
-      this.status.splice(index, 1)
-      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase()
+      this.status.splice(index, 1);
+      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase();
       this.status.push({
         tipo: this.editS1,
         nome: this.editS2,
@@ -736,19 +736,19 @@ export default {
         valor_operacao: this.editS6,
         sub_area: this.editS7
       })
-      this.$bvModal.hide(index)
-      this.editS5 = ""
-      this.editS6 = ""
+      this.$bvModal.hide(index);
+      this.editS5 = "";
+      this.editS6 = "";
     },
 
     sendOperator() {
-      this.pushed.push(this.operators)
-      this.separador = this.pushed.join(' ')
-      this.separador = this.separador.replace(/\s-\s/g, "-")
+      this.pushed.push(this.operators);
+      this.separador = this.pushed.join(' ');
+      this.separador = this.separador.replace(/\s-\s/g, "-");
       // Esse splice ta sumindo com o espaço necessario no final da logica
-      this.pushed.splice(0)
-      this.pushed.push(this.separador)
-      this.logicInfo = this.pushed.toString()
+      this.pushed.splice(0);
+      this.pushed.push(this.separador);
+      this.logicInfo = this.pushed.toString();
     },
 
     sendActivation(toaster) {
@@ -770,20 +770,20 @@ export default {
         }
 
         else  {
-          this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
-          this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+          this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
+          this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
           if (this.operaLogic === '=') {
             this.operaLogic = '==';
           }
           if (this.activation1 < 10) {
-              this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
-              this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
+              this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
+              this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic});
               // console.log(this.endAtivacao)
-              this.separador = this.pushed.join(' ')
+              this.separador = this.pushed.join(' ');
               // this.separador = this.separador.replace(/\s-\s/g, "-")
-              this.pushed.splice(0)
-              this.pushed.push(this.separador)
-              this.logicInfo = this.pushed.toString()
+              this.pushed.splice(0);
+              this.pushed.push(this.separador);
+              this.logicInfo = this.pushed.toString();
             } else {
               this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
                 title: `Preencher`,
@@ -803,42 +803,42 @@ export default {
       }
 
       else  {
-        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase()
-        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase()
+        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
+        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
         if (this.operaLogic === '=') {
-          this.operaLogic = '=='
+          this.operaLogic = '==';
         }
         if (this.activation1 < 10) {
-            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1)
-            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic})
+            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
+            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subArea2, operador: this.operaLogic});
             // console.log(this.endAtivacao)
-            this.separador = this.pushed.join(' ')
+            this.separador = this.pushed.join(' ');
             // this.separador = this.separador.replace(/\s-\s/g, "-")
-            this.pushed.splice(0)
-            this.pushed.push(this.separador)
-            this.logicInfo = this.pushed.toString()
+            this.pushed.splice(0);
+            this.pushed.push(this.separador);
+            this.logicInfo = this.pushed.toString();
           } else {
             this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
               title: `Preencher`,
               toaster: toaster,
               solid: true,
-            })
+            });
           }
       }
     },
 
     sendRecommendation() {
-      this.recomAdd(this.recommendation)
+      this.recomAdd(this.recommendation);
     },
 
     sendEnderecos() {
-      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase()
-      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase()
-      this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subArea3 })
+      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase();
+      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase();
+      this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subArea3 });
     },
 
     sendMeasures() {
-      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase()
+      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase();
       this.statusAdd({
         tipo: this.types,
         nome: this.name,
@@ -847,9 +847,9 @@ export default {
         unidade: this.unit3,
         valor_operacao: this.activation3,
         sub_area: this.subArea4
-      })
-      this.unit3 = ""
-      this.activation3 = ""
+      });
+      this.unit3 = "";
+      this.activation3 = "";
     },
 
     validation(pushed, value) {
@@ -857,36 +857,36 @@ export default {
     },
 
     cleanArea() {
-      this.separador = ""
-      this.logic = ""
-      this.ok = false
-      this.endAtivacao.splice(0)
-      this.pushed.splice(0)
+      this.separador = "";
+      this.logic = "";
+      this.ok = false;
+      this.endAtivacao.splice(0);
+      this.pushed.splice(0);
     },
 
     cleanCanais(index) {
-      this.canaisClean(index)
+      this.canaisClean(index);
     },
 
     cleanStatus(index) {
-      this.statusClean(index)
+      this.statusClean(index);
     },
 
     cleanRecom(index) {
-      this.recomClean(index)
+      this.recomClean(index);
     },
 
     async validate(toaster) {
-      await this.sendLogic({valid: this.logicInfo})
-      this.backendCheck = this.$store.state.validating
+      await this.sendLogic({valid: this.logicInfo});
+      this.backendCheck = this.$store.state.validating;
 
       if (this.pushed[this.pushed.length - 1] === 'E' || this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
         this.$bvToast.toast('A lógica não está válida.', {
           title: `Lógica inválida`,
           toaster: toaster,
           solid: true,
-        })
-        this.ok = false
+        });
+        this.ok = false;
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.$bvToast.toast('Feche o parênteses da lógica.', {
@@ -894,23 +894,23 @@ export default {
           toaster: toaster,
           solid: true,
         })
-        this.ok = false
+        this.ok = false;
       }
       else if(this.backendCheck === "expressão correta") {
         this.$bvToast.toast('A expressão está correta.', {
           title: `Validação`,
           toaster: toaster,
           solid: true,
-        })
-        this.ok = true
+        });
+        this.ok = true;
       }
       else {
          this.$bvToast.toast('A expressão está incorreta.', {
           title: `Validação`,
           toaster: toaster,
           solid: true,
-        })
-        this.ok = false
+        });
+        this.ok = false;
       }
 
     },
@@ -921,19 +921,19 @@ export default {
           title: `Validar`,
           toaster: toaster,
           solid: true,
-        })
-        this.$bvModal.hide('modal-update')
+        });
+        this.$bvModal.hide('modal-update');
       }
       else if (this.ok === true) {
-        this.$bvModal.show('modal-update')
+        this.$bvModal.show('modal-update');
       }
     },
 
    async saveData(toaster) {
-      this.allData.splice(0)
+      this.allData.splice(0);
     //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
-      this.load = true
-      this.disabling = true
+      this.load = true;
+      this.disabling = true;
       this.allData.push({
         tipo_desligamento: this.offType,
         local: this.local,
@@ -947,54 +947,54 @@ export default {
         status_medidas: this.status,
         recomendacoes: this.recomendacao,
         sub_area: this.subArea1,
-      })
+      });
 
-      await this.sendAlarms({unit: this.unitId, info: this.allData[0]})
-      this.backendAlarm = this.$store.state.salvarAlarm
+      await this.sendAlarms({unit: this.unitId, info: this.allData[0]});
+      this.backendAlarm = this.$store.state.salvarAlarm;
 
       if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
         this.$bvToast.toast('Verifique a lógica e/ou o endereço de medida.', {
           title: `Lógica`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.load = false
+        });
+        this.disabling = false;
+        this.load = false;
       }
       else if(this.backendAlarm === "Preencha a causa") {
         this.$bvToast.toast('Preencha o campo da causa.', {
           title: `Causa`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.load = false
+        });
+        this.disabling = false;
+        this.load = false;
       }
       else if(this.backendAlarm !== 200) {
         this.$bvToast.toast('Ocorreu um erro', {
           title: `Erro`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.load = false
+        });
+        this.disabling = false;
+        this.load = false;
       }
       else {
         this.$bvToast.toast('Salvo com sucesso.', {
           title: `Sucesso`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.load = false
-        this.$bvModal.hide('modal-update')
+        });
+        this.disabling = false;
+        this.load = false;
+        this.$bvModal.hide('modal-update');
       }
     },
 
     updateCard(toaster, id) {
       // this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
-      this.loadEdit = true
-      this.disabling = true
+      this.loadEdit = true;
+      this.disabling = true;
 
       this.allData.push({
         tipo_desligamento: this.offType,
@@ -1009,9 +1009,9 @@ export default {
         status_medidas: this.status,
         recomendacoes: this.recomendacao,
         sub_area: this.subArea1,
-       })
+       });
 
-      this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]})
+      this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]});
 
 
       if (this.errUpdate !== 200) {
@@ -1019,19 +1019,19 @@ export default {
           title: `Erro`,
           toaster: toaster,
           solid: true,
-        })
-        this.disabling = false
-        this.loadEdit = false
+        });
+        this.disabling = false;
+        this.loadEdit = false;
       } else if (this.errUpdate === 200) {
           this.$bvToast.toast('Editado com sucesso.', {
             title: `Editar`,
             toaster: toaster,
             solid: true,
-          })
+          });
           setTimeout(() => {
-            this.disabling = false
-            this.loadEdit = false
-            this.$bvModal.hide('modal-update')
+            this.disabling = false;
+            this.loadEdit = false;
+            this.$bvModal.hide('modal-update');
           }, 1000);
       }
     }
@@ -1039,14 +1039,14 @@ export default {
 
    async created() {
      // Logoff automatico
-      await this.idCheck()
+      await this.idCheck();
       if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
+        });
         // this.logOff({logout: "tes"})
         // this.$cookies.removeAll();
         // this.$router.push('/')
@@ -1062,19 +1062,19 @@ export default {
   },
 
   async asyncData({ store, route }) {
-    const { id } = route.params
+    const { id } = route.params;
     // const unitId = this.$cookies.get('unit') || ''
-    const unitId = document.cookie.split("; ")
-    let cookieGet = null
+    const unitId = document.cookie.split("; ");
+    let cookieGet = null;
     for (let index = 0; index < unitId.length; index++) {
-      const tes = unitId[index].split('=')
+      const tes = unitId[index].split('=');
       for (let index = 0; index < tes.length; index++) {
         if (tes[0] === 'unit') {
-          cookieGet = tes[1]
+          cookieGet = tes[1];
         }
       }
     }
-    const teste = await store.dispatch('loadCard',{unit: cookieGet, route: id})
+    const teste = await store.dispatch('loadCard',{unit: cookieGet, route: id});
 
     // console.log(teste)
 
