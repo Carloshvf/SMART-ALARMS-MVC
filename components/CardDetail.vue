@@ -31,7 +31,7 @@
         </b-modal>
       </div>
       <!-- /.card-detail-content -->
-    
+
     </div>
     <!-- /.card-content -->
   </div>
@@ -42,8 +42,8 @@
 import Graph from '~/components/Graph.vue'
 import Counter from '~/components/Counter.vue'
 
-import main from '~/plugins/main'
-import { mapActions, mapState } from 'vuex'
+import main from '~/plugins/main';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   props: ['alarm', 'unity'],
@@ -51,7 +51,6 @@ export default {
   components: {
     Graph,
     Counter,
-   
   },
 
   data() {
@@ -125,7 +124,7 @@ export default {
     unitId() {
       return this.$cookies.get('unit') || '';
     },
-   
+
   },
   methods: {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
@@ -134,7 +133,7 @@ export default {
       var result = { countTimeDiff: 0 }
 
       if (id && this.lists && this.lists.length > 0) {
-        var arrays = new Array()
+        var arrays = new Array();
         for (const key in this.lists) {
           arrays.push(Object.assign({}, this.lists[key]))
         }
@@ -165,21 +164,19 @@ export default {
       this.$emit('loops', false)
       this.stopRerun = false
       this.ceaseLoop = true
-      
     },
 
     onHidden() {
       this.ceaseLoop = false
       this.stopRerun = true
       this.rerun = setInterval(() => {
-        if (this.stopRerun == true) {
+        if (this.stopRerun === true) {
           this.loadData(this.unitId || '')
-          if (this.currentRouteName != 'alarm') {
-            this.stopRerun = false 
+          if (this.currentRouteName !== 'alarm') {
+            this.stopRerun = false
           }
         } else {
           clearInterval(this.rerun)
-         
         }
       }, 5000);
 
@@ -196,19 +193,18 @@ export default {
       this.stop = true
 
       this.stopInterval = setInterval(async () => {
-        if(this.stop == true) {
+        if(this.stop === true) {
           let response = await this.loadGraph(id)
           this.fillData = await this.treatGraph(response)
 
-           if (this.ceaseLoop == false) {
-            this.stop = false 
+           if (this.ceaseLoop === false) {
+            this.stop = false
           }
         } else {
           clearInterval(this.stopInterval)
-         
         }
       }, 3000);
-    
+
       this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
     }
   }

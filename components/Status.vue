@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import Graph from '~/components/Graph.vue'
-import { mapActions, mapGetters } from 'vuex'
+import Graph from '~/components/Graph.vue';
+import { mapActions } from 'vuex';
 
 export default {
   props: ['alarm'],
@@ -114,89 +114,82 @@ export default {
     unitId() {
       return this.$cookies.get('unit') || '';
     },
-   
   },
 
   methods: {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
 
-   
-
     getChartVisible() {
-      var refChart = 'chartCurve'
-      return refChart
+      var refChart = 'chartCurve';
+      return refChart;
     },
 
     reset() {
-      this.$resetGraph(this.getChartVisible())
+      this.$resetGraph(this.getChartVisible());
     },
 
     onShow() {
-      this.$emit('loops', false)
-      this.stopRerun = false
-      this.ceaseLoop = true
-      
+      this.$emit('loops', false);
+      this.stopRerun = false;
+      this.ceaseLoop = true;
     },
 
     onHidden() {
-      this.ceaseLoop = false
-      this.stopRerun = true
+      this.ceaseLoop = false;
+      this.stopRerun = true;
 
-      if (this.currentRouteName == 'alarm') {
+      if (this.currentRouteName === 'alarm') {
         this.rerun = setInterval(() => {
-        if (this.stopRerun == true) {
-          this.loadData(this.unitId || '')
-          if (this.currentRouteName != 'alarm') {
-            this.stopRerun = false 
+        if (this.stopRerun === true) {
+          this.loadData(this.unitId || '');
+          if (this.currentRouteName !== 'alarm') {
+            this.stopRerun = false;
           }
         } else {
-          clearInterval(this.rerun)
-         
+          clearInterval(this.rerun);
         }
       }, 5000);
       }
-      else if (this.currentRouteName == 'detail-id') {
+      else if (this.currentRouteName === 'detail-id') {
         this.rerun = setInterval(() => {
-        if (this.stopRerun == true) {
-          this.loadData(this.unitId || '')
-          if (this.currentRouteName != 'detail-id') {
-            this.stopRerun = false 
+        if (this.stopRerun === true) {
+          this.loadData(this.unitId || '');
+          if (this.currentRouteName !== 'detail-id') {
+            this.stopRerun = false;
           }
         } else {
-          clearInterval(this.rerun)
-         
+          clearInterval(this.rerun);
         }
       }, 5000);
       }
-      
-      this.disable = true
+
+      this.disable = true;
       setTimeout(() => {
-       this.disable = false
+       this.disable = false;
      }, 5000);
     },
 
     async getGraph(id) {
-      let response = await this.loadGraph(id)
-      this.fillData = await this.treatGraph(response)
-      this.stopInterval = true
-      this.stop = true
+      let response = await this.loadGraph(id);
+      this.fillData = await this.treatGraph(response);
+      this.stopInterval = true;
+      this.stop = true;
 
       this.stopInterval = setInterval(async () => {
-        if(this.stop == true) {
-          let response = await this.loadGraph(id)
-          this.fillData = await this.treatGraph(response)
+        if(this.stop === true) {
+          let response = await this.loadGraph(id);
+          this.fillData = await this.treatGraph(response);
 
-           if (this.ceaseLoop == false) {
-            this.stop = false 
+           if (this.ceaseLoop === false) {
+            this.stop = false;
           }
         } else {
-          clearInterval(this.stopInterval)
-         
+          clearInterval(this.stopInterval);
         }
       }, 3000);
-      this.ende = id
+      this.ende = id;
 
-      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value
+      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.fillData.value;
     }
   },
 

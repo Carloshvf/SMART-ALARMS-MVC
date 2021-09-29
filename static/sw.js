@@ -53,7 +53,7 @@ workbox.precaching.precacheAndRoute([
   "cacheId": "smart-alarms",
   "directoryIndex": "/",
   "cleanUrls": false
-})
+});
 
 workbox.clientsClaim();
 workbox.skipWaiting();

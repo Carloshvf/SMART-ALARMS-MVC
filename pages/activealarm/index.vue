@@ -3,7 +3,7 @@
     <!-- <header-smart></header-smart> -->
     <div class="container-fluid pt-5 mt-5">
       <div class="row adjust">
-        <div class="col-4 mb-4" v-for="alarm in alarms" :key="alarm.id"> 
+        <div class="col-4 mb-4" v-for="alarm in alarms" :key="alarm.id">
           <nuxt-link
             :class="{ alarmActive: alarm.active == 1 }"
             class="box-alarm d-flex align-items-center justify-content-center"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
 
@@ -38,15 +38,14 @@ export default {
 
   methods: {
     ...mapActions(['loadData', 'idCheck', 'logOff']),
-    
   },
 
   computed: {
     alarms() {
-      return this.$store.state.all
+      return this.$store.state.all;
     },
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
     currentRouteName() {
       return this.$route.name;
@@ -58,31 +57,30 @@ export default {
 
   async created() {
     // Logoff automatico
-      await this.idCheck()
-      if (this.session.value == false) {
+      await this.idCheck();
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
+        });
         // this.logOff({logout: "tes"})
         // this.$cookies.removeAll();
         // this.$router.push('/')
       }
-    //
 
     this.stopInterval = setInterval(() => {
-      if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'activealarm') {
-          clearInterval(this.stopInterval)
+      if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'activealarm') {
+          clearInterval(this.stopInterval);
         }
-      if (this.stop == true) {
-      this.loadData(this.unitId || '')
+      if (this.stop === true) {
+      this.loadData(this.unitId || '');
       if (this.alarms instanceof Array) {
           for (let index = 0; index < this.alarms.length; index++) {
             // console.log(this.currentRouteName)
-            if (this.alarms[index].active == 1 && this.currentRouteName == 'activealarm') {
-                this.$router.push('/alarm')
+            if (this.alarms[index].active === 1 && this.currentRouteName === 'activealarm') {
+                this.$router.push('/alarm');
                 this.stop = false
                 break
               }
@@ -93,24 +91,21 @@ export default {
               title: `Erro`,
               toaster: 'b-toaster-bottom-right',
               solid: true
-            })
+            });
             // clearInterval(this.stopInterval)
           }
         }
       }, 3000);
-    
-    this.loadData(this.unitId || '')
-    
+
+    this.loadData(this.unitId || '');
       // console.log(this.alarms instanceof Array)
       if (this.alarms == 'unidade não encontrada no banco') {
         this.$bvToast.toast(this.alarms, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
+        });
       }
-    
-   
   },
 }
 </script>
