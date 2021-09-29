@@ -27,7 +27,7 @@
               </div>
             </div>
             <hr />
-        
+
         <!-- /.col-12 -->
           <div class="row">
             <div class="col-sm-5">
@@ -44,7 +44,6 @@
         <!-- /.row -->
       </div>
       <!-- /.row -->
-      
     </div>
     <!-- /.container -->
   </div>
@@ -57,8 +56,6 @@ import CardDetail from '~/components/CardDetail.vue';
 import Status from '~/components/Status.vue';
 import Recommendation from '~/components/Recommendation.vue';
 import { mapActions } from 'vuex';
-import Vue from 'vue';
-
 
 export default {
   components: {
@@ -88,27 +85,27 @@ export default {
     ...mapActions(['loadData', 'idCheck', 'logOff']),
 
     check (value) {
-      this.receive = value
+      this.receive = value;
     },
 
     transform (value) {
-      this.stop = value
+      this.stop = value;
     },
     foo(id) {
       this.$moment.locale('pt-BR');
       var result = { countTimeDiff: 0 }
-      
+
       if (id && this.lists && this.lists.length > 0) {
         var arrays = this.lists;
 
-        result = arrays.filter(i => i.id === id)
-        result = result[0].kks
-        let result2 = result.slice()
+        result = arrays.filter(i => i.id === id);
+        result = result[0].kks;
+        let result2 = result.slice();
         // console.log(result2)
-        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
+        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff);
         result = result.filter(
           (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
-        )
+        );
         result = result[0];
 
         var alarmesAtivos =  arrays.filter(o => o.active === 1);
@@ -120,33 +117,33 @@ export default {
         dateTrip.setDate(dateTrip.getDate() - 1);
         dateTrip = this.$moment(dateTrip).format("MM/DD/YYYY HH:mm:ss");     
 
-        for (var key in alarmesAtivos) {
-              if(alarmesAtivos[key].kks.filter( o => o.type === 'TRIP').length > 0 ) { 
-                  houveUmaTrip = true;
-                  result.date =  dateTrip;
-                  for (var key in this.lists) {
-                      var element = this.lists[key];
-                      if(element.active === 1 && element.id === result.name) {
-                        for (var k in element.kks) {
-                            var kk = element.kks[k];
-                            if(kk.type !== 'TRIP') {
-                              kk.date = dateTrip;
-                            }
+        for (var alarme in alarmesAtivos) {
+          if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {
+              houveUmaTrip = true;
+              result.date =  dateTrip;
+              for (var alarme in this.lists) {
+                  var element = this.lists[alarme];
+                  if(element.active === 1 && element.id === result.name) {
+                    for (var k in element.kks) {
+                        var kk = element.kks[k];
+                        if(kk.type !== 'TRIP') {
+                          kk.date = dateTrip;
                         }
-                      }
+                    }
                   }
-                  if(!this.tripped) { 
-                    //this.$forceUpdate();
-                    this.tripped=true;
-                    this.$store.state.all = this.lists;
-                  }
-                  break;
               }
+              if(!this.tripped) {
+                //this.$forceUpdate();
+                this.tripped=true;
+                this.$store.state.all = this.lists;
+              }
+              break;
           }
+        }
 
           if(!houveUmaTrip) {
             for (const key in alarmesAtivos) {
-                const kks = alarmesAtivos[key].kks.filter( o => o.type == result.type && !result.marcado);
+                const kks = alarmesAtivos[key].kks.filter( o => o.type === result.type && !result.marcado);
                 for (const k in kks) {
                   const element = kks[k];
                   element["marcado"] = true;
@@ -156,30 +153,28 @@ export default {
 
             if(arraysTodosOsKKsAtivos && arraysTodosOsKKsAtivos.length > 1) {
               var todasAsDatesdosKKs = arraysTodosOsKKsAtivos.map(o => this.$moment(o.date).toDate());
-              var menorData = Math.min(...todasAsDatesdosKKs); 
+              var menorData = Math.min(...todasAsDatesdosKKs);
               result.date = this.$moment(menorData).format("MM/DD/YYYY HH:mm:ss");
               this.$store.state.all = this.lists;
             }
           }
         }
-
       }
       // console.log('result.date:');
       // console.log(result.date);
       return result;
     },
-    
   },
 
   computed: {
     lists() {
       //const state = [{"id": "UG 11", "active": 0, "kks": [{"value": "11teste20logica", "valor_medida": "", "date": "12/29/2020 18:40:00", "name": "UG 11", "type": "PLS", "complemento": "", "contador": "08:00", "cause": "teste obrigatoriedade medida", "status_one": [], "status_two": [], "recom": [], "channels": []}]},  {"id": "UG 21", "active": 1, "kks": [{"value": "11teste20logica2", "valor_medida": "", "date": "12/29/2020 19:11:00", "name": "UG 21", "type": "PLS", "complemento": "", "contador": "08:00", "cause": "teste obrigatoriedade medida 2", "status_one": [], "status_two": [], "recom": [], "channels": []}]}, {"id": "UG 21", "active": 1, "kks": [{"value": "11teste20logica3", "valor_medida": "", "date": "12/29/2020 19:11:01", "name": "UG 21", "type": "PLS", "complemento": "", "contador": "05:00", "cause": "teste obrigatoriedade medida 2", "status_one": [], "status_two": [], "recom": [], "channels": []}]}, {"id": "UG 31", "active": 0, "kks": []}, {"id": "UG 12", "active": 0, "kks": []}, {"id": "UG 22", "active": 0, "kks": []}, {"id": "UG 32", "active": 0, "kks": []}, {"id": "UG 18", "active": 0, "kks": []}, {"id": "UG 28", "active": 0, "kks": []}, {"id": "UG 38", "active": 0, "kks": []}, {"id": "CAV1", "active": 0, "kks": []}, {"id": "CAV2", "active": 0, "kks": []}, {"id": "CAV3", "active": 0, "kks": []}]
-      
-      return this.$store.state.all
+
+      return this.$store.state.all;
     },
 
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
 
     unitId() {
@@ -193,8 +188,8 @@ export default {
 
   async created() {
       // Logoff automatico
-      await this.idCheck()
-      if (this.session.value == false) {
+      await this.idCheck();
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
@@ -205,35 +200,32 @@ export default {
         // this.$cookies.removeAll();
         // this.$router.push('/')
       }
-      // 
-      
       this.stopInterval = setInterval(() => {
-        if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'alarm') {
-          clearInterval(this.stopInterval)
+        if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'alarm') {
+          clearInterval(this.stopInterval);
         }
-        if (this.stop == true) {
-          this.loadData(this.$cookies.get('unit') || '')
-          this.arrSize.splice(0)
+        if (this.stop === true) {
+          this.loadData(this.$cookies.get('unit') || '');
+          this.arrSize.splice(0);
 
           if (this.lists instanceof Array) {
             for (let index = 0; index < this.lists.length; index++) {
               for (let ind = 0; ind < this.lists[index].kks.length; index++) {
                 if (this.lists[index].active == 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length != this.receive.length) {
-                  this.arrAleat.push('5')
+                  this.arrAleat.push('5');
                   this.componentKey += 1;
                 }
             }
-            
             if (this.lists[index].active == 0 && this.currentRouteName == 'alarm') {
-                this.arrSize.push("5") 
+                this.arrSize.push("5");
               }
             }
-            if (this.arrSize.length == this.lists.length && this.currentRouteName == 'alarm') {
-              this.$router.push('/activealarm')
+            if (this.arrSize.length === this.lists.length && this.currentRouteName === 'alarm') {
+              this.$router.push('/activealarm');
             }
 
-            if (this.currentRouteName != 'alarm') {
-              this.stop = false 
+            if (this.currentRouteName !== 'alarm') {
+              this.stop = false;
             }
           } else {
               this.$bvToast.toast(this.lists, {
@@ -244,7 +236,7 @@ export default {
               // clearInterval(this.stopInterval)
           }
         }  else {
-          clearInterval(this.stopInterval)
+          clearInterval(this.stopInterval);
         }
       }, 3000);
   },

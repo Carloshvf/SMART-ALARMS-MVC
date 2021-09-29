@@ -513,7 +513,6 @@ export default {
     selectFilters() {
       return this.$store.state.getAlarm;
     }
-
   },
 
   methods: {

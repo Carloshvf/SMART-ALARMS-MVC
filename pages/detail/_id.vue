@@ -37,7 +37,7 @@
         </div>
         <!-- /.row -->
         <!-- AQUI -->
-        
+
         <div class="row fluid-card">
           <div class="col-6" v-for="content in value.kks" :key="content.value">
             <div class="card">
@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import TopDetail from '~/components/TopDetail.vue'
-import Status from '~/components/Status.vue'
-import Counter from '~/components/Counter.vue'
+import TopDetail from '~/components/TopDetail.vue';
+import Status from '~/components/Status.vue';
+import Counter from '~/components/Counter.vue';
 
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
   props: ['alarm', 'unity'],
@@ -89,55 +89,55 @@ export default {
     ...mapActions(['loadData', 'idCheck', 'logOff']),
 
     teste (value) {
-      this.incEnde = value
+      this.incEnde = value;
     },
 
     check (value) {
-      this.receive = value
+      this.receive = value;
     },
 
     onClickChild (value) {
-      this.stop = value
+      this.stop = value;
     },
 
     clickFalse() {
-      this.cease = false
+      this.cease = false;
     },
 
     foo(id) {
       var result = { countTimeDiff: 0 }
 
       if (this.id && this.lists && this.lists.length > 0) {
-        var arrays = new Array()
+        var arrays = new Array();
         for (const key in this.lists) {
-          arrays.push(Object.assign({}, this.lists[key]))
+          arrays.push(Object.assign({}, this.lists[key]));
         }
 
-        result = arrays.filter(i => i.id === id)
-        result = result[0].kks
-        let result2 = result.slice()
-        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
+        result = arrays.filter(i => i.id === id);
+        result = result[0].kks;
+        let result2 = result.slice();
+        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff);
         result = result.filter(
           (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
-        )
-        result = result[0]
+        );
+        result = result[0];
       }
 
-      return result
+      return result;
     }
   },
 
   computed: {
     cardDetail() {
-      return this.lists.filter(i => i.id === this.id)
+      return this.lists.filter(i => i.id === this.id);
     },
 
     lists() {
-      return this.$store.state.all
+      return this.$store.state.all;
     },
 
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
 
     currentRouteName() {
@@ -146,13 +146,12 @@ export default {
     unitId() {
       return this.$cookies.get('unit') || '';
     },
-   
   },
 
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
@@ -163,42 +162,41 @@ export default {
         // this.$cookies.removeAll();
         // this.$router.push('/')
       }
-    // 
 
     this.stopInterval = setInterval(() => {
-        if (this.$cookies.get('unit') == '' || this.$cookies.get('unit') == undefined || this.currentRouteName != 'detail-id') {
-            clearInterval(this.stopInterval)
+        if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'detail-id') {
+            clearInterval(this.stopInterval);
           }
-        if (this.stop == true) {
-          this.loadData(this.unitId || '')
-          this.arrSize.splice(0)
-          
+        if (this.stop === true) {
+          this.loadData(this.unitId || '');
+          this.arrSize.splice(0);
+
           if (this.lists instanceof Array) {
             for (let index = 0; index < this.lists.length; index++) {
               for (let ind = 0; ind < this.lists[index].kks.length; index++) {
-                if (this.lists[index].active == 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length != this.receive.length) {
-                  this.arrAleat.push('5')
+                if (this.lists[index].active === 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length !== this.receive.length) {
+                  this.arrAleat.push('5');
                   this.componentKey += 1;
                 }
             }
-              if (this.lists[index].active == 0 && this.currentRouteName == 'detail-id') {
-                  this.arrSize.push("5")
+              if (this.lists[index].active === 0 && this.currentRouteName === 'detail-id') {
+                  this.arrSize.push("5");
                 }
-            }
-            
-              for (let index = 0; index < this.lists.length; index++) {
-                if (this.lists[index].active == 1 && this.cardDetail[0].active == 0) { 
-                  this.$router.push({ name: 'detail-id', params: { id: this.lists[index].id } })
-                  clearInterval(this.stopInterval)
-                }
-              } 
-            
-            if (this.arrSize.length == this.lists.length && this.currentRouteName == 'detail-id') {
-              this.$router.push('/activealarm')
             }
 
-            if (this.currentRouteName != 'detail-id') {
-              this.stop = false 
+              for (let index = 0; index < this.lists.length; index++) {
+                if (this.lists[index].active === 1 && this.cardDetail[0].active === 0) { 
+                  this.$router.push({ name: 'detail-id', params: { id: this.lists[index].id } });
+                  clearInterval(this.stopInterval);
+                }
+              }
+
+            if (this.arrSize.length === this.lists.length && this.currentRouteName === 'detail-id') {
+              this.$router.push('/activealarm');
+            }
+
+            if (this.currentRouteName !== 'detail-id') {
+              this.stop = false ;
             }
           } else {
               this.$bvToast.toast(this.lists, {
@@ -209,11 +207,9 @@ export default {
               // clearInterval(this.stopInterval)
           }
         } else {
-          clearInterval(this.stopInterval)
-         
+          clearInterval(this.stopInterval);
         }
       }, 3000);
-   
   },
 }
 </script>

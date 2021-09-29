@@ -639,7 +639,7 @@ export default {
     },
     subArea3: {
       get () {
-        if (this.$store.state.edit.canais != '') {
+        if (this.$store.state.edit.canais !== '') {
           // console.log(this.$store.state.edit.canais)
           return this.$store.state.edit.canais[0].sub_area;
         }
@@ -650,7 +650,7 @@ export default {
     },
     subArea4: {
       get () {
-        if (this.$store.state.edit.status_medidas != '') {
+        if (this.$store.state.edit.status_medidas !== '') {
           // console.log(this.$store.state.edit.canais)
           return this.$store.state.edit.status_medidas[0].sub_area;
         }
