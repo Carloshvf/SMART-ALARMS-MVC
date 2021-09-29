@@ -20,7 +20,7 @@
         <graph ref="chartCurve" :chart-data="fillData" :height="210" :options="chartOptions" />
         <b-button @click="reset">Reset zoom</b-button>
       </b-modal>
-      <!--b-modal  -->
+      <!-- b-modal  -->
     </div>
     <!-- /.top-detail-kks -->
     <div class="detail-channel ">
@@ -101,7 +101,7 @@ export default {
           ]
         }
       }
-    }
+    };
   },
 
   computed: {
@@ -185,7 +185,7 @@ export default {
     this.$emit('kks', this.alarm.value);
   }
 
-}
+};
 </script>
 
 <style lang="scss" scoped>
