@@ -78,6 +78,7 @@ export default {
       if (this.stop && this.alarms instanceof Array) {
         this.loadData(this.unitId || '');
         for(alarm in this.alarms) {
+          console.log(this.alarm)
           if(this.alarms.active === 1 && this.currentRouteName !== 'activealarm') {
             this.$router.push('/alarm');
             this.stop = false
