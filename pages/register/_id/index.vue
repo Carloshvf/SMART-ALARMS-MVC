@@ -414,10 +414,9 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-            <li v-for="(lista,index) in recomendacao" :key="lista.id">{
-              {{ lista.item }}
-            } <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/>
-            </li>
+              <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} 
+                <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/>
+              </li>
           </ul>
         </div>
       <div class="mt-5">
