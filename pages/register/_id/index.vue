@@ -415,7 +415,7 @@
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
             <li v-for="(lista,index) in recomendacao" :key="lista.id">{
-              { lista.item }
+              {{ lista.item }}
             } <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/>
             </li>
           </ul>
