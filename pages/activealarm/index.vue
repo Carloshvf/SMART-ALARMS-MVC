@@ -58,7 +58,7 @@ export default {
   async created() {
     // Logoff automatico
       await this.idCheck();
-      if (!this.session.value) {
+      if (this.session.value === false) {
         // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
@@ -74,31 +74,12 @@ export default {
       if (this.$cookies.get('unit') === '' || undefined || this.currentRouteName !== 'activealarm') {
           clearInterval(this.stopInterval);
         }
-
-      // if (this.stop && this.alarms instanceof Array) {
-      //   this.loadData(this.unitId || '');
-      //   for(alarm in this.alarms) {
-      //     console.log(this.alarm)
-      //     if(this.alarms.active === 1 && this.currentRouteName !== 'activealarm') {
-      //       this.$router.push('/alarm');
-      //       this.stop = false
-      //       break
-      //     }
-      //   }
-      // } else {
-      //   this.$bvToast.toast(this.alarms, {
-      //     title: `Erro`,
-      //     toaster: 'b-toaster-bottom-right',
-      //     solid: true
-      //   });
-      // }
-
       if (this.stop === true) {
-        this.loadData(this.unitId || '');
-        if (this.alarms instanceof Array) {
-          for (alarm in this.alarms) {
+      this.loadData(this.unitId || '');
+      if (this.alarms instanceof Array) {
+          for (let index = 0; index < this.alarms.length; index++) {
             // console.log(this.currentRouteName)
-            if (this.alarm.active === 1 && this.currentRouteName === 'activealarm') {
+            if (this.alarms[index].active === 1 && this.currentRouteName === 'activealarm') {
                 this.$router.push('/alarm');
                 this.stop = false
                 break
