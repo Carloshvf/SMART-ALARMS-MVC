@@ -75,45 +75,45 @@ export default {
           clearInterval(this.stopInterval);
         }
 
-      if (this.stop && this.alarms instanceof Array) {
-        this.loadData(this.unitId || '');
-        for(alarm in this.alarms) {
-          console.log(this.alarm)
-          if(this.alarms.active === 1 && this.currentRouteName !== 'activealarm') {
-            this.$router.push('/alarm');
-            this.stop = false
-            break
-          }
-        }
-      } else {
-        this.$bvToast.toast(this.alarms, {
-          title: `Erro`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        });
-      }
-
-      // if (this.stop === true) {
+      // if (this.stop && this.alarms instanceof Array) {
       //   this.loadData(this.unitId || '');
-      //   if (this.alarms instanceof Array) {
-      //     for (alarm in this.alarms) {
-      //       // console.log(this.currentRouteName)
-      //       if (this.alarm.active === 1 && this.currentRouteName === 'activealarm') {
-      //           this.$router.push('/alarm');
-      //           this.stop = false
-      //           break
-      //         }
-      //       }
-      //     }
-      //     else {
-      //       this.$bvToast.toast(this.alarms, {
-      //         title: `Erro`,
-      //         toaster: 'b-toaster-bottom-right',
-      //         solid: true
-      //       });
-      //       // clearInterval(this.stopInterval)
+      //   for(alarm in this.alarms) {
+      //     console.log(this.alarm)
+      //     if(this.alarms.active === 1 && this.currentRouteName !== 'activealarm') {
+      //       this.$router.push('/alarm');
+      //       this.stop = false
+      //       break
       //     }
       //   }
+      // } else {
+      //   this.$bvToast.toast(this.alarms, {
+      //     title: `Erro`,
+      //     toaster: 'b-toaster-bottom-right',
+      //     solid: true
+      //   });
+      // }
+
+      if (this.stop === true) {
+        this.loadData(this.unitId || '');
+        if (this.alarms instanceof Array) {
+          for (alarm in this.alarms) {
+            // console.log(this.currentRouteName)
+            if (this.alarm.active === 1 && this.currentRouteName === 'activealarm') {
+                this.$router.push('/alarm');
+                this.stop = false
+                break
+              }
+            }
+          }
+          else {
+            this.$bvToast.toast(this.alarms, {
+              title: `Erro`,
+              toaster: 'b-toaster-bottom-right',
+              solid: true
+            });
+            // clearInterval(this.stopInterval)
+          }
+        }
       }, 3000);
 
     this.loadData(this.unitId || '');
