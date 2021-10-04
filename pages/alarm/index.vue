@@ -91,72 +91,82 @@ export default {
     transform (value) {
       this.stop = value;
     },
-    foo(id) {​
-      let result = undefined;
+    foo(id) {
       this.$moment.locale('pt-BR');
+      var result = { countTimeDiff: 0 };
 
       if (!id || !this.lists?.length) {
-        result = { countTimeDiff: 0 };
         return result;
       }
+
       var arrays = this.lists;
+
       result = arrays.filter(i => i.id === id);
       result = result[0].kks;
       let result2 = result.slice();
+      // console.log(result2)
       result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff);
       result = result.filter(
         (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
       );
       result = result[0];
+
       var alarmesAtivos =  arrays.filter(o => o.active === 1);
-      if(alarmesAtivos?.length) {​
+      if(alarmesAtivos && alarmesAtivos.length > 0) {
         var arraysTodosOsKKsAtivos = new Array();
+
       var houveUmaTrip = false;
       var dateTrip =  new Date();
       dateTrip.setDate(dateTrip.getDate() - 1);
       dateTrip = this.$moment(dateTrip).format("MM/DD/YYYY HH:mm:ss");     
-      for (var alarme in alarmesAtivos) {​
-        if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {​
+
+      for (var alarme in alarmesAtivos) {
+        if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {
             houveUmaTrip = true;
             result.date =  dateTrip;
-            for (var alarme in this.lists) {​
+            for (var alarme in this.lists) {
                 var element = this.lists[alarme];
-                if(element.active === 1 && element.id === result.name) {​
-                  for (var k in element.kks) {​
+                if(element.active === 1 && element.id === result.name) {
+                  for (var k in element.kks) {
                       var kk = element.kks[k];
-                      if(kk.type !== 'TRIP') {​
+                      if(kk.type !== 'TRIP') {
                         kk.date = dateTrip;
-                      }​
-                  }​
-                }​
-            }​
-            if(!this.tripped) {​
+                      }
+                  }
+                }
+            }
+            if(!this.tripped) {
+              //this.$forceUpdate();
               this.tripped=true;
               this.$store.state.all = this.lists;
-            }​
+            }
             break;
-        }​
-      }​
-        if(!houveUmaTrip) {​
-          for (const key in alarmesAtivos) {​
+        }
+      }
+
+        if(!houveUmaTrip) {
+          for (const key in alarmesAtivos) {
               const kks = alarmesAtivos[key].kks.filter( o => o.type === result.type && !result.marcado);
-              for (const k in kks) {​
+              for (const k in kks) {
                 const element = kks[k];
                 element["marcado"] = true;
                 arraysTodosOsKKsAtivos.push(element);
-              }​
-          }​
-          if(arraysTodosOsKKsAtivos?.length > 1) {​
+              }
+          }
+
+          if(arraysTodosOsKKsAtivos && arraysTodosOsKKsAtivos.length > 1) {
             var todasAsDatesdosKKs = arraysTodosOsKKsAtivos.map(o => this.$moment(o.date).toDate());
             var menorData = Math.min(...todasAsDatesdosKKs);
             result.date = this.$moment(menorData).format("MM/DD/YYYY HH:mm:ss");
             this.$store.state.all = this.lists;
-          }​
-        }​
-      }​
+          }
+        }
+      }
+      // console.log('result.date:');
+      // console.log(result.date);
       return result;
-    }​,
-  }​,
+    },
+  },
 
   computed: {
     lists() {
