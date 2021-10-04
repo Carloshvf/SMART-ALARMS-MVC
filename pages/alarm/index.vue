@@ -92,9 +92,8 @@ export default {
       this.stop = value;
     },
     foo(id) {​
-      let result = undefined
+      let result = undefined;
       this.$moment.locale('pt-BR');
-      var result = {​ countTimeDiff: 0 }​
 
       if (!id || !this.lists?.length) {
         result = { countTimeDiff: 0 };
