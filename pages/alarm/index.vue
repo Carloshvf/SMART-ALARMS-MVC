@@ -124,18 +124,14 @@ export default {
           houveUmaTrip = true;
           result.date =  dateTrip;
 
-          let listAlarm = this.lists.forEach(alarme => {
-            return Boolean(alarme.active === 1 && alarme.id === result.name);
+          this.lists.forEach(alarme => {
+            if (Boolean(alarme.active === 1 && alarme.id === result.name)) {
+              alarme.kks.forEach(kks => {
+                kks.date = dateTrip;
+              })
+            }
           });
           
-          if (listAlarm) {
-            testKks = alarme.kks.forEach(kks => {
-              return Boolean(kks.type !== 'TRIP');
-            });
-            if (testKks) {
-              kks.date = dateTrip;
-            }
-          }
           if(!this.tripped) {
             this.tripped=true;
             this.$store.state.all = this.lists;
