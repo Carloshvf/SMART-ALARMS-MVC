@@ -150,7 +150,7 @@ export default {
       //     }
       //   }, 5000);
       // }
-      const verific = 'alarm' || 'detail-id'
+      const verific = 'alarm || detail-id'
 
       if (this.currentRouteName === verific) {
         this.rerun = setInterval(() => {
