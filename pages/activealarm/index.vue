@@ -71,9 +71,20 @@ export default {
       }
 
     this.stopInterval = setInterval(() => {
-      if (this.$cookies.get('unit') === '' || undefined || this.currentRouteName !== 'activealarm') {
-          clearInterval(this.stopInterval);
-        }
+      const setStopInterval = false
+
+      if (this.$cookies.get('unit') === '') {
+        clearInterval(this.stopInterval);
+      }
+      if (this.$cookies.get('unit') === undefined) {
+        clearInterval(this.stopInterval);
+      }
+      if (this.currentRouteName !== 'activealarm') {
+        clearInterval(this.stopInterval);
+      }
+      // if (this.$cookies.get('unit') === '' || undefined || this.currentRouteName !== 'activealarm') {
+      //     clearInterval(this.stopInterval);
+      //   }
       if (this.stop === true) {
       this.loadData(this.unitId || '');
       if (this.alarms instanceof Array) {
