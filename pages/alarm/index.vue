@@ -91,109 +91,73 @@ export default {
     transform (value) {
       this.stop = value;
     },
-    foo(id) {
+    foo(id) {​
+      let result = undefined
       this.$moment.locale('pt-BR');
-      var result = { countTimeDiff: 0 }
+      var result = {​ countTimeDiff: 0 }​
 
-      if (id && this.lists && this.lists.length > 0) {
-        var arrays = this.lists;
-
-        result = arrays.filter(i => i.id === id);
-        result = result[0].kks;
-        let result2 = result.slice();
-        // console.log(result2)
-        result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff);
-        result = result.filter(
-          (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
-        );
-        result = result[0];
-
-        var alarmesAtivos =  arrays.filter(o => o.active === 1);
-        if(alarmesAtivos && alarmesAtivos.length > 0) {
-          var arraysTodosOsKKsAtivos = new Array();
-
-        var houveUmaTrip = false;
-        var dateTrip =  new Date();
-        dateTrip.setDate(dateTrip.getDate() - 1);
-        dateTrip = this.$moment(dateTrip).format("MM/DD/YYYY HH:mm:ss");     
-
-        let filterAlarmeAtivos = alarmesAtivos.forEach(alarme => {
-          return Boolean(alarme.kks.filter( o => o.type === 'TRIP').length > 0 );
-        });
-        if (filterAlarmeAtivos) {
-          houveUmaTrip = true;
-          result.date =  dateTrip;
-
-          this.lists.forEach(alarme => {
-            if (Boolean(alarme.active === 1 && alarme.id === result.name)) {
-              alarme.kks.forEach(kks => {
-                kks.date = dateTrip;
-              })
-            }
-          });
-          
-          if(!this.tripped) {
-            this.tripped=true;
-            this.$store.state.all = this.lists;
-          }
-        }
-        // Código antigo
-        // for (var alarme in alarmesAtivos) {
-        //   if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {
-        //       houveUmaTrip = true;
-        //       result.date =  dateTrip;
-        //       for (var alarme in this.lists) {
-        //           var element = this.lists[alarme];
-        //           if(element.active === 1 && element.id === result.name) {
-        //             for (var k in element.kks) {
-        //                 var kk = element.kks[k];
-        //                 if(kk.type !== 'TRIP') {
-        //                   kk.date = dateTrip;
-        //                 }
-        //             }
-        //           }
-        //       }
-        //       if(!this.tripped) {
-        //         //this.$forceUpdate();
-        //         this.tripped=true;
-        //         this.$store.state.all = this.lists;
-        //       }
-        //       break;
-        //   }
-        // }
-
-          if(!houveUmaTrip) {
-            alarmesAtivos.forEacc(alarmeAtivo => {
-              const kks = alarmeAtivo.kks.filter(o => o.type === result.type && !result.marcado);
-              kks.forEach(k => {
-                const element = k;
+      if (!id || !this.lists?.length) {
+        result = { countTimeDiff: 0 };
+        return result;
+      }
+      var arrays = this.lists;
+      result = arrays.filter(i => i.id === id);
+      result = result[0].kks;
+      let result2 = result.slice();
+      result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff);
+      result = result.filter(
+        (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
+      );
+      result = result[0];
+      var alarmesAtivos =  arrays.filter(o => o.active === 1);
+      if(alarmesAtivos?.length) {​
+        var arraysTodosOsKKsAtivos = new Array();
+      var houveUmaTrip = false;
+      var dateTrip =  new Date();
+      dateTrip.setDate(dateTrip.getDate() - 1);
+      dateTrip = this.$moment(dateTrip).format("MM/DD/YYYY HH:mm:ss");     
+      for (var alarme in alarmesAtivos) {​
+        if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {​
+            houveUmaTrip = true;
+            result.date =  dateTrip;
+            for (var alarme in this.lists) {​
+                var element = this.lists[alarme];
+                if(element.active === 1 && element.id === result.name) {​
+                  for (var k in element.kks) {​
+                      var kk = element.kks[k];
+                      if(kk.type !== 'TRIP') {​
+                        kk.date = dateTrip;
+                      }​
+                  }​
+                }​
+            }​
+            if(!this.tripped) {​
+              this.tripped=true;
+              this.$store.state.all = this.lists;
+            }​
+            break;
+        }​
+      }​
+        if(!houveUmaTrip) {​
+          for (const key in alarmesAtivos) {​
+              const kks = alarmesAtivos[key].kks.filter( o => o.type === result.type && !result.marcado);
+              for (const k in kks) {​
+                const element = kks[k];
                 element["marcado"] = true;
                 arraysTodosOsKKsAtivos.push(element);
-              });
-            });
-
-            // for (const key in alarmesAtivos) {
-            //     const kks = alarmesAtivos[key].kks.filter( o => o.type === result.type && !result.marcado);
-            //     for (const k in kks) {
-            //       const element = kks[k];
-            //       element["marcado"] = true;
-            //       arraysTodosOsKKsAtivos.push(element);
-            //     }
-            // }
-            if(arraysTodosOsKKsAtivos.length > 1) {
-              var todasAsDatesdosKKs = arraysTodosOsKKsAtivos.map(o => this.$moment(o.date).toDate());
-              var menorData = Math.min(...todasAsDatesdosKKs);
-              result.date = this.$moment(menorData).format("MM/DD/YYYY HH:mm:ss");
-              this.$store.state.all = this.lists;
-            }
-          }
-        }
-      }
-      // console.log('result.date:');
-      // console.log(result.date);
+              }​
+          }​
+          if(arraysTodosOsKKsAtivos?.length > 1) {​
+            var todasAsDatesdosKKs = arraysTodosOsKKsAtivos.map(o => this.$moment(o.date).toDate());
+            var menorData = Math.min(...todasAsDatesdosKKs);
+            result.date = this.$moment(menorData).format("MM/DD/YYYY HH:mm:ss");
+            this.$store.state.all = this.lists;
+          }​
+        }​
+      }​
       return result;
-    },
-  },
+    }​,
+  }​,
 
   computed: {
     lists() {
