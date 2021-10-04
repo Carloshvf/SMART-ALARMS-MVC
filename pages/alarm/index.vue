@@ -136,7 +136,6 @@ export default {
             this.tripped=true;
             this.$store.state.all = this.lists;
           }
-          break;
         }
         // Código antigo
         // for (var alarme in alarmesAtivos) {
