@@ -163,16 +163,27 @@ export default {
         // }
 
           if(!houveUmaTrip) {
-            for (const key in alarmesAtivos) {
-                const kks = alarmesAtivos[key].kks.filter( o => o.type === result.type && !result.marcado);
-                for (const k in kks) {
-                  const element = kks[k];
-                  element["marcado"] = true;
-                  arraysTodosOsKKsAtivos.push(element);
-                }
-            }
+            alarmesAtivos.forEacc(alarmeAtivo => {
+              const kks = alarmeAtivo.kks.filter(o => o.type === result.type && !result.marcado);
+              kks.forEach(k => {
+                const element = k;
+                element["marcado"] = true;
+                arraysTodosOsKKsAtivos.push(element);
+              });
+            });
 
-            if(arraysTodosOsKKsAtivos && arraysTodosOsKKsAtivos.length > 1) {
+            // for (const key in alarmesAtivos) {
+            //     const kks = alarmesAtivos[key].kks.filter( o => o.type === result.type && !result.marcado);
+            //     for (const k in kks) {
+            //       const element = kks[k];
+            //       element["marcado"] = true;
+            //       arraysTodosOsKKsAtivos.push(element);
+            //     }
+            // }
+            function verificKksAtivos(arraysTodosOsKKsAtivos, arraysTodosOsKKsAtivos) {
+              return Boolean(arraysTodosOsKKsAtivos && arraysTodosOsKKsAtivos.length > 1)
+            }
+            if(verificKksAtivos(arraysTodosOsKKsAtivos, arraysTodosOsKKsAtivos)) {
               var todasAsDatesdosKKs = arraysTodosOsKKsAtivos.map(o => this.$moment(o.date).toDate());
               var menorData = Math.min(...todasAsDatesdosKKs);
               result.date = this.$moment(menorData).format("MM/DD/YYYY HH:mm:ss");
