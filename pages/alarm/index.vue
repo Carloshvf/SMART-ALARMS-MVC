@@ -117,29 +117,55 @@ export default {
         dateTrip.setDate(dateTrip.getDate() - 1);
         dateTrip = this.$moment(dateTrip).format("MM/DD/YYYY HH:mm:ss");     
 
-        for (var alarme in alarmesAtivos) {
-          if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {
-              houveUmaTrip = true;
-              result.date =  dateTrip;
-              for (var alarme in this.lists) {
-                  var element = this.lists[alarme];
-                  if(element.active === 1 && element.id === result.name) {
-                    for (var k in element.kks) {
-                        var kk = element.kks[k];
-                        if(kk.type !== 'TRIP') {
-                          kk.date = dateTrip;
-                        }
-                    }
-                  }
-              }
-              if(!this.tripped) {
-                //this.$forceUpdate();
-                this.tripped=true;
-                this.$store.state.all = this.lists;
-              }
-              break;
+        let filterAlarmeAtivos = alarmesAtivos.forEach(alarme => {
+          return Boolean(alarme.kks.filter( o => o.type === 'TRIP').length > 0 );
+        });
+        if (filterAlarmeAtivos) {
+          houveUmaTrip = true;
+          result.date =  dateTrip;
+
+          let listAlarm = this.lists.forEach(alarme => {
+            return Boolean(alarme.active === 1 && alarme.id === result.name);
+          });
+          
+          if (listAlarm) {
+            testKks = alarme.kks.forEach(kks => {
+              return Boolean(kks.type !== 'TRIP');
+            });
+            if (testKks) {
+              kks.date = dateTrip;
+            }
           }
+          if(!this.tripped) {
+            this.tripped=true;
+            this.$store.state.all = this.lists;
+          }
+          break;
         }
+        // Código antigo
+        // for (var alarme in alarmesAtivos) {
+        //   if(alarmesAtivos[alarme].kks.filter( o => o.type === 'TRIP').length > 0 ) {
+        //       houveUmaTrip = true;
+        //       result.date =  dateTrip;
+        //       for (var alarme in this.lists) {
+        //           var element = this.lists[alarme];
+        //           if(element.active === 1 && element.id === result.name) {
+        //             for (var k in element.kks) {
+        //                 var kk = element.kks[k];
+        //                 if(kk.type !== 'TRIP') {
+        //                   kk.date = dateTrip;
+        //                 }
+        //             }
+        //           }
+        //       }
+        //       if(!this.tripped) {
+        //         //this.$forceUpdate();
+        //         this.tripped=true;
+        //         this.$store.state.all = this.lists;
+        //       }
+        //       break;
+        //   }
+        // }
 
           if(!houveUmaTrip) {
             for (const key in alarmesAtivos) {

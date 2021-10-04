@@ -77,11 +77,11 @@ export default {
 
       try {
         let alarmActive = this.alarms.some(alarm => {
-          return Boolean(alarm.active === 1 && this.currentRouteName === 'activealarm')
+          return Boolean(alarm.active === 1 && this.currentRouteName === 'activealarm');
         });
         if(alarmActive) {
           this.$router.push('/alarm');
-          this.stop = false
+          this.stop = false;
         }
       }
       catch (e) {
