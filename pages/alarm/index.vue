@@ -180,10 +180,7 @@ export default {
             //       arraysTodosOsKKsAtivos.push(element);
             //     }
             // }
-            function verificKksAtivos(arraysTodosOsKKsAtivos, arraysTodosOsKKsAtivos) {
-              return Boolean(arraysTodosOsKKsAtivos && arraysTodosOsKKsAtivos.length > 1)
-            }
-            if(verificKksAtivos(arraysTodosOsKKsAtivos, arraysTodosOsKKsAtivos)) {
+            if(arraysTodosOsKKsAtivos.length > 1) {
               var todasAsDatesdosKKs = arraysTodosOsKKsAtivos.map(o => this.$moment(o.date).toDate());
               var menorData = Math.min(...todasAsDatesdosKKs);
               result.date = this.$moment(menorData).format("MM/DD/YYYY HH:mm:ss");
