@@ -796,23 +796,6 @@ export default {
       if (this.$cookies.get('unit') === 1) {
         this.verificaEnderecos();
       }
-
-       else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
-        this.$bvToast.toast('Por favor, preencha todos os campos.', {
-          title: `Preencher`,
-          toaster: toaster,
-          solid: true,
-        })
-      }
-
-      else  {
-        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
-        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
-        if (this.operaLogic === '=') {
-          this.operaLogic = '==';
-        }
-        this.verificIsNaN();
-      }
     },
 
     sendRecommendation() {

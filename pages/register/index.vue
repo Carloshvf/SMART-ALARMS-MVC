@@ -585,46 +585,16 @@ export default {
       this.logic = this.separador;
     },
 
-    sendActivation(toaster) {
-      if (this.$cookies.get('unit') === 1) {
-        if (isNaN(this.textMedida.charAt(0)) === true && isNaN(this.textMedida.charAt(1)) === true ||
-          isNaN(this.textAlarme.charAt(0)) === true && isNaN(this.textAlarme.charAt(1)) === true) {
-          this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
-            title: `Endereços`,
-            toaster: toaster,
-            solid: true
-          });
-        }
-          else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
-          this.$bvToast.toast('Por favor, preencha todos os campos.', {
-            title: `Preencher`,
-            toaster: toaster,
-            solid: true,
-          });
-        }
-
-        else  {
-          this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
-          this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
-          if (this.operaLogic === '=') {
-            this.operaLogic = '==';
-          }
-          if (!isNaN(parseInt(this.activation1))) {
-            this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
-            this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic});
-            this.separador = this.pushed.join(' ');
-            this.logic = this.separador;
-          } else {
-            this.$bvToast.toast('Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', {
-              title: `Preencher`,
-              toaster: toaster,
-              solid: true,
-            });
-          }
-        }
+    verificaEnderecos(toaster) {
+      if (isNaN(this.textMedida.charAt(0)) && isNaN(this.textMedida.charAt(1))||
+        isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
+        this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
+          title: `Endereços`,
+          toaster: toaster,
+          solid: true
+        });
       }
-
-       else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+        else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
         this.$bvToast.toast('Por favor, preencha todos os campos.', {
           title: `Preencher`,
           toaster: toaster,
@@ -638,10 +608,24 @@ export default {
         if (this.operaLogic === '=') {
           this.operaLogic = '==';
         }
-        this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
-        this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic});
-        this.separador = this.pushed.join(' ');
-        this.logic = this.separador;
+        if (!isNaN(parseInt(this.activation1))) {
+          this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
+          this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic});
+          this.separador = this.pushed.join(' ');
+          this.logic = this.separador;
+        } else {
+          this.$bvToast.toast('Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', {
+            title: `Preencher`,
+            toaster: toaster,
+            solid: true,
+          });
+        }
+      }
+    },
+
+    sendActivation(toaster) {
+      if (this.$cookies.get('unit') === 1) {
+        this.verificaEnderecos();
       }
     },
 
