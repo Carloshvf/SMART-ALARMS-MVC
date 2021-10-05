@@ -124,6 +124,30 @@ export default {
       }
 
       return result;
+    },
+    receiveInclude(value) {
+      if (this.receive.includes(value)) {
+        return;
+      }
+      if (this.arrAleat.length === this.receive.length) {
+          return;
+      }
+      this.arrAleat.push('5');
+      this.componentKey += 1;
+    },
+
+    handleAlarm(alarm){
+      if (alarm.active === 1) {
+        if (this.cardDetail[0].active === 0) {
+            this.$router.push({ name: 'detail-id', params: { id: alarm.id } });
+            clearInterval(this.stopInterval);
+        }
+        alarm.kks.forEach(k => {
+            this.receiveInclude(k.value);
+        });
+      }else if (this.currentRouteName === 'detail-id') {
+          this.arrSize.push("5");
+      }
     }
   },
 
@@ -147,6 +171,7 @@ export default {
       return this.$cookies.get('unit') || '';
     },
   },
+
 
   async created() {
     // Logoff automatico
@@ -172,24 +197,7 @@ export default {
 
         try {
             this.lists.forEach(alarm => {
-                if (alarm.active === 1) {
-                    if (this.cardDetail[0].active === 0) {
-                        this.$router.push({ name: 'detail-id', params: { id: alarm.id } });
-                        clearInterval(this.stopInterval);
-                    }
-                    alarm.kks.forEach(k => {
-                        if (this.receive.includes(k.value)) {
-                            return;
-                        }
-                        if (this.arrAleat.length === this.receive.length) {
-                            return;
-                        }
-                        this.arrAleat.push('5');
-                        this.componentKey += 1;
-                    });
-                }else if (this.currentRouteName === 'detail-id') {
-                    this.arrSize.push("5");
-                }
+                handleAlarm(alarm);
             });
             if (this.currentRouteName !== 'detail-id') {
                 this.stop = false ;
