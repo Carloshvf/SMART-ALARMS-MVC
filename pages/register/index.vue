@@ -609,13 +609,13 @@ export default {
           if (this.operaLogic === '=') {
             this.operaLogic = '==';
           }
-          if (this.activation1 < 10) {
+          if (!isNaN(parseInt(this.activation1))) {
             this.pushed.push(this.textAlarme, this.operaLogic, this.activation1);
             this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1, sub_area: this.subSelect2, operador: this.operaLogic});
             this.separador = this.pushed.join(' ');
             this.logic = this.separador;
           } else {
-            this.$bvToast.toast('Por favor, bote um valor abaixo de 10 no campo de valor', {
+            this.$bvToast.toast('Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', {
               title: `Preencher`,
               toaster: toaster,
               solid: true,
