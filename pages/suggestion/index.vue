@@ -293,36 +293,26 @@ export default {
             filterCheck4 = this.checkbox4
         return this.sugDetail.filter(function(item){
             let filtered = true
-                if(filterUg && filterUg.length > 0){
+            if(filterUg?.length > 0){
                 filtered = item.ug == filterUg
-                }
+            }
             if(filtered){
-                if(filterType && filterType.length > 0){
+                if(filterType?.length > 0){
                     filtered = item.tipo == filterType
                 }
-            }
-            if(filtered){
-                if(filterCause && filterCause.length > 0){
+                if(filterCause?.length > 0){
                     filtered = item.causa == filterCause
                 }
-            }
-            if(filtered){
-                if(filterCheck1 && filterCheck1.length > 0){
+                if(filterCheck1?.length > 0){
                     filtered = item.status == filterCheck1
                 }
-            }
-            if(filtered){
-                if(filterCheck2 && filterCheck2.length > 0){
+                if(filterCheck2?.length > 0){
                     filtered = item.status == filterCheck2
                 }
-            }
-            if(filtered){
-                if(filterCheck3 && filterCheck3.length > 0){
+                if(filterCheck3?.length > 0){
                     filtered = item.status == filterCheck3
                 }
-            }
-            if(filtered){
-                if(filterCheck4 && filterCheck4.length > 0){
+                if(filterCheck4?.length > 0){
                     filtered = item.status == filterCheck4
                 }
             }
