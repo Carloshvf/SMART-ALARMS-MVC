@@ -31,7 +31,8 @@ export const state = () => ({
   getAlarm: [],
   getHeader: [],
   checkingSession: [],
-  clear: null
+  clear: null,
+  sugestCadastro: '/sugestoes/cadastro/'
 });
 
 export const mutations = {
@@ -297,7 +298,7 @@ export const actions = {
   // GET DE CADASTRAR SUGESTÃO
   async getRegister(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro/' + dados, {
+      HOST_API + sugestCadastro + dados, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }
@@ -312,7 +313,7 @@ export const actions = {
   // POST DE CADASTRAR SUGESTÃO
   async registerSuggestions(dados) {
     await this.$axios.post(
-      HOST_API + '/sugestoes/cadastro/' + dados.unit,
+      HOST_API + sugestCadastro + dados.unit,
       dados.info, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
@@ -324,7 +325,7 @@ export const actions = {
   // GET DE EDITAR SUGESTÕES
   async editingSuggestions(context, dados) {
     await this.$axios.get(
-      HOST_API + '/sugestoes/cadastro/' + 
+      HOST_API + sugestCadastro + 
       dados.unit + '/' + dados.id, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
@@ -340,7 +341,7 @@ export const actions = {
   // PUT DE EDITAR SUGESTÃO
   async editSuggestions(context, dados) {
     await this.$axios.put(
-        HOST_API + '/sugestoes/cadastro/' + 
+        HOST_API + sugestCadastro + 
         dados.unit + '/' + dados.id, dados.info, {
           headers: {
             'Authorization': this.$cookies.get('token') || '',

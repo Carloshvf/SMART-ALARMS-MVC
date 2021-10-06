@@ -140,7 +140,7 @@ export default {
 
         result = arrays.filter(i => i.id === id)
         result = result[0].kks
-        let result2 = result.slice()
+        const result2 = result.slice()
         result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff)
         result = result.filter(
           (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
@@ -187,14 +187,14 @@ export default {
     },
 
     async getGraph(id) {
-      let response = await this.loadGraph(id)
+      const response = await this.loadGraph(id)
       this.fillData = await this.treatGraph(response)
       this.stopInterval = true
       this.stop = true
 
       this.stopInterval = setInterval(async () => {
         if(this.stop === true) {
-          let response = await this.loadGraph(id)
+          const response = await this.loadGraph(id)
           this.fillData = await this.treatGraph(response)
 
            if (this.ceaseLoop === false) {
