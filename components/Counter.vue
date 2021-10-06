@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import main from '~/plugins/main';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   props: ['alarm', 'kks', 'arr', 'cont'],
@@ -31,7 +30,6 @@ export default {
         this.$emit('send', this.arr);
       }
       const dateApi = this.alarm.date;
-      const dateNew = new Date();
       const moDataApi = this.$moment(dateApi);
 
       var ms = moDataApi;
@@ -42,7 +40,7 @@ export default {
       if (cont !== '00:00' && cont !== '') {
         return moDataApi2.add(parseInt(this.cont.split(':')[0]), 'minutes');
       } else {
-        return this.countTime = '';
+        return '';
       }
     }
       if (ms > 0) {
@@ -54,20 +52,20 @@ export default {
           var moDataApi2 = this.$moment(this.alarm.date);
           verifyCont(this.cont);
 
-          let dateCurrent = this.$moment(new Date());
+          const dateCurrent = this.$moment(new Date());
           ms = moDataApi2.diff(dateCurrent);
           this.alarm['countTimeDiff'] = ms;
 
           if (ms > 0) {
-            const duration_time = this.$moment.duration(ms);
+            const dTime = this.$moment.duration(ms);
 
             this.countTime =
-              duration_time
+              dTime
                 .get('minutes')
                 .toString()
                 .padStart(2, '0') +
               ':' +
-              duration_time
+              dTime
                 .get('seconds')
                 .toString()
                 .padStart(2, '0')
@@ -87,7 +85,6 @@ export default {
       }
       const dateApi = this.alarm.date;
       var typeData = this.alarm.type;
-      const dateNew = new Date();
       const moDataApi = this.$moment(dateApi);
 
       var ms = moDataApi;
@@ -109,20 +106,20 @@ export default {
             moDataApi2.add(5, 'minutes');
           }
 
-          let dateCurrent = this.$moment(new Date());
+          const dateCurrent = this.$moment(new Date());
           ms = moDataApi2.diff(dateCurrent);
           this.alarm['countTimeDiff'] = ms;
 
           if (ms > 0) {
-            const duration_time = this.$moment.duration(ms);
+            const dTime = this.$moment.duration(ms);
 
             this.countTime =
-              duration_time
+              dTime
                 .get('minutes')
                 .toString()
                 .padStart(2, '0') +
               ':' +
-              duration_time
+              dTime
                 .get('seconds')
                 .toString()
                 .padStart(2, '0')
@@ -139,11 +136,6 @@ export default {
   created() {
     this.countTime = '';
     this.newCount();
-    // if (this.cont == '' || this.cont == undefined) {
-    //   this.loadCount()
-    // } else if (this.cont != '' || this.cont !== undefined) {
-    //   this.newCount()
-    // }
   }
 }
 </script>

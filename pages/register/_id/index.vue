@@ -451,8 +451,6 @@
 import { mapActions, mapMutations } from 'vuex';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
-import { axios } from 'axios';
-
 export default {
   components: {
     DeleteOutline
@@ -589,7 +587,7 @@ export default {
     },
     logic: {
       get () {
-        return this.$store.state.edit.logica;;
+        return this.$store.state.edit.logica;
       },
       set (value) {
         this.$store.commit('setLogica', value);
@@ -637,10 +635,10 @@ export default {
     },
     subArea3: {
       get () {
-        if (this.$store.state.edit.canais !== '') {
-          // console.log(this.$store.state.edit.canais)
-          return this.$store.state.edit.canais[0].sub_area;
+        if (this.$store.state.edit.canais === '') {
+          return;
         }
+        return this.$store.state.edit.canais[0].sub_area;
       },
       set (value) {
         this.$store.commit('setSubArea3', value);
@@ -648,10 +646,10 @@ export default {
     },
     subArea4: {
       get () {
-        if (this.$store.state.edit.status_medidas !== '') {
-          // console.log(this.$store.state.edit.canais)
-          return this.$store.state.edit.status_medidas[0].sub_area;
+        if (this.$store.state.edit.status_medidas === '') {
+          return;
         }
+        return this.$store.state.edit.status_medidas[0].sub_area;
       },
       set (value) {
         this.$store.commit('setSubArea4', value);
@@ -681,8 +679,6 @@ export default {
 
     async showModal(index, value) {
       this.modalEdit = value;
-      // console.log(this.canal[index])
-      // console.log(this.status[index])
       if (value === false) {
         this.editS1 = this.status[index].tipo;
         this.editS2 = this.status[index].nome;
@@ -903,7 +899,6 @@ export default {
 
    async saveData(toaster) {
       this.allData.splice(0);
-    //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
       this.load = true;
       this.disabling = true;
       this.allData.push({
@@ -964,7 +959,6 @@ export default {
     },
 
     updateCard(toaster, id) {
-      // this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1})
       this.loadEdit = true;
       this.disabling = true;
 
@@ -1013,15 +1007,11 @@ export default {
      // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
         });
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
       }
     //
 
@@ -1035,7 +1025,6 @@ export default {
 
   async asyncData({ store, route }) {
     const { id } = route.params;
-    // const unitId = this.$cookies.get('unit') || ''
     const unitId = document.cookie.split("; ");
     let cookieGet = null;
     for (let index = 0; index < unitId.length; index++) {
@@ -1047,8 +1036,6 @@ export default {
       }
     }
     const teste = await store.dispatch('loadCard',{unit: cookieGet, route: id});
-
-    // console.log(teste)
 
     return { detail: teste.data.todos[0] };
   }
