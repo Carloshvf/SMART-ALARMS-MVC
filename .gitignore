@@ -66,6 +66,7 @@ typings/
 .nuxt
 
 # vuepress build output
+dist
 .vuepress/dist
 
 # Serverless directories
@@ -80,4 +81,4 @@ typings/
 
 .arquitetura-td-build/
 node_modules
-
+.venv

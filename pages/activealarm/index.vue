@@ -59,47 +59,59 @@ export default {
     // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
         });
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
       }
 
     this.stopInterval = setInterval(() => {
-      if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'activealarm') {
+      if (this.$cookies.get('unit') === '' || undefined || this.currentRouteName !== 'activealarm') {
           clearInterval(this.stopInterval);
         }
-      if (this.stop === true) {
+      if (this.stop !== true) {
+        return
+      }
       this.loadData(this.unitId || '');
-      if (this.alarms instanceof Array) {
-          for (let index = 0; index < this.alarms.length; index++) {
-            // console.log(this.currentRouteName)
-            if (this.alarms[index].active === 1 && this.currentRouteName === 'activealarm') {
-                this.$router.push('/alarm');
-                this.stop = false
-                break
-              }
-            }
-          }
-          else {
-            this.$bvToast.toast(this.alarms, {
-              title: `Erro`,
-              toaster: 'b-toaster-bottom-right',
-              solid: true
-            });
-            // clearInterval(this.stopInterval)
-          }
+
+      try {
+        let alarmActive = this.alarms.some(alarm => {
+          return Boolean(alarm.active === 1 && this.currentRouteName === 'activealarm');
+        });
+        if(alarmActive) {
+          this.$router.push('/alarm');
+          this.stop = false;
         }
-      }, 3000);
+      }
+      catch (e) {
+        this.$bvToast.toast(this.alarms, {
+          title: `Erro`,
+          toaster: 'b-toaster-bottom-right',
+          solid: true,
+          message: e
+        });
+      }
+      // if (this.alarms instanceof Array) {
+      //   for (let index = 0; index < this.alarms.length; index++) {
+      //     if (this.alarms[index].active === 1 && this.currentRouteName === 'activealarm') {
+      //         this.$router.push('/alarm');
+      //         this.stop = false
+      //         break
+      //     }
+      //   }
+      // }
+      // else {
+      //   this.$bvToast.toast(this.alarms, {
+      //     title: `Erro`,
+      //     toaster: 'b-toaster-bottom-right',
+      //     solid: true
+      //   });
+      // }
+    }, 3000);
 
     this.loadData(this.unitId || '');
-      // console.log(this.alarms instanceof Array)
-      if (this.alarms == 'unidade não encontrada no banco') {
+      if (this.alarms === 'unidade não encontrada no banco') {
         this.$bvToast.toast(this.alarms, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',

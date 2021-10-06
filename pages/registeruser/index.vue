@@ -293,31 +293,32 @@ extends: VueTypeahead,
         },
 
         computed_filter: function () {
-            if (this.profileUser != undefined) {
-                let filterName = this.search.toLowerCase(),
-                filterChave = this.search.toLowerCase(),
-                filterPerfil = this.search.toLowerCase(),
-                filterUnidade = this.search.toLowerCase()
-            
+            if (!this.profileUser) {
+                return
+            }
+            let filterName = this.search.toLowerCase(),
+            filterChave = this.search.toLowerCase(),
+            filterPerfil = this.search.toLowerCase(),
+            filterUnidade = this.search.toLowerCase()
+        
             return this.profileUser.filter(function(item){
                 let filtered = true
-                
-                if(filterName && filterName.length > 0){
+            
+                if(filterName?.length > 0){
                     filtered = item.nome.toLowerCase().includes(filterName)
                 }
-                if(filterChave && filterChave.length > 0 && filtered == false){
+                if(filterChave?.length > 0 && filtered == false){
                     filtered = item.chave.toLowerCase().includes(filterChave)
                 }
-                if(filterPerfil && filterPerfil.length > 0 && filtered == false){
+                if(filterPerfil?.length > 0 && filtered == false){
                     filtered = item.perfil.toLowerCase().includes(filterPerfil)
                 }
-                if(filterUnidade && filterUnidade.length > 0 && filtered == false){
+                if(filterUnidade?.length > 0 && filtered == false){
                     filtered = item.unidade.toLowerCase().includes(filterUnidade)
                 }
             
                     return filtered
-                })
-            }
+            })
         
         }
 

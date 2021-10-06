@@ -138,32 +138,34 @@ export default {
       this.ceaseLoop = false;
       this.stopRerun = true;
 
-      if (this.currentRouteName === 'alarm') {
-        this.rerun = setInterval(() => {
-        if (this.stopRerun === true) {
-          this.loadData(this.unitId || '');
-          if (this.currentRouteName !== 'alarm') {
-            this.stopRerun = false;
-          }
-        } else {
-          clearInterval(this.rerun);
-        }
-      }, 5000);
-      }
-      else if (this.currentRouteName === 'detail-id') {
-        this.rerun = setInterval(() => {
-        if (this.stopRerun === true) {
-          this.loadData(this.unitId || '');
-          if (this.currentRouteName !== 'detail-id') {
-            this.stopRerun = false;
-          }
-        } else {
-          clearInterval(this.rerun);
-        }
-      }, 5000);
-      }
+      // function executePromisse(currentRouteName) {
+      //   this.rerun = setInterval((currentRouteName) => {
+      //     if (this.stopRerun === true) {
+      //       this.loadData(this.unitId || '');
+      //       if (this.currentRouteName !== 'alarm' || 'detail-id') {
+      //         this.stopRerun = false;
+      //       }
+      //     } else {
+      //       clearInterval(this.rerun);
+      //     }
+      //   }, 5000);
+      // }
+      const verific = 'alarm || detail-id'
 
+      if (this.currentRouteName === verific) {
+        this.rerun = setInterval(() => {
+          if (this.stopRerun === true) {
+            this.loadData(this.unitId || '');
+            if (this.currentRouteName !== verific) {
+              this.stopRerun = false;
+            }
+          } else {
+            clearInterval(this.rerun);
+          }
+        }, 5000);
+      }
       this.disable = true;
+      
       setTimeout(() => {
        this.disable = false;
      }, 5000);

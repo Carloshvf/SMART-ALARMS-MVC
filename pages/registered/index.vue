@@ -100,27 +100,25 @@ export default {
     },
 
     computed_filter: function () {
-      if (this.cardInfo != undefined) {
-      let filterUg = this.ug,
-          filterType = this.type
+      if (this.cardInfo === undefined) {
+        return
+      }
+        let filterUg = this.ug,
+        filterType = this.type
       
-      return this.cardInfo.filter(function(item){
+        return this.cardInfo.filter(function(item){
           let filtered = true
           
           if(filtered){
-            if(filterUg && filterUg.length > 0){
+            if(filterUg?.length > 0){
                 filtered = item.infos[0].local == filterUg
             }
-          }
-          if(filtered){
-            if(filterType && filterType.length > 0){
-                filtered = item.infos[0].tipo == filterType
+            if(filterType?.length > 0){
+              filtered = item.infos[0].tipo == filterType
             }
           }
-            
-              return filtered
-          })
-      }
+          return filtered;
+        })
     }
     
   },

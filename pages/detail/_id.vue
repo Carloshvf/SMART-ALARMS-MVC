@@ -124,6 +124,30 @@ export default {
       }
 
       return result;
+    },
+    receiveInclude(value) {
+      if (this.receive.includes(value)) {
+        return;
+      }
+      if (this.arrAleat.length === this.receive.length) {
+          return;
+      }
+      this.arrAleat.push('5');
+      this.componentKey += 1;
+    },
+
+    handleAlarm(alarm){
+      if (alarm.active === 1) {
+        if (this.cardDetail[0].active === 0) {
+            this.$router.push({ name: 'detail-id', params: { id: alarm.id } });
+            clearInterval(this.stopInterval);
+        }
+        alarm.kks.forEach(k => {
+            this.receiveInclude(k.value);
+        });
+      }else if (this.currentRouteName === 'detail-id') {
+          this.arrSize.push("5");
+      }
     }
   },
 
@@ -148,66 +172,45 @@ export default {
     },
   },
 
+
   async created() {
     // Logoff automatico
-      await this.idCheck()
+      await this.idCheck();
       if (this.session.value === false) {
-        // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
+        });
       }
 
     this.stopInterval = setInterval(() => {
-        if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'detail-id') {
+        if (!this.$cookies.get('unit') || this.currentRouteName !== 'detail-id') {
             clearInterval(this.stopInterval);
-          }
-        if (this.stop === true) {
-          this.loadData(this.unitId || '');
-          this.arrSize.splice(0);
+        }
+        if (!this.stop) {
+            clearInterval(this.stopInterval);
+            return;
+        }
+        this.loadData(this.unitId || '');
+        this.arrSize.splice(0);
 
-          if (this.lists instanceof Array) {
-            for (let index = 0; index < this.lists.length; index++) {
-              for (let ind = 0; ind < this.lists[index].kks.length; index++) {
-                if (this.lists[index].active === 1 && !this.receive.includes(this.lists[index].kks[ind].value) && this.arrAleat.length !== this.receive.length) {
-                  this.arrAleat.push('5');
-                  this.componentKey += 1;
-                }
-            }
-              if (this.lists[index].active === 0 && this.currentRouteName === 'detail-id') {
-                  this.arrSize.push("5");
-                }
-            }
-
-              for (let index = 0; index < this.lists.length; index++) {
-                if (this.lists[index].active === 1 && this.cardDetail[0].active === 0) { 
-                  this.$router.push({ name: 'detail-id', params: { id: this.lists[index].id } });
-                  clearInterval(this.stopInterval);
-                }
-              }
-
-            if (this.arrSize.length === this.lists.length && this.currentRouteName === 'detail-id') {
-              this.$router.push('/activealarm');
-            }
-
+        try {
+            this.lists.forEach(alarm => {
+                handleAlarm(alarm);
+            });
             if (this.currentRouteName !== 'detail-id') {
-              this.stop = false ;
+                this.stop = false ;
+            }else if(this.arrSize.length === this.lists.length) {
+                this.$router.push('/activealarm');
             }
-          } else {
-              this.$bvToast.toast(this.lists, {
-                title: `Erro`,
-                toaster: 'b-toaster-bottom-right',
-                solid: true
-              })
-              // clearInterval(this.stopInterval)
-          }
-        } else {
-          clearInterval(this.stopInterval);
+        }catch (e) {
+            this.$bvToast.toast(this.lists, {
+            title: `Erro`,
+            toaster: 'b-toaster-bottom-right',
+            solid: true,
+            message: e
+            });
         }
       }, 3000);
   },
