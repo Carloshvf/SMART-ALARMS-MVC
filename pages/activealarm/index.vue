@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <header-smart></header-smart> -->
+    <!-- Header -->
     <div class="container-fluid pt-5 mt-5">
       <div class="row adjust">
         <div class="col-4 mb-4" v-for="alarm in alarms" :key="alarm.id">
@@ -11,7 +11,7 @@
             to="alarm"
           >
             <span class="box-alarm-number">{{ alarm.id }}</span>
-            <!-- :event="disabled ? '' : 'click'" -->
+            <!-- Event disable when is empty -->
           </nuxt-link>
           <!-- /.box-alarm -->
         </div>
@@ -33,6 +33,7 @@ export default {
       disabled: true,
       stop: true,
       stopInterval: '',
+      toasterStr: 'b-toaster-bottom-right'
     }
   },
 
@@ -61,7 +62,7 @@ export default {
       if (this.session.value === false) {
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
+          toaster: toasterStr,
           solid: true
         });
       }
@@ -87,34 +88,18 @@ export default {
       catch (e) {
         this.$bvToast.toast(this.alarms, {
           title: `Erro`,
-          toaster: 'b-toaster-bottom-right',
+          toaster: toasterStr,
           solid: true,
           message: e
         });
       }
-      // if (this.alarms instanceof Array) {
-      //   for (let index = 0; index < this.alarms.length; index++) {
-      //     if (this.alarms[index].active === 1 && this.currentRouteName === 'activealarm') {
-      //         this.$router.push('/alarm');
-      //         this.stop = false
-      //         break
-      //     }
-      //   }
-      // }
-      // else {
-      //   this.$bvToast.toast(this.alarms, {
-      //     title: `Erro`,
-      //     toaster: 'b-toaster-bottom-right',
-      //     solid: true
-      //   });
-      // }
     }, 3000);
 
     this.loadData(this.unitId || '');
       if (this.alarms === 'unidade não encontrada no banco') {
         this.$bvToast.toast(this.alarms, {
           title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
+          toaster: toasterStr,
           solid: true
         });
       }

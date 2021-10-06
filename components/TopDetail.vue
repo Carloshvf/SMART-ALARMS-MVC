@@ -118,8 +118,7 @@ export default {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
 
     getChartVisible() {
-      var refChart = 'chartCurve';
-      return refChart;
+      return 'chartCurve';
     },
 
     reset() {

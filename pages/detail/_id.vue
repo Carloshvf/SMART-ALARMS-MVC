@@ -2,7 +2,7 @@
   <div>
     <section class="detail-page" v-for="value in cardDetail" :key="value.id">
       <aside class="detail-page-sidebar">
-        <!-- <nuxt-link to="/alarm">Eventos</nuxt-link> -->
+        <!-- Eventos -->
         <ul>
           <li class="mb-3" v-for="link in lists" :key="link.id">
             <nuxt-link
@@ -28,7 +28,7 @@
 
                 <counter v-if="value.active == 1" :alarm="foo(value.id)" :cont="value.kks[0].contador" :kks="incEnde" :arr="arrVa" :key="componentKey" @send="check" />
 
-                <!-- <h1>{{ value.kks[0].countTime }}</h1> -->
+                <!-- Count Time -->
               </div>
               <!-- /.count -->
             </header>
@@ -108,7 +108,7 @@ export default {
       var result = { countTimeDiff: 0 }
 
       if (this.id && this.lists && this.lists.length > 0) {
-        var arrays = new Array();
+        var arrays = [];
         for (const key in this.lists) {
           arrays.push(Object.assign({}, this.lists[key]));
         }

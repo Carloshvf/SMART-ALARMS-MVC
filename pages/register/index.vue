@@ -716,7 +716,6 @@ export default {
 
    async saveData(toaster) {
       this.allData.splice(0);
-    //  this.endAtivacao.push({end_alarme: this.textAlarme, ativacao: this.activation1}) 
       this.load = true;
       this.disabling = true;
       this.allData.push({
@@ -780,15 +779,11 @@ export default {
     // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        // console.log(this.session)
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
         });
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
       }
     this.loadRegister(this.unitId || '');
   }

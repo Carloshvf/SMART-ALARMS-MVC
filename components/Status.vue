@@ -120,8 +120,7 @@ export default {
     ...mapActions(['loadGraph', 'treatGraph', 'loadData']),
 
     getChartVisible() {
-      var refChart = 'chartCurve';
-      return refChart;
+      return 'chartCurve';
     },
 
     reset() {
@@ -137,19 +136,6 @@ export default {
     onHidden() {
       this.ceaseLoop = false;
       this.stopRerun = true;
-
-      // function executePromisse(currentRouteName) {
-      //   this.rerun = setInterval((currentRouteName) => {
-      //     if (this.stopRerun === true) {
-      //       this.loadData(this.unitId || '');
-      //       if (this.currentRouteName !== 'alarm' || 'detail-id') {
-      //         this.stopRerun = false;
-      //       }
-      //     } else {
-      //       clearInterval(this.rerun);
-      //     }
-      //   }, 5000);
-      // }
       const verific = 'alarm || detail-id'
 
       if (this.currentRouteName === verific) {
@@ -165,7 +151,7 @@ export default {
         }, 5000);
       }
       this.disable = true;
-      
+
       setTimeout(() => {
        this.disable = false;
      }, 5000);
