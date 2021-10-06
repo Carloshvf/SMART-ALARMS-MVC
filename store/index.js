@@ -651,7 +651,7 @@ export const actions = {
         pointBackgroundColor: cores[key],
         fill: false,
         borderColor: cores[key],
-        data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor);
+        data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor)
       });
     }
 
