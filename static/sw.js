@@ -1,5 +1,6 @@
 importScripts('/_nuxt/workbox.4c4f5ca6.js');
 
+// Taking data from json file
 import data from './sw_data.json';
 
 workbox.precaching.precacheAndRoute(data, {
