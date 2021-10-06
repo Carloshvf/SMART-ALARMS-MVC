@@ -1,5 +1,6 @@
 importScripts('/_nuxt/workbox.4c4f5ca6.js');
 
+<<<<<<< HEAD
 workbox.precaching.precacheAndRoute([
   {
     "url": "/_nuxt/1204c945c34d0cd51203.js",
@@ -82,6 +83,11 @@ workbox.precaching.precacheAndRoute([
     "revision": "ca44a16c0d9f01b6d4f7f485818ca043"
   }
 ], {
+=======
+import data from './sw_data.json';
+
+workbox.precaching.precacheAndRoute(data, {
+>>>>>>> origin/develop
   "cacheId": "smart-alarms",
   "directoryIndex": "/",
   "cleanUrls": false
@@ -91,5 +97,4 @@ workbox.clientsClaim();
 workbox.skipWaiting();
 
 workbox.routing.registerRoute(new RegExp('/_nuxt/.*'), workbox.strategies.cacheFirst({}), 'GET');
-
 workbox.routing.registerRoute(new RegExp('/.*'), workbox.strategies.networkFirst({}), 'GET');

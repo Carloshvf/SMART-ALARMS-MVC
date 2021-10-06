@@ -1,5 +1,3 @@
-// import axios from 'moment'
-
 //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
 export const HOST_API = process.env.baseURL; 
 export const strict = false;
@@ -34,9 +32,7 @@ export const state = () => ({
   getHeader: [],
   checkingSession: [],
   clear: null
-  // 
-  
-})
+});
 
 export const mutations = {
   setAll(state, all) {
@@ -215,13 +211,9 @@ export const mutations = {
   setCleanRecom(state, index) {
     state.edit.recomendacoes.splice(index, 1)
   },
-  
-  // 
 }
 
-
 export const actions = {
-
   async loadData(context, dados) {
     await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
@@ -231,54 +223,30 @@ export const actions = {
         }}
     )
     .then(response => {
-      this.all = response.data.all
-      // console.log(response.data.all)
+      this.all = response.data.all;
     })
-
     .catch(error => {
-      this.all = error.response.data.erro
-      // console.log(this.all)
-    })
-
-    context.commit('setAll', this.all)
+      this.all = error.response.data.erro;
+    });
+    context.commit('setAll', this.all);
   },
 
 // GET PARA CHECAR O TOKEN DA SESSÃO
-  async idCheck(context, dados) {
+  async idCheck(context) {
     await this.$axios.get(
       HOST_API + '/validacao_id_sessao/' + this.$cookies.get('key') || '', {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
-    )
+        }
+      })
     .then(response => {
-      this.checkingSession = response.data
-      // console.log(this.$cookies.get('key') || '')
-      
+      this.checkingSession = response.data;
     })
-
     .catch(error => {
       // console.log(error.response)
-      this.checkingSession = error.response.data.erro
-    })
-
-    context.commit('setIdCheck', this.checkingSession)
-
-    // if (this.clear == null) {
-    //   this.clear = setInterval(() => {
-    //     if (this.checkingSession == false) {
-    //       this._vm.$bvToast.toast('O tempo da sessão expirou', {
-    //         title: `Logoff`,
-    //         toaster: 'b-toaster-bottom-right',
-    //         solid: true
-    //       })
-    //       this.logOff({logout: "tes"})
-    //       this.$cookies.removeAll();
-    //       this.$router.push('/')
-    //     }
-    //   }, 86400);
-    // }
-    
+      this.checkingSession = error?.response?.data?.erro;
+    });
+    context.commit('setIdCheck', this.checkingSession);
   },
 
   // GET DO HEADER DAS PAGINAS
@@ -291,9 +259,8 @@ export const actions = {
     )
     .then(response => {
       this.getHeader = response.data
-    })
-
-    context.commit('setHeaderGet', this.getHeader)
+    });
+    context.commit('setHeaderGet', this.getHeader);
   },
 
   //GET DA PÁGINA DE SUGESTÕES
@@ -307,9 +274,8 @@ export const actions = {
     .then(response => {
       this.suggest = response.data.sugestoes
       // console.log(response.data)
-    })
-
-    context.commit('setSuggest', this.suggest)
+    });
+    context.commit('setSuggest', this.suggest);
   },
 
   // POST DE CONSULTA DE SUGESTÃO 
@@ -319,13 +285,13 @@ export const actions = {
         dados.unit + '/' + dados.id, dados.info, {
           headers: {
             'Authorization': this.$cookies.get('token') || '',
-          }}
+          }
+        }
       )
     .then(response => {
       this.suggestChoice = response
-    })
-
-    context.commit('setChoice', this.suggestChoice)
+    });
+    context.commit('setChoice', this.suggestChoice);
   },
 
   // GET DE CADASTRAR SUGESTÃO
@@ -334,25 +300,25 @@ export const actions = {
       HOST_API + '/sugestoes/cadastro/' + dados, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
       this.suggestRegister = response.data
-    })
-
-    context.commit('setRegister', this.suggestRegister)
+    });
+    context.commit('setRegister', this.suggestRegister);
   },
 
   // POST DE CADASTRAR SUGESTÃO
-  async registerSuggestions(context, dados) {
+  async registerSuggestions(dados) {
     await this.$axios.post(
-        HOST_API + '/sugestoes/cadastro/' + dados.unit,
+      HOST_API + '/sugestoes/cadastro/' + dados.unit,
       dados.info, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
-      )
-    
+        }
+      }
+    );
   },
 
   // GET DE EDITAR SUGESTÕES
@@ -362,13 +328,13 @@ export const actions = {
       dados.unit + '/' + dados.id, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
       this.getSuggest = response.data
-    })
-    // console.log(dados)
-    context.commit('setEdit', this.getSuggest)
+    });
+    context.commit('setEdit', this.getSuggest);
   },
 
   // PUT DE EDITAR SUGESTÃO
@@ -378,9 +344,9 @@ export const actions = {
         dados.unit + '/' + dados.id, dados.info, {
           headers: {
             'Authorization': this.$cookies.get('token') || '',
-          }}
+          }
+        }
       )
-
   },
 
   // GET DA PÁGINA DE SELEÇÃO DE UNIDADES
@@ -389,13 +355,13 @@ export const actions = {
       HOST_API + '/unidades', {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
       this.getUnit = response.data
-    })
-   
-    context.commit('setUnit', this.getUnit)
+    });
+    context.commit('setUnit', this.getUnit);
   },
 
   // GET DA PÁGINA DE EDIÇÃO DE UNIDADES
@@ -404,12 +370,12 @@ export const actions = {
       HOST_API + '/unidades/' + id, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
       this.getEdit = response.data
-    })
-    
+    });
     context.commit('setEditing', this.getEdit)
   },
   
@@ -417,98 +383,91 @@ export const actions = {
   async updateUnit(context, dados) {
     await this.$axios
       .put(
-        (HOST_API + '/unidades/' +
-          dados.id), dados.data, {
-            headers: {
-              'Authorization': this.$cookies.get('token') || '',
-            }}
-      )
-
+        (HOST_API + '/unidades/' +dados.id), 
+          dados.data, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }
+        }
+      );
   },
 
   //POST DA PÁGINA DE CADASTRAR UNIDADES 
   async registerUnit(context, dados) {
     await this.$axios.post(
-        HOST_API + '/unidades',
+      HOST_API + '/unidades',
       dados, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
-      )
-    
+        }
+      }
+    );
   },
 
   // POST DA PÁGINA DE LOGIN
   async loginUser(context, dados) {
-    this.valid = ''
+    this.valid = '';
     await this.$axios.post(
         HOST_API + '/login',
-      dados.info
-      )
-      .then(response => {
-      this.authorizationId = response.headers.authorization
-      this.userName = response.data.nome
-      this.keyName = response.data.chave
-      // this.caName = response.headers.ca
-      // console.log(response.headers.authorization)
-      if (response.status == 200) {
-        this.$cookies.set('token', JSON.stringify(this.authorizationId))
-        this.$cookies.set('name', JSON.stringify(this.userName))
-        this.$cookies.set('key', JSON.stringify(this.keyName))
-        // this.$cookies.set('CA', JSON.stringify(this.caName))
-      }
-      // console.log(response.headers)
+        dados.info
+    )
+    .then(response => {
+    this.authorizationId = response.headers.authorization
+    this.userName = response.data.nome
+    this.keyName = response.data.chave
+    if (response.status == 200) {
+      this.$cookies.set('token', JSON.stringify(this.authorizationId))
+      this.$cookies.set('name', JSON.stringify(this.userName))
+      this.$cookies.set('key', JSON.stringify(this.keyName))
+    }
     })
     .catch(error => {
       // console.log(error.response.data.erro)
       this.valid = error.response.data.erro
-    })
-  
-    context.commit('setUser', this.valid)
+    });
+    context.commit('setUser', this.valid);
   },
 
   // POST DE LOGOUT
-  async logOff(context, dados) {
+  async logOff(dados) {
     await this.$axios.post(
-        HOST_API + '/logout', dados.logout, {
-          headers: {
-            'Authorization': this.$cookies.get('token') || '',
-          }}
-      )
-  
+      HOST_API + '/logout', dados.logout, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }
+      }
+    );
   },
 
   //GET DA PÁGINA DE CADASTRAR PERFIS
-  async gettingProfile(context, id) {
+  async gettingProfile(context) {
     await this.$axios.get(
       HOST_API + '/perfis', {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
-      this.getProfile = response.data
-    })
-    
-    context.commit('setProfile', this.getProfile)
+      this.getProfile = response.data;
+    });
+    context.commit('setProfile', this.getProfile);
   },
 
   // POST DA PÁGINA DE PERFIS
   async postProfile(context, dados) {
-    this.errSede = ""
+    this.errSede = "";
     await this.$axios.post(
       HOST_API + '/perfis', dados.info, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .catch(error => {
-      
-      this.errSede = error.response.data.erro
-    })
-
-    context.commit('setErrSede', this.errSede)
-    
+      this.errSede = error.response.data.erro;
+    });
+    context.commit('setErrSede', this.errSede);
   },
 
   // GET DO MODAL DA PÁGINA DE PERFIS
@@ -517,53 +476,48 @@ export const actions = {
       HOST_API + '/perfis/' + id, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
-      this.getProfileEdit = response.data
-    })
-    
-    context.commit('setProfileEdit', this.getProfileEdit)
+      this.getProfileEdit = response.data;
+    });
+    context.commit('setProfileEdit', this.getProfileEdit);
   },
 
   // PUT DA PÁGINA DE PERFIS
   async editProfile(context, dados) {
-    this.errEditSede = ""
+    this.errEditSede = "";
     await this.$axios.put(
       HOST_API + '/perfis/' + dados.id,
       dados.info, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .catch(error => {
-      this.errEditSede = error.response.data.erro
-    })
-
-    context.commit('setErrEditSede', this.errEditSede)
-
+      this.errEditSede = error.response.data.erro;
+    });
+    context.commit('setErrEditSede', this.errEditSede);
   },
-
-  // 
-  // 
-  // 
 
   async loadRegister(context, dados) {
     await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/alarme/' +
-        dados, {
+      HOST_API + '/alarme/' + dados, 
+        {
           headers: {
             'Authorization': this.$cookies.get('token') || '',
-          }}
+          }
+        }
     )
     .then(response => {
-      this.getAlarm = response.data.filtro_alarmes
-    })
-
-    context.commit('setGetAlarm', this.getAlarm)
+      this.getAlarm = response.data.filtro_alarmes;
+    });
+    context.commit('setGetAlarm', this.getAlarm);
   },
-  
+
   async sendAlarms(context, dados ) {
     await this.$axios.post(
       //CONCATENANDO O HOST COM A RODA
@@ -571,18 +525,17 @@ export const actions = {
       dados.info, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
+        }
+      }
     )
     .then(response => {
       this.salvarAlarm = response.data.erro
     })
-
     .catch(error => {
       console.log(error.response)
-      this.salvarAlarm = error.response.status
-    })
-
-    context.commit('setAlarm', this.salvarAlarm)
+      this.salvarAlarm = error.response.status;
+    });
+    context.commit('setAlarm', this.salvarAlarm);
   },
 
   async sendLogic(context, { valid }) {
@@ -592,10 +545,9 @@ export const actions = {
         {'logica':"'" + valid + " '"}
       )
       .then(response => {
-        this.validating = response.data.ok
-      })
-
-    context.commit('setLogic', this.validating)
+        this.validating = response.data.ok;
+      });
+    context.commit('setLogic', this.validating);
   },
 
   async loadRegistered(context, {unit}) {
@@ -604,65 +556,62 @@ export const actions = {
         HOST_API + '/cadastrado/' + unit, {
           headers: {
             'Authorization': this.$cookies.get('token') || '',
-          }}
-        
+          }
+        }
       )
       .then(response => {
-        this.cardAlarm = response.data
-        // console.log(response.data)
-      })
-
-    context.commit('setCard', this.cardAlarm)
+        this.cardAlarm = response.data;
+      });
+    context.commit('setCard', this.cardAlarm);
   },
 
-  async loadGraph(context, idGraph) {
+  async loadGraph(idGraph) {
     return this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
       HOST_API + '/grafico/' + idGraph, {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
-        }}
-    )
+        }
+      }
+    );
   },
 
   async loadCard(context, dados) {
     return this.$axios
-      .get(
-        HOST_API + '/cadastrado/' + 
-        dados.unit + '/' + dados.route, {
-          headers: {
-            'Authorization': this.$cookies.get('token') || '',
-          }}
-      )
-      .then(response => {
-        context.commit('loadInfo', response.data.todos[0])
-
-        return response
-      })
+    .get(
+      HOST_API + '/cadastrado/' + 
+      dados.unit + '/' + dados.route, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }
+      }
+    )
+    .then(response => {
+      context.commit('loadInfo', response.data.todos[0]);
+      return response;
+    });
   },
 
   async updateData(context, dados) {
     await this.$axios
-      .put(
-        (HOST_API + '/alarme/' +  
-        dados.unit + '/' + dados.id), dados.data, {
-          headers: {
-            'Authorization': this.$cookies.get('token') || '',
-          }}
-      )
-      .then(response => {
-        this.update = response.data.erro
-      })
-
-      .catch(error => {
-        // console.log(error.response)
-        this.update = error.response.status
-      })
-      
-    context.commit('updateCard', this.update)
+    .put(
+      (HOST_API + '/alarme/' + dados.unit + '/' + dados.id),
+      dados.data, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
+        }
+      }
+    )
+    .then(response => {
+      this.update = response.data.erro;
+    })
+    .catch(error => {
+      this.update = error.response.status;
+    });
+    context.commit('updateCard', this.update);
   },
-  
-  treatGraph(context, response) {
+
+  treatGraph(response) {
     const responseData = response.data
 
     var cores = [
@@ -676,22 +625,21 @@ export const actions = {
       '#FFF000'
     ]
 
-    var diaAtual = ''
-    var diaAnterior = ''
-    var arrayDias = new Array()
-    var arrayDatasets = new Array()
+    var diaAtual = '';
+    var diaAnterior = '';
+    var arrayDias = []
+    var arrayDatasets = []
     var tempos = [
       ...new Set(responseData.graph.map(i => i.tempo.split(' ')[1]))
     ]
 
     for (const key in responseData.graph) {
-      const element = responseData.graph[key]
-      diaAtual = element.tempo.substring(0, 10)
-      element['dia'] = diaAtual
+      const element = responseData.graph[key];
+      diaAtual = element.tempo.substring(0, 10);
+      element['dia'] = diaAtual;
       if (diaAtual != diaAnterior) {
-        diaAnterior = diaAtual
-        
-        arrayDias.push(diaAtual)
+        diaAnterior = diaAtual;
+        arrayDias.push(diaAtual);
       }
     }
 
@@ -703,8 +651,8 @@ export const actions = {
         pointBackgroundColor: cores[key],
         fill: false,
         borderColor: cores[key],
-        data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor)
-      })
+        data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor);
+      });
     }
 
     return {
@@ -713,5 +661,4 @@ export const actions = {
       datasets: arrayDatasets
     }
   }
-
 }
