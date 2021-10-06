@@ -76,7 +76,7 @@ export default {
       this.loadData(this.unitId || '');
 
       try {
-        let alarmActive = this.alarms.some(alarm => {
+        const alarmActive = this.alarms.some(alarm => {
           return Boolean(alarm.active === 1 && this.currentRouteName === 'activealarm');
         });
         if(alarmActive) {
