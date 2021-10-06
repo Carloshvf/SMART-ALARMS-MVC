@@ -504,7 +504,8 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      modal_update: 'modal-update'
     };
   },
 
@@ -702,11 +703,6 @@ export default {
         this.$bvModal.show(index);
       }, 100);
     },
-    modal_update() {
-      const modal_update = 'modal-update';
-      return modal_update
-    }
-
 
     cancelEdit(index) {
       this.$bvModal.hide(index);
@@ -898,10 +894,10 @@ export default {
           toaster: toaster,
           solid: true,
         });
-        this.$bvModal.hide(modal_update());
+        this.$bvModal.hide(this.modal_update);
       }
       else if (this.ok === true) {
-        this.$bvModal.show(this.modal_update());
+        this.$bvModal.show(this.modal_update);
       }
     },
 
@@ -963,7 +959,7 @@ export default {
         });
         this.disabling = false;
         this.load = false;
-        this.$bvModal.hide(modal_update());
+        this.$bvModal.hide(this.modal_update);
       }
     },
 
@@ -1007,7 +1003,7 @@ export default {
           setTimeout(() => {
             this.disabling = false;
             this.loadEdit = false;
-            this.$bvModal.hide(modal_update());
+            this.$bvModal.hide(this.modal_update);
           }, 1000);
       }
     }
