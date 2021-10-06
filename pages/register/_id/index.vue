@@ -460,7 +460,6 @@ export default {
 
   data() {
     return {
-      modal_update = 'modal-update',
       types: 'medida',
       forOnce: true,
       backendCheck: "",
@@ -505,7 +504,8 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      modal_update: 'modal-update'
     };
   },
 
@@ -703,8 +703,6 @@ export default {
         this.$bvModal.show(index);
       }, 100);
     },
-
-
 
     cancelEdit(index) {
       this.$bvModal.hide(index);
