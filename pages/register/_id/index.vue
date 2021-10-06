@@ -460,7 +460,6 @@ export default {
 
   data() {
     return {
-      modal_update = 'modal-update',
       types: 'medida',
       forOnce: true,
       backendCheck: "",
@@ -703,7 +702,10 @@ export default {
         this.$bvModal.show(index);
       }, 100);
     },
-
+    modal_update() {
+      const modal_update = 'modal-update';
+      return modal_update
+    }
 
 
     cancelEdit(index) {
@@ -896,10 +898,10 @@ export default {
           toaster: toaster,
           solid: true,
         });
-        this.$bvModal.hide(this.modal_update);
+        this.$bvModal.hide(modal_update());
       }
       else if (this.ok === true) {
-        this.$bvModal.show(this.modal_update);
+        this.$bvModal.show(this.modal_update());
       }
     },
 
@@ -961,7 +963,7 @@ export default {
         });
         this.disabling = false;
         this.load = false;
-        this.$bvModal.hide(this.modal_update);
+        this.$bvModal.hide(modal_update());
       }
     },
 
@@ -1005,7 +1007,7 @@ export default {
           setTimeout(() => {
             this.disabling = false;
             this.loadEdit = false;
-            this.$bvModal.hide(this.modal_update);
+            this.$bvModal.hide(modal_update());
           }, 1000);
       }
     }
