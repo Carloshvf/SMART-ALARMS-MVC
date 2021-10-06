@@ -59,15 +59,15 @@ export default {
           this.alarm['countTimeDiff'] = ms;
 
           if (ms > 0) {
-            let d = this.$moment.duration(ms);
+            const duration_time = this.$moment.duration(ms);
 
             this.countTime =
-              d
+              duration_time
                 .get('minutes')
                 .toString()
                 .padStart(2, '0') +
               ':' +
-              d
+              duration_time
                 .get('seconds')
                 .toString()
                 .padStart(2, '0')
@@ -114,15 +114,15 @@ export default {
           this.alarm['countTimeDiff'] = ms;
 
           if (ms > 0) {
-            let d = this.$moment.duration(ms);
+            const duration_time = this.$moment.duration(ms);
 
             this.countTime =
-              d
+              duration_time
                 .get('minutes')
                 .toString()
                 .padStart(2, '0') +
               ':' +
-              d
+              duration_time
                 .get('seconds')
                 .toString()
                 .padStart(2, '0')

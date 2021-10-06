@@ -172,14 +172,14 @@ export default {
     },
 
     async getGraph(id) {
-      let response = await this.loadGraph(id);
+      const response = await this.loadGraph(id);
       this.fillData = await this.treatGraph(response);
       this.stopInterval = true;
       this.stop = true;
 
       this.stopInterval = setInterval(async () => {
         if(this.stop === true) {
-          let response = await this.loadGraph(id);
+          const response = await this.loadGraph(id);
           this.fillData = await this.treatGraph(response);
 
            if (this.ceaseLoop === false) {

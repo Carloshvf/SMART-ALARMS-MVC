@@ -887,16 +887,17 @@ export default {
     },
 
     validCheck(toaster) {
+      const modal_update = 'modal-update'
       if (this.ok === false) {
         this.$bvToast.toast('Por favor, valide a lógica antes de salvar.', {
           title: `Validar`,
           toaster: toaster,
           solid: true,
         });
-        this.$bvModal.hide('modal-update');
+        this.$bvModal.hide(modal_update);
       }
       else if (this.ok === true) {
-        this.$bvModal.show('modal-update');
+        this.$bvModal.show(modal_update);
       }
     },
 

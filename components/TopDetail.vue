@@ -152,7 +152,7 @@ export default {
     },
 
     async getGraph(id) {
-      let response = await this.loadGraph(id);
+      const response = await this.loadGraph(id);
       this.fillData = await this.treatGraph(response);
       this.stopInterval = true;
       this.stop = true;
@@ -163,7 +163,7 @@ export default {
               if (this.alarm.channels[index].medida !== id) {
                   continue;
               } else {
-                let response = await this.loadGraph(id);
+                const response = await this.loadGraph(id);
                 this.fillData = await this.treatGraph(response);
               }
           }
