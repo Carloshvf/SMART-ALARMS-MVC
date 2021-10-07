@@ -22,18 +22,18 @@
                             {{tab.sugestao}}
                         </span>
                     </div>
-                    <b-button class="btn btn-consulta" @click="showModal(true)">CONSULTA</b-button>
+                    <b-button class="btn btn-consulta" @click="showModal(true)">{{labelConsulta}}</b-button>
                 </div>
 
                 <div class="row card-suggest">
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.nome_usuario}}</span>
+                        <span style="color: #B5B5B5;">{{ labelName }}{{tab.nome_usuario}}</span>
                     </div>
                     <div class="col-4">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.chave}}</span>
+                        <span style="color: #B5B5B5;">{{ labelAcessKey }}{{tab.chave}}</span>
                     </div>
                     <div class="col-5">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.data}}</span>
+                        <span style="color: #B5B5B5;">{{ labelDateTime }}{{tab.data}}</span>
                     </div>
                 </div>
             </div>
@@ -42,13 +42,13 @@
             <template v-slot:modal-title>
                 <div class="card-consulta">
                     <h1>{{tab.tipo}} {{tab.ug}}</h1>
-                    <span class="reason">Causa</span>
+                    <span class="reason">{{ labelCause }}</span>
                     <div class="row">
                         <div class="col-7">
                             <p class="mb-1 titles">{{tab.causa}}</p>
                         </div>
                         <div class="col-5" style="text-align: right;">
-                            <span class="titles">STATUS: </span>
+                            <span class="titles">{{ labelStatus }}</span>
                             <span>&nbsp;</span>
                             <span class="badge refuse mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada',
                             yellow: tab.status == 'Aguardando Aprovação', orange: tab.status == 'Aguardando Implementação' }">
@@ -61,7 +61,7 @@
             </template>
             <template>
                 <div class="row">
-                    <span class="col-12 consulta-suggest">Sugestão:</span>
+                    <span class="col-12 consulta-suggest">{{ labelSuggestion }}</span>
                 </div>
                 <div class="row">
                     <span class="col-12 card-suggest">
@@ -70,21 +70,21 @@
                 </div>
                 <div class="row ">
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.nome_usuario}}</span>
+                        <span style="color: #B5B5B5;">{{ labelName }}{{tab.nome_usuario}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.chave}}</span>
+                        <span style="color: #B5B5B5;">{{ labelAcessKey }}{{tab.chave}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.data}}</span>
+                        <span style="color: #B5B5B5;">{{ labelDateTime }}{{tab.data}}</span>
                     </div>
                 </div>
                 <div class="row mt-3 border-edit"></div>
                
                 <div class="row mt-3">
-                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <span class="col-8 consulta-suggest">{{ labelObservation }}</span>
                     <div class="col-4" style="text-align: right;">
-                        <span class="consulta-suggest">Gestão Unidade:</span>
+                        <span class="consulta-suggest">{{ labelUnitManagement }}</span>
                         <span style="color: #226E48">{{tab.gestao_unidade[0].status}}</span>
                     </div>
                 </div>
@@ -103,34 +103,34 @@
                         v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
                     >
                         <img src="../static/img/aceitar.svg" alt="accept"/>
-                        Aceitar
+                        {{ accept }}
                     </b-button>
                         <b-button class="btn-cancel"
                         @click="sendChoice(tipo1, refuse, answer1)"
                         v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
                     >
                         <img src="../static/img/cancelar.svg" alt="cancel"/>
-                        Recusar
+                        {{ refuse }}
                     </b-button>
                     </div>
                 </div>
                 <div class="row ">
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_unidade[0].nome}}</span>
+                        <span style="color: #B5B5B5;">{{ labelName }}{{tab.gestao_unidade[0].nome}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_unidade[0].chave}}</span>
+                        <span style="color: #B5B5B5;">{{ labelAcessKey }}{{tab.gestao_unidade[0].chave}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_unidade[0].data}}</span>
+                        <span style="color: #B5B5B5;">{{ labelDateTime }}{{tab.gestao_unidade[0].data}}</span>
                     </div>
                 </div>
                 <div class="row mt-3 border-edit"></div>
                 <!-- 2 -->
                 <div class="row mt-3">
-                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <span class="col-8 consulta-suggest">{{ labelObservation }}</span>
                     <div class="col-4" style="text-align: right;">
-                        <span class="consulta-suggest">Gestão Sede:</span>
+                        <span class="consulta-suggest">{{ labelThisrstManagement }}</span>
                         <span style="color: #226E48">{{tab.gestao_sede[0].status}}</span>
                     </div>
                 </div>
@@ -145,34 +145,34 @@
                             v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true"
                         >
                             <img src="../static/img/aceitar.svg" alt="accept"/>
-                            Aceitar
+                            {{ accept }}
                         </b-button>
                         <b-button class="btn-cancel"
                           @click="sendChoice(tipo2, refuse, answer2)"
                           v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true"
                         >
                             <img src="../static/img/cancelar.svg" alt="cancel"/>
-                            Recusar
+                            {{ refuse }}
                         </b-button>
                      </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.gestao_sede[0].nome}}</span>
+                        <span style="color: #B5B5B5;">{{ labelName }}{{tab.gestao_sede[0].nome}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.gestao_sede[0].chave}}</span>
+                        <span style="color: #B5B5B5;">{{ labelAcessKey }}{{tab.gestao_sede[0].chave}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.gestao_sede[0].data}}</span>
+                        <span style="color: #B5B5B5;">{{ labelDateTime }}{{tab.gestao_sede[0].data}}</span>
                     </div>
                 </div>
                 <div class="row mt-3 border-edit"></div>
                 <!-- 3 -->
                 <div class="row mt-3">
-                    <span class="col-8 consulta-suggest">Observação:</span>
+                    <span class="col-8 consulta-suggest">{{ labelObservation }}</span>
                     <div class="col-4" style="text-align: right;">
-                        <span class="consulta-suggest">Executor:</span>
+                        <span class="consulta-suggest">{{ labelExecutor }}</span>
                         <span style="color: #226E48">{{tab.executor[0].status}}</span>
                     </div>
                 </div>
@@ -184,23 +184,23 @@
                      <div class="col-2" style="text-align: center;">
                          <b-button class="btn-enviar" @click="sendChoice(tipo3, implement, answer3)" v-if="tab.executor[0].status == 'Em análise' && tab.executor[0].botao == true">
                             <img src="../static/img/aceitar.svg" alt="Implement"/>
-                            Implementar
+                            {{ implement }}
                         </b-button>
                          <b-button class="btn-cancel" @click="cancelConsulta()" v-if="tab.executor[0].status == 'Em análise' && tab.executor[0].botao == true">
                             <img src="../static/img/cancelar.svg" @click="cancelConsulta()" alt="cancel"/>
-                            Cancelar
+                            {{ labelCancel }}
                         </b-button>
                      </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Nome: {{tab.executor[0].nome}}</span>
+                        <span style="color: #B5B5B5;">{{ labelName }}{{tab.executor[0].nome}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{tab.executor[0].chave}}</span>
+                        <span style="color: #B5B5B5;">{{ labelAcessKey }}{{tab.executor[0].chave}}</span>
                     </div>
                     <div class="col-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.executor[0].data}}</span>
+                        <span style="color: #B5B5B5;">{{ labelDateTime }}{{tab.executor[0].data}}</span>
                     </div>
                 </div>
             </template>
@@ -214,7 +214,7 @@
             <template v-slot:modal-title>
                 <div class="row">
                     <div class="col-2 ">
-                        <label class="labels">SELECIONAR UG</label>
+                        <label class="labels">{{ labelSelectUG }}</label>
                         <select class="form-control" v-model="editModal1">
                             <option v-for="item in filterUg" :key="item.id">
                                 {{item}}                
@@ -222,7 +222,7 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <label class="labels">SELECIONAR TIPO</label>
+                        <label class="labels">{{ labelSelectType }}</label>
                         <select class="form-control" v-model="editModal2">
                             <option v-for="item in filterType" :key="item.id">
                                 {{item}}                
@@ -230,7 +230,7 @@
                         </select>
                     </div>
                     <div class="col-4 ">
-                        <label class="labels">CAUSA</label>
+                        <label class="labels">{{ labelCauseUP }}</label>
                         <select class="form-control" v-model="editModal3">
                             <option v-for="item in filterCause" :key="item.id">
                                 {{item}}                
@@ -248,8 +248,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">UG</th>
-                                <th scope="col">Causa</th>
+                                <th scope="col">{{ labelUG }}</th>
+                                <th scope="col">{{ labelCause }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -262,7 +262,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <span class="col-12 cadastro-suggest mt-3">Sugestão:</span>
+                    <span class="col-12 cadastro-suggest mt-3">{{ labelSuggestion }}</span>
                 </div>
                 <div class="row">
                     <div class="col mt-3 mb-3">
@@ -273,24 +273,24 @@
 
                 <div class="row">
                     <div class="col-3 mb-3">
-                    <span style="color: #B5B5B5;">Nome: {{filterNome}}</span>
+                    <span style="color: #B5B5B5;">{{ labelName }}{{filterNome}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Chave de acesso: {{filterChave}}</span>
+                        <span style="color: #B5B5B5;">{{ labelAcessKey }}{{filterChave}}</span>
                     </div>
                     <div class="col-3 mb-3">
-                        <span style="color: #B5B5B5;">Data e hora: {{tab.data}}</span>
+                        <span style="color: #B5B5B5;">{{ labelDateTime }}{{tab.data}}</span>
                     </div>
                 </div>
             </template>
             <template v-slot:modal-footer>
                 <b-button class="btn-cancel" @click="cancelEdit()">
                     <img src="../static/img/cancelar.svg" alt="cancel"/>
-                    Cancelar
+                    {{ labelCancel }}
                 </b-button>
                 <b-button class="btn-enviar" @click="editRegister()">
                     <img src="../static/img/aceitar.svg" alt="send"/>
-                    Enviar
+                    {{ labelSend }}
                 </b-button>
             </template>
         </b-modal>
@@ -326,7 +326,24 @@ export default {
             lists: [],
             filterUg: [],
             filterType: [],
-            filterCause: []
+            filterCause: [],
+            labelConsulta: "CONSULTA",
+            labelName: "Nome: ",
+            labelAcessKey: "Chave de acesso: ",
+            labelDateTime: "Data e hora: ",
+            labelCause: "Causa",
+            labelStatus: "STATUS: ",
+            labelSuggestion: "Sugestão:",
+            labelObservation: "Observação:",
+            labelUnitManagement: "Gestão Unidade:",
+            labelThisrstManagement: "Gestão Sede:",
+            labelExecutor: "Executor:",
+            labelCancel: "Cancelar",
+            labelSelectUG: "SELECIONAR UG",
+            labelSelectType: "SELECIONAR TIPO",
+            labelCauseUP: "CAUSA",
+            labelUG: "UG",
+            labelSend: "Enviar"
         }
     },
 

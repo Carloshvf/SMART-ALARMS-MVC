@@ -564,6 +564,10 @@ export default {
     },
     textAlarme: {
       get () {
+        this.$store.state.edit.canais[0]
+        if (!this.$store.state.edit.ends_alarme[0]) {
+          return this.$store.state.edit.canais[0].end_alarme
+        }
         return this.$store.state.edit.ends_alarme[0].end_alarme;
       },
       set (value) {
@@ -572,6 +576,9 @@ export default {
     },
     activation1: {
       get () {
+        if (!this.$store.state.edit.ends_alarme[0]){
+          return '1';
+        }
         return this.$store.state.edit.ends_alarme[0].ativacao;
       },
       set (value) {
@@ -580,6 +587,9 @@ export default {
     },
     operaLogic: {
       get () {
+        if (!this.$store.state.edit.ends_alarme[0]) {
+          return "";
+        }
         return this.$store.state.edit.ends_alarme[0].operador;
       },
       set (value) {
@@ -620,6 +630,7 @@ export default {
     },
     subArea1: {
       get () {
+        console.log(`Get subArea1: ${this.$store.state.edit}`)
         return this.$store.state.edit.sub_area;
       },
       set (value) {
@@ -628,6 +639,11 @@ export default {
     },
     subArea2: {
       get () {
+        if (!this.$store.state.edit.ends_alarme[0]) {
+          console.log(`Get subArea2: ${this.$store.state.edit.sub_area}`)
+          return this.$store.state.edit.sub_area;
+        }
+        console.log(`Get subArea2: ${this.$store.state.edit.ends_alarme[0].sub_area}`)
         return this.$store.state.edit.ends_alarme[0].sub_area;
       },
       set (value) {
@@ -649,7 +665,10 @@ export default {
       get () {
         if (this.$store.state.edit.status_medidas === '') {
           return null;
+        } else if (!this.$store.state.edit.sub_area === 'ELIPSE') {
+          return this.$store.state.edit
         }
+        console.log(`Get Sub Area 4: ${this.$store.state.edit.ends_alarme[0]}`)
         return this.$store.state.edit.status_medidas[0].sub_area;
       },
       set (value) {
