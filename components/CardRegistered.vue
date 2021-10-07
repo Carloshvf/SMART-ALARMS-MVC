@@ -15,7 +15,7 @@
 
 <script>
 import Delete from 'vue-material-design-icons/Delete.vue';
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     props: ['alarm', 'unit', 'ind'],
@@ -34,14 +34,23 @@ export default {
 
     methods: {
         ...mapActions(['deleteRegistered', 'persist']),
+
+        makeToast(msg) {
+            this.$bvToast.toast(msg, {
+                title: 'Delete Card',
+                autoHideDelay: 3000,
+                solid: true
+            })
+        },
+
         async deletion(ind) {
             this.deletionAlarms.splice(0);
             this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa});
             this.alarm.splice(ind, 1);
             if (this.delMessage === "deletado com sucesso") {
-                alert("Deletado com sucesso");
+                makeToast("Deletado com sucesso");
             } else {
-                alert("Não foi possivel deletar");
+                makeToast("Não foi possivel deletar");
             }
         },
 

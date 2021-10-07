@@ -35,7 +35,7 @@ export default {
 
 .card-recom-item {
   font-weight: bold;
-  line-height: 30px;  
+  line-height: 30px;
   font-size: 22px;
 }
 </style>

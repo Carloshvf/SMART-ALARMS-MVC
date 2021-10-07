@@ -9,7 +9,7 @@
                 <div class="col-1" style="color:#02592E;">{{tab.tipo}}</div>
                 <div class="col-5">{{tab.causa}}</div>
                 <div class="col-4 status-align">
-                    <span class="badge green mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada', 
+                    <span class="badge green mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada',
                     yellow: tab.status == 'Aguardando Aprovação', orange: tab.status == 'Aguardando Implementação' }">
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     </span>
@@ -50,7 +50,7 @@
                         <div class="col-5" style="text-align: right;">
                             <span class="titles">STATUS: </span>
                             <span>&nbsp;</span>
-                            <span class="badge refuse mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada', 
+                            <span class="badge refuse mr-1" :class="{ red: tab.status == 'Recusada', green: tab.status == 'Implementada',
                             yellow: tab.status == 'Aguardando Aprovação', orange: tab.status == 'Aguardando Implementação' }">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
@@ -60,7 +60,7 @@
                 </div>
             </template>
             <template>
-                <div class="row"> 
+                <div class="row">
                     <span class="col-12 consulta-suggest">Sugestão:</span>
                 </div>
                 <div class="row">
@@ -81,7 +81,7 @@
                 </div>
                 <div class="row mt-3 border-edit"></div>
                
-                <div class="row mt-3"> 
+                <div class="row mt-3">
                     <span class="col-8 consulta-suggest">Observação:</span>
                     <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Unidade:</span>
@@ -97,7 +97,7 @@
                     </textarea>
                     </div>
                     <div class="col-2" style="text-align: center;">
-                        <b-button 
+                        <b-button
                         class="btn-enviar"
                         @click="sendChoice(tipo1, accept, answer1)" 
                         v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
@@ -105,8 +105,8 @@
                         <img src="../static/img/aceitar.svg" alt="accept"/>
                         Aceitar
                     </b-button>
-                        <b-button class="btn-cancel" 
-                        @click="sendChoice(tipo1, refuse, answer1)" 
+                        <b-button class="btn-cancel"
+                        @click="sendChoice(tipo1, refuse, answer1)"
                         v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
                     >
                         <img src="../static/img/cancelar.svg" alt="cancel"/>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="row mt-3 border-edit"></div>
                 <!-- 2 -->
-                <div class="row mt-3"> 
+                <div class="row mt-3">
                     <span class="col-8 consulta-suggest">Observação:</span>
                     <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Gestão Sede:</span>
@@ -169,7 +169,7 @@
                 </div>
                 <div class="row mt-3 border-edit"></div>
                 <!-- 3 -->
-                <div class="row mt-3"> 
+                <div class="row mt-3">
                     <span class="col-8 consulta-suggest">Observação:</span>
                     <div class="col-4" style="text-align: right;">
                         <span class="consulta-suggest">Executor:</span>
@@ -206,8 +206,8 @@
             </template>
             <template v-slot:modal-footer>
                 <span>&nbsp;</span>
-            </template>           
-        </b-modal> 
+            </template>
+        </b-modal>
         <!--  -->
         <!-- MODAL EDITAR -->
         <b-modal size="xl" :id="modal_id" v-if="modalEdit == false">
@@ -219,7 +219,6 @@
                             <option v-for="item in filterUg" :key="item.id">
                                 {{item}}                
                             </option>
-                            
                         </select>
                     </div>
                     <div class="col-2">
@@ -228,7 +227,6 @@
                             <option v-for="item in filterType" :key="item.id">
                                 {{item}}                
                             </option>
-                           
                         </select>
                     </div>
                     <div class="col-4 ">
@@ -237,7 +235,6 @@
                             <option v-for="item in filterCause" :key="item.id">
                                 {{item}}                
                             </option>
-                         
                         </select>
                     </div>
                     <div>
@@ -252,7 +249,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">UG</th>
-                                <th scope="col">Causa</th>  
+                                <th scope="col">Causa</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -264,7 +261,6 @@
                         </table>
                     </div>
                 </div>
-    
                 <div class="row">
                     <span class="col-12 cadastro-suggest mt-3">Sugestão:</span>
                 </div>
@@ -420,15 +416,15 @@ export default {
         },
 
         filterList() {
-            return this.editSug != undefined ? this.editSug.lista_ugs : [];
+            return this.editSug !== undefined ? this.editSug.lista_ugs : [];
         },
 
         filterNome() {
-            return this.editSug != undefined ? this.editSug.nome : [];
+            return this.editSug !== undefined ? this.editSug.nome : [];
         },
 
         filterChave() {
-            return this.editSug != undefined ? this.editSug.chave : [];
+            return this.editSug !== undefined ? this.editSug.chave : [];
         }
     },
 }
@@ -445,10 +441,6 @@ export default {
 textarea {
   resize: none;
 }
-
-// .table thead tr th{
-//     border: none;
-// }
 
 .border-edit {
     border-bottom: 1px solid #dee2e6;
@@ -472,7 +464,6 @@ textarea {
 }
 
 .card-consulta {
-    
     h1 {
         font-weight: 300;
         color: #02592E;
@@ -498,10 +489,6 @@ textarea {
     background: #F7F7F7;
     border: none;
 }
-
-// .form-control {
-//     box-shadow: none;
-// }
 
 .consulta-suggest {
     font-weight: bold;
@@ -530,7 +517,6 @@ textarea {
     &:hover{
         color: $white;
         background-color: #6979F8;
-    } 
+    }
 }
-
 </style>

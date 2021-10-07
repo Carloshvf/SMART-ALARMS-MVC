@@ -40,8 +40,7 @@
 import Graph from '~/components/Graph.vue'
 import Counter from '~/components/Counter.vue'
 
-import main from '~/plugins/main';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   props: ['alarm', 'unity'],
@@ -131,7 +130,7 @@ export default {
       var result = { countTimeDiff: 0 }
 
       if (id && this.lists && this.lists.length > 0) {
-        var arrays = new Array();
+        var arrays = [];
         for (const key in this.lists) {
           arrays.push(Object.assign({}, this.lists[key]))
         }
@@ -150,8 +149,7 @@ export default {
     },
 
     getChartVisible() {
-      var refChart = 'chartCurve'
-      return refChart
+      return 'chartCurve'
     },
 
     reset() {

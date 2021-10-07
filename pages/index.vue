@@ -18,7 +18,6 @@
           <div class="col">
             <b-button class="btn btn-green btn-login mt-4 mb-4" @click="logging()" :disabled="disabling">Acessar</b-button>
           </div>
-          
         </div>
       </div>
     </div>
@@ -42,12 +41,7 @@ export default {
 
   computed: {
     disabling() {
-      if (this.name === "" || this.password === "") {
-        return true;
-      }
-      else {
-        return false;
-      } 
+      return !this.name || !this.password;
     },
 
     validation() {
@@ -152,6 +146,4 @@ export default {
   height: 150px;
   width: 240px;
 }
-
-
 </style>

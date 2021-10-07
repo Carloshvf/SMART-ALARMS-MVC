@@ -1,4 +1,4 @@
-var BASE_URL = undefined;
+var BASE_URL = null;
 if (process.env.NODE_ENV === 'development') {
   BASE_URL = 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000';
 }

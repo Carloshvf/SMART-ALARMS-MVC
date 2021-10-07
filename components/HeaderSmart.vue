@@ -9,19 +9,19 @@
         </div>
         <div class="col-7 position" v-if="headerButtons == true">
           <nuxt-link to="/activealarm" class="btn mt-2 mr-4">
-            <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" /> 
+            <img class="icons" v-b-tooltip.hover title="Pagina principal" src="../static/img/home.svg" alt="Homealt" />
           </nuxt-link>
-          <nuxt-link to="/alarm" class="btn mt-2 mr-4"> 
-            <img class="icons" v-b-tooltip.hover title="Alarmes ativos" src="../static/img/avalanche.svg" alt="Aval" /> 
+          <nuxt-link to="/alarm" class="btn mt-2 mr-4">
+            <img class="icons" v-b-tooltip.hover title="Alarmes ativos" src="../static/img/avalanche.svg" alt="Aval" />
           </nuxt-link>
-          <nuxt-link to="/registered" class="btn mt-2 mr-4" v-if="permButtons.alarmes_cadastrados == true"> 
-            <img class="icons" v-b-tooltip.hover title="Alarmes cadastrados" src="../static/img/edit.svg" alt="Editalt" /> 
+          <nuxt-link to="/registered" class="btn mt-2 mr-4" v-if="permButtons.alarmes_cadastrados == true">
+            <img class="icons" v-b-tooltip.hover title="Alarmes cadastrados" src="../static/img/edit.svg" alt="Editalt" />
           </nuxt-link>
-          <nuxt-link to="/suggestion" class="btn mt-2 mr-4" v-if="permButtons.sugestoes == true"> 
-            <img class="icons" v-b-tooltip.hover title="Sugestões" src="../static/img/article.svg" alt="Sug" /> 
+          <nuxt-link to="/suggestion" class="btn mt-2 mr-4" v-if="permButtons.sugestoes == true">
+            <img class="icons" v-b-tooltip.hover title="Sugestões" src="../static/img/article.svg" alt="Sug" />
           </nuxt-link>
-          <nuxt-link to="/units" class="btn mt-2 mr-4"> 
-            <img class="icons" v-b-tooltip.hover title="Unidades" src="../static/img/unit.svg" alt="Unit" /> 
+          <nuxt-link to="/units" class="btn mt-2 mr-4">
+            <img class="icons" v-b-tooltip.hover title="Unidades" src="../static/img/unit.svg" alt="Unit" />
           </nuxt-link>
           <b-dropdown class="mt-2 mb-2" :text="user" v-if="user != ''">
             <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>

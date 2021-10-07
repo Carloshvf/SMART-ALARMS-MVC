@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid pt-5 mt-5">
       <div class="row adjust">
-        <div class="col-4 mb-4" v-for="item in unitDetail" :key="item.id"> 
+        <div class="col-4 mb-4" v-for="item in unitDetail" :key="item.id">
           <nuxt-link
             class="box-alarm d-flex align-items-center justify-content-center"
             to="alarm"
@@ -34,7 +34,6 @@ export default {
 
   methods: {
     ...mapActions(['loadData', 'idCheck', 'logOff', 'gettingUnits']),
-    
   },
 
   computed: {
