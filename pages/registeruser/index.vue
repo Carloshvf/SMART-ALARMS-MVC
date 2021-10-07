@@ -126,7 +126,7 @@
 <script>
 import { mapActions } from 'vuex';
 import VueTypeahead from 'vue-typeahead'
-export const HOST_API = process.env.baseURL;
+export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
 extends: VueTypeahead,

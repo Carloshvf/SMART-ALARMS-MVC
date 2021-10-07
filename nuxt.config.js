@@ -1,17 +1,8 @@
-var BASE_URL = null;
-if (process.env.NODE_ENV === 'development') {
-  BASE_URL = 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000';
-}
-else {
-  console.log(process.env.NODE_ENV);
-  BASE_URL = 'https://smartalarms-backend-hmg.petrobras.com.br';
-}
-
 export default {
 
   env: {
     //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
-    baseURL: process.env.baseURL || BASE_URL
+    baseURL: process.env.baseURL || 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000'
   },
 
   mode: 'spa',
@@ -20,6 +11,7 @@ export default {
    */
 
   head: {
+    script: [{src: "/env.js"}],
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },

@@ -57,7 +57,7 @@ import Delete from 'vue-material-design-icons/Delete.vue'
 import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 import { mapActions, mapMutations } from 'vuex'
 
-export const HOST_API = process.env.baseURL;
+export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
   components: {

@@ -142,7 +142,7 @@
 <script>
 import { mapActions, mapMutations} from 'vuex';
 
-export const HOST_API = process.env.baseURL;
+export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
 
