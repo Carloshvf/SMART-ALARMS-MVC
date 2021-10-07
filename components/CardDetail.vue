@@ -3,7 +3,6 @@
     <div class="card-content card-detail">
       <div class="card-detail-header">
         <h6 class="mb-2">Causa imediata:</h6>
-        <!-- <h3>Nível baixo do tambor de HP</h3> -->
         <h2 class="mb-3">{{ alarm.cause }}</h2>
       </div>
       <!-- /.card-detail-head -->
@@ -19,7 +18,6 @@
 
         <b-modal size="xl" :id="alarm.value" title="Gráfico" @hidden="onHidden" @show="onShow">
           <p class="my-4">Endereço: {{ alarm.value }}</p>
-          <!-- <p class="ml-auto">Medida: C</p> -->
           <graph
             ref="chartCurve"
             :chart-data="fillData"

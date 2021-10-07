@@ -1,5 +1,5 @@
 var BASE_URL = undefined;
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV === 'development') {
   BASE_URL = 'https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000';
 }
 else {
@@ -11,7 +11,6 @@ export default {
   env: {
     //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
     baseURL: process.env.baseURL || BASE_URL
-
   },
 
   mode: 'spa',

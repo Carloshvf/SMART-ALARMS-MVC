@@ -9,17 +9,6 @@
       </div>
       <div class="row">
         <!-- CARD SEDE -->
-        <!-- v-if="sede == true" -->
-        <!-- <div class="col-4" >
-          <div class="card mt-4">
-            <div class="card-white">
-              <nuxt-link to="/activeunit" :event="disable ? '' : 'click'">
-                <h1 class="unit-select">SEDE</h1>
-              </nuxt-link>
-            </div>
-          </div>
-        </div> -->
-          <!--  -->
         <div class="col-4" v-for="item in unitDetail" :key="item.id">
           <div class="card mt-4">
             <div class="card-white">
@@ -89,65 +78,60 @@ export default {
     ...mapActions(['gettingUnits', 'headerGet', 'idCheck', 'logOff']),
 
     async showModal(id) {
-      this.$bvModal.show(id)
+      this.$bvModal.show(id);
     },
 
     async deleteUnit(id, toaster) {
       await this.$axios
       .delete(
-        HOST_API + '/unidades/' +
-          id, {
-        headers: {
-          'Authorization': this.$cookies.get('token') || '',
-        }}
+        HOST_API + '/unidades/' + id, {
+          headers: {
+            'Authorization': this.$cookies.get('token') || '',
+          }
+        }
       )
       .then(() => {
-        this.gettingUnits()
-      })
-
+        this.gettingUnits();
+      });
       this.$bvToast.toast('Unidade deletada com sucesso', {
         title: `Delete`,
         toaster: toaster,
         solid: true
-      })
+      });
       setTimeout(() => {
         this.$bvModal.hide(id)
       }, 1000);
     },
 
     sendId(id) {
-      this.$cookies.remove('unit')
-      this.$cookies.set('unit', JSON.stringify(id))
-      this.headerGet(this.$cookies.get('unit') || '')
+      this.$cookies.remove('unit');
+      this.$cookies.set('unit', JSON.stringify(id));
+      this.headerGet(this.$cookies.get('unit') || '');
     }
-
   },
 
   async created() {
     // Logoff automatico
-      await this.idCheck()
-        if (this.session.value == false) {
-          // console.log(this.session)
-          this.$bvToast.toast(this.session.logoff, {
-            title: `Logoff`,
-            toaster: 'b-toaster-bottom-right',
-            solid: true
-          })
-          this.logOff({logout: "tes"})
-          this.$cookies.removeAll();
-          this.$router.push('/')
-        }
-      // 
-      
-    await this.gettingUnits()
+    await this.idCheck();
+    if (!this.session.value) {
+      this.$bvToast.toast(this.session.logoff, {
+        title: `Logoff`,
+        toaster: 'b-toaster-bottom-right',
+        solid: true
+      });
+      this.logOff({logout: "tes"});
+      this.$cookies.removeAll();
+      this.$router.push('/');
+    }
+    await this.gettingUnits();
     setTimeout(() => {
-      this.disable = false
+      this.disable = false;
     }, 3000);
 
-    if (this.unitDetail[0].edicao == true) {
-      this.sede = true
-    } else if(this.unitDetail[0].edicao == false || this.unitDetail[0].edicao == undefined){
-      this.sede = false
+    if (this.unitDetail[0].edicao) {
+      this.sede = true;
+    } else if(!this.unitDetail[0].edicao || !this.unitDetail[0].edicao){
+      this.sede = false;
     }
   }
 }

@@ -439,7 +439,6 @@ import { mapActions } from 'vuex';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
 export default {
-
   components: {
     DeleteOutline,
   },
@@ -520,22 +519,20 @@ export default {
 
     async showModal(index, value) {
       this.modalEdit = value;
-      if (value === false) {
+      if (value) {
+        this.editC1 = this.end[index].end_alarme;
+        this.editC2 = this.end[index].ativacao;
+        this.editC3 = this.end[index].end_medida;
+        this.editC4 = this.end[index].unidade;
+        this.editC5 = this.end[index].sub_area;
+      } else {
         this.editS1 = this.measures[index].tipo;
-        // console.log(this.measures[index])
         this.editS2 = this.measures[index].nome;
         this.editS3 = this.measures[index].end_supervisorio;
         this.editS4 = this.measures[index].prioridade;
         this.editS5 = this.measures[index].unidade;
         this.editS6 = this.measures[index].valor_operacao;
         this.editS7 = this.measures[index].sub_area;
-      } else if(value === true) {
-        this.editC1 = this.end[index].end_alarme;
-        // console.log(this.end[index])
-        this.editC2 = this.end[index].ativacao;
-        this.editC3 = this.end[index].end_medida;
-        this.editC4 = this.end[index].unidade;
-        this.editC5 = this.end[index].sub_area;
       }
 
       setTimeout(() => {

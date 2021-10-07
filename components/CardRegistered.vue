@@ -7,7 +7,6 @@
                 <hr>
                 <div class="align options">
                     <button class="btn mr-5" @click="deletion(ind)">Excluir <delete class="options"></delete></button>
-                    
                     <nuxt-link @click.native="editing()" to="/register" class="btn options ml-5">Editar</nuxt-link>
                 </div>
             </div>
@@ -27,7 +26,6 @@ export default {
         persistAlarms: [],
         delMessage: "",
         }
-
     },
 
     components: {
@@ -36,35 +34,24 @@ export default {
 
     methods: {
         ...mapActions(['deleteRegistered', 'persist']),
-
-        
         async deletion(ind) {
-            this.deletionAlarms.splice(0)
-            this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa})
-            // await this.deleteRegistered(this.deletionAlarms[0])
-            
-            // console.log(this.ind)
-            this.alarm.splice(ind, 1)
-            
-            // this.delMessage = this.$store.state.deleteAlarm
-            if (this.delMessage == "deletado com sucesso") {
-                alert("Deletado com sucesso")
+            this.deletionAlarms.splice(0);
+            this.deletionAlarms.push({local: this.unit, causa: this.alarm.causa});
+            this.alarm.splice(ind, 1);
+            if (this.delMessage === "deletado com sucesso") {
+                alert("Deletado com sucesso");
             } else {
-                alert("Não foi possivel deletar")
+                alert("Não foi possivel deletar");
             }
-            
         },
 
         editing() {
-            this.persistAlarms.splice(0)
-            this.persistAlarms.push({local: this.unit, causa: this.alarm.causa})
-            this.persist(this.persistAlarms[0])
+            this.persistAlarms.splice(0);
+            this.persistAlarms.push({local: this.unit, causa: this.alarm.causa});
+            this.persist(this.persistAlarms[0]);
         }
-
     }
-
 }
-
 </script>
 
 <style lang="scss" scoped>

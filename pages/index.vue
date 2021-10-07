@@ -42,53 +42,49 @@ export default {
 
   computed: {
     disabling() {
-      if (this.name == "" || this.password == "") {
-        return true
+      if (this.name === "" || this.password === "") {
+        return true;
       }
       else {
-        return false
+        return false;
       } 
     },
 
     validation() {
-      return this.$store.state.valid
+      return this.$store.state.valid;
     }
-
   },
 
   methods: {
     ...mapActions(['loginUser',]),
 
     async logging() {
-      this.userData.splice(0)
-
+      this.userData.splice(0);
       this.userData.push({
         chave: this.name,
         senha: this.password,
-      })
-      await this.loginUser({info: this.userData[0]})
+      });
+      await this.loginUser({info: this.userData[0]});
 
-      if (this.validation == '') {
-        this.$router.push('/units')
+      if (this.validation === '') {
+        this.$router.push('/units');
       }
       else {
         this.$bvToast.toast(this.validation, {
           title: `Erro`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
+        });
       }
-      
     }
   },
 
   mounted() {
     // Tentativa de fazer ele jogar pra página de unidades no caso de já ter um token
-    this.userCheck = this.$cookies.get('token') || ''
-    if (this.userCheck != '') {
-      this.$router.push('/units')
+    this.userCheck = this.$cookies.get('token') || '';
+    if (this.userCheck !== '') {
+      this.$router.push('/units');
     }
-    
   }
 }
 </script>

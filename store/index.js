@@ -1,6 +1,7 @@
 //PEGANDO A VARIAVEL DE AMBIENTE OU PEGAR A STRING MOCADA
 export const HOST_API = process.env.baseURL; 
 export const strict = false;
+export const sugestCadastro = '/sugestoes/cadastro/';
 
 export const state = () => ({
   all: [],
@@ -31,8 +32,7 @@ export const state = () => ({
   getAlarm: [],
   getHeader: [],
   checkingSession: [],
-  clear: null,
-  sugestCadastro: '/sugestoes/cadastro/'
+  clear: null
 });
 
 export const mutations = {
@@ -244,7 +244,6 @@ export const actions = {
       this.checkingSession = response.data;
     })
     .catch(error => {
-      // console.log(error.response)
       this.checkingSession = error?.response?.data?.erro;
     });
     context.commit('setIdCheck', this.checkingSession);
@@ -274,7 +273,6 @@ export const actions = {
     )
     .then(response => {
       this.suggest = response.data.sugestoes
-      // console.log(response.data)
     });
     context.commit('setSuggest', this.suggest);
   },
@@ -333,21 +331,21 @@ export const actions = {
       }
     )
     .then(response => {
-      this.getSuggest = response.data
+      this.getSuggest = response.data;
     });
     context.commit('setEdit', this.getSuggest);
   },
 
   // PUT DE EDITAR SUGESTÃO
-  async editSuggestions(context, dados) {
+  async editSuggestions(dados) {
     await this.$axios.put(
-        HOST_API + sugestCadastro + 
-        dados.unit + '/' + dados.id, dados.info, {
-          headers: {
-            'Authorization': this.$cookies.get('token') || '',
-          }
+      HOST_API + sugestCadastro + 
+      dados.unit + '/' + dados.id, dados.info, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
         }
-      )
+      }
+    );
   },
 
   // GET DA PÁGINA DE SELEÇÃO DE UNIDADES
@@ -360,7 +358,7 @@ export const actions = {
       }
     )
     .then(response => {
-      this.getUnit = response.data
+      this.getUnit = response.data;
     });
     context.commit('setUnit', this.getUnit);
   },
@@ -375,22 +373,21 @@ export const actions = {
       }
     )
     .then(response => {
-      this.getEdit = response.data
+      this.getEdit = response.data;
     });
-    context.commit('setEditing', this.getEdit)
+    context.commit('setEditing', this.getEdit);
   },
-  
   // PUT DA PÁGINA DE EDIÇÃO DE UNIDADES
   async updateUnit(context, dados) {
     await this.$axios
-      .put(
-        (HOST_API + '/unidades/' +dados.id), 
-          dados.data, {
-          headers: {
-            'Authorization': this.$cookies.get('token') || '',
-          }
+    .put(
+      (HOST_API + '/unidades/' +dados.id), 
+        dados.data, {
+        headers: {
+          'Authorization': this.$cookies.get('token') || '',
         }
-      );
+      }
+    );
   },
 
   //POST DA PÁGINA DE CADASTRAR UNIDADES 
@@ -413,18 +410,17 @@ export const actions = {
         dados.info
     )
     .then(response => {
-    this.authorizationId = response.headers.authorization
-    this.userName = response.data.nome
-    this.keyName = response.data.chave
-    if (response.status == 200) {
-      this.$cookies.set('token', JSON.stringify(this.authorizationId))
-      this.$cookies.set('name', JSON.stringify(this.userName))
-      this.$cookies.set('key', JSON.stringify(this.keyName))
+    this.authorizationId = response.headers.authorization;
+    this.userName = response.data.nome;
+    this.keyName = response.data.chave;
+    if (response.status === 200) {
+      this.$cookies.set('token', JSON.stringify(this.authorizationId));
+      this.$cookies.set('name', JSON.stringify(this.userName));
+      this.$cookies.set('key', JSON.stringify(this.keyName));
     }
     })
     .catch(error => {
-      // console.log(error.response.data.erro)
-      this.valid = error.response.data.erro
+      this.valid = error.response.data.erro;
     });
     context.commit('setUser', this.valid);
   },
@@ -533,7 +529,7 @@ export const actions = {
       this.salvarAlarm = response.data.erro
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error.response);
       this.salvarAlarm = error.response.status;
     });
     context.commit('setAlarm', this.salvarAlarm);
@@ -613,7 +609,7 @@ export const actions = {
   },
 
   treatGraph(response) {
-    const responseData = response.data
+    const responseData = response.data;
 
     var cores = [
       '#f87979',
@@ -628,31 +624,31 @@ export const actions = {
 
     var diaAtual = '';
     var diaAnterior = '';
-    var arrayDias = []
-    var arrayDatasets = []
+    var arrayDias = [];
+    var arrayDatasets = [];
     var tempos = [
       ...new Set(responseData.graph.map(i => i.tempo.split(' ')[1]))
-    ]
+    ];
 
     for (const key in responseData.graph) {
       const element = responseData.graph[key];
       diaAtual = element.tempo.substring(0, 10);
       element['dia'] = diaAtual;
-      if (diaAtual != diaAnterior) {
+      if (diaAtual !== diaAnterior) {
         diaAnterior = diaAtual;
         arrayDias.push(diaAtual);
       }
     }
 
     for (const key in arrayDias) {
-      const dia = arrayDias[key]
+      const dia = arrayDias[key];
 
       arrayDatasets.push({
         label: dia,
         pointBackgroundColor: cores[key],
         fill: false,
         borderColor: cores[key],
-        data: responseData.graph.filter(i => i.dia == dia).map(v => v.valor)
+        data: responseData.graph.filter(i => i.dia === dia).map(v => v.valor)
       });
     }
 

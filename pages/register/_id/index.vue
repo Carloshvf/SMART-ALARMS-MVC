@@ -155,7 +155,6 @@
           <div class="ml-2">
             <button class="btn btn-green rounded-circle" @click="sendEnderecos()">+</button>
           </div>
-
             <div class="col-12 mt-4 scroll">
               <table class="table">
                 <thead>
@@ -414,7 +413,10 @@
         <div class="col-12 mt-5">
           <h5 class="titles">Lista de recomendações</h5>
           <ul class="scroll">
-              <li v-for="(lista,index) in recomendacao" :key="lista.id">{{ lista.item }} <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/></li>
+              <li v-for="(lista,index) in recomendacao" :key="lista.id">
+                {{ lista.item }} 
+                <img class="deleting" src="../../../static/img/delete.svg" alt="del" @click="cleanRecom(index)"/>
+              </li>
           </ul>
         </div>
       <div class="mt-5">
@@ -570,7 +572,6 @@ export default {
     },
     activation1: {
       get () {
-        // console.log(this.$store.state.edit.ends_alarme[0].ativacao)
         return this.$store.state.edit.ends_alarme[0].ativacao;
       },
       set (value) {
@@ -636,7 +637,7 @@ export default {
     subArea3: {
       get () {
         if (this.$store.state.edit.canais === '') {
-          return;
+          return null;
         }
         return this.$store.state.edit.canais[0].sub_area;
       },
@@ -647,7 +648,7 @@ export default {
     subArea4: {
       get () {
         if (this.$store.state.edit.status_medidas === '') {
-          return;
+          return null;
         }
         return this.$store.state.edit.status_medidas[0].sub_area;
       },

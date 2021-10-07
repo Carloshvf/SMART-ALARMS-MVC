@@ -31,7 +31,6 @@
           <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_alarmes == true">
             Cadastrar Eventos
           </nuxt-link>
-         
         </div>
       </div>
       <!-- /.row -->
@@ -79,30 +78,24 @@ export default {
     },
 
     async logout() {
-      await this.logOff({logout: "tes"})
-
+      await this.logOff({logout: "tes"});
       this.$cookies.removeAll();
-      this.headerButtons = false
-      this.$router.push('/')
+      this.headerButtons = false;
+      this.$router.push('/');
     }
-    
   },
 
   mounted() {
     this.userKey()
-  
     setInterval(() => {
-      if (this.currentRouteName != 'index' && this.currentRouteName != 'units' && this.currentRouteName != 'registerunit' 
-      && this.currentRouteName != 'registerunit-id' && this.currentRouteName != 'registeruser') {
-        this.headerButtons = true
-      } else if(this.currentRouteName == 'units' || this.currentRouteName == 'registerunit' 
-      || this.currentRouteName == 'registerunit-id' || this.currentRouteName == 'registeruser') {
-        this.headerButtons = false
+      this.headerButtons = false;
+
+      if (this.currentRouteName !== 'index' && this.currentRouteName !== 'units' && this.currentRouteName !== 'registerunit'
+      && this.currentRouteName !== 'registerunit-id' && this.currentRouteName !== 'registeruser') {
+        this.headerButtons = true;
       }
     }, 3000);
-    
   }
-
 }
 </script>
 

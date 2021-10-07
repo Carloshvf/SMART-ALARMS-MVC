@@ -92,20 +92,27 @@
                     <!-- div.col-10+div.col-2|c -->
                 </div>
                  <div class="row">
-                     <div class="col-10">
-                        <textarea class="form-control observ mt-2" placeholder="Digite aqui sua observação" rows="4" v-model="answer1">
-                        </textarea>
-                     </div>
-                     <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar" @click="sendChoice(tipo1, accept, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true">
-                            <img src="../static/img/aceitar.svg" alt="accept"/>
-                            Aceitar
-                        </b-button>
-                         <b-button class="btn-cancel" @click="sendChoice(tipo1, refuse, answer1)" v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true">
-                            <img src="../static/img/cancelar.svg" alt="cancel"/>
-                            Recusar
-                        </b-button>
-                     </div>
+                    <div class="col-10">
+                    <textarea class="form-control observ mt-2" placeholder="Digite aqui sua observação" rows="4" v-model="answer1">
+                    </textarea>
+                    </div>
+                    <div class="col-2" style="text-align: center;">
+                        <b-button 
+                        class="btn-enviar"
+                        @click="sendChoice(tipo1, accept, answer1)" 
+                        v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
+                    >
+                        <img src="../static/img/aceitar.svg" alt="accept"/>
+                        Aceitar
+                    </b-button>
+                        <b-button class="btn-cancel" 
+                        @click="sendChoice(tipo1, refuse, answer1)" 
+                        v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
+                    >
+                        <img src="../static/img/cancelar.svg" alt="cancel"/>
+                        Recusar
+                    </b-button>
+                    </div>
                 </div>
                 <div class="row ">
                     <div class="col-3">
@@ -133,11 +140,17 @@
                         </textarea>
                      </div>
                      <div class="col-2" style="text-align: center;">
-                         <b-button class="btn-enviar" @click="sendChoice(tipo2, accept, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true">
+                        <b-button class="btn-enviar"
+                            @click="sendChoice(tipo2, accept, answer2)"
+                            v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true"
+                        >
                             <img src="../static/img/aceitar.svg" alt="accept"/>
                             Aceitar
                         </b-button>
-                         <b-button class="btn-cancel" @click="sendChoice(tipo2, refuse, answer2)" v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true">
+                        <b-button class="btn-cancel"
+                          @click="sendChoice(tipo2, refuse, answer2)"
+                          v-if="tab.gestao_sede[0].status == 'Em análise' && tab.gestao_sede[0].botao == true"
+                        >
                             <img src="../static/img/cancelar.svg" alt="cancel"/>
                             Recusar
                         </b-button>
@@ -251,7 +264,6 @@
                         </table>
                     </div>
                 </div>
-                <!-- <div class="row border-edit"></div> -->
     
                 <div class="row">
                     <span class="col-12 cadastro-suggest mt-3">Sugestão:</span>
@@ -327,47 +339,45 @@ export default {
 
         filteredOptions() {
             for (let index = 0; index < this.sugEdit.filtro.length; index++) {
-                this.filterUg.push(this.sugEdit.filtro[index].ug)
-                this.filterType.push(this.sugEdit.filtro[index].tipo)
-                this.filterCause.push(this.sugEdit.filtro[index].causa)
+                this.filterUg.push(this.sugEdit.filtro[index].ug);
+                this.filterType.push(this.sugEdit.filtro[index].tipo);
+                this.filterCause.push(this.sugEdit.filtro[index].causa);
             }
-            this.filterUg = [...new Set(this.filterUg)]
-            this.filterType = [...new Set(this.filterType)]
-            this.filterCause = [...new Set(this.filterCause)]
+            this.filterUg = [...new Set(this.filterUg)];
+            this.filterType = [...new Set(this.filterType)];
+            this.filterCause = [...new Set(this.filterCause)];
         },
 
         editOptions() {
-            this.lists = this.editSug.lista_ugs
-            this.lists.push({ug: this.editModal1, tipo: this.editModal2, causa: this.editModal3})
+            this.lists = this.editSug.lista_ugs;
+            this.lists.push({ug: this.editModal1, tipo: this.editModal2, causa: this.editModal3});
 
         },
 
         cancelConsulta() {
-            this.$bvModal.hide(this.modal_id)
+            this.$bvModal.hide(this.modal_id);
         },
 
         cancelEdit() {
-            this.editModal1 = ""
-            this.editModal2 = ""
-            this.editModal3 = ""
-            this.observac = ""
-            this.$bvModal.hide(this.modal_id)
+            this.editModal1 = "";
+            this.editModal2 = "";
+            this.editModal3 = "";
+            this.observac = "";
+            this.$bvModal.hide(this.modal_id);
         },
 
         async showModal(value) {
-            this.modalEdit = value
-            await this.editingSuggestions({unit: this.unit, id:this.modal_id})
-            this.filteredOptions()
-            
+            this.modalEdit = value;
+            await this.editingSuggestions({unit: this.unit, id:this.modal_id});
+            this.filteredOptions();
+
             setTimeout(() => {
-                this.$bvModal.show(this.modal_id)
-                // console.log(this.editSug.nome)
+                this.$bvModal.show(this.modal_id);
             }, 100);
-            
         },
 
         async sendChoice(tipos, choice, obs) {
-            this.allData.splice(0)
+            this.allData.splice(0);
 
             this.allData.push({
                 tipo_usuario: tipos,
@@ -376,63 +386,52 @@ export default {
                 observacao: obs,
                 nome: this.tab.nome_usuario,
                 chave: this.tab.chave
-            })
-            await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]})
-            this.loadSuggestions(this.unit)
-            this.$bvModal.hide(this.modal_id)
-            // this.sugResponse = this.$store.state.suggestChoice
+            });
+            await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]});
+            this.loadSuggestions(this.unit);
+            this.$bvModal.hide(this.modal_id);
         },
 
         async editRegister() {
-        this.allEdit.splice(0)
-        
-        this.allEdit.push({
-            sugestao: this.observac,
-            nome: this.tab.nome_usuario,
-            chave: this.tab.chave,
-            lista_ugs: this.lists,
-        })
-
-        await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]})
-        this.loadSuggestions(this.unit)
-        this.$bvModal.hide(this.modal_id)
-    }
+            this.allEdit.splice(0);
+            this.allEdit.push({
+                sugestao: this.observac,
+                nome: this.tab.nome_usuario,
+                chave: this.tab.chave,
+                lista_ugs: this.lists,
+            });
+            await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]});
+            this.loadSuggestions(this.unit);
+            this.$bvModal.hide(this.modal_id);
+        }
     },
 
     computed: {
         modal_id() {
-            return this.tab_modal.toString()
+            return this.tab_modal.toString();
         },
 
         sugEdit() {
-            return this.$store.state.getSuggest
+            return this.$store.state.getSuggest;
         },
 
         editSug() {
-            return this.$store.state.getSuggest.sugestoes
+            return this.$store.state.getSuggest.sugestoes;
         },
 
         filterList() {
-            return this.editSug != undefined ? this.editSug.lista_ugs : []
+            return this.editSug != undefined ? this.editSug.lista_ugs : [];
         },
 
         filterNome() {
-            return this.editSug != undefined ? this.editSug.nome : []
+            return this.editSug != undefined ? this.editSug.nome : [];
         },
 
         filterChave() {
-            return this.editSug != undefined ? this.editSug.chave : []
+            return this.editSug != undefined ? this.editSug.chave : [];
         }
-
     },
-
-    created() {
-        
-        // console.log(this.sugEdit)
-        // console.log(this.modal_id)
-    }
 }
-
 </script>
 
 <style lang="scss" scoped>

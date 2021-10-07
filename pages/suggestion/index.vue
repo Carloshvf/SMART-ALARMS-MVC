@@ -20,7 +20,6 @@
                             <option v-for="item in filterUg" :key="item.id">
                                 {{item}}                
                             </option>
-
                         </select>
                     </div>
                     <div class="col-2 card-suggest">
@@ -29,7 +28,6 @@
                             <option v-for="item in filterType" :key="item.id">
                                 {{item}}
                             </option>
-
                         </select>
                     </div>
                     <div class="col-3 card-suggest">
@@ -38,7 +36,6 @@
                             <option v-for="item in filterCause" :key="item.id">
                                 {{item}}
                             </option>
-
                         </select>
                     </div>
                     <div class="col-2 card-suggest">
@@ -80,7 +77,6 @@
                             <option v-for="item in filterRegist1" :key="item.id">
                                 {{item}}                
                             </option>
-                            
                         </select>
                     </div>
                     <div class="col-2">
@@ -89,7 +85,6 @@
                             <option v-for="item in filterRegist2" :key="item.id">
                                 {{item}}                
                             </option>
-                          
                         </select>
                     </div>
                     <div class="col-4 ">
@@ -98,7 +93,6 @@
                             <option v-for="item in filterRegist3" :key="item.id">
                                 {{item}}                
                             </option>
-                          
                         </select>
                     </div>
                     <div>
@@ -107,7 +101,6 @@
                 </div>
             </template>
             <template>
-                
                 <div class="row">
                     <div class="col scroll"> 
                         <table class="table" v-if="selects != ''">
@@ -115,7 +108,6 @@
                             <tr class="">
                             <th scope="col">UG</th>
                             <th scope="col">Causa</th>
-                            
                             </tr>
                             </thead>
                             <tbody>
@@ -123,10 +115,6 @@
                                 <td class="border-line">{{item.ug}}</td>
                                 <td class="border-line">{{item.causa}}</td>
                             </tr>
-                            <!-- <tr v-for="item in editSug.lista_ugs" :key="item.id">
-                                <td>{{item.ug}}</td>
-                                <td>{{item.causa}}</td>
-                            </tr> -->
                             </tbody>
                         </table>    
                     </div>
@@ -195,70 +183,66 @@ export default {
         ...mapActions(['loadSuggestions', 'getRegister', 'registerSuggestions', 'idCheck', 'logOff']),
 
         async onShow() {
-            await this.getRegister(this.unitId || '')
-            this.filteredRegister()
-            // console.log("teste se subiu")
+            await this.getRegister(this.unitId || '');
+            this.filteredRegister();
         },
 
         cancelCadastro() {
-            this.regModal1 = ""
-            this.regModal2 = ""
-            this.regModal3 = ""
-            this.observacao = ""
-            // console.log(this.filterOptions)
-            this.selects.splice(0)
-            this.$bvModal.hide('modal-cadastrar')
+            this.regModal1 = "";
+            this.regModal2 = "";
+            this.regModal3 = "";
+            this.observacao = "";
+            this.selects.splice(0);
+            this.$bvModal.hide('modal-cadastrar');
         },
 
         filteredOptions() {
             for (let index = 0; index < this.sugDetail.length; index++) {
-                this.filterUg.push(this.sugDetail[index].ug)
-                this.filterType.push(this.sugDetail[index].tipo)
-                this.filterCause.push(this.sugDetail[index].causa)
+                this.filterUg.push(this.sugDetail[index].ug);
+                this.filterType.push(this.sugDetail[index].tipo);
+                this.filterCause.push(this.sugDetail[index].causa);
             }
-            this.filterUg = [...new Set(this.filterUg)]
-            this.filterType = [...new Set(this.filterType)]
-            this.filterCause = [...new Set(this.filterCause)]
+            this.filterUg = [...new Set(this.filterUg)];
+            this.filterType = [...new Set(this.filterType)];
+            this.filterCause = [...new Set(this.filterCause)];
         },
 
         filteredRegister() {
             for (let index = 0; index < this.sugRegister.length; index++) {
-                this.filterRegist1.push(this.sugRegister[index].ug)
-                this.filterRegist2.push(this.sugRegister[index].tipo)
-                this.filterRegist3.push(this.sugRegister[index].causa)
+                this.filterRegist1.push(this.sugRegister[index].ug);
+                this.filterRegist2.push(this.sugRegister[index].tipo);
+                this.filterRegist3.push(this.sugRegister[index].causa);
             }
-            this.filterRegist1 = [...new Set(this.filterRegist1)]
-            this.filterRegist2 = [...new Set(this.filterRegist2)]
-            this.filterRegist3 = [...new Set(this.filterRegist3)]
+            this.filterRegist1 = [...new Set(this.filterRegist1)];
+            this.filterRegist2 = [...new Set(this.filterRegist2)];
+            this.filterRegist3 = [...new Set(this.filterRegist3)];
         },
 
         sendOptions() {
-            this.selects.push({ug: this.regModal1, tipo: this.regModal2, causa: this.regModal3})
-            // console.log(this.selects)
+            this.selects.push({ug: this.regModal1, tipo: this.regModal2, causa: this.regModal3});
         },
 
         onHidden() {
-            this.regModal1 = ""
-            this.regModal2 = ""
+            this.regModal1 = "";
+            this.regModal2 = "";
             this.regModal3 = ""
-            this.observacao = ""
-            this.selects.splice(0)
+            this.observacao = "";
+            this.selects.splice(0);
         },
 
         async sendRegister() {
-            this.allRegister.splice(0)
+            this.allRegister.splice(0);
             
             this.allRegister.push({
                 sugestao: this.observacao,
                 nome: this.realUser.nome,
                 chave: this.realUser.chave,
                 lista_ugs: this.selects,
-            })
-            // console.log(this.realUser.chave)
-            await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]})
-            await this.loadSuggestions(this.unitId)
-            this.filteredOptions()
-            this.$bvModal.hide('modal-cadastrar')
+            });
+            await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]});
+            await this.loadSuggestions(this.unitId);
+            this.filteredOptions();
+            this.$bvModal.hide('modal-cadastrar');
         }
     },
 
@@ -268,19 +252,19 @@ export default {
         },
 
         session() {
-            return this.$store.state.checkingSession
+            return this.$store.state.checkingSession;
         },
 
         sugDetail() {
-            return this.$store.state.suggest
+            return this.$store.state.suggest;
         },
 
         sugRegister() {
-            return this.$store.state.suggestRegister.filtro
+            return this.$store.state.suggestRegister.filtro;
         },
 
         realUser() {
-            return this.$store.state.suggestRegister
+            return this.$store.state.suggestRegister;
         },
 
         computed_items: function () {
@@ -292,56 +276,47 @@ export default {
             filterCheck3 = this.checkbox3,
             filterCheck4 = this.checkbox4
         return this.sugDetail.filter(function(item){
-            let filtered = true
+            let filtered = true;
             if(filterUg?.length > 0){
-                filtered = item.ug == filterUg
+                filtered = item.ug == filterUg;
             }
             if(filtered){
                 if(filterType?.length > 0){
-                    filtered = item.tipo == filterType
+                    filtered = item.tipo == filterType;
                 }
                 if(filterCause?.length > 0){
-                    filtered = item.causa == filterCause
+                    filtered = item.causa == filterCause;
                 }
                 if(filterCheck1?.length > 0){
-                    filtered = item.status == filterCheck1
+                    filtered = item.status == filterCheck1;
                 }
                 if(filterCheck2?.length > 0){
-                    filtered = item.status == filterCheck2
+                    filtered = item.status == filterCheck2;
                 }
                 if(filterCheck3?.length > 0){
-                    filtered = item.status == filterCheck3
+                    filtered = item.status == filterCheck3;
                 }
                 if(filterCheck4?.length > 0){
-                    filtered = item.status == filterCheck4
+                    filtered = item.status == filterCheck4;
                 }
             }
-                return filtered
-            })
+                return filtered;
+            });
         }
     },
 
     async created() {
         // Logoff automatico
-        await this.idCheck()
+        await this.idCheck();
         if (this.session.value == false) {
-          // console.log(this.session)
           this.$bvToast.toast(this.session.logoff, {
             title: `Logoff`,
             toaster: 'b-toaster-bottom-right',
             solid: true
-          })
-          // this.logOff({logout: "tes"})
-          // this.$cookies.removeAll();
-          // this.$router.push('/')
+          });
         }
-        //
-
-        await this.loadSuggestions(this.unitId || '')
-        this.filteredOptions()
-        // console.log(this.realUser)
-        // console.log(this.sugRegister)
-
+        await this.loadSuggestions(this.unitId || '');
+        this.filteredOptions();
     }
 }
 </script>   

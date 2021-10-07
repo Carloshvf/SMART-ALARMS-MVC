@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations} from 'vuex'
+import { mapActions, mapMutations} from 'vuex';
 
 export const HOST_API = process.env.baseURL;
 
@@ -162,50 +162,49 @@ export default {
 
   computed: {
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
-    
+
     unitName: {
       get () {
-        return this.$store.state.getEdit.unidade
+        return this.$store.state.getEdit.unidade;
       },
       set (value) {
-        this.$store.commit('setUnitName', value)
+        this.$store.commit('setUnitName', value);
       }
     },
     connectionType: {
       get () {
-        return this.$store.state.getEdit.tipo_conexao
+        return this.$store.state.getEdit.tipo_conexao;
       },
       set (value) {
-        this.$store.commit('setConnectionType', value)
+        this.$store.commit('setConnectionType', value);
       }
     },
     eventUnit: {
       get () {
-        return this.$store.state.getEdit.tipo_evento
+        return this.$store.state.getEdit.tipo_evento;
       },
       set (value) {
-        this.$store.commit('setEventUnit', value)
+        this.$store.commit('setEventUnit', value);
       }
     },
     systemUnit: {
       get () {
-        return this.$store.state.getEdit.sistemas
+        return this.$store.state.getEdit.sistemas;
       },
       set (value) {
-        this.$store.commit('setSystemUnit', value)
+        this.$store.commit('setSystemUnit', value);
       }
     },
     subInfo: {
       get () {
-        return this.$store.state.getEdit.sub_area
+        return this.$store.state.getEdit.sub_area;
       },
       set (value) {
-        this.$store.commit('setSub', value)
+        this.$store.commit('setSub', value);
       }
     },
-
   },
 
   methods: {
@@ -214,19 +213,18 @@ export default {
       cleanTypes: 'setCleanType',
       cleanSystems: 'setCleanSystem',
       cleanSubs: 'setCleanSub',
-      
     }),
 
     cleanType(index) {
-      this.cleanTypes(index)
+      this.cleanTypes(index);
     },
 
     cleanSystem(index) {
-      this.cleanSystems(index)
+      this.cleanSystems(index);
     },
 
     cleanSub(index) {
-      this.cleanSubs(index)
+      this.cleanSubs(index);
     },
 
     pushEvent() {
@@ -234,12 +232,12 @@ export default {
     },
 
     pushSystem() {
-      this.systemUnit.push(this.systems)
+      this.systemUnit.push(this.systems);
     },
 
     pushSub(toaster) {
-      if (this.subUnit != "" && this.subModel != "") {
-        this.subInfo.push({nome: this.subUnit, modelo: this.subModel})
+      if (!this.subUnit && !this.subModel) {
+        this.subInfo.push({nome: this.subUnit, modelo: this.subModel});
       } else {
         this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
           title: `Erro`,
@@ -247,46 +245,36 @@ export default {
           solid: true,
         })
       }
-      
     },
 
     async editUnit(toaster) {
-      this.unitEditing.splice(0)
-
+      this.unitEditing.splice(0);
       this.unitEditing.push({
         unidade: this.unitName,
         tipo_conexao: this.connectionType,
         tipo_evento: this.eventUnit,
         sistemas: this.systemUnit,
         sub_area: this.subInfo,
-      })
-
-      await this.updateUnit({ id:this.id, data:this.unitEditing[0]})
+      });
+      await this.updateUnit({ id:this.id, data:this.unitEditing[0]});
        this.$bvToast.toast('Unidade editada com sucesso', {
           title: `Edição`,
           toaster: toaster,
           solid: true,
-        })
+        });
     }
-
   },
 
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
-        // console.log(this.session)
+      if (!this.session.value) {
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
+        });
       }
-    //
-
     this.gettingEdits(this.id)
   }
 }

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <header-smart></header-smart> -->
     <div class="container-fluid pt-5 mt-5">
       <div class="row adjust">
         <div class="col-4 mb-4" v-for="item in unitDetail" :key="item.id"> 
@@ -9,7 +8,6 @@
             to="alarm"
           >
             <span class="box-alarm-number">{{ item.unidade }}</span>
-            <!-- :event="disabled ? '' : 'click'" -->
           </nuxt-link>
           <!-- /.box-alarm -->
         </div>
@@ -22,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
 
@@ -41,10 +39,10 @@ export default {
 
   computed: {
     alarms() {
-      return this.$store.state.all
+      return this.$store.state.all;
     },
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
      currentRouteName() {
         return this.$route.name;
@@ -53,45 +51,21 @@ export default {
       return this.$cookies.get('unit') || '';
     },
     unitDetail() {
-      return this.$store.state.getUnit.unidades
+      return this.$store.state.getUnit.unidades;
     }
   },
 
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
-        // console.log(this.session)
+      if (this.session.value === false) {
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
-        })
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
+        });
       }
-    //
-    await this.gettingUnits()
-
-    // this.stopInterval = setInterval(() => {
-    //   if (this.currentRouteName != 'activeunit') {
-    //       clearInterval(this.stopInterval)
-    //     }
-    //   if (this.stop == true) {
-    //   this.loadData(this.unitId || '')
-    //     for (let index = 0; index < this.alarms.length; index++) {
-    //       // console.log(this.currentRouteName)
-    //       if (this.alarms[index].active == 1 && this.currentRouteName == 'activealarm') {
-    //           this.stop = false
-    //           break
-    //         }
-    //       }
-    //     }
-    //   }, 3000);
-    
-    // this.loadData(this.unitId || '')
-   
+    await this.gettingUnits();
   },
 }
 </script>
