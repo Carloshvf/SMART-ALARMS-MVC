@@ -2,14 +2,14 @@
   <div class="container">
     <div class="form-row align-items-end mt-4 mb-2">
       <div class="col">
-        <h1 class="mt-5 titles">Cadastro de evento</h1>
+        <h1 class="mt-5 titles">{{ labelEventRegistration }}</h1>
       </div>
     </div>
     <div class="row">
       <div class="col card">
     <div class="form-row ">
       <div class="col-2">
-        <label class="mt-4 sizing">LOCAL</label>
+        <label class="mt-4 sizing">{{ labelLocal }}</label>
         <select class="form-control" v-model="local">
           <option v-for="item in selectFilters.local_banco" :key="item.id">
             {{item}}
@@ -17,15 +17,15 @@
         </select>
       </div>
       <div class="col-5" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
-        <label class="mt-4 sizing">COMPLEMENTO</label>
+        <label class="mt-4 sizing">{{ labelComplement }}</label>
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
       </div>
       <div class="col-3">
-            <label class="mt-4 sizing">ENDEREÇO DE MEDIDA</label>
+            <label class="mt-4 sizing">{{ labelMeasurementAddress }}</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
           </div>
           <div class="col-1">
-            <label class="mt-4 sizing">SUBAREA</label>
+            <label class="mt-4 sizing">{{ labelSubArea }}</label>
             <select class="form-control" v-model="subArea1">
               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
                 {{item}}
@@ -33,14 +33,14 @@
             </select>
           </div>
           <div class="col-1">
-            <label class="mt-4 sizing">UNIDADE</label>
+            <label class="mt-4 sizing">{{ labelUnit }}</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
           </div>
     </div>
 
     <div class="form-row mt-4">
       <div class="col">
-        <label class="mt-4 sizing">TIPO DE DESLIGAMENTO</label>
+        <label class="mt-4 sizing">{{ labelTypeofShutdown }}</label>
         <select class="form-control" v-model="offType">
           <option v-for="item in selectFilters.tipo_desligamento_banco" :key="item.id">
             {{item}}
@@ -48,7 +48,7 @@
         </select>
       </div>
       <div class="col-10">
-        <label class="mt-4 sizing">CAUSA</label>
+        <label class="mt-4 sizing">{{ labelCause }}</label>
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="reason" >
       </div>
     </div>
@@ -56,9 +56,9 @@
     <div class="row mt-5">
       <div class="col-sm">
         <div class="form-row align-items-end">
-          <!-- SUBAREA -->
+          <!-- SUBAREA-LABEL -->
           <div class="col-1">
-            <label class="sizing">SUBAREA</label>
+            <label class="sizing">{{ labelSubArea }}</label>
             <select class="form-control" v-model="subArea2">
               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
                 {{item}}
@@ -67,11 +67,11 @@
           </div>
           <!--  -->
           <div class="col-3">
-            <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
+            <label class="sizing">{{ labelSupervisoryAddress }}</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
           <div class="col-1">
-            <label class="sizing">LOGICO</label>
+            <label class="sizing">{{ labelLogic }}</label>
             <select class="form-control" v-model="operaLogic">
               <option v-for="item in selectFilters.operadores" :key="item.id">
                 {{item}}
@@ -79,14 +79,14 @@
             </select>
           </div>
           <div class="col-1">
-            <label class="sizing">VALOR</label>
+            <label class="sizing">{{ labelValue }}</label>
             <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
             <button class="mr-2 btn btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button>
           </div>
           <div class="col-1">
-            <label class="sizing">OPERADORES</label>
+            <label class="sizing">{{ labelOperator }}</label>
             <select class="form-control" v-model="operators">
               <option>E</option>
               <option>OU</option>
@@ -105,7 +105,7 @@
       <div class="col-sm" >
         <div class="form-row mt-4">
           <div class="col">
-            <label class="mini-title">LISTA DE ALARMES</label>
+            <label class="mini-title">{{ labelListAlarms }}</label>
             <textarea class="form-control push-area" v-model="pushed" disabled></textarea>
             <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
             <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
@@ -124,11 +124,11 @@
 
         <div class="form-row align-items-end mt-3">
           <div class="col-3">
-            <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
+            <label class="sizing">{{ labelSupervisoryAddress }}</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-1">
-            <label class="sizing">VALOR</label>
+            <label class="sizing">{{ labelValue }}</label>
             <select class="form-control" v-model="activation2">
               <option>1</option>
               <option>0</option>
@@ -136,16 +136,16 @@
             </select>
           </div>
           <div class="col-3">
-            <label class="sizing">ENDEREÇO DE MEDIDA</label>
+            <label class="sizing">{{ labelMeasurementAddress }}</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
           </div>
 
           <div class="col-1">
-            <label class="sizing">UNIDADE</label>
+            <label class="sizing">{{ labelUnit }}</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
           </div>
           <div class="col-2">
-            <label class="sizing">SUBAREA</label>
+            <label class="sizing">{{ labelSubArea }}</label>
             <select class="form-control" v-model="subArea3">
               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
                 {{item}}
@@ -159,10 +159,10 @@
               <table class="table">
                 <thead>
                   <tr class="address border-line">
-                    <th scope="col">ENDEREÇO</th>
-                    <th scope="col">VALOR</th>
-                    <th scope="col">ENDEREÇO DE MEDIDA</th>
-                    <th scope="col">UNIDADE</th>
+                    <th scope="col">{{ labelAddress }}</th>
+                    <th scope="col">{{ labelValue }}</th>
+                    <th scope="col">{{ labelMeasurementAddress }}</th>
+                    <th scope="col">{{ labelUnit }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -180,18 +180,18 @@
                     <!-- MODAL EDITAR CANAIS -->
                     <b-modal size="lg" :id="index.toString()" v-if="modalEdit == true">
                       <template v-slot:modal-title>
-                        <h1 class="modal-title">Edição de Canais</h1>
+                        <h1 class="modal-title">{{ labelChannelEditing }}</h1>
                       </template>
                       <template>
                         <div class="row">
                           <div class="col-5">
-                            <label class="labels">ENDEREÇO</label>
+                            <label class="labels">{{ labelAddress }}</label>
                             <input class="form-control" style="text-transform: uppercase;" v-model="editC1">
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-2">
-                            <label class="labels mt-4">VALOR</label>
+                            <label class="labels mt-4">{{ labelValue }}</label>
                             <select class="form-control" v-model="editC2">
                               <option>1</option>
                               <option>0</option>
@@ -199,15 +199,15 @@
                             </select>
                           </div>
                           <div class="col-3">
-                            <label class="labels mt-4">ENDEREÇO DE MEDIDA</label>
+                            <label class="labels mt-4">{{ labelMeasurementAddress }}</label>
                             <input class="form-control" style="text-transform: uppercase;" v-model="editC3">
                           </div>
                           <div class="col-2">
-                            <label class="labels mt-4">UNIDADE</label>
+                            <label class="labels mt-4">{{ labelUnit }}</label>
                             <input class="form-control" v-model="editC4">
                           </div>
                           <div class="col-2">
-                            <label class="labels mt-4">SUBAREA</label>
+                            <label class="labels mt-4">{{ labelSubArea }}</label>
                             <select class="form-control" v-model="editC5">
                               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
                                   {{ item }}
@@ -218,10 +218,10 @@
                       </template>
                       <template v-slot:modal-footer>
                         <b-button class="btn-cancel" @click="cancelEdit(index.toString())">
-                            Cancelar
+                            {{ labelCancel }}
                         </b-button>
                         <b-button class="btn-enviar" @click="editingCanais(index.toString())">
-                            Salvar
+                            {{ labelSave }}
                         </b-button>
                       </template>
                     </b-modal>
@@ -245,26 +245,26 @@
 
           <div class="form-row">
             <div class="col-3">
-              <label class="sizing">TIPO</label>
+              <label class="sizing">{{ labelType }}</label>
               <select class="form-control" v-model="types">
-                <option>medida</option>
-                <option>status</option>
+                <option>{{ types }}</option>
+                <option>{{ labelStatus }}</option>
               </select>
 
             </div>
             <div class="col-5">
-              <label class="sizing">NOME</label>
+              <label class="sizing">{{ labelName }}</label>
               <input type="text" class="form-control" v-model="name">
             </div>
             <div class="col-3">
-              <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
+              <label class="sizing">{{ labelSupervisoryAddress }}</label>
               <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoSuper">
             </div>
           </div>
 
         <div class="form-row align-items-end mt-4">
           <div class="col-1">
-            <label class="sizing">PRIORIDADE</label>
+            <label class="sizing">{{ labelPriorities }}</label>
             <select class="form-control" v-model="priority">
               <option>1</option>
               <option>2</option>
@@ -272,11 +272,11 @@
           </div>
           <div class="col-1">
             <div v-if="types == 'medida'">
-              <label class="sizing">UNIDADE</label>
+              <label class="sizing">{{ labelUnit }}</label>
               <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3">
             </div>
             <div v-else-if="types == 'status'">
-              <label class="sizing">VALOR</label>
+              <label class="sizing">{{ labelValue }}</label>
               <select class="form-control" v-model="activation3">
                 <option>1</option>
                 <option>0</option>
@@ -284,7 +284,7 @@
             </div>
           </div>
           <div class="col-2">
-            <label class="sizing">SUBAREA</label>
+            <label class="sizing">{{ labelSubArea }}</label>
             <select class="form-control" v-model="subArea4">
               <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
                 {{item}}
@@ -299,11 +299,11 @@
             <table class="table">
               <thead>
                 <tr class="address border-line">
-                  <th scope="col">TIPO</th>
-                  <th scope="col">NOME</th>
-                  <th scope="col">ENDEREÇO</th>
-                  <th scope="col">PRIORIDADE</th>
-                  <th scope="col">UNIDADE/VALOR</th>
+                  <th scope="col">{{ labelType }}</th>
+                  <th scope="col">{{ labelName }}</th>
+                  <th scope="col">{{ labelAddress }}</th>
+                  <th scope="col">{{ labelPriorities }}</th>
+                  <th scope="col">{{ labelUnit }}/{{ labelValue }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -328,42 +328,42 @@
                     <template>
                       <div class="row">
                         <div class="col-2">
-                          <label class="labels">TIPO</label>
+                          <label class="labels">{{ labelType }}</label>
                           <select class="form-control" v-model="editS1">
-                            <option>medida</option>
-                            <option>status</option>
+                            <option>{{ types }}</option>
+                            <option>{{ labelStatus }}</option>
                           </select>
                         </div>
                         <div class="col-6">
-                          <label class="labels">NOME</label>
+                          <label class="labels">{{ labelName }}</label>
                           <input class="form-control" v-model="editS2">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-3">
-                          <label class="labels mt-4">ENDEREÇO</label>
+                          <label class="labels mt-4">{{ labelAddress }}</label>
                           <input class="form-control" style="text-transform: uppercase;" v-model="editS3">
                         </div>
                         <div class="col-2">
-                          <label class="labels mt-4">PRIORIDADE</label>
+                          <label class="labels mt-4">{{ labelPriorities }}</label>
                           <select class="form-control" v-model="editS4">
                             <option>1</option>
                             <option>2</option>
                           </select>
                         </div>
                         <div class="col-2" v-if="value.unidade != '' ">
-                          <label class="labels mt-4">UNIDADE</label>
+                          <label class="labels mt-4">{{ labelUnit }}</label>
                           <input class="form-control" v-model="editS5">
                         </div>
                         <div class="col-2" v-else-if="value.valor_operacao != '' ">
-                          <label class="labels mt-4">VALOR</label>
+                          <label class="labels mt-4">{{ labelValue }}</label>
                           <select class="form-control" v-model="editS6">
                             <option>1</option>
                             <option>0</option>
                           </select>
                         </div>
                         <div class="col-3">
-                          <label class="labels mt-4">SUBAREA</label>
+                          <label class="labels mt-4">{{ labelSubArea }}</label>
                           <select class="form-control" v-model="editS7">
                             <option v-for="item in selectFilters.sub_area_banco" :key="item.id">
                               {{item}}
@@ -374,10 +374,10 @@
                     </template>
                     <template v-slot:modal-footer>
                       <b-button class="btn-cancel" @click="cancelEdit(index.toString())">
-                          Cancelar
+                          {{ labelCancel }}
                       </b-button>
                       <b-button class="btn-enviar" @click="editingStatus(index.toString())">
-                          Salvar
+                          {{ labelSave }}
                       </b-button>
                     </template>
                   </b-modal>
@@ -420,25 +420,25 @@
           </ul>
         </div>
       <div class="mt-5">
-        <button class="btn btn-green btn-salvar" @click="validCheck('b-toaster-bottom-right')">Salvar</button>
-        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
+        <button class="btn btn-green btn-salvar" @click="validCheck('b-toaster-bottom-right')">{{ labelSave }}</button>
+        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">{{ labelCancel }}</nuxt-link>
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
     <b-modal id="modal-update" hide-footer>
       <template v-slot:modal-title>
-        Salvando o alarme
+        {{ labelCSavingAlarm }}
       </template>
       <div>
         <p>Escolha como quer salvar o alarme.</p>
       </div>
       <b-button class="modal-buttons bg-dark-red mt-3" @click="saveData('b-toaster-bottom-right')" :disabled="disabling">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
-        Salvar como alarme novo
+        <span class="spinner-border spinner-border-sm" role={{ labelStatus }} aria-hidden="true" v-if="load == true"></span>
+        {{ labelSaveNewAlarm }}
       </b-button>
       <b-button class="modal-buttons btn-edit btn-green mt-3 mr-2" @click="updateCard('b-toaster-bottom-right')" :disabled="disabling">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loadEdit == true"></span>
-        Salvar edição
+        <span class="spinner-border spinner-border-sm" role={{ labelStatus }} aria-hidden="true" v-if="loadEdit == true"></span>
+        {{ labelSaveEdition }}
       </b-button>
     </b-modal>
     <!-- MODAL -->
@@ -505,7 +505,30 @@ export default {
       allData: [],
       editData: [],
       id: this.$route.params.id,
-      modal_update: 'modal-update'
+      modal_update: 'modal-update',
+      labelEventRegistration: 'Cadastro de evento',
+      labelLocal: 'LOCAL',
+      labelComplement: 'COMPLEMENTO',
+      labelMeasurementAddress: 'ENDEREÇO DE MEDIDA',
+      labelSubArea: 'SUBAREA',
+      labelUnit: 'UNIDADE',
+      labelTypeofShutdown: 'TIPO DE DESLIGAMENTO',
+      labelCause: 'CAUSA',
+      labelSupervisoryAddress: 'ENDEREÇO NO SUPERVISÓRIO',
+      labelLogic: 'LOGICO',
+      labelValue: 'VALOR',
+      labelOperator: 'OPERADORES',
+      labelChannelEditing: 'Edição de Canais',
+      labelListAlarms: 'LISTA DE ALARMES',
+      labelCancel: 'Cancelar',
+      labelSave: 'Salvar',
+      labelSaveEdition: 'Salvar edição',
+      labelSaveNewAlarm: 'Salvar como alarme novo',
+      labelCSavingAlarm: 'Salvando o alarme',
+      labelPriorities: 'PRIORIDADE',
+      labelName: 'NOME',
+      labelStatus: 'status',
+      labelType: 'TIPO'
     };
   },
 
@@ -665,8 +688,8 @@ export default {
       get () {
         if (this.$store.state.edit.status_medidas === '') {
           return null;
-        } else if (!this.$store.state.edit.sub_area === 'ELIPSE') {
-          return this.$store.state.edit
+        } else if (this.$store.state.edit.sub_area === 'ELIPSE') {
+          return this.$store.state.edit.sub_area;
         }
         console.log(`Get Sub Area 4: ${this.$store.state.edit.ends_alarme[0]}`)
         return this.$store.state.edit.status_medidas[0].sub_area;
