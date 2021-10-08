@@ -20,7 +20,6 @@
             </select>
         </div>
       </div>
-      
       <div class="row">
           <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
@@ -41,7 +40,6 @@
               <b-button class="btn btn-green btn-add rounded-circle" @click="pushSystem()">+</b-button>
           </div>
       </div>
-
       <div class="row">
         <div class="col-6 scroll" v-if="eventType != []">
           <table class="table mt-4">
@@ -62,7 +60,6 @@
             </tbody>
           </table>
         </div>
-
         <div class="col-6 scroll" v-if="systems != []">
           <table class="table mt-4">
             <thead>
@@ -81,13 +78,11 @@
           </table>
         </div>
       </div>
-      
       <div class="row">
         <div class="col-3">
           <label class="mt-3 mb-0">SUBAREA:</label>
         </div>
       </div>
-      
       <div class="row">
         <div class="col-3">
           <label class="mt-4">NOME</label>
@@ -101,7 +96,6 @@
             <b-button class="btn btn-green btn-add rounded-circle" @click="pushSub('b-toaster-bottom-right')">+</b-button>
         </div>
       </div>
-
       <div class="row">
            <div class="col-6 scroll" >
           <table class="table mt-4">
@@ -123,7 +117,6 @@
           </table>
         </div>
       </div>
-      
       <div class="row">
           <div class="col">
               <b-button class="btn btn-green btn-save" @click="saveUnit('b-toaster-bottom-right')">
@@ -132,7 +125,6 @@
                 </b-button>
               <nuxt-link to="/units" class="btn btn-cancel" >Cancelar</nuxt-link>
           </div>
-          
       </div>
       </div>
     </div>
@@ -141,7 +133,7 @@
 
 <script>
 
-import { mapActions} from 'vuex'
+import { mapActions} from 'vuex';
 
 export const HOST_API = window.processEnv.BASE_URL;
 
@@ -167,36 +159,35 @@ export default {
     ...mapActions(['registerUnit', 'idCheck', 'logOff']),
 
     cleanType(index) {
-      this.eventType.splice(index, 1)
+      this.eventType.splice(index, 1);
     },
 
     cleanSystem(index) {
-      this.systems.splice(index, 1)
+      this.systems.splice(index, 1);
     },
 
     cleanSub(index) {
-      this.sub.splice(index, 1)
+      this.sub.splice(index, 1);
     },
 
     pushEvent() {
-      this.eventType.push({tipo: this.eventUnit, contador: this.contUnit})
+      this.eventType.push({tipo: this.eventUnit, contador: this.contUnit});
     },
 
     pushSystem() {
-      this.systems.push(this.systemUnit)
+      this.systems.push(this.systemUnit);
     },
 
     pushSub(toaster) {
-      if (this.subUnit != "" && this.subModel != "") {
-        this.sub.push({nome: this.subUnit, modelo: this.subModel})
+      if (this.subUnit && this.subModel) {
+        this.sub.push({nome: this.subUnit, modelo: this.subModel});
       } else {
         this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
           title: `Erro`,
           toaster: toaster,
           solid: true,
-        })
+        });
       }
-      
     },
 
     async saveUnit(toaster) {
@@ -228,18 +219,13 @@ export default {
   async created() {
     // Logoff automatico
       await this.idCheck()
-      if (this.session.value == false) {
-        // console.log(this.session)
+      if (!this.session.value) {
         this.$bvToast.toast(this.session.logoff, {
           title: `Logoff`,
           toaster: 'b-toaster-bottom-right',
           solid: true
         })
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
       }
-    //
   }
 }
 </script>

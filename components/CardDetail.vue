@@ -52,7 +52,6 @@ export default {
 
   data() {
     return {
-      // id: this.unity.id,
       countTime: '',
       stop: true,
       stopInterval: true,
@@ -205,12 +204,6 @@ export default {
     }
   }
 }
-
-// created() {
-//   this.countTime = ''
-//   this.loadCount()
-// }
-// }
 </script>
 
 <style lang="scss" scoped>

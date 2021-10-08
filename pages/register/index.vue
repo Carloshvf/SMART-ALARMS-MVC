@@ -540,6 +540,14 @@ export default {
       }, 100);
     },
 
+    createToast(toaster, title, message) {
+      this.$bvToast.toast(message, {
+        title: title,
+        toaster: toaster,
+        solid: true,
+      });
+    },
+
     cancelEdit(index) {
       this.$bvModal.hide(index);
     },
@@ -585,18 +593,10 @@ export default {
     verificaEnderecos(toaster) {
       if (isNaN(this.textMedida.charAt(0)) && isNaN(this.textMedida.charAt(1))||
         isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
-        this.$bvToast.toast('Os endereços precisam possuir dois numeros como os primeiros caracteres.', {
-          title: `Endereços`,
-          toaster: toaster,
-          solid: true
-        });
+        this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois numeros como os primeiros caracteres.');
       }
-        else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
-        this.$bvToast.toast('Por favor, preencha todos os campos.', {
-          title: `Preencher`,
-          toaster: toaster,
-          solid: true,
-        });
+      else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+        this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
       }
 
       else  {
@@ -611,11 +611,7 @@ export default {
           this.separador = this.pushed.join(' ');
           this.logic = this.separador;
         } else {
-          this.$bvToast.toast('Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', {
-            title: `Preencher`,
-            toaster: toaster,
-            solid: true,
-          });
+          this.createToast(toaster, `Preencher`, 'Por favor, digite uma unidade de medida do tipo inteiro no campo de valor');
         }
       }
     },
@@ -686,27 +682,15 @@ export default {
       this.backendCheck = this.$store.state.validating;
 
       if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
-        this.$bvToast.toast('A lógica não esta válida.', {
-          title: `Logica invalida`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Logica invalida`, 'A lógica não esta válida.');
         this.ok = false;
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
-        this.$bvToast.toast('Feche o parenteses da lógica.', {
-          title: `Parenteses`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Parenteses`, 'Feche o parenteses da lógica.');
         this.ok = false;
       }
       else if(this.backendCheck === "expressão correta") {
-        this.$bvToast.toast('A expressão esta correta.', {
-          title: `Validação`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Validação`, 'A expressão esta correta.');
         this.ok = true;
       }
     },
@@ -734,38 +718,22 @@ export default {
       this.backendAlarm = this.$store.state.salvarAlarm;
 
       if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
-        this.$bvToast.toast('Verifique a logica.', {
-          title: `Logica`,
-          toaster: toaster,
-          solid: true,
-        })
+        this.createToast(toaster, `Logica`, 'Verifique a logica.');
         this.disabling = false;
         this.load = false;
       }
       else if(this.backendAlarm === "Preencha a causa") {
-        this.$bvToast.toast('Preencha o campo da causa.', {
-          title: `Causa`,
-          toaster: toaster,
-          solid: true,
-        })
+        this.createToast(toaster, `Causa`, 'Preencha o campo da causa.');
         this.disabling = false;
         this.load = false;
       }
       else if(this.backendAlarm !== 200) {
-        this.$bvToast.toast('Ocorreu um erro', {
-          title: `Erro`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Erro`, 'Ocorreu um erro');
         this.disabling = false;
         this.load = false;
       }
       else {
-        this.$bvToast.toast('Salvo com sucesso.', {
-          title: `Sucesso`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
         this.disabling = false;
         this.load = false;
       }
@@ -776,11 +744,7 @@ export default {
     // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        });
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
     this.loadRegister(this.unitId || '');
   }

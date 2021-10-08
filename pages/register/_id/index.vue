@@ -528,7 +528,8 @@ export default {
       labelPriorities: 'PRIORIDADE',
       labelName: 'NOME',
       labelStatus: 'status',
-      labelType: 'TIPO'
+      labelType: 'TIPO',
+      labelAddress: 'ENDEREÇO'
     };
   },
 
@@ -743,6 +744,14 @@ export default {
       }, 100);
     },
 
+    createToast(toaster, title, message) {
+      this.$bvToast.toast(message, {
+        title: title,
+        toaster: toaster,
+        solid: true,
+      });
+    },
+
     cancelEdit(index) {
       this.$bvModal.hide(index);
     },
@@ -797,11 +806,7 @@ export default {
         this.pushed.push(this.separador);
         this.logicInfo = this.pushed.toString();
       } else {
-        this.$bvToast.toast('Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', {
-          title: `Preencher`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Preencher`, 'Por favor, digite uma unidade de medida do tipo inteiro no campo de valor');
       }
     },
 
@@ -814,13 +819,9 @@ export default {
           solid: true
         });
       }
-        else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
-        this.$bvToast.toast('Por favor, preencha todos os campos.', {
-          title: `Preencher`,
-          toaster: toaster,
-          solid: true,
-        })
-      }
+      else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+        this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
+    }
 
       else  {
         this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
@@ -892,35 +893,19 @@ export default {
       this.backendCheck = this.$store.state.validating;
 
       if (this.pushed[this.pushed.length - 1] === 'E' || this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
-        this.$bvToast.toast('A lógica não está válida.', {
-          title: `Lógica inválida`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Lógica inválida`, 'A lógica não está válida.');
         this.ok = false;
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
-        this.$bvToast.toast('Feche o parênteses da lógica.', {
-          title: `Parenteses`,
-          toaster: toaster,
-          solid: true,
-        })
+        this.createToast(toaster, `Parenteses`, 'Feche o parênteses da lógica.');
         this.ok = false;
       }
       else if(this.backendCheck === "expressão correta") {
-        this.$bvToast.toast('A expressão está correta.', {
-          title: `Validação`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Validação`, 'A expressão está correta.');
         this.ok = true;
       }
       else {
-         this.$bvToast.toast('A expressão está incorreta.', {
-          title: `Validação`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Validação`, 'A expressão está incorreta.');
         this.ok = false;
       }
 
@@ -928,11 +913,7 @@ export default {
 
     validCheck(toaster) {
       if (this.ok === false) {
-        this.$bvToast.toast('Por favor, valide a lógica antes de salvar.', {
-          title: `Validar`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Validar`, 'Por favor, valide a lógica antes de salvar.');
         this.$bvModal.hide(this.modal_update);
       }
       else if (this.ok === true) {
@@ -963,38 +944,22 @@ export default {
       this.backendAlarm = this.$store.state.salvarAlarm;
 
       if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
-        this.$bvToast.toast('Verifique a lógica e/ou o endereço de medida.', {
-          title: `Lógica`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Lógica`, 'Verifique a lógica e/ou o endereço de medida.');
         this.disabling = false;
         this.load = false;
       }
       else if(this.backendAlarm === "Preencha a causa") {
-        this.$bvToast.toast('Preencha o campo da causa.', {
-          title: `Causa`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Causa`, 'Preencha o campo da causa.');
         this.disabling = false;
         this.load = false;
       }
       else if(this.backendAlarm !== 200) {
-        this.$bvToast.toast('Ocorreu um erro', {
-          title: `Erro`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Erro`, 'Ocorreu um erro');
         this.disabling = false;
         this.load = false;
       }
       else {
-        this.$bvToast.toast('Salvo com sucesso.', {
-          title: `Sucesso`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
         this.disabling = false;
         this.load = false;
         this.$bvModal.hide(this.modal_update);
@@ -1024,24 +989,16 @@ export default {
 
 
       if (this.errUpdate !== 200) {
-        this.$bvToast.toast('Ocorreu um erro', {
-          title: `Erro`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Erro`, 'Ocorreu um erro');
         this.disabling = false;
         this.loadEdit = false;
       } else if (this.errUpdate === 200) {
-          this.$bvToast.toast('Editado com sucesso.', {
-            title: `Editar`,
-            toaster: toaster,
-            solid: true,
-          });
-          setTimeout(() => {
-            this.disabling = false;
-            this.loadEdit = false;
-            this.$bvModal.hide(this.modal_update);
-          }, 1000);
+        this.createToast(toaster, `Editar`, 'Editado com sucesso.');
+        setTimeout(() => {
+          this.disabling = false;
+          this.loadEdit = false;
+          this.$bvModal.hide(this.modal_update);
+        }, 1000);
       }
     }
   },
@@ -1050,14 +1007,8 @@ export default {
      // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        });
+        this.createToast('b-toaster-bottom-right', `Logoff`, 'this.session.logoff');
       }
-    //
-
      // TODA VEZ Q TIVER CAMPO NOVO DA LOGICA ELE TEM Q ENTRAR AQUI PRA DAR CERTO NA LOGICA
       for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {
         this.endAtivacao.push({end_alarme: this.$store.state.edit.ends_alarme[index].end_alarme,
