@@ -572,10 +572,14 @@ export default {
       this.$bvModal.hide(index);
     },
 
+    replaceToUpper(msg) {
+      return msg.replace(/\s/g, '').toUpperCase();
+    },
+
     editingCanais(index) {
       this.end.splice(index, 1);
-      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase();
-      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase();
+      this.editC1 = this.replaceToUpper(this.editC1);
+      this.editC3 = this.replaceToUpper(this.editC3);
       this.end.push({
         end_alarme: this.editC1,
         ativacao: this.editC2,
@@ -588,7 +592,7 @@ export default {
 
     editingStatus(index) {
       this.measures.splice(index, 1);
-      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase();
+      this.editS3 = this.replaceToUpper(this.editS3);
       this.measures.push({
         tipo: this.editS1,
         nome: this.editS2,
@@ -614,14 +618,11 @@ export default {
       if (isNaN(this.textMedida.charAt(0)) && isNaN(this.textMedida.charAt(1))||
         isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
         this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois numeros como os primeiros caracteres.');
-      }
-      else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+      } else if(!this.textAlarme || !this.operaLogic || !this.activation1) {
         this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
-      }
-
-      else  {
-        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
-        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
+      } else  {
+        this.textMedida = this.replaceToUpper(this.textMedida);
+        this.textAlarme = this.replaceToUpper(this.textAlarme);
         if (this.operaLogic === '=') {
           this.operaLogic = '==';
         }
@@ -636,7 +637,7 @@ export default {
       }
     },
 
-    sendActivation(toaster) {
+    sendActivation() {
       if (this.$cookies.get('unit') === 1) {
         this.verificaEnderecos();
       }
@@ -647,8 +648,8 @@ export default {
     },
 
     sendEnderecos() {
-      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase();
-      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase();
+      this.infoAlarme = this.replaceToUpper(this.infoAlarme);
+      this.infoMedida = this.replaceToUpper(this.infoMedida);
       this.end.push({
         end_alarme: this.infoAlarme,
         ativacao: this.activation2,
@@ -659,7 +660,7 @@ export default {
     },
 
     sendMeasures() {
-      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase();
+      this.infoSuper = this.replaceToUpper(this.infoSuper);
       this.measures.push({
         tipo: this.types,
         nome: this.name,
@@ -673,7 +674,7 @@ export default {
       this.activation3 = "";
     },
 
-    validation(pushed, value) {
+    validation(value) {
       return this.pushed.filter((v) => (v === value)).length;
     },
 
