@@ -588,7 +588,6 @@ export default {
     },
     textAlarme: {
       get () {
-        this.$store.state.edit.canais[0]
         if (!this.$store.state.edit.ends_alarme[0]) {
           return this.$store.state.edit.canais[0].end_alarme
         }

@@ -2,9 +2,9 @@
   <div class="container">
       <div class="row mt-5">
         <div class="col mt-5">
-            <h1 class="alarm-title">Seleção de Unidades Operacionais</h1>
-            <nuxt-link to="/registerunit" class="btn btn-green mt-4" v-if="unitPermission == true">Cadastrar Unidades</nuxt-link>
-            <nuxt-link to="/registeruser" class="btn btn-grey mt-4 ml-3" v-if="profileReg == true">Cadastrar Usuários</nuxt-link>
+            <h1 class="alarm-title">{{ labelSelectUnits }}</h1>
+            <nuxt-link to="/registerunit" class="btn btn-green mt-4" v-if="unitPermission == true">{{ labelRegisterUnits }}</nuxt-link>
+            <nuxt-link to="/registeruser" class="btn btn-grey mt-4 ml-3" v-if="profileReg == true">{{ labelRegisterUser }}</nuxt-link>
         </div>
       </div>
       <div class="row">
@@ -27,13 +27,13 @@
           <!-- MODAL DELETE -->
           <b-modal :id="item.id.toString()" hide-footer>
             <template v-slot:modal-title>
-              Deletando unidade
+              {{ labelDeleteUnit }}
             </template>
             <div>
-              <p>Tem certeza que deseja deletar a unidade?</p>
+              <p>{{ labelText }}</p>
             </div>
             <b-button class="modal-buttons bg-dark-red mt-3 mr-2" @click="deleteUnit(item.id, 'b-toaster-bottom-right')">
-              Deletar unidade
+              {{ labeDeleteUnit }}
             </b-button>
           </b-modal>
         </div>
@@ -53,24 +53,30 @@ export default {
     return {
       disable: true,
       sede: false,
+      labelSelectUnits: 'Seleção de Unidades Operacionais',
+      labelRegisterUnits: 'Cadastrar Unidades',
+      labelRegisterUser: 'Cadastrar Usuários',
+      labelDeleteUnit: 'Deletando unidade',
+      labelText: 'Tem certeza que deseja deletar a unidade?',
+      labeDeleteUnit: 'Deletar unidade'
     }
   },
 
   computed: {
     unitDetail() {
-      return this.$store.state.getUnit.unidades
+      return this.$store.state.getUnit.unidades;
     },
 
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
 
     unitPermission() {
-      return this.$store.state.getUnit.cadastro
+      return this.$store.state.getUnit.cadastro;
     },
 
     profileReg() {
-      return this.$store.state.getUnit.cadastrar_perfis
+      return this.$store.state.getUnit.cadastrar_perfis;
     }
   },
 
@@ -130,7 +136,7 @@ export default {
 
     if (this.unitDetail[0].edicao) {
       this.sede = true;
-    } else if(!this.unitDetail[0].edicao || !this.unitDetail[0].edicao){
+    } else if(!this.unitDetail[0].edicao){
       this.sede = false;
     }
   }

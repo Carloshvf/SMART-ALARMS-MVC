@@ -9,7 +9,7 @@
       <div class="col card">
     <div class="form-row ">
       <div class="col-2">
-        <label class="mt-4 sizing">LOCAL</label>
+        <label class="mt-4 sizing">{{ labeLocal }}</label>
         <select class="form-control" v-model="local">
           <option v-for="item in selectFilters.local" :key="item.id">
             {{item}}
@@ -17,15 +17,15 @@
         </select>
       </div>
       <div class="col-5" v-if="local == 'CAV1' || local == 'CAV2' || local == 'CAV3'">
-        <label class="mt-4 sizing">COMPLEMENTO</label>
+        <label class="mt-4 sizing">{{ labeComplement }}</label>
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="complement" >
       </div>
       <div class="col-3">
-        <label class="mt-4 sizing">ENDEREÇO DE MEDIDA</label>
+        <label class="mt-4 sizing">{{ labeMeasurementAddress }}</label>
         <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textMedida">
       </div>
       <div class="col-1">
-        <label class="mt-4 sizing">SUBAREA</label>
+        <label class="mt-4 sizing">{{ labelSubarea }}</label>
         <select class="form-control" v-model="subSelect1">
           <option v-for="item in selectFilters.sub_area" :key="item.id">
             {{item}}
@@ -33,7 +33,7 @@
         </select>
       </div>
       <div class="col-1">
-        <label class="mt-4 sizing">UNIDADE</label>
+        <label class="mt-4 sizing">{{ labelUnit }}</label>
         <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit1" >
       </div>
     </div>
@@ -48,7 +48,7 @@
         </select>
       </div>
       <div class="col-10">
-        <label class="mt-4 sizing">CAUSA</label>
+        <label class="mt-4 sizing">{{ labelCause }}</label>
         <input type="text" class="form-control" placeholder="Escreva aqui..." v-model="reason" >
       </div>
     </div>
@@ -56,22 +56,22 @@
     <div class="row mt-5">
       <div class="col-sm">
         <div class="form-row align-items-end">
-          <!-- SUBAREA -->
+          <!-- Subarea -->
           <div class="col-1">
-            <label class="sizing">SUBAREA</label>
+            <label class="sizing">{{ labelSubarea }}</label>
             <select class="form-control" v-model="subSelect2">
               <option v-for="item in selectFilters.sub_area" :key="item.id">
                 {{item}}
               </option>
             </select>
           </div>
-          <!-- ENDEREÇO NO SUPERVISÓRIO -->
+          <!-- Endereço do supervisório -->
           <div class="col-3">
             <label class="sizing">ENDEREÇO NO SUPERVISÓRIO</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="textAlarme">
           </div>
           <div class="col-1">
-            <label class="sizing">LOGICO</label>
+            <label class="sizing">{{ labelLogic }}</label>
             <select class="form-control" v-model="operaLogic">
               <option v-for="item in selectFilters.operadores" :key="item.id">
                 {{item}}
@@ -79,14 +79,14 @@
             </select>
           </div>
           <div class="col-1">
-            <label class="sizing">VALOR</label>
+            <label class="sizing">{{ labelValue }}</label>
             <input maxlength="20" minlength="1" type="float" class="form-control" v-model="activation1">
           </div>
           <div>
             <button class="btn mr-2 btn-green rounded-circle" @click="sendActivation('b-toaster-bottom-right')">+</button>
           </div>
           <div class="col-1">
-            <label class="sizing">OPERADORES</label>
+            <label class="sizing">{{ labelOperators }}</label>
             <select class="form-control" v-model="operators">
               <option>E</option>
               <option>OU</option>
@@ -107,8 +107,8 @@
           <div class="col">
             <label class="mini-title">LISTA DE ALARMES</label>
             <textarea class="form-control push-area" v-model="separador" disabled></textarea>
-            <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">Validar</button>
-            <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">Limpar</button>
+            <button class="btn btn-green btn-validar mt-4" @click="validate('b-toaster-bottom-right')">{{ labelValidate }}</button>
+            <button class="btn btn-clean mt-4 ml-3" @click="cleanArea()">{{ labelClear }}</button>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
       <div class="col-sm">
         <div class="form-row mt-5">
           <div class="col-3">
-            <h4 class="titles">Canais</h4>
+            <h4 class="titles">{{ labelChannels }}</h4>
           </div>
         </div>
 
@@ -128,7 +128,7 @@
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoAlarme">
           </div>
           <div class="col-1">
-            <label class="sizing">VALOR</label>
+            <label class="sizing">{{ labelValue }}</label>
             <select class="form-control" v-model="activation2">
               <option>1</option>
               <option>0</option>
@@ -136,16 +136,16 @@
             </select>
           </div>
           <div class="col-3">
-            <label class="sizing">ENDEREÇO DE MEDIDA</label>
+            <label class="sizing">{{ labeMeasurementAddress }}</label>
             <input maxlength="50" minlength="3" type="text" style="text-transform: uppercase;" class="form-control" v-model="infoMedida" >
           </div>
 
           <div class="col-1">
-            <label class="sizing">UNIDADE</label>
+            <label class="sizing">{{ labelUnit }}</label>
             <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit2">
           </div>
           <div class="col-2">
-            <label class="sizing">SUBAREA</label>
+            <label class="sizing">{{ labelSubarea }}</label>
             <select class="form-control" v-model="subSelect3">
               <option v-for="item in selectFilters.sub_area" :key="item.id">
                 {{item}}
@@ -160,10 +160,10 @@
               <table class="table">
                 <thead>
                   <tr class="address border-line">
-                    <th scope="col">ENDEREÇO</th>
-                    <th scope="col">VALOR</th>
-                    <th scope="col">ENDEREÇO DE MEDIDA</th>
-                    <th scope="col">UNIDADE</th>
+                    <th scope="col">{{ labelAdress }}</th>
+                    <th scope="col">{{ labelValue }}</th>
+                    <th scope="col">{{ labeMeasurementAddress }}</th>
+                    <th scope="col">{{ labelUnit }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -186,13 +186,13 @@
                       <template>
                         <div class="row">
                           <div class="col-5">
-                            <label class="labels">ENDEREÇO</label>
+                            <label class="labels">{{ labelAdress }}</label>
                             <input class="form-control" style="text-transform: uppercase;" v-model="editC1">
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-2">
-                            <label class="labels mt-4">VALOR</label>
+                            <label class="labels mt-4">{{ labelValue }}</label>
                             <select class="form-control" v-model="editC2">
                               <option>1</option>
                               <option>0</option>
@@ -200,15 +200,15 @@
                             </select>
                           </div>
                           <div class="col-3">
-                            <label class="labels mt-4">ENDEREÇO DE MEDIDA</label>
+                            <label class="labels mt-4">{{ labeMeasurementAddress }}</label>
                             <input class="form-control" style="text-transform: uppercase;" v-model="editC3">
                           </div>
                           <div class="col-2">
-                            <label class="labels mt-4">UNIDADE</label>
+                            <label class="labels mt-4">{{ labelUnit }}</label>
                             <input class="form-control" v-model="editC4">
                           </div>
                           <div class="col-2">
-                            <label class="labels mt-4">SUBAREA</label>
+                            <label class="labels mt-4">{{ labelSubarea }}</label>
                             <select class="form-control" v-model="editC5">
                               <option v-for="item in selectFilters.sub_area" :key="item.id">
                                   {{ item }}
@@ -219,7 +219,7 @@
                       </template>
                       <template v-slot:modal-footer>
                         <b-button class="btn-cancel" @click="cancelEdit(index.toString())">
-                            Cancelar
+                            {{ labelCancel }}
                         </b-button>
                         <b-button class="btn-enviar" @click="editingCanais(index.toString())">
                             Salvar
@@ -245,14 +245,14 @@
 
         <div class="form-row">
           <div class="col-3">
-            <label class="sizing">TIPO</label>
+            <label class="sizing">{{ labelType }}</label>
             <select class="form-control" v-model="types">
-              <option>medida</option>
-              <option>status</option>
+              <option>{{ labelMeasure }}</option>
+              <option>{{ labelStatus }}</option>
             </select>
           </div>
           <div class="col-5">
-            <label class="sizing">NOME</label>
+            <label class="sizing">{{ labelName }}</label>
             <input type="text" class="form-control" v-model="name">
           </div>
           <div class="col-3">
@@ -263,7 +263,7 @@
 
         <div class="form-row align-items-end mt-4">
           <div class="col-1">
-            <label class="sizing">PRIORIDADE</label>
+            <label class="sizing">{{ labelPriority }}</label>
             <select class="form-control" v-model="priority">
               <option>1</option>
               <option>2</option>
@@ -271,11 +271,11 @@
           </div>
           <div class="col-1">
             <div v-if="types == 'medida'">
-              <label class="sizing">UNIDADE</label>
+              <label class="sizing">{{ labelUnit }}</label>
               <input maxlength="15" minlength="1" type="text" class="form-control" v-model="unit3">
             </div>
             <div v-else-if="types == 'status'">
-              <label class="sizing">VALOR</label>
+              <label class="sizing">{{ labelValue }}</label>
               <select class="form-control" v-model="activation3">
                 <option>1</option>
                 <option>0</option>
@@ -283,7 +283,7 @@
             </div>
           </div>
           <div class="col-2">
-            <label class="sizing">SUBAREA</label>
+            <label class="sizing">{{ labelSubarea }}</label>
             <select class="form-control" v-model="subSelect4">
               <option v-for="item in selectFilters.sub_area" :key="item.id">
                 {{item}}
@@ -298,11 +298,11 @@
             <table class="table">
               <thead>
                 <tr class="address border-line">
-                  <th scope="col">TIPO</th>
-                  <th scope="col">NOME</th>
-                  <th scope="col">ENDEREÇO</th>
-                  <th scope="col">PRIORIDADE</th>
-                  <th scope="col">UNIDADE/VALOR</th>
+                  <th scope="col">{{ labelType }}</th>
+                  <th scope="col">{{ labelName }}</th>
+                  <th scope="col">{{ labelAdress }}</th>
+                  <th scope="col">{{ labelPriority }}</th>
+                  <th scope="col">{{ labelUnit }}/{{ labelValue }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -327,42 +327,42 @@
                       <template>
                         <div class="row">
                           <div class="col-2">
-                            <label class="labels">TIPO</label>
+                            <label class="labels">{{ labelType }}</label>
                             <select class="form-control" v-model="editS1">
-                              <option>medida</option>
-                              <option>status</option>
+                              <option>{{ labelMeasure }}</option>
+                              <option>{{ labelStatus }}</option>
                             </select>
                           </div>
                           <div class="col-6">
-                            <label class="labels">NOME</label>
+                            <label class="labels">{{ labelName }}</label>
                             <input class="form-control" v-model="editS2">
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-3">
-                            <label class="labels mt-4">ENDEREÇO</label>
+                            <label class="labels mt-4">{{ labelAdress }}</label>
                             <input class="form-control" style="text-transform: uppercase;" v-model="editS3">
                           </div>
                           <div class="col-2">
-                            <label class="labels mt-4">PRIORIDADE</label>
+                            <label class="labels mt-4">{{ labelPriority }}</label>
                             <select class="form-control" v-model="editS4">
                               <option>1</option>
                               <option>2</option>
                             </select>
                           </div>
                           <div class="col-2" v-if="value.unidade != '' ">
-                            <label class="labels mt-4">UNIDADE</label>
+                            <label class="labels mt-4">{{ labelUnit }}</label>
                             <input class="form-control" v-model="editS5">
                           </div>
                           <div class="col-2" v-else-if="value.valor_operacao != '' ">
-                            <label class="labels mt-4">VALOR</label>
+                            <label class="labels mt-4">{{ labelValue }}</label>
                             <select class="form-control" v-model="editS6">
                               <option>1</option>
                               <option>0</option>
                             </select>
                           </div>
                           <div class="col-3">
-                            <label class="labels mt-4">SUBAREA</label>
+                            <label class="labels mt-4">{{ labelSubarea }}</label>
                             <select class="form-control" v-model="editS7">
                               <option v-for="item in selectFilters.sub_area" :key="item.id">
                                 {{item}}
@@ -373,7 +373,7 @@
                       </template>
                       <template v-slot:modal-footer>
                         <b-button class="btn-cancel" @click="cancelEdit(index.toString())">
-                            Cancelar
+                            {{ labelCancel }}
                         </b-button>
                         <b-button class="btn-enviar" @click="editingStatus(index.toString())">
                             Salvar
@@ -395,7 +395,7 @@
     <div class="col-sm-6">
       <div class="form-row mt-5">
         <div class="col-5">
-          <h4 class="titles">Recomendações</h4>
+          <h4 class="titles">{{ labelRecommendations }}</h4>
         </div>
       </div>
       <div class="form-row mt-3 justify">
@@ -424,7 +424,7 @@
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="load == true"></span>
           Salvar
         </button>
-        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">Cancelar</nuxt-link>
+        <nuxt-link to="/registered" class="btn btn-cadastrados mr-3">{{ labelCancel }}</nuxt-link>
       </div>
     </div>
     <!-- RECOMENDAÇÕES -->
@@ -445,6 +445,7 @@ export default {
 
   data() {
     return {
+      labelMeasure: 'medida',
       types: 'medida',
       backendCheck: "",
       backendAlarm: "",
@@ -497,7 +498,26 @@ export default {
       measures: [],
       allData: [],
       editData: [],
-    };
+      labeLocal: 'LOCAL',
+      labeComplement: 'COMPLEMENTO',
+      labeMeasurementAddress: 'ENDEREÇO DE MEDIDA',
+      labelSubarea: 'SUBAREA',
+      labelUnit: 'UNIDADE',
+      labelCause: 'CAUSA',
+      labelLogic: 'LOGICO',
+      labelValue: 'VALOR',
+      labelOperators: 'OPERADORES',
+      labelValidate: 'Validar',
+      labelClear: 'Limpar',
+      labelAdress: 'ENDEREÇO',
+      LabelChannels: 'Canais',
+      labelType: 'TIPO',
+      labelStatus: 'status',
+      labelName: 'NOME',
+      labelPriority: 'PRIORIDADE',
+      labelRecommendations: 'Recomendações',
+      labelCancel: 'Cancelar'
+    }
   },
 
   computed: {
