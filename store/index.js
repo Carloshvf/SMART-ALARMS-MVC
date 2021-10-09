@@ -337,7 +337,7 @@ export const actions = {
   },
 
   // PUT DE EDITAR SUGESTÃO
-  async editSuggestions(dados) {
+  async editSuggestions(context, dados) {
     await this.$axios.put(
       HOST_API + sugestCadastro + 
       dados.unit + '/' + dados.id, dados.info, {

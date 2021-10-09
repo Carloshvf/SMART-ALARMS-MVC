@@ -16,4 +16,4 @@ if(HOST === 'localhost:3000') {
 } else {
     window.processEnv.BASE_URL = 'https://smartalarms-backend.petrobras.com.br';
 }
-console.log(window.location);
+

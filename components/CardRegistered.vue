@@ -15,7 +15,7 @@
 
 <script>
 import Delete from 'vue-material-design-icons/Delete.vue';
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
     props: ['alarm', 'unit', 'ind'],

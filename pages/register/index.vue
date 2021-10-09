@@ -437,8 +437,11 @@
 <script>
 import { mapActions } from 'vuex';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
+import global_mixin from '@/mixins/mixins.js';
 
 export default {
+  mixins: [global_mixin],
+
   components: {
     DeleteOutline,
   },
@@ -560,20 +563,8 @@ export default {
       }, 100);
     },
 
-    createToast(toaster, title, message) {
-      this.$bvToast.toast(message, {
-        title: title,
-        toaster: toaster,
-        solid: true,
-      });
-    },
-
     cancelEdit(index) {
       this.$bvModal.hide(index);
-    },
-
-    replaceToUpper(msg) {
-      return msg.replace(/\s/g, '').toUpperCase();
     },
 
     editingCanais(index) {
@@ -701,14 +692,13 @@ export default {
     async validate(toaster) {
       await this.sendLogic({valid: this.logic});
       this.backendCheck = this.$store.state.validating;
+      this.ok = false;
 
       if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
         this.createToast(toaster, `Logica invalida`, 'A lógica não esta válida.');
-        this.ok = false;
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
         this.createToast(toaster, `Parenteses`, 'Feche o parenteses da lógica.');
-        this.ok = false;
       }
       else if(this.backendCheck === "expressão correta") {
         this.createToast(toaster, `Validação`, 'A expressão esta correta.');
@@ -737,26 +727,20 @@ export default {
 
       await this.sendAlarms({unit: this.unitId, info: this.allData[0]});
       this.backendAlarm = this.$store.state.salvarAlarm;
+      this.disabling = false;
+      this.load = false;
 
       if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
         this.createToast(toaster, `Logica`, 'Verifique a logica.');
-        this.disabling = false;
-        this.load = false;
       }
       else if(this.backendAlarm === "Preencha a causa") {
         this.createToast(toaster, `Causa`, 'Preencha o campo da causa.');
-        this.disabling = false;
-        this.load = false;
       }
       else if(this.backendAlarm !== 200) {
         this.createToast(toaster, `Erro`, 'Ocorreu um erro');
-        this.disabling = false;
-        this.load = false;
       }
       else {
         this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
-        this.disabling = false;
-        this.load = false;
       }
     },
   },

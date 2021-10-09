@@ -33,7 +33,6 @@
             <div class="scroll-causa">
               <p>{{ item.infos[0].causa }}</p>
             </div>
-            
             <div class="align options mb-5">
               <button class="btn mt-3 mr-5" @click="deletion(item.id,'b-toaster-bottom-right')" v-if="permButtons == true">
                 Excluir
@@ -52,14 +51,16 @@
 </template>
 
 <script>
-import CardRegistered from '~/components/CardRegistered.vue'
-import Delete from 'vue-material-design-icons/Delete.vue'
+import CardRegistered from '~/components/CardRegistered.vue';
+import Delete from 'vue-material-design-icons/Delete.vue';
 import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex';
+import global_mixin from '@/mixins/mixins.js';
 
 export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
+  mixins: [global_mixin],
   components: {
     CardRegistered,
     Delete,
@@ -80,19 +81,19 @@ export default {
 
   computed: {
     alarms() {
-      return this.$store.state.cardAlarm
+      return this.$store.state.cardAlarm;
     },
 
     session() {
-      return this.$store.state.checkingSession
+      return this.$store.state.checkingSession;
     },
 
     cardInfo() {
-      return this.$store.state.cardAlarm.todos
+      return this.$store.state.cardAlarm.todos;
     },
 
     permButtons() {
-      return this.$store.state.cardAlarm.editar_eventos
+      return this.$store.state.cardAlarm.editar_eventos;
     },
     
     unitId() {
@@ -107,11 +108,11 @@ export default {
         filterType = this.type
       
         return this.cardInfo.filter(function(item){
-          let filtered = true
+          let filtered = true;
           
           if(filtered){
             if(filterUg?.length > 0){
-                filtered = item.infos[0].local == filterUg
+              filtered = item.infos[0].local == filterUg
             }
             if(filterType?.length > 0){
               filtered = item.infos[0].tipo == filterType
@@ -136,14 +137,9 @@ export default {
         }}
       )
       .then(() => {
-        this.loadRegistered({unit: this.unitId})
-      })
-      this.$bvToast.toast('Deletado com sucesso.', {
-          title: `Deletar`,
-          toaster: toaster,
-          solid: true,
-        })
-      
+        this.loadRegistered({unit: this.unitId});
+      });
+      this.createToast(toaster, `Deletar`, 'Deletado com sucesso.');
     }
 
   },
@@ -152,18 +148,8 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (this.session.value == false) {
-        // console.log(this.session)
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        })
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
-    //
-
     this.loadRegistered({unit: this.unitId || ''})
   }
 }

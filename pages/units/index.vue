@@ -43,11 +43,13 @@
 </template>
 
 <script>
-import { mapActions} from 'vuex'
+import { mapActions} from 'vuex';
+import global_mixin from '@/mixins/mixins.js';
 
 export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
+  mixins: [global_mixin],
 
   data() {
     return {
@@ -99,11 +101,7 @@ export default {
       .then(() => {
         this.gettingUnits();
       });
-      this.$bvToast.toast('Unidade deletada com sucesso', {
-        title: `Delete`,
-        toaster: toaster,
-        solid: true
-      });
+      this.createToast(toaster, `Delete`, 'Unidade deletada com sucesso');
       setTimeout(() => {
         this.$bvModal.hide(id)
       }, 1000);
@@ -120,11 +118,7 @@ export default {
     // Logoff automatico
     await this.idCheck();
     if (!this.session.value) {
-      this.$bvToast.toast(this.session.logoff, {
-        title: `Logoff`,
-        toaster: 'b-toaster-bottom-right',
-        solid: true
-      });
+      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       this.logOff({logout: "tes"});
       this.$cookies.removeAll();
       this.$router.push('/');

@@ -26,8 +26,10 @@
 
 <script>
 import { mapActions } from 'vuex';
+import global_mixin from '@/mixins/mixins.js';
 
 export default {
+  mixins: [global_mixin],
   layout: "login",
   data() {
       return {
@@ -64,11 +66,7 @@ export default {
         this.$router.push('/units');
       }
       else {
-        this.$bvToast.toast(this.validation, {
-          title: `Erro`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        });
+        this.createToast('b-toaster-bottom-right', `Erro`, this.validation);
       }
     }
   },

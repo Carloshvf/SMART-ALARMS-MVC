@@ -452,8 +452,11 @@
 <script>
 import { mapActions, mapMutations } from 'vuex';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
+import global_mixin from '@/mixins/mixins.js';
 
 export default {
+  mixins: [global_mixin],
+
   components: {
     DeleteOutline
   },
@@ -653,7 +656,6 @@ export default {
     },
     subArea1: {
       get () {
-        console.log(`Get subArea1: ${this.$store.state.edit}`)
         return this.$store.state.edit.sub_area;
       },
       set (value) {
@@ -663,10 +665,8 @@ export default {
     subArea2: {
       get () {
         if (!this.$store.state.edit.ends_alarme[0]) {
-          console.log(`Get subArea2: ${this.$store.state.edit.sub_area}`)
           return this.$store.state.edit.sub_area;
         }
-        console.log(`Get subArea2: ${this.$store.state.edit.ends_alarme[0].sub_area}`)
         return this.$store.state.edit.ends_alarme[0].sub_area;
       },
       set (value) {
@@ -691,7 +691,6 @@ export default {
         } else if (this.$store.state.edit.sub_area === 'ELIPSE') {
           return this.$store.state.edit.sub_area;
         }
-        console.log(`Get Sub Area 4: ${this.$store.state.edit.ends_alarme[0]}`)
         return this.$store.state.edit.status_medidas[0].sub_area;
       },
       set (value) {
@@ -741,14 +740,6 @@ export default {
       setTimeout(() => {
         this.$bvModal.show(index);
       }, 100);
-    },
-
-    createToast(toaster, title, message) {
-      this.$bvToast.toast(message, {
-        title: title,
-        toaster: toaster,
-        solid: true,
-      });
     },
 
     cancelEdit(index) {
@@ -812,11 +803,7 @@ export default {
     verificaEnderecos(toaster) {
       if (isNaN(this.textMedida.charAt(0)) && isNaN(this.textMedida.charAt(1)) ||
         isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
-        this.$bvToast.toast('Os endereços precisam possuir dois números como os primeiros caracteres.', {
-          title: `Endereços`,
-          toaster: toaster,
-          solid: true
-        });
+        this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois números como os primeiros caracteres.');
       }
       else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
         this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
@@ -999,7 +986,7 @@ export default {
           this.$bvModal.hide(this.modal_update);
         }, 1000);
       }
-    }
+    },
   },
 
    async created() {

@@ -27,7 +27,6 @@
               </div>
             </div>
             <hr />
-
         <!-- /.col-12 -->
           <div class="row">
             <div class="col-sm-5">
@@ -56,8 +55,10 @@ import CardDetail from '~/components/CardDetail.vue';
 import Status from '~/components/Status.vue';
 import Recommendation from '~/components/Recommendation.vue';
 import { mapActions } from 'vuex';
+import global_mixin from '@/mixins/mixins.js';
 
 export default {
+  mixins: [global_mixin],
   components: {
     Counter,
     TopDetail,
@@ -68,7 +69,6 @@ export default {
 
   data() {
     return {
-      // lists: this.$store.state.all
       arrSize: [],
       arrVa: [],
       arrAleat: [],
@@ -104,7 +104,6 @@ export default {
       result = arrays.filter(i => i.id === id);
       result = result[0].kks;
       let result2 = result.slice();
-      // console.log(result2)
       result = result2.sort((a, b) => a.countTimeDiff - b.countTimeDiff);
       result = result.filter(
         (item, index, array) => item.countTimeDiff === array[0].countTimeDiff
@@ -136,7 +135,6 @@ export default {
                 }
             }
             if(!this.tripped) {
-              //this.$forceUpdate();
               this.tripped=true;
               this.$store.state.all = this.lists;
             }
@@ -162,16 +160,12 @@ export default {
           }
         }
       }
-      // console.log('result.date:');
-      // console.log(result.date);
       return result;
     },
   },
 
   computed: {
     lists() {
-      //const state = [{"id": "UG 11", "active": 0, "kks": [{"value": "11teste20logica", "valor_medida": "", "date": "12/29/2020 18:40:00", "name": "UG 11", "type": "PLS", "complemento": "", "contador": "08:00", "cause": "teste obrigatoriedade medida", "status_one": [], "status_two": [], "recom": [], "channels": []}]},  {"id": "UG 21", "active": 1, "kks": [{"value": "11teste20logica2", "valor_medida": "", "date": "12/29/2020 19:11:00", "name": "UG 21", "type": "PLS", "complemento": "", "contador": "08:00", "cause": "teste obrigatoriedade medida 2", "status_one": [], "status_two": [], "recom": [], "channels": []}]}, {"id": "UG 21", "active": 1, "kks": [{"value": "11teste20logica3", "valor_medida": "", "date": "12/29/2020 19:11:01", "name": "UG 21", "type": "PLS", "complemento": "", "contador": "05:00", "cause": "teste obrigatoriedade medida 2", "status_one": [], "status_two": [], "recom": [], "channels": []}]}, {"id": "UG 31", "active": 0, "kks": []}, {"id": "UG 12", "active": 0, "kks": []}, {"id": "UG 22", "active": 0, "kks": []}, {"id": "UG 32", "active": 0, "kks": []}, {"id": "UG 18", "active": 0, "kks": []}, {"id": "UG 28", "active": 0, "kks": []}, {"id": "UG 38", "active": 0, "kks": []}, {"id": "CAV1", "active": 0, "kks": []}, {"id": "CAV2", "active": 0, "kks": []}, {"id": "CAV3", "active": 0, "kks": []}]
-
       return this.$store.state.all;
     },
 
@@ -192,15 +186,7 @@ export default {
       // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        // console.log(this.session)
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        })
-        // this.logOff({logout: "tes"})
-        // this.$cookies.removeAll();
-        // this.$router.push('/')
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
       this.stopInterval = setInterval(() => {
         if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'alarm') {
@@ -225,17 +211,11 @@ export default {
             if (this.arrSize.length === this.lists.length && this.currentRouteName === 'alarm') {
               this.$router.push('/activealarm');
             }
-
             if (this.currentRouteName !== 'alarm') {
               this.stop = false;
             }
           } else {
-              this.$bvToast.toast(this.lists, {
-                title: `Erro`,
-                toaster: 'b-toaster-bottom-right',
-                solid: true
-              })
-              // clearInterval(this.stopInterval)
+              this.createToast('b-toaster-bottom-right', `Erro`, this.lists);
           }
         }  else {
           clearInterval(this.stopInterval);

@@ -134,10 +134,12 @@
 <script>
 
 import { mapActions} from 'vuex';
+import global_mixin from '@/mixins/mixins.js';
 
 export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
+  mixins: [global_mixin],
 
   data() {
     return {
@@ -182,11 +184,7 @@ export default {
       if (this.subUnit && this.subModel) {
         this.sub.push({nome: this.subUnit, modelo: this.subModel});
       } else {
-        this.$bvToast.toast('Preencha o campo de nome e o de modelo.', {
-          title: `Erro`,
-          toaster: toaster,
-          solid: true,
-        });
+        this.createToast(toaster, `Erro`, 'Preencha o campo de nome e o de modelo.');
       }
     },
 
@@ -200,12 +198,8 @@ export default {
         sistemas: this.systems,
         sub_area: this.sub
       })
-      await this.registerUnit(this.unitData[0])
-      this.$bvToast.toast('Unidade cadastrada com sucesso', {
-          title: `Cadastro`,
-          toaster: toaster,
-          solid: true,
-        })
+      await this.registerUnit(this.unitData[0]);
+      this.createToast(toaster, `Cadastro`, 'Unidade cadastrada com sucesso');
     }
 
   },
@@ -220,11 +214,7 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (!this.session.value) {
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        })
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
   }
 }

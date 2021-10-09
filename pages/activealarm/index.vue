@@ -24,16 +24,18 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from 'vuex'
+import global_mixin from '@/mixins/mixins.js'
 
 export default {
+  mixins: [global_mixin],
 
   data() {
     return {
       disabled: true,
       stop: true,
       stopInterval: '',
-      toasterStr: 'b-toaster-bottom-right'
+      toasterStr: 'b-toaster-bottom-right',
     }
   },
 
@@ -58,51 +60,43 @@ export default {
 
   async created() {
     // Logoff automatico
-      await this.idCheck();
-      if (this.session.value === false) {
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: toasterStr,
-          solid: true
-        });
-      }
+    await this.idCheck();
+    if (this.session.value === false) {
+      this.createToast(toasterStr, `Logoff`, this.session.logoff);
+    }
 
     this.stopInterval = setInterval(() => {
-      if (this.$cookies.get('unit') === '' || undefined || this.currentRouteName !== 'activealarm') {
-          clearInterval(this.stopInterval);
-        }
+      if (
+        this.$cookies.get('unit') === '' ||
+        undefined ||
+        this.currentRouteName !== 'activealarm'
+      ) {
+        clearInterval(this.stopInterval);
+      }
       if (this.stop !== true) {
         return
       }
       this.loadData(this.unitId || '');
 
       try {
-        const alarmActive = this.alarms.some(alarm => {
-          return Boolean(alarm.active === 1 && this.currentRouteName === 'activealarm');
-        });
-        if(alarmActive) {
+        const alarmActive = this.alarms.some((alarm) => {
+          return Boolean(
+            alarm.active === 1 && this.currentRouteName === 'activealarm'
+          );
+        })
+        if (alarmActive) {
           this.$router.push('/alarm');
           this.stop = false;
         }
+      } catch (e) {
+        this.createToast(toasterStr, `Erro`, this.alarms);
       }
-      catch (e) {
-        this.$bvToast.toast(this.alarms, {
-          title: `Erro`,
-          toaster: toasterStr,
-          solid: true,
-          message: e
-        });
-      }
-    }, 3000);
+    }, 3000)
 
-    this.loadData(this.unitId || '');
-      if (this.alarms === 'unidade não encontrada no banco') {
-        this.$bvToast.toast(this.alarms, {
-          title: `Logoff`,
-          toaster: toasterStr,
-          solid: true
-        });
-      }
+    this.loadData(this.unitId || '')
+    if (this.alarms === 'unidade não encontrada no banco') {
+      this.createToast(toasterStr, `Logoff`, this.alarms);
+    }
   },
 }
 </script>
@@ -129,10 +123,9 @@ export default {
     font-weight: 700;
     color: white;
   }
-
 }
 
 .alarmActive {
-  background-color: #ED1313 !important;
+  background-color: #ed1313 !important;
 }
 </style>

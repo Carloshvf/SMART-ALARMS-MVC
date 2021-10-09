@@ -57,10 +57,12 @@
 import TopDetail from '~/components/TopDetail.vue';
 import Status from '~/components/Status.vue';
 import Counter from '~/components/Counter.vue';
+import global_mixin from '@/mixins/mixins.js';
 
 import { mapActions } from 'vuex';
 
 export default {
+  mixins: [global_mixin],
   props: ['alarm', 'unity'],
 
   components: {
@@ -177,11 +179,7 @@ export default {
     // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        });
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
 
     this.stopInterval = setInterval(() => {

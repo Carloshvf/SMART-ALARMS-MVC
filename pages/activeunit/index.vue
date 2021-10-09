@@ -21,8 +21,10 @@
 
 <script>
 import { mapActions } from 'vuex';
+import global_mixin from '@/mixins/mixins.js';
 
 export default {
+  mixins: [global_mixin],
 
   data() {
     return {
@@ -58,11 +60,7 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (this.session.value === false) {
-        this.$bvToast.toast(this.session.logoff, {
-          title: `Logoff`,
-          toaster: 'b-toaster-bottom-right',
-          solid: true
-        });
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
     await this.gettingUnits();
   },
