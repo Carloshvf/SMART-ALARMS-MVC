@@ -13,5 +13,12 @@ export default {
                 solid: true,
             });
         },
+        /**
+         * 
+         * @param {Mensagem} msg 
+         */
+        replaceToUpper(msg) {
+            return msg.replace(/\s/g, '').toUpperCase()
+        },
     }
 }

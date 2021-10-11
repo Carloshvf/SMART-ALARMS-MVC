@@ -56,7 +56,7 @@
                             </span>
                             <span class="refused">{{tab.status}}</span>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </template>
             <template>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="row mt-3 border-edit"></div>
-               
+
                 <div class="row mt-3">
                     <span class="col-8 consulta-suggest">{{ labelObservation }}</span>
                     <div class="col-4" style="text-align: right;">
@@ -99,7 +99,7 @@
                     <div class="col-2" style="text-align: center;">
                         <b-button
                         class="btn-enviar"
-                        @click="sendChoice(tipo1, accept, answer1)" 
+                        @click="sendChoice(tipo1, accept, answer1)"
                         v-if="tab.gestao_unidade[0].status == 'Em análise' && tab.gestao_unidade[0].botao == true"
                     >
                         <img src="../static/img/aceitar.svg" alt="accept"/>
@@ -217,7 +217,7 @@
                         <label class="labels">{{ labelSelectUG }}</label>
                         <select class="form-control" v-model="editModal1">
                             <option v-for="item in filterUg" :key="item.id">
-                                {{item}}                
+                                {{item}}
                             </option>
                         </select>
                     </div>
@@ -225,7 +225,7 @@
                         <label class="labels">{{ labelSelectType }}</label>
                         <select class="form-control" v-model="editModal2">
                             <option v-for="item in filterType" :key="item.id">
-                                {{item}}                
+                                {{item}}
                             </option>
                         </select>
                     </div>
@@ -233,7 +233,7 @@
                         <label class="labels">{{ labelCauseUP }}</label>
                         <select class="form-control" v-model="editModal3">
                             <option v-for="item in filterCause" :key="item.id">
-                                {{item}}                
+                                {{item}}
                             </option>
                         </select>
                     </div>

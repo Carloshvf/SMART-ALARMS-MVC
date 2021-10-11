@@ -165,7 +165,7 @@ export default {
 .editing {
   position: absolute;
   left: 320px;
-  bottom: 85.35%; 
+  bottom: 85.35%;
 }
 
 .add {

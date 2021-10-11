@@ -452,7 +452,7 @@
 <script>
 import { mapActions, mapMutations } from 'vuex';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
-import global_mixin from '@/mixins/mixins.js';
+import global_mixin from '../../../mixins/mixins.js';
 
 export default {
   mixins: [global_mixin],
@@ -748,8 +748,8 @@ export default {
 
     editingCanais(index) {
       this.canal.splice(index, 1);
-      this.editC1 = this.editC1.replace(/\s/g, '').toUpperCase();
-      this.editC3 = this.editC3.replace(/\s/g, '').toUpperCase();
+      this.editC1 = this.replaceToUpper(this.editC1);
+      this.editC3 = this.replaceToUpper(this.editC3);
       this.canal.push({
         end_alarme: this.editC1,
         ativacao: this.editC2,
@@ -762,7 +762,7 @@ export default {
 
     editingStatus(index) {
       this.status.splice(index, 1);
-      this.editS3 = this.editS3.replace(/\s/g, '').toUpperCase();
+      this.editS3 = this.replaceToUpper(this.editS3);
       this.status.push({
         tipo: this.editS1,
         nome: this.editS2,
@@ -779,9 +779,11 @@ export default {
 
     sendOperator() {
       this.pushed.push(this.operators);
-      this.separador = this.pushed.join(' ');
-      this.separador = this.separador.replace(/\s-\s/g, "-");
+      this.separador = this.pushed.join(" ");
+      // Adicionar a função replaceToUpper remove os espaços!
+      console.log("This separador replaced", this.separador);
       // Esse splice ta sumindo com o espaço necessario no final da logica
+      // O splice limpa o array
       this.pushed.splice(0);
       this.pushed.push(this.separador);
       this.logicInfo = this.pushed.toString();
@@ -810,8 +812,8 @@ export default {
     }
 
       else  {
-        this.textMedida = this.textMedida.replace(/\s/g, '').toUpperCase();
-        this.textAlarme = this.textAlarme.replace(/\s/g, '').toUpperCase();
+        this.textMedida = this.replaceToUpper(this.textMedida);
+        this.textAlarme = this.replaceToUpper(this.textAlarme);
         if (this.operaLogic === '=') {
           this.operaLogic = '==';
         }
@@ -830,13 +832,13 @@ export default {
     },
 
     sendEnderecos() {
-      this.infoAlarme = this.infoAlarme.replace(/\s/g, '').toUpperCase();
-      this.infoMedida = this.infoMedida.replace(/\s/g, '').toUpperCase();
+      this.infoAlarme = this.replaceToUpper(this.infoAlarme);
+      this.infoMedida = this.replaceToUpper(this.infoMedida);
       this.canaisAdd({ end_alarme: this.infoAlarme, ativacao: this.activation2 ,end_medida: this.infoMedida, unidade: this.unit2, sub_area: this.subArea3 });
     },
 
     sendMeasures() {
-      this.infoSuper = this.infoSuper.replace(/\s/g, '').toUpperCase();
+      this.infoSuper = this.replaceToUpper(this.infoSuper);
       this.statusAdd({
         tipo: this.types,
         nome: this.name,

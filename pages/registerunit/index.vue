@@ -46,7 +46,7 @@
             <thead>
             <tr>
                 <th scope="col">TIPOS DE EVENTO</th>
-                <th scope="col">CONTADOR</th> 
+                <th scope="col">CONTADOR</th>
             </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@
           <table class="table mt-4">
             <thead>
             <tr>
-                <th scope="col">SISTEMAS</th>  
+                <th scope="col">SISTEMAS</th>
             </tr>
             </thead>
             <tbody>
@@ -102,7 +102,7 @@
             <thead>
             <tr>
                 <th scope="col">NOME</th>
-                <th scope="col">MODELO</th> 
+                <th scope="col">MODELO</th>
             </tr>
             </thead>
             <tbody>
@@ -237,12 +237,12 @@ export default {
   right: 30px;
   top: 70px;
   float: right;
-  border-radius: 22px;  
+  border-radius: 22px;
 
   &:hover{
     color: $white;
     background-color: $dark-purple;
-  } 
+  }
 }
 
 .cross-img {
@@ -261,8 +261,7 @@ export default {
 
     span {
         position: relative;
-        left: 5px;       
-        
+        left: 5px;
     }
 }
 

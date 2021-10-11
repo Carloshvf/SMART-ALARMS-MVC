@@ -135,7 +135,6 @@ export default {
   &:hover{
     background-color: #008542;
   }
-  
 }
 
 .aligning {
