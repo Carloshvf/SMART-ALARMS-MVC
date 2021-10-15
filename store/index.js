@@ -529,7 +529,7 @@ export const actions = {
       this.salvarAlarm = response.data.erro
     })
     .catch(error => {
-      console.log(error.response);
+      // console.log(error.response);
       this.salvarAlarm = error.response.status;
     });
     context.commit('setAlarm', this.salvarAlarm);

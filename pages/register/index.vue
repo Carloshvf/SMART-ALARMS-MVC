@@ -469,7 +469,7 @@ export default {
       textMedida: "",
       textAlarme:"",
       activation1: "",
-      activation2: "1",
+      activation2: 1,
       activation3: "",
       unit1: "",
       unit2: "",
@@ -492,7 +492,7 @@ export default {
       editS7: "",
       modalEdit: null,
       name: "",
-      priority: "1",
+      priority: 1,
       endAtivacao: [],
       separador: [],
       pushed: [],
@@ -513,7 +513,7 @@ export default {
       labelValidate: 'Validar',
       labelClear: 'Limpar',
       labelAdress: 'ENDEREÇO',
-      LabelChannels: 'Canais',
+      labelChannels: 'Canais',
       labelType: 'TIPO',
       labelStatus: 'status',
       labelName: 'NOME',
@@ -736,9 +736,9 @@ export default {
       else if(this.backendAlarm === "Preencha a causa") {
         this.createToast(toaster, `Causa`, 'Preencha o campo da causa.');
       }
-      else if(this.backendAlarm !== 200) {
-        this.createToast(toaster, `Erro`, 'Ocorreu um erro');
-      }
+      // else if(this.backendAlarm !== 200) {
+      //   this.createToast(toaster, `Erro`, 'Ocorreu um erro');
+      // }
       else {
         this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
       }

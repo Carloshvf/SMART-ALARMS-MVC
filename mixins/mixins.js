@@ -2,8 +2,8 @@ export default {
     methods: {
         /**
          * 
-         * @param {*Toaster} toaster 
-         * @param {*Titulo} title 
+         * @param {*Toaster} toaster
+         * @param {*Titulo} title
          * @param {*Mensagem} message 
          */
         createToast(toaster, title, message) {
@@ -15,7 +15,7 @@ export default {
         },
         /**
          * 
-         * @param {Mensagem} msg 
+         * @param {Mensagem} msg
          */
         replaceToUpper(msg) {
             return msg.replace(/\s/g, '').toUpperCase()

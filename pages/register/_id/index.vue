@@ -570,7 +570,7 @@ export default {
         isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
         this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois números como os primeiros caracteres.');
       }
-      else if(this.textAlarme === "" || this.operaLogic === "" || this.activation1 === "") {
+      else if(!this.textAlarme || !this.operaLogic || !this.activation1) {
         this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
     }
 
@@ -704,11 +704,11 @@ export default {
         this.disabling = false;
         this.load = false;
       }
-      else if(this.backendAlarm !== 200) {
-        this.createToast(toaster, `Erro`, 'Ocorreu um erro');
-        this.disabling = false;
-        this.load = false;
-      }
+      // else if(this.backendAlarm !== 200) {
+      //   this.createToast(toaster, `Erro`, 'Ocorreu um erro');
+      //   this.disabling = false;
+      //   this.load = false;
+      // }
       else {
         this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
         this.disabling = false;
@@ -743,7 +743,7 @@ export default {
         this.createToast(toaster, `Erro`, 'Ocorreu um erro');
         this.disabling = false;
         this.loadEdit = false;
-      } else if (this.errUpdate === 200) {
+      } else {
         this.createToast(toaster, `Editar`, 'Editado com sucesso.');
         setTimeout(() => {
           this.disabling = false;
