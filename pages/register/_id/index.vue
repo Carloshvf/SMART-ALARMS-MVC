@@ -738,7 +738,6 @@ export default {
 
       this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]});
 
-
       if (this.errUpdate !== 200) {
         this.createToast(toaster, `Erro`, 'Ocorreu um erro');
         this.disabling = false;
