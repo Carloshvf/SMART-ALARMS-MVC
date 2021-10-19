@@ -7,7 +7,7 @@ window.processEnv = ProcessEnv;
 
 var HOST = window.location.host;
 
-if(HOST === 'localhost:3000') {
+if(HOST === 'localhost:3000' || HOST === 'localhost:3100') {
     window.processEnv.BASE_URL = AWS_URL;
 } else if(HOST === 'smartalarms-dev.transformacaodigitalspassu.com.br:3100') {
     window.processEnv.BASE_URL = AWS_URL;
