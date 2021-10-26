@@ -218,7 +218,7 @@ export const actions = {
   async loadData(context, dados) {
     await this.$axios.get(
       //CONCATENANDO O HOST COM A RODA
-      HOST_API + '/alarmes-ativos/' + dados,  {
+      HOST_API + '/alarmes-ativos/' + dados.unit + '/' + dados.cont,  {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }}

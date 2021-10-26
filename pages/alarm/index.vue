@@ -188,6 +188,7 @@ export default {
       if (this.session.value === false) {
         this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
+
       this.stopInterval = setInterval(() => {
         if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'alarm') {
           clearInterval(this.stopInterval);
@@ -220,7 +221,7 @@ export default {
         }  else {
           clearInterval(this.stopInterval);
         }
-      }, 3000);
+      }, 5000);
   },
 }
 </script>

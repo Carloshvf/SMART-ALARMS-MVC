@@ -210,7 +210,7 @@ export default {
             message: e
             });
         }
-      }, 3000);
+      }, 5000);
   },
 }
 </script>

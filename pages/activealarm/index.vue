@@ -36,6 +36,7 @@ export default {
       stop: true,
       stopInterval: '',
       toasterStr: 'b-toaster-bottom-right',
+      contador: 0,
     }
   },
 
@@ -65,7 +66,7 @@ export default {
       this.createToast(toasterStr, `Logoff`, this.session.logoff);
     }
 
-    this.stopInterval = setInterval(() => {
+    this.stopInterval = setInterval(async () => {
       if (
         this.$cookies.get('unit') === '' ||
         undefined ||
@@ -76,7 +77,10 @@ export default {
       if (this.stop !== true) {
         return
       }
-      this.loadData(this.unitId || '');
+
+      this.contador = this.contador + 1;
+      // console.log(this.contador);
+      await this.loadData({unit: this.unitId, cont: this.contador});
 
       try {
         const alarmActive = this.alarms.some((alarm) => {
@@ -85,15 +89,17 @@ export default {
           );
         })
         if (alarmActive) {
+          this.contador = 0;
           this.$router.push('/alarm');
           this.stop = false;
         }
       } catch (e) {
         this.createToast(toasterStr, `Erro`, this.alarms);
       }
-    }, 3000)
+    }, 5000)
 
-    this.loadData(this.unitId || '')
+    this.contador = this.contador + 1
+    await this.loadData({unit: this.unitId, cont: this.contador})
     if (this.alarms === 'unidade não encontrada no banco') {
       this.createToast(toasterStr, `Logoff`, this.alarms);
     }
