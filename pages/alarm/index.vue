@@ -74,6 +74,7 @@ export default {
       arrAleat: [],
       countTime: '',
       stop: true,
+      contador: 0,
       stopInterval: "",
       receive: "",
       componentKey: 0,
@@ -189,12 +190,14 @@ export default {
         this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
 
-      this.stopInterval = setInterval(() => {
+      this.stopInterval = setInterval(async () => {
         if (this.$cookies.get('unit') === '' || this.$cookies.get('unit') === undefined || this.currentRouteName !== 'alarm') {
           clearInterval(this.stopInterval);
         }
         if (this.stop === true) {
-          this.loadData(this.$cookies.get('unit') || '');
+          this.contador = this.contador + 1;
+          console.log(this.contador);
+          await this.loadData({unit: this.unitId, cont: this.contador});
           this.arrSize.splice(0);
 
           if (this.lists instanceof Array) {
@@ -210,15 +213,18 @@ export default {
               }
             }
             if (this.arrSize.length === this.lists.length && this.currentRouteName === 'alarm') {
+              this.contador = 0;
               this.$router.push('/activealarm');
             }
             if (this.currentRouteName !== 'alarm') {
+              this.contador = 0;
               this.stop = false;
             }
           } else {
               this.createToast('b-toaster-bottom-right', `Erro`, this.lists);
           }
         }  else {
+          this.contador = 0;
           clearInterval(this.stopInterval);
         }
       }, 5000);

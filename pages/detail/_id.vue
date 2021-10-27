@@ -76,6 +76,7 @@ export default {
       arrSize: [],
       arrVa: [],
       arrAleat: [],
+      contador: 0,
       incEnde: "",
       stop: true,
       stopInterval: "",
@@ -182,7 +183,7 @@ export default {
         this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
       }
 
-    this.stopInterval = setInterval(() => {
+    this.stopInterval = setInterval(async () => {
         if (!this.$cookies.get('unit') || this.currentRouteName !== 'detail-id') {
             clearInterval(this.stopInterval);
         }
@@ -190,7 +191,9 @@ export default {
             clearInterval(this.stopInterval);
             return;
         }
-        this.loadData(this.unitId || '');
+        this.contador = this.contador + 1;
+        // console.log(this.contador);
+        await this.loadData({unit: this.unitId, cont: this.contador});
         this.arrSize.splice(0);
 
         try {
@@ -198,8 +201,10 @@ export default {
                 handleAlarm(alarm);
             });
             if (this.currentRouteName !== 'detail-id') {
+                this.contador = 0;
                 this.stop = false ;
             }else if(this.arrSize.length === this.lists.length) {
+                this.contador = 0;
                 this.$router.push('/activealarm');
             }
         }catch (e) {
