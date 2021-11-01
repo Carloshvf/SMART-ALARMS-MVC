@@ -196,7 +196,7 @@ export default {
         }
         if (this.stop === true) {
           this.contador = this.contador + 1;
-          console.log(this.contador);
+          // console.log(this.contador);
           await this.loadData({unit: this.unitId, cont: this.contador});
           this.arrSize.splice(0);
 
