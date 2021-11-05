@@ -167,12 +167,11 @@
 
 <script>
 import { mapActions } from 'vuex';
-import VueTypeahead from 'vue-typeahead';
+import global_mixin from '@/mixins/mixins.js';
 export const HOST_API = window.processEnv.BASE_URL;
 
 export default {
   mixins: [global_mixin],
-  extends: VueTypeahead,
 
   data() {
     return {
