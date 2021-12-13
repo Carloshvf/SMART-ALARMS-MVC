@@ -311,7 +311,7 @@
                   <td class="border-line">{{ value.tipo }}</td>
                   <td class="border-line">{{ value.nome }}</td>
                   <td class="border-line">{{ value.end_supervisorio }}</td>
-                  <td class="border-line">{{ value.prioridade }}</td>
+                  <td class="border-line">{{ parseInt(value.prioridade) }}</td>
                   <td class="border-line" v-if="value.unidade != '' ">{{ value.unidade }}</td>
                   <td class="border-line" v-else-if="value.valor_operacao != '' ">{{ value.valor_operacao }}</td>
                   <td class="border-line">
@@ -487,7 +487,7 @@ export default {
         this.editS1 = this.status[index].tipo;
         this.editS2 = this.status[index].nome;
         this.editS3 = this.status[index].end_supervisorio;
-        this.editS4 = this.status[index].prioridade;
+        this.editS4 = parseInt(this.status[index].prioridade);
         this.editS5 = this.status[index].unidade;
         this.editS6 = this.status[index].valor_operacao;
         this.editS7 = this.status[index].sub_area;
@@ -529,7 +529,7 @@ export default {
         tipo: this.editS1,
         nome: this.editS2,
         end_supervisorio: this.editS3,
-        prioridade:this.editS4,
+        prioridade:parseInt(this.editS4),
         unidade: this.editS5,
         valor_operacao: this.editS6,
         sub_area: this.editS7
@@ -561,17 +561,17 @@ export default {
         this.pushed.push(this.separador);
         this.logicInfo = this.pushed.toString();
       } else {
-        this.createToast(toaster, `Preencher`, 'Por favor, digite uma unidade de medida do tipo inteiro no campo de valor');
+        this.createToast(toaster, `Preencher`, 'Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', 'warning');
       }
     },
 
     verificaEnderecos(toaster) {
       if (isNaN(this.textMedida.charAt(0)) && isNaN(this.textMedida.charAt(1)) ||
         isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
-        this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois números como os primeiros caracteres.');
+        this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois números como os primeiros caracteres.', 'warning');
       }
       else if(!this.textAlarme || !this.operaLogic || !this.activation1) {
-        this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
+        this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.', 'warning');
     }
 
       else  {
@@ -606,7 +606,7 @@ export default {
         tipo: this.types,
         nome: this.name,
         end_supervisorio: this.infoSuper,
-        prioridade: this.priority,
+        prioridade: parseInt(this.priority),
         unidade: this.unit3,
         valor_operacao: this.activation3,
         sub_area: this.subArea4
@@ -644,19 +644,19 @@ export default {
       this.backendCheck = this.$store.state.validating;
 
       if (this.pushed[this.pushed.length - 1] === 'E' || this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
-        this.createToast(toaster, `Lógica inválida`, 'A lógica não está válida.');
+        this.createToast(toaster, `Lógica inválida`, 'A lógica não está válida.', 'warning');
         this.ok = false;
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
-        this.createToast(toaster, `Parenteses`, 'Feche o parênteses da lógica.');
+        this.createToast(toaster, `Parenteses`, 'Feche o parênteses da lógica.', 'warning');
         this.ok = false;
       }
       else if(this.backendCheck === "expressão correta") {
-        this.createToast(toaster, `Validação`, 'A expressão está correta.');
+        this.createToast(toaster, `Validação`, 'A expressão está correta.', 'success');
         this.ok = true;
       }
       else {
-        this.createToast(toaster, `Validação`, 'A expressão está incorreta.');
+        this.createToast(toaster, `Validação`, 'A expressão está incorreta.', 'warning');
         this.ok = false;
       }
 
@@ -664,7 +664,7 @@ export default {
 
     validCheck(toaster) {
       if (this.ok === false) {
-        this.createToast(toaster, `Validar`, 'Por favor, valide a lógica antes de salvar.');
+        this.createToast(toaster, `Validar`, 'Por favor, valide a lógica antes de salvar.', 'warning');
         this.$bvModal.hide(this.modal_update);
       }
       else if (this.ok === true) {
@@ -672,7 +672,7 @@ export default {
       }
     },
 
-   async saveData(toaster) {
+   saveData(toaster) {
       this.allData.splice(0);
       this.load = true;
       this.disabling = true;
@@ -691,30 +691,14 @@ export default {
         sub_area: this.subArea1,
       });
 
-      await this.sendAlarms({unit: this.unitId, info: this.allData[0]});
-      this.backendAlarm = this.$store.state.salvarAlarm;
-
-      if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
-        this.createToast(toaster, `Lógica`, 'Verifique a lógica e/ou o endereço de medida.');
-        this.disabling = false;
-        this.load = false;
-      }
-      else if(this.backendAlarm === "Preencha a causa") {
-        this.createToast(toaster, `Causa`, 'Preencha o campo da causa.');
-        this.disabling = false;
-        this.load = false;
-      }
-      // else if(this.backendAlarm !== 200) {
-      //   this.createToast(toaster, `Erro`, 'Ocorreu um erro');
-      //   this.disabling = false;
-      //   this.load = false;
-      // }
-      else {
-        this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
-        this.disabling = false;
-        this.load = false;
+      this.sendAlarms({unit: this.unitId, info: this.allData[0]});
+    
+      this.disabling = false;
+      this.load = false;
+      console.log(this.modal_update);
+      setTimeout(() => {
         this.$bvModal.hide(this.modal_update);
-      }
+      }, 1000);
     },
 
     updateCard(toaster, id) {
@@ -738,18 +722,12 @@ export default {
 
       this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]});
 
-      if (this.errUpdate !== 200) {
-        this.createToast(toaster, `Erro`, 'Ocorreu um erro');
-        this.disabling = false;
-        this.loadEdit = false;
-      } else {
-        this.createToast(toaster, `Editar`, 'Editado com sucesso.');
-        setTimeout(() => {
-          this.disabling = false;
-          this.loadEdit = false;
-          this.$bvModal.hide(this.modal_update);
-        }, 1000);
-      }
+      this.disabling = false;
+      this.loadEdit = false;
+      console.log(this.modal_update);
+      setTimeout(() => {
+        this.$bvModal.hide(this.modal_update);
+      }, 1000);
     },
   },
 
@@ -757,7 +735,7 @@ export default {
      // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        this.createToast('b-toaster-bottom-right', `Logoff`, 'this.session.logoff');
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       }
      // TODA VEZ Q TIVER CAMPO NOVO DA LOGICA ELE TEM Q ENTRAR AQUI PRA DAR CERTO NA LOGICA
       for (let index = 0; index < this.$store.state.edit.ends_alarme.length; index++) {

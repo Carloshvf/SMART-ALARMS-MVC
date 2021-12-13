@@ -139,7 +139,7 @@ export default {
       .then(() => {
         this.loadRegistered({unit: this.unitId});
       });
-      this.createToast(toaster, `Deletar`, 'Deletado com sucesso.');
+      this.createToast(toaster, `Deletar`, 'Deletado com sucesso.', 'success');
     }
 
   },
@@ -148,7 +148,7 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (this.session.value == false) {
-        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       }
     this.loadRegistered({unit: this.unitId || ''})
   }

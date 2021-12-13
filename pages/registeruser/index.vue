@@ -218,7 +218,7 @@ export default {
       if (
         this.errPost == 'Unidade sede só é válida para perfil de administrador'
       ) {
-        this.createToast(toaster, `Erro`, this.errPost);
+        this.createToast(toaster, `Erro`, this.errPost, 'danger');
       }
     },
 
@@ -232,7 +232,7 @@ export default {
         .then(() => {
           this.gettingProfile();
         })
-      this.createToast(toaster, `Delete`, 'Perfil Deletado com sucesso');
+      this.createToast(toaster, `Delete`, 'Perfil Deletado com sucesso', 'success');
     },
 
     async editing(id, toaster) {
@@ -251,9 +251,9 @@ export default {
       if (
         this.errEdit == 'Unidade sede só é válida para perfil de administrador'
       ) {
-        this.createToast(toaster, `Erro`, this.errEdit);
+        this.createToast(toaster, `Erro`, this.errEdit, 'danger');
       } else {
-        this.createToast(toaster, `Edição`, 'Perfil Editado com sucesso');
+        this.createToast(toaster, `Edição`, 'Perfil Editado com sucesso', 'success');
         this.$bvModal.hide(id);
       }
     },
@@ -357,7 +357,7 @@ export default {
     // Logoff automatico
     await this.idCheck()
     if (this.session.value == false) {
-      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
     }
     this.gettingProfile()
   },

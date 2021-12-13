@@ -552,7 +552,7 @@ export default {
         this.editS1 = this.measures[index].tipo;
         this.editS2 = this.measures[index].nome;
         this.editS3 = this.measures[index].end_supervisorio;
-        this.editS4 = this.measures[index].prioridade;
+        this.editS4 = parseInt(this.measures[index].prioridade);
         this.editS5 = this.measures[index].unidade;
         this.editS6 = this.measures[index].valor_operacao;
         this.editS7 = this.measures[index].sub_area;
@@ -588,7 +588,7 @@ export default {
         tipo: this.editS1,
         nome: this.editS2,
         end_supervisorio: this.editS3,
-        prioridade:this.editS4,
+        prioridade: parseInt(this.editS4),
         unidade: this.editS5,
         valor_operacao: this.editS6,
         sub_area: this.editS7
@@ -608,9 +608,9 @@ export default {
     verificaEnderecos(toaster) {
       if (isNaN(this.textMedida.charAt(0)) && isNaN(this.textMedida.charAt(1))||
         isNaN(this.textAlarme.charAt(0)) && isNaN(this.textAlarme.charAt(1))) {
-        this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois numeros como os primeiros caracteres.');
+        this.createToast(toaster, `Endereços`, 'Os endereços precisam possuir dois numeros como os primeiros caracteres.', 'warning');
       } else if(!this.textAlarme || !this.operaLogic || !this.activation1) {
-        this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.');
+        this.createToast(toaster, `Preencher`, 'Por favor, preencha todos os campos.', 'warning');
       } else  {
         this.textMedida = this.replaceToUpper(this.textMedida);
         this.textAlarme = this.replaceToUpper(this.textAlarme);
@@ -623,7 +623,7 @@ export default {
           this.separador = this.pushed.join(' ');
           this.logic = this.separador;
         } else {
-          this.createToast(toaster, `Preencher`, 'Por favor, digite uma unidade de medida do tipo inteiro no campo de valor');
+          this.createToast(toaster, `Preencher`, 'Por favor, digite uma unidade de medida do tipo inteiro no campo de valor', 'warning');
         }
       }
     },
@@ -656,7 +656,7 @@ export default {
         tipo: this.types,
         nome: this.name,
         end_supervisorio: this.infoSuper,
-        prioridade:this.priority,
+        prioridade: parseInt(this.priority),
         unidade: this.unit3,
         valor_operacao: this.activation3,
         sub_area: this.subSelect4
@@ -695,13 +695,13 @@ export default {
       this.ok = false;
 
       if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
-        this.createToast(toaster, `Logica invalida`, 'A lógica não esta válida.');
+        this.createToast(toaster, `Logica invalida`, 'A lógica não esta válida.', 'warning');
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
-        this.createToast(toaster, `Parenteses`, 'Feche o parenteses da lógica.');
+        this.createToast(toaster, `Parenteses`, 'Feche o parenteses da lógica.', 'warning');
       }
       else if(this.backendCheck === "expressão correta") {
-        this.createToast(toaster, `Validação`, 'A expressão esta correta.');
+        this.createToast(toaster, `Validação`, 'A expressão esta correta.', 'warning');
         this.ok = true;
       }
     },
@@ -731,16 +731,16 @@ export default {
       this.load = false;
 
       if (this.backendAlarm === 'Preencha os endereços de alarme/medida') {
-        this.createToast(toaster, `Logica`, 'Verifique a logica.');
+        this.createToast(toaster, `Logica`, 'Verifique a logica.', 'warning');
       }
       else if(this.backendAlarm === "Preencha a causa") {
-        this.createToast(toaster, `Causa`, 'Preencha o campo da causa.');
+        this.createToast(toaster, `Causa`, 'Preencha o campo da causa.', 'warning');
       }
       // else if(this.backendAlarm !== 200) {
       //   this.createToast(toaster, `Erro`, 'Ocorreu um erro');
       // }
       else {
-        this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.');
+        this.createToast(toaster, `Sucesso`, 'Salvo com sucesso.', 'success');
       }
     },
   },
@@ -749,7 +749,7 @@ export default {
     // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       }
     this.loadRegister(this.unitId || '');
   }

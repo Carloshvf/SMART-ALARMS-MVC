@@ -2,6 +2,7 @@
 export const HOST_API = window.processEnv.BASE_URL; 
 export const strict = false;
 export const sugestCadastro = '/sugestoes/cadastro/';
+import { mixin_axios } from '../mixins/mixin_axios.js';
 
 export const state = () => ({
   all: [],
@@ -399,7 +400,11 @@ export const actions = {
           'Authorization': this.$cookies.get('token') || '',
         }
       }
-    );
+    ).then(response => {
+      mixin_axios.methods.createToast(`Editar`, response.data.menssagem, 'success');
+    }).catch(error => {
+      mixin_axios.methods.createToast(`CAMPO OBRIGATÓRIO`, error.response.data.erro, 'warning');
+    });
   },
 
   // POST DA PÁGINA DE LOGIN
@@ -526,10 +531,12 @@ export const actions = {
       }
     )
     .then(response => {
+      mixin_axios.methods.createToast(`Editar`, response.data.menssagem, 'success');
       this.salvarAlarm = response.data.erro
     })
     .catch(error => {
-      // console.log(error.response);
+      console.log(error.response.data.erro);
+      mixin_axios.methods.createToast(`CAMPO OBRIGATÓRIO`, error.response.data.erro, 'warning');
       this.salvarAlarm = error.response.status;
     });
     context.commit('setAlarm', this.salvarAlarm);
@@ -601,9 +608,11 @@ export const actions = {
     )
     .then(response => {
       this.update = response.data.erro;
+      mixin_axios.methods.createToast(`Editar`, response.data.menssagem, 'success');
     })
     .catch(error => {
       this.update = error.response.status;
+      mixin_axios.methods.createToast(`CAMPO OBRIGATÓRIO`, error.response.data.erro, 'warning');
     });
     context.commit('updateCard', this.update);
   },

@@ -280,7 +280,7 @@ export default {
       if (!this.subUnit && !this.subModel) {
         this.subInfo.push({ nome: this.subUnit, modelo: this.subModel });
       } else {
-        this.createToast(toaster, `Erro`, 'Preencha o campo de nome e o de modelo.');
+        this.createToast(toaster, `Erro`, 'Preencha o campo de nome e o de modelo.', 'warning');
       }
     },
 
@@ -294,7 +294,7 @@ export default {
         sub_area: this.subInfo,
       })
       await this.updateUnit({ id: this.id, data: this.unitEditing[0] });
-      this.createToast(toaster, `Edição`, 'Unidade editada com sucesso');
+      this.createToast(toaster, `Edição`, 'Unidade editada com sucesso', 'success');
     },
   },
 
@@ -302,7 +302,7 @@ export default {
     // Logoff automatico
     await this.idCheck();
     if (!this.session.value) {
-      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
     }
     this.gettingEdits(this.id);
   },

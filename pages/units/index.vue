@@ -101,7 +101,7 @@ export default {
       .then(() => {
         this.gettingUnits();
       });
-      this.createToast(toaster, `Delete`, 'Unidade deletada com sucesso');
+      this.createToast(toaster, `Delete`, 'Unidade deletada com sucesso', 'success');
       setTimeout(() => {
         this.$bvModal.hide(id)
       }, 1000);
@@ -118,7 +118,7 @@ export default {
     // Logoff automatico
     await this.idCheck();
     if (!this.session.value) {
-      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+      this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       this.logOff({logout: "tes"});
       this.$cookies.removeAll();
       this.$router.push('/');

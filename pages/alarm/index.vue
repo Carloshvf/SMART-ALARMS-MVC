@@ -187,7 +187,7 @@ export default {
       // Logoff automatico
       await this.idCheck();
       if (this.session.value === false) {
-        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       }
 
       this.stopInterval = setInterval(async () => {
@@ -221,7 +221,7 @@ export default {
               this.stop = false;
             }
           } else {
-              this.createToast('b-toaster-bottom-right', `Erro`, this.lists);
+              this.createToast('b-toaster-bottom-right', `Erro`, this.lists, 'danger');
           }
         }  else {
           this.contador = 0;

@@ -60,7 +60,7 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (this.session.value === false) {
-        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       }
     await this.gettingUnits();
   },

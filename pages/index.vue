@@ -66,7 +66,7 @@ export default {
         this.$router.push('/units');
       }
       else {
-        this.createToast('b-toaster-bottom-right', `Erro`, this.validation);
+        this.createToast('b-toaster-bottom-right', `Erro`, this.validation, 'danger');
       }
     }
   },

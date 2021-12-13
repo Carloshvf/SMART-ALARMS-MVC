@@ -6,10 +6,11 @@ export default {
          * @param {*Titulo} title
          * @param {*Mensagem} message 
          */
-        createToast(toaster, title, message) {
+        createToast(toaster, title, message, variant = null) {
             this.$bvToast.toast(message, {
                 title: title,
                 toaster: toaster,
+                variant: variant || 'default',
                 solid: true,
             });
         },

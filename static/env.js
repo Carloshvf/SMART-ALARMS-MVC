@@ -1,4 +1,4 @@
-const AWS_URL = "https://api-smartalarms-dev.transformacaodigitalspassu.com.br:3000"
+const AWS_URL = "http://localhost:5000"
 var ProcessEnv = {
     BASE_URL:AWS_URL
 }
@@ -14,6 +14,6 @@ if(HOST === 'localhost:3000' || HOST === 'localhost:3100') {
 } else if (HOST === 'smartalarms-hmg.petrobras.com.br') {
     window.processEnv.BASE_URL = 'https://smartalarms-backend-hmg.petrobras.com.br';
 } else {
-    window.processEnv.BASE_URL = 'https://smartalarms-backend.petrobras.com.br';
+    window.processEnv.BASE_URL = 'http://localhost:5000';
 }
 

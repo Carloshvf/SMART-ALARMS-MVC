@@ -23,18 +23,18 @@
       <div class="row">
           <div class="col-2">
             <label class="mt-4">TIPO DE EVENTO</label>
-            <input class="form-control" maxlength="15" v-model="eventUnit">
+            <input class="form-control" maxlength="15" v-model="eventUnit" placeholder="PLS">
           </div>
           <div class="col-1">
             <label class="mt-4">CONTADOR</label>
-            <input v-mask="'##:##'" class="form-control" v-model="contUnit">
+            <input v-mask="'##:##'" class="form-control" v-model="contUnit" placeholder="07:00">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add rounded-circle" @click="pushEvent()">+</b-button>
           </div>
           <div class="col-3">
             <label class="mt-4">SISTEMAS MONITORADOS</label>
-            <input class="form-control" maxlength="15" v-model="systemUnit">
+            <input class="form-control" maxlength="15" v-model="systemUnit" placeholder="UG 21">
           </div>
           <div class="col-3">
               <b-button class="btn btn-green btn-add rounded-circle" @click="pushSystem()">+</b-button>
@@ -86,11 +86,11 @@
       <div class="row">
         <div class="col-3">
           <label class="mt-4">NOME</label>
-          <input class="form-control" v-model="subUnit">
+          <input class="form-control" v-model="subUnit" placeholder="ELIPSE">
         </div>
         <div class="col-3">
           <label class="mt-4">MODELO</label>
-          <input class="form-control" v-model="subModel">
+          <input class="form-control" v-model="subModel" placeholder="OPC.[ELIPSE]">
         </div>
         <div class="col-3">
             <b-button class="btn btn-green btn-add rounded-circle" @click="pushSub('b-toaster-bottom-right')">+</b-button>
@@ -184,7 +184,7 @@ export default {
       if (this.subUnit && this.subModel) {
         this.sub.push({nome: this.subUnit, modelo: this.subModel});
       } else {
-        this.createToast(toaster, `Erro`, 'Preencha o campo de nome e o de modelo.');
+        this.createToast(toaster, `Erro`, 'Preencha o campo de nome e o de modelo.', 'warning');
       }
     },
 
@@ -199,7 +199,6 @@ export default {
         sub_area: this.sub
       })
       await this.registerUnit(this.unitData[0]);
-      this.createToast(toaster, `Cadastro`, 'Unidade cadastrada com sucesso');
     }
 
   },
@@ -214,7 +213,7 @@ export default {
     // Logoff automatico
       await this.idCheck()
       if (!this.session.value) {
-        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff);
+        this.createToast('b-toaster-bottom-right', `Logoff`, this.session.logoff, 'danger');
       }
   }
 }

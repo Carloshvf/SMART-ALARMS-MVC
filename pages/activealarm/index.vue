@@ -63,7 +63,7 @@ export default {
     // Logoff automatico
     await this.idCheck();
     if (this.session.value === false) {
-      this.createToast(toasterStr, `Logoff`, this.session.logoff);
+      this.createToast(toasterStr, `Logoff`, this.session.logoff, 'danger');
     }
 
     this.stopInterval = setInterval(async () => {
@@ -94,14 +94,14 @@ export default {
           this.stop = false;
         }
       } catch (e) {
-        this.createToast(toasterStr, `Erro`, this.alarms);
+        this.createToast(toasterStr, `Erro`, this.alarms, 'danger');
       }
     }, 5000)
 
     this.contador = this.contador + 1
     await this.loadData({unit: this.unitId, cont: this.contador})
     if (this.alarms === 'unidade não encontrada no banco') {
-      this.createToast(toasterStr, `Logoff`, this.alarms);
+      this.createToast(toasterStr, `Logoff`, this.alarms, 'danger');
     }
   },
 }
