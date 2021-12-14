@@ -695,7 +695,7 @@ export default {
     
       this.disabling = false;
       this.load = false;
-      console.log(this.modal_update);
+      // this.createToast('b-toaster-bottom-right', `Entrou aqui`, this.session.logoff, 'danger');
       setTimeout(() => {
         this.$bvModal.hide(this.modal_update);
       }, 1000);

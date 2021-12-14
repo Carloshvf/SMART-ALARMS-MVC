@@ -531,11 +531,10 @@ export const actions = {
       }
     )
     .then(response => {
-      mixin_axios.methods.createToast(`Editar`, response.data.menssagem, 'success');
+      mixin_axios.methods.createToast(`Novo alarme`, response.data.menssagem, 'success');
       this.salvarAlarm = response.data.erro
     })
     .catch(error => {
-      console.log(error.response.data.erro);
       mixin_axios.methods.createToast(`CAMPO OBRIGATÓRIO`, error.response.data.erro, 'warning');
       this.salvarAlarm = error.response.status;
     });
@@ -607,8 +606,8 @@ export const actions = {
       }
     )
     .then(response => {
-      this.update = response.data.erro;
-      mixin_axios.methods.createToast(`Editar`, response.data.menssagem, 'success');
+      this.update = response.data.menssagem;
+      mixin_axios.methods.createToast(`Editar`, response.data.message, 'success');
     })
     .catch(error => {
       this.update = error.response.status;
