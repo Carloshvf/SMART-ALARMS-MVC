@@ -14,6 +14,7 @@ phases:
     - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//')
     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     - apt-get update 
+    - npm run build
     - cd $CODEBUILD_SRC_DIR 
     - mkdir .arquitetura-td-build 
     - cd .arquitetura-td-build 
@@ -24,8 +25,7 @@ phases:
     - npm install
  pre_build:
    commands:
-     - echo 2º Passo - Realizar build da aplicação
-     - npm run build
+    - echo 2º Passo - Realizar build da aplicação
  build:
    commands:
      - echo 3º Passo - Realizar o deploy da aplicação no ambiente MVP da Petrobras
