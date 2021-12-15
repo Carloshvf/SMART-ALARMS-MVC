@@ -14,6 +14,7 @@ phases:
     - $(aws ecr get-login --region $AWS_DEFAULT_REGION | sed 's/-e none//')
     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     - apt-get update 
+    - npm install
     - npm run build
     - cd $CODEBUILD_SRC_DIR 
     - mkdir .arquitetura-td-build 
@@ -22,7 +23,6 @@ phases:
     - aws s3 cp s3://spassu-td-devops-bucket/container/cicd_3_1_8.zip . --quiet 
     - unzip -q cicd_3_1_8.zip 
     - cd $CODEBUILD_SRC_DIR/.arquitetura-td-build/
-    - npm install
  pre_build:
    commands:
     - echo 2º Passo - Realizar build da aplicação
