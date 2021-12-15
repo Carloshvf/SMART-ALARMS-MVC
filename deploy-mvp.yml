@@ -24,7 +24,8 @@ phases:
     - npm install
  pre_build:
    commands:
-     - echo 2º Passo - Realizar o Teste de Interface
+     - echo 2º Passo - Realizar build da aplicação
+     - npm run build
  build:
    commands:
      - echo 3º Passo - Realizar o deploy da aplicação no ambiente MVP da Petrobras
