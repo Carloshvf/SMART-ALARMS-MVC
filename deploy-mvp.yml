@@ -44,3 +44,4 @@ phases:
      - echo 4º Passo - Gerar Aviso no Slack da Finalização do Pipeline 
      - cd $CODEBUILD_SRC_DIR/.arquitetura-td-build/
      - node slack "O Projeto ${projectName} foi versionado com sucesso no git da Petrobras na url https://codigo-externo.petrobras.com.br/esteiras-digitais-tic/spassu/smartalarms/${projectName}.git."
+     
