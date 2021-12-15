@@ -531,6 +531,7 @@ export const actions = {
       }
     )
     .then(response => {
+      console.log(response);
       mixin_axios.methods.createToast(`Novo alarme`, response.data.message, 'success');
       this.salvarAlarm = response.data.erro
     })
