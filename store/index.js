@@ -531,11 +531,12 @@ export const actions = {
       }
     )
     .then(response => {
-      mixin_axios.methods.createToast(`Novo alarme`, response.data.menssagem, 'success');
+      mixin_axios.methods.createToast(`Novo alarme`, response.data.message, 'success');
       this.salvarAlarm = response.data.erro
     })
     .catch(error => {
-      mixin_axios.methods.createToast(`CAMPO OBRIGATÓRIO`, error.response.data.erro, 'warning');
+      console.log(error);
+      mixin_axios.methods.createToast(`Validação`, error.response.data.erro, 'warning');
       this.salvarAlarm = error.response.status;
     });
     context.commit('setAlarm', this.salvarAlarm);
@@ -607,7 +608,7 @@ export const actions = {
     )
     .then(response => {
       this.update = response.data.menssagem;
-      mixin_axios.methods.createToast(`Editar`, response.data.message, 'success');
+      mixin_axios.methods.createToast(`Editar`, response.data.menssagem, 'success');
     })
     .catch(error => {
       this.update = error.response.status;
