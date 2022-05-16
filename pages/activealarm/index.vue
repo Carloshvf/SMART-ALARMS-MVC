@@ -98,8 +98,6 @@ export default {
       }
     }, 5000)
 
-    this.contador = this.contador + 1
-    await this.loadData({unit: this.unitId, cont: this.contador})
     if (this.alarms === 'unidade não encontrada no banco') {
       this.createToast(toaster, `Entrou`, this.alarms, 'danger');
     }

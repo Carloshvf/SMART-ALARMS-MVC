@@ -223,8 +223,8 @@ export const actions = {
         headers: {
           'Authorization': this.$cookies.get('token') || '',
         }}
-    )
-    .then(response => {
+        )
+        .then(response => {
       this.all = response.data.all;
     })
     .catch(error => {
