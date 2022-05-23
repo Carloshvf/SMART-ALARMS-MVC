@@ -693,8 +693,8 @@ export default {
       await this.sendLogic({valid: this.logic});
       this.backendCheck = this.$store.state.validating;
       this.ok = false;
-
-      if (this.pushed[this.pushed.length - 1] === 'E'|| this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
+      const splitpushed = this.pushed[0].split(' ')
+      if (splitpushed[splitpushed.length - 1] === 'E' || splitpushed[splitpushed.length - 1] === 'OU') {
         this.createToast(toaster, `Logica invalida`, 'A lógica não esta válida.', 'warning');
       }
       else if(this.validation(this.pushed, '(') !== this.validation(this.pushed, ')')) {
