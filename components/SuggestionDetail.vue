@@ -401,7 +401,7 @@ export default {
                 chave: this.tab.chave
             });
             await this.postSuggestions({unit: this.unit, id: this.tab_modal, info: this.allData[0]});
-            this.loadSuggestions(this.unit);
+            await this.loadSuggestions(this.unit);
             this.$bvModal.hide(this.modal_id);
         },
 
@@ -414,7 +414,7 @@ export default {
                 lista_ugs: this.lists,
             });
             await this.editSuggestions({unit: this.unit, id: this.tab_modal, info: this.allEdit[0]});
-            this.loadSuggestions(this.unit);
+            await this.loadSuggestions(this.unit);
             this.$bvModal.hide(this.modal_id);
         }
     },

@@ -247,7 +247,7 @@
             <div class="col-3">
               <label class="sizing">{{ labelType }}</label>
               <select class="form-control" v-model="types">
-                <option>{{ types }}</option>
+                <option>{{ labelMedida }}</option>
                 <option>{{ labelStatus }}</option>
               </select>
 
@@ -330,7 +330,7 @@
                         <div class="col-2">
                           <label class="labels">{{ labelType }}</label>
                           <select class="form-control" v-model="editS1">
-                            <option>{{ types }}</option>
+                            <option>{{ labelMedida }}</option>
                             <option>{{ labelStatus }}</option>
                           </select>
                         </div>
@@ -642,8 +642,9 @@ export default {
     async validate(toaster) {
       await this.sendLogic({valid: this.logicInfo});
       this.backendCheck = this.$store.state.validating;
-
-      if (this.pushed[this.pushed.length - 1] === 'E' || this.pushed[0] === 'E' || this.pushed[this.pushed.length - 1] === 'OU' || this.pushed[0] === 'OU') {
+      const splitpushed = this.pushed[0].split(' ')
+      // console.log(splitpushed[splitpushed.length - 1])
+      if (splitpushed[splitpushed.length - 1] === 'E' || splitpushed[splitpushed.length - 1] === 'OU') {
         this.createToast(toaster, `Lógica inválida`, 'A lógica não está válida.', 'warning');
         this.ok = false;
       }
@@ -719,7 +720,6 @@ export default {
         recomendacoes: this.recomendacao,
         sub_area: this.subArea1,
        });
-
       this.updateData({unit: this.unitId, id: this.id, data: this.allData[0]});
 
       this.disabling = false;

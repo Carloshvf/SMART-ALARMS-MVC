@@ -701,7 +701,7 @@ export default {
         this.createToast(toaster, `Parenteses`, 'Feche o parenteses da lógica.', 'warning');
       }
       else if(this.backendCheck === "expressão correta") {
-        this.createToast(toaster, `Validação`, 'A expressão esta correta.', 'warning');
+        this.createToast(toaster, `Validação`, 'A expressão esta correta.', 'success');
         this.ok = true;
       }
     },

@@ -310,7 +310,7 @@ export const actions = {
   },
 
   // POST DE CADASTRAR SUGESTÃO
-  async registerSuggestions(dados) {
+  async registerSuggestions(context, dados) {
     await this.$axios.post(
       HOST_API + sugestCadastro + dados.unit,
       dados.info, {
@@ -431,7 +431,7 @@ export const actions = {
   },
 
   // POST DE LOGOUT
-  async logOff(dados) {
+  async logOff(context, dados) {
     await this.$axios.post(
       HOST_API + '/logout', dados.logout, {
         headers: {

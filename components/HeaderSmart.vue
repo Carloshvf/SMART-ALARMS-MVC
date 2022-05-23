@@ -26,9 +26,9 @@
           <b-dropdown class="mt-2 mb-2" :text="user" v-if="user != ''">
             <b-dropdown-item @click="logout()">Logoff</b-dropdown-item>
           </b-dropdown>
-          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_perfis == true">Cadastrar Usuários</nuxt-link>
+          <nuxt-link to="/registeruser" class="btn btn-links mt-2 mb-2 ml-3" >Cadastrar Usuários</nuxt-link>
 
-          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" v-if="permButtons.cadastrar_alarmes == true">
+          <nuxt-link to="/register" class="btn btn-links mt-2 mb-2 ml-3" >
             Cadastrar Eventos
           </nuxt-link>
         </div>

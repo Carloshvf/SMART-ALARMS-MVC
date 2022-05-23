@@ -241,6 +241,7 @@ export default {
                 chave: this.realUser.chave,
                 lista_ugs: this.selects,
             });
+            // console.log(this.unitId)
             await this.registerSuggestions({unit: this.unitId, info: this.allRegister[0]});
             await this.loadSuggestions(this.unitId);
             this.filteredOptions();

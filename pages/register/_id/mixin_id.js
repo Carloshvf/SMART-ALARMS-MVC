@@ -65,6 +65,7 @@ export default {
           labelCSavingAlarm: 'Salvando o alarme',
           labelPriorities: 'PRIORIDADE',
           labelName: 'NOME',
+          labelMedida: 'medida',
           labelStatus: 'status',
           labelType: 'TIPO',
           labelAddress: 'ENDEREÇO'
