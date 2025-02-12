@@ -774,9 +774,9 @@ export default {
   }
 }
 
-input[type=number] {
-  -moz-appearance: textfield;
-}
+// input[type=number] {
+//   -moz-appearance: textfield;
+// }
 
 .border-line {
   border-bottom: solid rgba(209, 216, 245, 0.6);
